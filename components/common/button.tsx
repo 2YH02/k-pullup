@@ -60,11 +60,29 @@ type ButtonColor = keyof typeof buttonColorMap;
 type ButtonSize = keyof typeof buttonSizeMap;
 
 export interface ButtonProps {
+  /**
+   * 버튼 색상
+   */
   color?: ButtonColor;
+  /**
+   * 버튼 사이즈
+   */
   size?: ButtonSize;
+  /**
+   * 버튼 배경 색상 유 / 무
+   */
   variant?: "normal" | "contrast";
+  /**
+   * 넓이 최대
+   */
   full?: boolean;
+  /**
+   * className (우선순위 높음)
+   */
   className?: string;
+  /**
+   * 버튼 비활성화
+   */
   disabled?: boolean;
   onClick: VoidFunction;
   children: React.ReactNode;
