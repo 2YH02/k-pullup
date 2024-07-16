@@ -21,7 +21,10 @@
       "@/*": ["./*"],
       "@lib/*": ["./lib/*"],
       "@components/*": ["./components/*"],
-      "@common/*": ["./components/common/*"]
+      "@common/*": ["./components/common/*"],
+      "@layout/*": ["./components/layout/*"],
+      "@icons/*": ["./components/icons/*"],
+      "@store/*": ["./store/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

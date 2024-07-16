@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 :root {
-  /* --background: #eee; */
   --background: #838383;
   --color: #111827;
 }
@@ -11,6 +10,12 @@
 body {
   color: var(--color);
   background: var(--background);
+}
+
+div,
+main,
+nav {
+  box-sizing: border-box;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,12 +31,17 @@ body {
   }
 
   .scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb {
     background-color: rgba(100, 100, 100, 0.5);
+    border-radius: 10px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
   }
 }
