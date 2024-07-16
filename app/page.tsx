@@ -1,9 +1,7 @@
+import SideMain from "@common/side-main";
+
 const Home = () => {
-  return (
-    <main>
-      <h1>철봉 지도</h1>
-    </main>
-  );
+  return <SideMain title="철봉 지도"></SideMain>;
 };
 
 export default Home;
