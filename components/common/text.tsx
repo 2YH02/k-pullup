@@ -13,10 +13,19 @@ const typographyMap = {
 export type Typography = keyof typeof typographyMap;
 
 interface TextProps {
+  /**
+   * 버튼 크기
+   */
   typography?: Typography;
   display?: "inline" | "block" | "inline-block";
+  /**
+   * 버튼 정렬
+   */
   textAlign?: "left" | "center" | "right";
   fontWeight?: "normal" | "bold" | "lighter" | "bolder";
+  /**
+   * 스타일 클래스
+   */
   className?: string;
   children?: React.ReactNode;
 }
