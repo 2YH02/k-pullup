@@ -14,8 +14,17 @@ export interface Menu {
 }
 
 interface NavigateProps {
+  /**
+   * nav 리스트
+   */
   menus: Menu[];
+  /**
+   * 넓이 (full: 100%)
+   */
   width?: number | "full";
+  /**
+   * 스타일 클래스
+   */
   navClass?: string;
 }
 
@@ -83,7 +92,9 @@ const NavLink = ({
           display="block"
           textAlign="center"
           fontWeight="bold"
-          className={`${isActive ? "text-white" : "text-coral-dark dark:text-grey-light"} z-20`}
+          className={`${
+            isActive ? "text-white" : "text-coral-dark dark:text-grey-light"
+          } z-20`}
         >
           {title}
         </Text>
