@@ -15,10 +15,12 @@ const config: Config = {
         black: "#212121",
         "grey-light": "#eee",
         grey: "#9e9e9e",
+        "grey-dark": "#2a2a2a",
         red: "#f55656",
         blue: "#2196f3",
         green: "#62c466",
         coral: "#f9b4ab",
+        "coral-dark": "#f29992",
         beige: "#fdebd3",
         "dark-teel": "#264e70",
         "grayish-teel": "#679186",
@@ -28,6 +30,15 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      keyframes: {
+        grow: {
+          "0%": { transform: "scale(0.2)" },
+          "100%": { transform: "scale(1)" },
+        },
+      },
+      animation: {
+        grow: "grow 0.1s ease-in-out forwards",
       },
     },
   },
