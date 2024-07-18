@@ -9,11 +9,12 @@ import Navigate from "@layout/navigate";
 import cn from "@lib/cn";
 import { useEffect, useState } from "react";
 import Text from "./text";
+// TODO: header 뒤로가기, 아이콘 클릭 이벤트 처리 추가
 
 interface SideMainProps {
   headerTitle?: string;
   hasHeaderBackButton?: boolean;
-  hasHeaderIconButton?: boolean;
+  headerIcon?: React.ReactNode;
   withNav?: boolean;
   clasName?: string;
   children?: React.ReactNode;
@@ -48,8 +49,8 @@ const menus = [
 
 const SideMain = ({
   headerTitle,
+  headerIcon,
   hasHeaderBackButton,
-  hasHeaderIconButton,
   withNav,
   clasName,
   children,
@@ -113,12 +114,12 @@ const SideMain = ({
       {headerTitle && (
         <MainHeader
           titile={headerTitle}
+          headerIcon={headerIcon}
           hasBackButton={hasHeaderBackButton}
-          hasIconButton={hasHeaderIconButton}
         />
       )}
 
-      <div className="sticky top-0 py-3 bg-grey-light z-20 web:hidden">
+      <div className="sticky top-0 py-3 bg-grey-light dark:bg-black z-20 web:hidden">
         <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />
       </div>
 
@@ -138,30 +139,28 @@ const SideMain = ({
 
 interface MainHeaderProps {
   titile: string;
+  headerIcon?: React.ReactNode;
   hasBackButton?: boolean;
-  hasIconButton?: boolean;
 }
 
 export const MainHeader = ({
   titile,
   hasBackButton = false,
-  hasIconButton = false,
+  headerIcon,
 }: MainHeaderProps) => {
   return (
-    <div className="web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 bg-white shadow-sm">
-      {hasBackButton && (
-        <div className="flex items-center justify-center w-10 h-10">
-          <ArrowLeftIcon color="black" />
-        </div>
-      )}
+    <div className="web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 shadow-sm bg-white dark:bg-grey-dark">
+      <div className="flex items-center justify-center w-10 h-10">
+        {hasBackButton && <ArrowLeftIcon color="black" />}
+      </div>
 
       <Text typography="t5" fontWeight="bold" className="grow text-center">
         {titile}
       </Text>
 
-      {hasIconButton && (
-        <div className="flex items-center justify-center w-10 h-10">a</div>
-      )}
+      <div className="flex items-center justify-center w-10 h-10">
+        {headerIcon && headerIcon}
+      </div>
     </div>
   );
 };
