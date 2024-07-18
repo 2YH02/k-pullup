@@ -78,7 +78,7 @@ const NavLink = ({
     <li className="flex flex-col justify-center items-center relative w-1/4 h-full z-20">
       {isActive && (
         <span
-          className={`absolute bg-coral dark:bg-grey h-12 w-12 rounded-full origin-center animate-grow`}
+          className={`absolute bg-coral shadow-dark dark:bg-grey h-12 w-12 rounded-full origin-center animate-grow`}
         />
       )}
 

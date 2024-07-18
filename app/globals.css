@@ -10,12 +10,18 @@
 body {
   color: var(--color);
   background: var(--background);
+
+  overflow: hidden;
 }
 
 div,
 main,
 nav {
   box-sizing: border-box;
+}
+
+a {
+  user-select: none;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,6 +34,19 @@ nav {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .shadow-dark {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+
+  .no-touch {
+    touch-action: none;
+    -ms-touch-action: none;
+  }
+
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
   }
 
   .scrollbar-thin::-webkit-scrollbar {

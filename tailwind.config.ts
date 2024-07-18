@@ -10,6 +10,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        mo: { max: "484px" },
+        web: "485px",
+      },
       colors: {
         white: "#fff",
         black: "#212121",
