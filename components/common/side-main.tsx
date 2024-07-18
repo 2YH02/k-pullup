@@ -1,5 +1,6 @@
 "use client";
 
+import ArrowLeftIcon from "@icons/arrow-left-icon";
 import ChatBubbleIcon from "@icons/chat-bubble-icon";
 import HomeIcon from "@icons/home-icon";
 import SignIcon from "@icons/sign-icon";
@@ -10,7 +11,9 @@ import { useEffect, useState } from "react";
 import Text from "./text";
 
 interface SideMainProps {
-  title?: string;
+  headerTitle?: string;
+  hasHeaderBackButton?: boolean;
+  hasHeaderIconButton?: boolean;
   withNav?: boolean;
   clasName?: string;
   children?: React.ReactNode;
@@ -43,7 +46,14 @@ const menus = [
   },
 ];
 
-const SideMain = ({ title, withNav, clasName, children }: SideMainProps) => {
+const SideMain = ({
+  headerTitle,
+  hasHeaderBackButton,
+  hasHeaderIconButton,
+  withNav,
+  clasName,
+  children,
+}: SideMainProps) => {
   const [sheetHeight, setSheetHeight] = useState(85);
   const [isMoblie, setIsMobile] = useState(false);
 
@@ -92,34 +102,67 @@ const SideMain = ({ title, withNav, clasName, children }: SideMainProps) => {
   return (
     <main
       className={cn(
-        `absolute web:top-6 web:bottom-6 web:left-6 web:max-w-96 w-full web:rounded-lg web:translate-x-0 
+        `absolute web:top-6 web:bottom-6 web:left-6 web:max-w-96 w-full web:rounded-lg
         overflow-y-auto overflow-x-hidden web:scrollbar-thin shadow-md bg-grey-light dark:bg-black
-        mo:bottom-0 mo:rounded-t-lg mo:no-touch mo:scrollbar-hidden`,
+        mo:bottom-0 mo:rounded-t-lg mo:no-touch mo:scrollbar-hidden mo:h-[85%]`,
         clasName
       )}
       style={{ height: isMoblie ? `${sheetHeight}%` : "" }}
       onPointerDown={dragStart}
     >
+      {headerTitle && (
+        <MainHeader
+          titile={headerTitle}
+          hasBackButton={hasHeaderBackButton}
+          hasIconButton={hasHeaderIconButton}
+        />
+      )}
+
       <div className="sticky top-0 py-3 bg-grey-light z-20 web:hidden">
         <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />
       </div>
+
       <div
-        className={`${
-          withNav ? "px-4 pb-10" : "px-4"
-        } min-h-[calc(100%-56px)] mo:min-h-[calc(100%-84px)] relative`}
+        className={`p-4 ${
+          headerTitle
+            ? "web:min-h-[calc(100%-96px)] mo:min-h-[calc(100%-84px)]"
+            : "min-h-[calc(100%-56px)]"
+        }`}
       >
-        <Text
-          typography="t3"
-          display="block"
-          textAlign="center"
-          className="pt-4"
-        >
-          {title}
-        </Text>
         {children}
       </div>
-      <Navigate menus={menus} width={"full"} navClass="" />
+      {withNav && <Navigate menus={menus} width={"full"} />}
     </main>
+  );
+};
+
+interface MainHeaderProps {
+  titile: string;
+  hasBackButton?: boolean;
+  hasIconButton?: boolean;
+}
+
+export const MainHeader = ({
+  titile,
+  hasBackButton = false,
+  hasIconButton = false,
+}: MainHeaderProps) => {
+  return (
+    <div className="web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 bg-white shadow-sm">
+      {hasBackButton && (
+        <div className="flex items-center justify-center w-10 h-10">
+          <ArrowLeftIcon color="black" />
+        </div>
+      )}
+
+      <Text typography="t5" fontWeight="bold" className="grow text-center">
+        {titile}
+      </Text>
+
+      {hasIconButton && (
+        <div className="flex items-center justify-center w-10 h-10">a</div>
+      )}
+    </div>
   );
 };
 
