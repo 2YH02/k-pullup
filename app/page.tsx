@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <SideMain
       withNav
-      headerTitile="메인"
+      headerTitle="메인"
       headerIcon={<HomeIcon color="black" size={20} />}
       hasBackButton
     >

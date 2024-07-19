@@ -15,7 +15,7 @@ interface SideMainProps {
   withNav?: boolean;
   className?: React.ComponentProps<"div">["className"];
   children?: React.ReactNode;
-  headerTitile?: string;
+  headerTitle?: string;
   hasBackButton?: boolean;
   headerIcon?: React.ReactNode;
   headerIconClick?: VoidFunction;
@@ -51,7 +51,7 @@ const menus = [
 const SideMain = ({
   withNav,
   className,
-  headerTitile,
+  headerTitle,
   headerIcon,
   hasBackButton,
   headerIconClick,
@@ -113,9 +113,9 @@ const SideMain = ({
       style={{ height: isMoblie ? `${sheetHeight}%` : "" }}
       onPointerDown={dragStart}
     >
-      {headerTitile && (
+      {headerTitle && (
         <MainHeader
-          titile={headerTitile}
+          titile={headerTitle}
           headerIcon={headerIcon}
           hasBackButton={hasBackButton}
           iconClick={headerIconClick}
@@ -127,7 +127,7 @@ const SideMain = ({
 
       <div
         className={`mo:h-[calc(100%-86px)] ${
-          headerTitile ? "h-[calc(100%-96px)]" : "h-[calc(100%-56px)]"
+          headerTitle ? "h-[calc(100%-96px)]" : "h-[calc(100%-56px)]"
         } overflow-auto web:scrollbar-thin mo:scrollbar-hidden`}
       >
         {children}
