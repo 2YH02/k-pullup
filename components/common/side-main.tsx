@@ -5,11 +5,13 @@ import ChatBubbleIcon from "@icons/chat-bubble-icon";
 import HomeIcon from "@icons/home-icon";
 import SignIcon from "@icons/sign-icon";
 import UserIcon from "@icons/user-icon";
-import BottomNav from "@layout/bottom-nav";
+import BottomNav, { NAV_HEIGHT } from "@layout/bottom-nav";
 import cn from "@lib/cn";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Text from "./text";
+
+export const SCROLL_HEADER_HEIGHT = 28;
 
 interface SideMainProps {
   withNav?: boolean;
@@ -95,7 +97,7 @@ const SideMain = ({ withNav, className, children }: SideMainProps) => {
       className={cn(
         `absolute web:top-6 web:bottom-6 web:left-6 web:max-w-96 w-full web:rounded-lg
         overflow-y-auto overflow-x-hidden web:scrollbar-thin shadow-md bg-grey-light dark:bg-black
-        mo:bottom-0 mo:rounded-t-lg mo:no-touch mo:scrollbar-hidden mo:h-[85%]`,
+        mo:bottom-0 mo:rounded-t-lg mo:no-touch scrollbar-hidden mo:h-[85%]`,
         className
       )}
       style={{ height: isMoblie ? `${sheetHeight}%` : "" }}
@@ -105,7 +107,13 @@ const SideMain = ({ withNav, className, children }: SideMainProps) => {
         <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />
       </div>
 
-      <div className={"min-h-[calc(100%-56px)]"}>{children}</div>
+      <div
+        className={`min-h-[calc(100%-${NAV_HEIGHT}px)] mo:min-h-[calc(100%-${
+          NAV_HEIGHT + SCROLL_HEADER_HEIGHT
+        }px)]`}
+      >
+        {children}
+      </div>
       {withNav && <BottomNav menus={menus} width={"full"} />}
     </main>
   );

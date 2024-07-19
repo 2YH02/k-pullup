@@ -6,6 +6,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 
+export const NAV_HEIGHT = 56;
+
 export interface Menu {
   name: string;
   icon?: React.ReactNode;
@@ -23,7 +25,7 @@ interface BottomNavProps {
    */
   width?: number | "full";
   /**
-   * tailwind 스타일 클래스 
+   * tailwind 스타일 클래스
    */
   className?: React.ComponentProps<"nav">["className"];
 }
