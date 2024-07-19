@@ -9,25 +9,25 @@ const menus = [
   {
     name: "홈",
     icon: <HomeIcon />,
-    iconActive: <HomeIcon color="#fff" />,
+    iconActive: <HomeIcon className="fill-white" />,
     path: "/",
   },
   {
     name: "채팅",
     icon: <ChatBubbleIcon />,
-    iconActive: <ChatBubbleIcon color="#fff" />,
+    iconActive: <ChatBubbleIcon className="fill-white" />,
     path: "/chat",
   },
   {
     name: "등록",
     icon: <SignIcon />,
-    iconActive: <SignIcon color="#fff" />,
+    iconActive: <SignIcon className="fill-white" />,
     path: "/register",
   },
   {
     name: "내 정보",
     icon: <UserIcon />,
-    iconActive: <UserIcon color="#fff" />,
+    iconActive: <UserIcon className="fill-white" />,
     path: "/mypage",
   },
 ];
@@ -43,13 +43,13 @@ const meta = {
     width: {
       control: { type: "select" },
     },
-    navClass: {
+    className: {
       control: { type: "text" },
     },
   },
   args: {
     menus: menus,
-    navClass: "",
+    className: "",
     width: "full",
   },
 } satisfies Meta<typeof BottomNav>;

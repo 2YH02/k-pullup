@@ -1,7 +1,7 @@
 import cn from "@lib/cn";
 
 interface GrowBoxProps {
-  className?: string;
+  className?: React.ComponentProps<"div">["className"];
   children?: React.ReactNode;
 }
 

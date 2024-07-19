@@ -16,32 +16,32 @@ interface SideMainProps {
   hasHeaderBackButton?: boolean;
   headerIcon?: React.ReactNode;
   withNav?: boolean;
-  clasName?: string;
+  className?: React.ComponentProps<"div">["className"];
   children?: React.ReactNode;
 }
 
 const menus = [
   {
     name: "홈",
-    icon: <HomeIcon color="primary" />,
+    icon: <HomeIcon />,
     iconActive: <HomeIcon className="fill-white" />,
     path: "/",
   },
   {
     name: "채팅",
-    icon: <ChatBubbleIcon color="primary" />,
+    icon: <ChatBubbleIcon />,
     iconActive: <ChatBubbleIcon className="fill-white" />,
     path: "/chat",
   },
   {
     name: "등록",
-    icon: <SignIcon color="primary" />,
+    icon: <SignIcon />,
     iconActive: <SignIcon className="fill-white" />,
     path: "/register",
   },
   {
     name: "내 정보",
-    icon: <UserIcon color="primary" />,
+    icon: <UserIcon />,
     iconActive: <UserIcon className="fill-white" />,
     path: "/mypage",
   },
@@ -52,7 +52,7 @@ const SideMain = ({
   headerIcon,
   hasHeaderBackButton,
   withNav,
-  clasName,
+  className,
   children,
 }: SideMainProps) => {
   const [sheetHeight, setSheetHeight] = useState(85);
@@ -106,7 +106,7 @@ const SideMain = ({
         `absolute web:top-6 web:bottom-6 web:left-6 web:max-w-96 w-full web:rounded-lg
         overflow-y-auto overflow-x-hidden web:scrollbar-thin shadow-md bg-grey-light dark:bg-black
         mo:bottom-0 mo:rounded-t-lg mo:no-touch mo:scrollbar-hidden mo:h-[85%]`,
-        clasName
+        className
       )}
       style={{ height: isMoblie ? `${sheetHeight}%` : "" }}
       onPointerDown={dragStart}

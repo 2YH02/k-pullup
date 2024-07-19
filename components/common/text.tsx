@@ -24,9 +24,9 @@ interface TextProps {
   textAlign?: "left" | "center" | "right";
   fontWeight?: "normal" | "bold" | "lighter" | "bolder";
   /**
-   * 스타일 클래스
+   * tailwind 스타일 클래스 
    */
-  className?: string;
+  className?: React.ComponentProps<"span">["className"];
   children?: React.ReactNode;
 }
 

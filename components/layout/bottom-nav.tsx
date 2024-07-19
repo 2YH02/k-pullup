@@ -23,12 +23,12 @@ interface BottomNavProps {
    */
   width?: number | "full";
   /**
-   * 스타일 클래스
+   * tailwind 스타일 클래스 
    */
-  navClass?: string;
+  className?: React.ComponentProps<"nav">["className"];
 }
 
-const BottomNav = ({ menus, width = "full", navClass }: BottomNavProps) => {
+const BottomNav = ({ menus, width = "full", className }: BottomNavProps) => {
   const pathname = usePathname();
 
   const navWidth = useMemo(() => {
@@ -42,7 +42,7 @@ const BottomNav = ({ menus, width = "full", navClass }: BottomNavProps) => {
       className={cn(
         "sticky bottom-0 h-14 shadow-lg bg-white dark:bg-grey-dark",
         navWidth,
-        navClass
+        className
       )}
     >
       <ul className="relative flex justify-around items-center h-full">

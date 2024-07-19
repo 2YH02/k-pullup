@@ -19,6 +19,9 @@ const meta = {
       control: { type: "select" },
       options: ["normal", "contrast"],
     },
+    className: {
+      control: { type: "text" },
+    },
     full: { control: "boolean" },
     disabled: { control: "boolean" },
     onClick: { action: "clicked" },

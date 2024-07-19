@@ -91,9 +91,9 @@ export interface ButtonProps {
    */
   full?: boolean;
   /**
-   * className (우선순위 높음)
+   * tailwind 스타일 클래스
    */
-  className?: string;
+  className?: React.ComponentProps<"div">["className"];
   /**
    * 버튼 비활성화
    */
