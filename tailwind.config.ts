@@ -16,6 +16,8 @@ const config: Config = {
         web: "485px",
       },
       colors: {
+        primary: "#f9b4ab",
+        "primary-dark": "#f29992",
         white: "#fff",
         black: "#212121",
         "grey-light": "#eee",

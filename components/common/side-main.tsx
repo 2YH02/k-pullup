@@ -23,26 +23,26 @@ interface SideMainProps {
 const menus = [
   {
     name: "홈",
-    icon: <HomeIcon />,
-    iconActive: <HomeIcon color="#fff" />,
+    icon: <HomeIcon color="primary" />,
+    iconActive: <HomeIcon className="fill-white" />,
     path: "/",
   },
   {
     name: "채팅",
-    icon: <ChatBubbleIcon />,
-    iconActive: <ChatBubbleIcon color="#fff" />,
+    icon: <ChatBubbleIcon color="primary" />,
+    iconActive: <ChatBubbleIcon className="fill-white" />,
     path: "/chat",
   },
   {
     name: "등록",
-    icon: <SignIcon />,
-    iconActive: <SignIcon color="#fff" />,
+    icon: <SignIcon color="primary" />,
+    iconActive: <SignIcon className="fill-white" />,
     path: "/register",
   },
   {
     name: "내 정보",
-    icon: <UserIcon />,
-    iconActive: <UserIcon color="#fff" />,
+    icon: <UserIcon color="primary" />,
+    iconActive: <UserIcon className="fill-white" />,
     path: "/mypage",
   },
 ];

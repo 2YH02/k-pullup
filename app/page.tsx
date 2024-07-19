@@ -8,7 +8,7 @@ const Home = () => {
     <SideMain
       headerTitle="메인"
       hasHeaderBackButton
-      headerIcon={<HomeIcon size={20} color="#212121" />}
+      headerIcon={<HomeIcon size={20} color="black" />}
       withNav
     >
       <Input isInvalid={false} placeholder="검색" icon={<SearchIcon />} />

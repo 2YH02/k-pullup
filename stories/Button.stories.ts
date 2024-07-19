@@ -9,7 +9,7 @@ const meta = {
   argTypes: {
     color: {
       control: { type: "select" },
-      options: ["coral", "blue", "black"],
+      options: ["coral", "blue", "black", "primary"],
     },
     size: {
       control: { type: "select" },
@@ -33,7 +33,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    color: "coral",
+    color: "primary",
     size: "md",
     variant: "normal",
     full: false,
@@ -66,7 +66,7 @@ export const Large: Story = {
 
 export const Small: Story = {
   args: {
-    color: "coral",
+    color: "primary",
     size: "sm",
     variant: "normal",
     full: false,

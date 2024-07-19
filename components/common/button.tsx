@@ -3,6 +3,12 @@
 import cn from "@lib/cn";
 
 const buttonColorMap = {
+  primary: cn(
+    "bg-primary",
+    "text-white",
+    "disabled:bg-primary/50",
+    "disabled:text-white/70"
+  ),
   coral: cn(
     "bg-coral",
     "text-white",
@@ -24,6 +30,14 @@ const buttonColorMap = {
 };
 
 const buttonContrastColorMap = {
+  primary: cn(
+    "bg-white",
+    "text-primary",
+    "border",
+    "border-primary",
+    "disabled:text-primary/50",
+    "disabled:border-primary/50"
+  ),
   coral: cn(
     "bg-white",
     "text-coral",
@@ -89,7 +103,7 @@ export interface ButtonProps {
 }
 
 const Button = ({
-  color = "coral",
+  color = "primary",
   size = "md",
   variant,
   full,
