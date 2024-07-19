@@ -3,13 +3,23 @@
 import { useRouter } from "next/navigation";
 
 interface InputProps extends React.ComponentProps<"input"> {
+  /**
+   * 유효성 검사
+   */
   isInvalid: boolean;
+  /**
+   * icon 추가
+   */
   icon?: React.ReactNode;
+  /**
+   * icon 클릭 함수
+   */
   onIconClick?: VoidFunction;
+  /**
+   * true일 때 클릭 시 /search 페이지로 이동
+   */
   isSearchButton?: boolean;
 }
-// TODO: Input 컴포넌트 스토리 추가
-// TODO: Input field 컴포넌트, 스토리 추가
 
 const Input = ({
   isInvalid,
@@ -34,8 +44,8 @@ const Input = ({
     <div className="relative w-full">
       <input
         className={`h-10 w-full px-4 pr-10 text-base font-medium border border-primary rounded-3xl focus:outline-none focus:border-primary-dark ${
-          isInvalid ? "border-red" : ""
-        } dark:bg-grey-dark dark:border-grey dark:focus:border-grey-light dark:text-white ${
+          isInvalid ? "border-red dark:border-red" : "dark:border-grey"
+        } dark:bg-grey-dark dark:focus:border-grey-light dark:text-white ${
           isSearchButton ? "cursor-pointer focus:" : ""
         }`}
         aria-invalid={isInvalid}

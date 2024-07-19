@@ -1,11 +1,7 @@
-import SideMain, { MainHeader } from "@common/side-main";
+import SideMain from "@common/side-main";
 
 const Chat = () => {
-  return (
-    <SideMain withNav>
-      <MainHeader titile="채팅" />
-    </SideMain>
-  );
+  return <SideMain withNav headerTitile="채팅"></SideMain>;
 };
 
 export default Chat;

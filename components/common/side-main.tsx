@@ -5,18 +5,20 @@ import ChatBubbleIcon from "@icons/chat-bubble-icon";
 import HomeIcon from "@icons/home-icon";
 import SignIcon from "@icons/sign-icon";
 import UserIcon from "@icons/user-icon";
-import BottomNav, { NAV_HEIGHT } from "@layout/bottom-nav";
+import BottomNav from "@layout/bottom-nav";
 import cn from "@lib/cn";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Text from "./text";
 
-export const SCROLL_HEADER_HEIGHT = 28;
-
 interface SideMainProps {
   withNav?: boolean;
   className?: React.ComponentProps<"div">["className"];
   children?: React.ReactNode;
+  headerTitile?: string;
+  hasBackButton?: boolean;
+  headerIcon?: React.ReactNode;
+  headerIconClick?: VoidFunction;
 }
 
 const menus = [
@@ -46,7 +48,15 @@ const menus = [
   },
 ];
 
-const SideMain = ({ withNav, className, children }: SideMainProps) => {
+const SideMain = ({
+  withNav,
+  className,
+  headerTitile,
+  headerIcon,
+  hasBackButton,
+  headerIconClick,
+  children,
+}: SideMainProps) => {
   const [sheetHeight, setSheetHeight] = useState(85);
   const [isMoblie, setIsMobile] = useState(false);
 
@@ -96,21 +106,29 @@ const SideMain = ({ withNav, className, children }: SideMainProps) => {
     <main
       className={cn(
         `absolute web:top-6 web:bottom-6 web:left-6 web:max-w-96 w-full web:rounded-lg
-        overflow-y-auto overflow-x-hidden web:scrollbar-thin shadow-md bg-grey-light dark:bg-black
-        mo:bottom-0 mo:rounded-t-lg mo:no-touch scrollbar-hidden mo:h-[85%]`,
+        overflow-hidden shadow-md bg-grey-light dark:bg-black
+        mo:bottom-0 mo:rounded-t-lg mo:no-touch mo:h-[85%]`,
         className
       )}
       style={{ height: isMoblie ? `${sheetHeight}%` : "" }}
       onPointerDown={dragStart}
     >
+      {headerTitile && (
+        <MainHeader
+          titile={headerTitile}
+          headerIcon={headerIcon}
+          hasBackButton={hasBackButton}
+          iconClick={headerIconClick}
+        />
+      )}
       <div className="sticky top-0 py-3 bg-grey-light dark:bg-black z-20 web:hidden">
         <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />
       </div>
 
       <div
-        className={`min-h-[calc(100%-${NAV_HEIGHT}px)] mo:min-h-[calc(100%-${
-          NAV_HEIGHT + SCROLL_HEADER_HEIGHT
-        }px)]`}
+        className={`mo:h-[calc(100%-86px)] ${
+          headerTitile ? "h-[calc(100%-96px)]" : "h-[calc(100%-56px)]"
+        } overflow-auto web:scrollbar-thin mo:scrollbar-hidden`}
       >
         {children}
       </div>
@@ -126,7 +144,7 @@ interface MainHeaderProps {
   iconClick?: VoidFunction;
 }
 
-export const MainHeader = ({
+const MainHeader = ({
   titile,
   hasBackButton = false,
   headerIcon,

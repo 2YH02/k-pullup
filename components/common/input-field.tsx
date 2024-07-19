@@ -11,8 +11,17 @@ import Input from "./input";
 import Text from "./text";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
+  /**
+   * input label
+   */
   label?: React.ReactNode;
+  /**
+   * 에러 확인
+   */
   isError?: boolean;
+  /**
+   * 하단 메시지 출력
+   */
   message?: React.ReactNode;
 }
 
@@ -21,9 +30,9 @@ const InputField = forwardRef<HTMLInputElement, Props>(
     const [focused, setFocused] = useState(false);
 
     const labelColor = isError
-      ? "text-red"
+      ? "text-red dark:text-red"
       : focused
-      ? "text-primary-dark"
+      ? "text-primary-dark dark:text-primary-dark"
       : undefined;
 
     const handleFocus: FocusEventHandler<HTMLInputElement> = (e) => {

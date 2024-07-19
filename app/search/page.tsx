@@ -1,11 +1,7 @@
-import SideMain, { MainHeader } from "@common/side-main";
+import SideMain from "@common/side-main";
 
 const SearchPage = () => {
-  return (
-    <SideMain withNav>
-      <MainHeader titile="검색" />
-    </SideMain>
-  );
+  return <SideMain withNav headerTitile="검색"></SideMain>;
 };
 
 export default SearchPage;

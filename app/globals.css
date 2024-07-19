@@ -11,7 +11,7 @@ body {
   color: var(--color);
   background: var(--background);
 
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 div,

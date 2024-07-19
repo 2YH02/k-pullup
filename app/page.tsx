@@ -1,16 +1,16 @@
 import Input from "@common/input";
-import SideMain, { MainHeader } from "@common/side-main";
+import SideMain from "@common/side-main";
 import HomeIcon from "@icons/home-icon";
 import SearchIcon from "@icons/search-icon";
 
 const Home = () => {
   return (
-    <SideMain withNav>
-      <MainHeader
-        titile="메인"
-        hasBackButton
-        headerIcon={<HomeIcon color="black" size={20} />}
-      />
+    <SideMain
+      withNav
+      headerTitile="메인"
+      headerIcon={<HomeIcon color="black" size={20} />}
+      hasBackButton
+    >
       <div className="p-4">
         <Input
           isInvalid={false}
