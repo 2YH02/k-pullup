@@ -9,10 +9,15 @@ const Home = () => {
       <MainHeader
         titile="메인"
         hasBackButton
-        headerIcon={<HomeIcon color="black"  size={20}/>}
+        headerIcon={<HomeIcon color="black" size={20} />}
       />
       <div className="p-4">
-        <Input isInvalid={false} placeholder="검색" icon={<SearchIcon />} />
+        <Input
+          isInvalid={false}
+          placeholder="검색"
+          icon={<SearchIcon />}
+          isSearchButton
+        />
       </div>
     </SideMain>
   );
