@@ -13,7 +13,7 @@ export interface Menu {
   path: string;
 }
 
-interface NavigateProps {
+interface BottomNavProps {
   /**
    * nav 리스트
    */
@@ -28,7 +28,7 @@ interface NavigateProps {
   navClass?: string;
 }
 
-const Navigate = ({ menus, width = "full", navClass }: NavigateProps) => {
+const BottomNav = ({ menus, width = "full", navClass }: BottomNavProps) => {
   const pathname = usePathname();
 
   const navWidth = useMemo(() => {
@@ -103,4 +103,4 @@ const NavLink = ({
   );
 };
 
-export default Navigate;
+export default BottomNav;

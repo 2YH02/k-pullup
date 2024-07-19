@@ -5,7 +5,7 @@ import ChatBubbleIcon from "@icons/chat-bubble-icon";
 import HomeIcon from "@icons/home-icon";
 import SignIcon from "@icons/sign-icon";
 import UserIcon from "@icons/user-icon";
-import Navigate from "@layout/navigate";
+import BottomNav from "@layout/bottom-nav";
 import cn from "@lib/cn";
 import { useEffect, useState } from "react";
 import Text from "./text";
@@ -132,7 +132,7 @@ const SideMain = ({
       >
         {children}
       </div>
-      {withNav && <Navigate menus={menus} width={"full"} />}
+      {withNav && <BottomNav menus={menus} width={"full"} />}
     </main>
   );
 };

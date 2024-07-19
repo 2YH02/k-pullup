@@ -2,7 +2,7 @@ import ChatBubbleIcon from "@icons/chat-bubble-icon";
 import HomeIcon from "@icons/home-icon";
 import SignIcon from "@icons/sign-icon";
 import UserIcon from "@icons/user-icon";
-import Navigate from "@layout/navigate";
+import BottomNav from "@layout/bottom-nav";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const menus = [
@@ -33,8 +33,8 @@ const menus = [
 ];
 
 const meta = {
-  title: "layout/Navigation",
-  component: Navigate,
+  title: "layout/BottomNav",
+  component: BottomNav,
   tags: ["autodocs"],
   argTypes: {
     menus: {
@@ -52,7 +52,7 @@ const meta = {
     navClass: "",
     width: "full",
   },
-} satisfies Meta<typeof Navigate>;
+} satisfies Meta<typeof BottomNav>;
 
 export default meta;
 
