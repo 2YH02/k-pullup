@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-// TODO: coral 색상 primary color로 변경
 
 const config: Config = {
   darkMode: "selector",

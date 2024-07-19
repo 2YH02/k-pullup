@@ -7,14 +7,11 @@ import SignIcon from "@icons/sign-icon";
 import UserIcon from "@icons/user-icon";
 import BottomNav from "@layout/bottom-nav";
 import cn from "@lib/cn";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Text from "./text";
-// TODO: header 뒤로가기, 아이콘 클릭 이벤트 처리 추가
 
 interface SideMainProps {
-  headerTitle?: string;
-  hasHeaderBackButton?: boolean;
-  headerIcon?: React.ReactNode;
   withNav?: boolean;
   className?: React.ComponentProps<"div">["className"];
   children?: React.ReactNode;
@@ -47,14 +44,7 @@ const menus = [
   },
 ];
 
-const SideMain = ({
-  headerTitle,
-  headerIcon,
-  hasHeaderBackButton,
-  withNav,
-  className,
-  children,
-}: SideMainProps) => {
+const SideMain = ({ withNav, className, children }: SideMainProps) => {
   const [sheetHeight, setSheetHeight] = useState(85);
   const [isMoblie, setIsMobile] = useState(false);
 
@@ -111,27 +101,11 @@ const SideMain = ({
       style={{ height: isMoblie ? `${sheetHeight}%` : "" }}
       onPointerDown={dragStart}
     >
-      {headerTitle && (
-        <MainHeader
-          titile={headerTitle}
-          headerIcon={headerIcon}
-          hasBackButton={hasHeaderBackButton}
-        />
-      )}
-
       <div className="sticky top-0 py-3 bg-grey-light dark:bg-black z-20 web:hidden">
         <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />
       </div>
 
-      <div
-        className={`p-4 ${
-          headerTitle
-            ? "web:min-h-[calc(100%-96px)] mo:min-h-[calc(100%-84px)]"
-            : "min-h-[calc(100%-56px)]"
-        }`}
-      >
-        {children}
-      </div>
+      <div className={"min-h-[calc(100%-56px)]"}>{children}</div>
       {withNav && <BottomNav menus={menus} width={"full"} />}
     </main>
   );
@@ -141,26 +115,36 @@ interface MainHeaderProps {
   titile: string;
   headerIcon?: React.ReactNode;
   hasBackButton?: boolean;
+  iconClick?: VoidFunction;
 }
 
 export const MainHeader = ({
   titile,
   hasBackButton = false,
   headerIcon,
+  iconClick,
 }: MainHeaderProps) => {
+  const router = useRouter();
+
   return (
-    <div className="web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 shadow-sm bg-white dark:bg-grey-dark">
-      <div className="flex items-center justify-center w-10 h-10">
+    <div className="web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 shadow-sm z-20 bg-white dark:bg-grey-dark">
+      <button
+        className="flex items-center justify-center w-10 h-10"
+        onClick={() => router.back()}
+      >
         {hasBackButton && <ArrowLeftIcon color="black" />}
-      </div>
+      </button>
 
       <Text typography="t5" fontWeight="bold" className="grow text-center">
         {titile}
       </Text>
 
-      <div className="flex items-center justify-center w-10 h-10">
+      <button
+        className="flex items-center justify-center w-10 h-10"
+        onClick={iconClick}
+      >
         {headerIcon && headerIcon}
-      </div>
+      </button>
     </div>
   );
 };

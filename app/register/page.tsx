@@ -1,7 +1,11 @@
-import SideMain from "@common/side-main";
+import SideMain, { MainHeader } from "@common/side-main";
 
 const Register = () => {
-  return <SideMain headerTitle="등록" withNav></SideMain>;
+  return (
+    <SideMain withNav>
+      <MainHeader titile="등록" />
+    </SideMain>
+  );
 };
 
 export default Register;
