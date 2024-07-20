@@ -102,6 +102,14 @@ const SideMain = ({
     document.onpointerup = dragEnd;
   };
 
+  const getBodyHeight = () => {
+    if (headerTitle) {
+      return withNav ? "h-[calc(100%-96px)] mo:h-[calc(100%-84px)]" : "h-[calc(100%-40px)] mo:h-[calc(100%-28px)]";
+    } else {
+      return withNav ? "h-[calc(100%-56px)] mo:h-[calc(100%-84px)]" : "h-full mo:h-[calc(100%-28px)]";
+    }
+  };
+
   return (
     <main
       className={cn(
@@ -126,9 +134,10 @@ const SideMain = ({
       </div>
 
       <div
-        className={`mo:h-[calc(100%-86px)] ${
-          headerTitle ? "h-[calc(100%-96px)]" : "h-[calc(100%-56px)]"
-        } overflow-auto web:scrollbar-thin mo:scrollbar-hidden`}
+        className={cn(
+          "mo:h-[calc(100%-86px)] overflow-auto web:scrollbar-thin mo:scrollbar-hidden",
+          getBodyHeight()
+        )}
       >
         {children}
       </div>
