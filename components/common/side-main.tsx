@@ -18,6 +18,8 @@ interface SideMainProps {
   headerTitle?: string;
   hasBackButton?: boolean;
   headerIcon?: React.ReactNode;
+  fullHeight?: boolean;
+  headerPosition?: "sticky" | "fixed";
   headerIconClick?: VoidFunction;
 }
 
@@ -54,6 +56,8 @@ const SideMain = ({
   headerTitle,
   headerIcon,
   hasBackButton,
+  fullHeight,
+  headerPosition,
   headerIconClick,
   children,
 }: SideMainProps) => {
@@ -75,7 +79,7 @@ const SideMain = ({
   }, []);
 
   const dragStart: React.PointerEventHandler<HTMLDivElement> = (e) => {
-    if (!isMoblie) return;
+    if (!isMoblie || fullHeight) return;
     const startY = e.clientY;
     let newHeight: number;
 
@@ -103,10 +107,24 @@ const SideMain = ({
   };
 
   const getBodyHeight = () => {
-    if (headerTitle) {
-      return withNav ? "h-[calc(100%-96px)] mo:h-[calc(100%-84px)]" : "h-[calc(100%-40px)] mo:h-[calc(100%-28px)]";
+    if (fullHeight) {
+      if (headerTitle) {
+        return withNav
+          ? "h-[calc(100%-96px)] mo:h-[calc(100%-96px)]"
+          : "h-[calc(100%-40px)] mo:h-[calc(100%-40px)]";
+      } else {
+        return withNav ? "mo:h-[calc(100%-54px)]" : "mo:h-full";
+      }
     } else {
-      return withNav ? "h-[calc(100%-56px)] mo:h-[calc(100%-84px)]" : "h-full mo:h-[calc(100%-28px)]";
+      if (headerTitle) {
+        return withNav
+          ? "h-[calc(100%-96px)] mo:h-[calc(100%-84px)]"
+          : "h-[calc(100%-40px)] mo:h-[calc(100%-28px)]";
+      } else {
+        return withNav
+          ? "h-[calc(100%-56px)] mo:h-[calc(100%-84px)]"
+          : "h-full mo:h-[calc(100%-28px)]";
+      }
     }
   };
 
@@ -114,11 +132,13 @@ const SideMain = ({
     <main
       className={cn(
         `absolute web:top-6 web:bottom-6 web:left-6 web:max-w-96 w-full web:rounded-lg
-        overflow-hidden shadow-md bg-grey-light dark:bg-black
-        mo:bottom-0 mo:rounded-t-lg mo:no-touch mo:h-[85%]`,
+        overflow-hidden shadow-md bg-white dark:bg-black-light ${
+          fullHeight ? "" : "mo:rounded-t-lg"
+        }
+        mo:bottom-0 mo:no-touch ${fullHeight ? "mo:h-full" : "mo:h-[85%]"}`,
         className
       )}
-      style={{ height: isMoblie ? `${sheetHeight}%` : "" }}
+      style={{ height: isMoblie && !fullHeight ? `${sheetHeight}%` : "" }}
       onPointerDown={dragStart}
     >
       {headerTitle && (
@@ -126,12 +146,16 @@ const SideMain = ({
           titile={headerTitle}
           headerIcon={headerIcon}
           hasBackButton={hasBackButton}
+          headerPosition={headerPosition}
           iconClick={headerIconClick}
         />
       )}
-      <div className="sticky top-0 py-3 bg-grey-light dark:bg-black z-20 web:hidden">
-        <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />
-      </div>
+
+      {!fullHeight && (
+        <div className="sticky top-0 py-3 bg-white dark:bg-black-light z-20 web:hidden">
+          <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />
+        </div>
+      )}
 
       <div
         className={cn(
@@ -150,6 +174,7 @@ interface MainHeaderProps {
   titile: string;
   headerIcon?: React.ReactNode;
   hasBackButton?: boolean;
+  headerPosition?: "sticky" | "fixed";
   iconClick?: VoidFunction;
 }
 
@@ -157,12 +182,24 @@ const MainHeader = ({
   titile,
   hasBackButton = false,
   headerIcon,
+  headerPosition,
   iconClick,
 }: MainHeaderProps) => {
   const router = useRouter();
 
+  const getHeaderPosition = () => {
+    if (headerPosition === "sticky") return "web:sticky mo:sticky";
+    if (headerPosition === "fixed") return "web:fixed mo:fixed";
+  };
+
   return (
-    <div className="web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 shadow-sm z-20 bg-white dark:bg-grey-dark">
+    <div
+      className={cn(
+        `web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 shadow-sm z-20 bg-white 
+        dark:bg-black-light dark:border-b dark:border-solid dark:border-grey-dark`,
+        getHeaderPosition()
+      )}
+    >
       <button
         className="flex items-center justify-center w-10 h-10"
         onClick={() => router.back()}

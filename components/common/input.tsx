@@ -47,16 +47,19 @@ const Input = ({
   };
 
   return (
-    <div className="relative w-full">
+    <div
+      className={cn(
+        `relative w-full rounded-3xl overflow-hidden h-10 px-4 pr-10 text-base font-medium border-2
+        bg-white border-primary ${
+          isInvalid ? "border-red dark:border-red" : "dark:border-grey"
+        } ${isSearchButton ? "cursor-pointer" : ""}`,
+        className
+      )}
+    >
       <input
-        className={cn(
-          `h-10 w-full px-4 pr-10 text-base font-medium border bg-white border-primary rounded-3xl focus:outline-none focus:border-primary-dark ${
-            isInvalid ? "border-red dark:border-red" : "dark:border-grey"
-          } dark:bg-grey-dark dark:focus:border-grey-light dark:text-white ${
-            isSearchButton ? "cursor-pointer focus:" : ""
-          }`,
-          className
-        )}
+        className={`w-full h-full focus:outline-none focus:border-primary-dark ${
+          isSearchButton ? "cursor-pointer" : ""
+        } dark:bg-black-light dark:focus:border-grey-light dark:text-white`}
         aria-invalid={isInvalid}
         onClick={isSearchButton ? handleClick : undefined}
         onFocus={isSearchButton ? handleFocus : undefined}

@@ -40,7 +40,7 @@ const BottomNav = ({ menus, width = "full", className }: BottomNavProps) => {
   return (
     <nav
       className={cn(
-        "sticky bottom-0 h-14 shadow-lg bg-white dark:bg-grey-dark",
+        "sticky bottom-0 h-14 shadow-dark bg-white dark:bg-black-light dark:border-t dark:border-grey-dark dark:border-solid",
         navWidth,
         className
       )}
