@@ -1,5 +1,6 @@
 "use client";
 
+import cn from "@lib/cn";
 import { useRouter } from "next/navigation";
 
 interface InputProps extends React.ComponentProps<"input"> {
@@ -19,6 +20,10 @@ interface InputProps extends React.ComponentProps<"input"> {
    * true일 때 클릭 시 /search 페이지로 이동
    */
   isSearchButton?: boolean;
+  /**
+   * tailwind 스타일 클래스
+   */
+  className?: string;
 }
 
 const Input = ({
@@ -26,6 +31,7 @@ const Input = ({
   icon,
   onIconClick,
   isSearchButton = false,
+  className,
   ...props
 }: InputProps) => {
   const router = useRouter();
@@ -43,11 +49,14 @@ const Input = ({
   return (
     <div className="relative w-full">
       <input
-        className={`h-10 w-full px-4 pr-10 text-base font-medium border border-primary rounded-3xl focus:outline-none focus:border-primary-dark ${
-          isInvalid ? "border-red dark:border-red" : "dark:border-grey"
-        } dark:bg-grey-dark dark:focus:border-grey-light dark:text-white ${
-          isSearchButton ? "cursor-pointer focus:" : ""
-        }`}
+        className={cn(
+          `h-10 w-full px-4 pr-10 text-base font-medium border bg-white border-primary rounded-3xl focus:outline-none focus:border-primary-dark ${
+            isInvalid ? "border-red dark:border-red" : "dark:border-grey"
+          } dark:bg-grey-dark dark:focus:border-grey-light dark:text-white ${
+            isSearchButton ? "cursor-pointer focus:" : ""
+          }`,
+          className
+        )}
         aria-invalid={isInvalid}
         onClick={isSearchButton ? handleClick : undefined}
         onFocus={isSearchButton ? handleFocus : undefined}
