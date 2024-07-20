@@ -75,7 +75,7 @@ const NavLink = ({
   const isActive = pathname === url;
 
   return (
-    <li className="flex flex-col justify-center items-center relative w-1/4 h-full z-20">
+    <li className="flex grow flex-col justify-center items-center relative w-1/4 h-full z-20">
       {isActive && (
         <span
           className={`absolute bg-primary shadow-dark dark:bg-grey h-12 w-12 rounded-full origin-center animate-grow`}

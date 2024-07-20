@@ -1,7 +1,7 @@
 import cn from "@lib/cn";
 
 export interface IconProps {
-  size?: number;
+  size?: number | string;
   color?: "primary" | "black";
   className?: React.ComponentProps<"svg">["className"];
 }
