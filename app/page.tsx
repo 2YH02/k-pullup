@@ -2,12 +2,12 @@ import Badge from "@common/badge";
 import Input from "@common/input";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
+import Text from "@common/text";
+import ArticleCarousel from "@components/pages/home/article-carousel";
+import RankingCarousel from "@components/pages/home/ranking-carousel";
 import LocationIcon from "@icons/location-icon";
 import SearchIcon from "@icons/search-icon";
-// TODO: 슬라이드 컴포넌트 추가
 // TODO: 메인 페이지 아이콘 - 즐겨찾기, 위치 등록, 랭킹, 설정, 채팅
-
-// 철봉 및 맨몸운동의 이점, 철봉 및 맨몸운동 장비 소개, 안전 수칙 및 주의사항
 
 const Home = () => {
   return (
@@ -26,6 +26,15 @@ const Home = () => {
           isSearchButton
           className="shadow"
         />
+      </Section>
+      <Section>
+        <ArticleCarousel />
+      </Section>
+      <Section>
+        <Text className="px-1" typography="t6" fontWeight="bold">
+          슬라이드
+        </Text>
+        <RankingCarousel />
       </Section>
     </SideMain>
   );

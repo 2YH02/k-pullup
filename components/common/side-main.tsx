@@ -159,7 +159,7 @@ const SideMain = ({
 
       <div
         className={cn(
-          "mo:h-[calc(100%-86px)] overflow-auto web:scrollbar-thin mo:scrollbar-hidden",
+          "mo:h-[calc(100%-86px)] overflow-y-auto overflow-x-hidden web:scrollbar-thin mo:scrollbar-hidden",
           getBodyHeight()
         )}
       >

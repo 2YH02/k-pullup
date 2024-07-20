@@ -43,6 +43,8 @@ const RAW_RUNTIME_STATE =
           ["@types/react", "npm:18.3.3"],\
           ["@types/react-dom", "npm:18.3.0"],\
           ["clsx", "npm:2.1.1"],\
+          ["embla-carousel-autoplay", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:8.1.7"],\
+          ["embla-carousel-react", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:8.1.7"],\
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-next", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:14.2.5"],\
           ["eslint-plugin-storybook", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:0.8.0"],\
@@ -7919,6 +7921,83 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["embla-carousel", [\
+      ["npm:8.1.7", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/embla-carousel-npm-8.1.7-a6e4c71ae9-10c0.zip/node_modules/embla-carousel/",\
+        "packageDependencies": [\
+          ["embla-carousel", "npm:8.1.7"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["embla-carousel-autoplay", [\
+      ["npm:8.1.7", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/embla-carousel-autoplay-npm-8.1.7-629d15167a-10c0.zip/node_modules/embla-carousel-autoplay/",\
+        "packageDependencies": [\
+          ["embla-carousel-autoplay", "npm:8.1.7"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:8.1.7", {\
+        "packageLocation": "./.yarn/__virtual__/embla-carousel-autoplay-virtual-797f730519/4/AppData/Local/Yarn/Berry/cache/embla-carousel-autoplay-npm-8.1.7-629d15167a-10c0.zip/node_modules/embla-carousel-autoplay/",\
+        "packageDependencies": [\
+          ["embla-carousel-autoplay", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:8.1.7"],\
+          ["@types/embla-carousel", null],\
+          ["embla-carousel", null]\
+        ],\
+        "packagePeers": [\
+          "@types/embla-carousel",\
+          "embla-carousel"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["embla-carousel-react", [\
+      ["npm:8.1.7", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/embla-carousel-react-npm-8.1.7-eb2de36c81-10c0.zip/node_modules/embla-carousel-react/",\
+        "packageDependencies": [\
+          ["embla-carousel-react", "npm:8.1.7"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:8.1.7", {\
+        "packageLocation": "./.yarn/__virtual__/embla-carousel-react-virtual-a42df60b96/4/AppData/Local/Yarn/Berry/cache/embla-carousel-react-npm-8.1.7-eb2de36c81-10c0.zip/node_modules/embla-carousel-react/",\
+        "packageDependencies": [\
+          ["embla-carousel-react", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:8.1.7"],\
+          ["@types/react", "npm:18.3.3"],\
+          ["embla-carousel", "npm:8.1.7"],\
+          ["embla-carousel-reactive-utils", "virtual:a42df60b966170e4eea7314cea1c916578b4503268afebe038b63173b4dbfb3adf0981fdd72a5c4010f45ca1209a57108825a4911fc12810c260f8e6fcef677e#npm:8.1.7"],\
+          ["react", "npm:18.3.1"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["embla-carousel-reactive-utils", [\
+      ["npm:8.1.7", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/embla-carousel-reactive-utils-npm-8.1.7-a85ed874cc-10c0.zip/node_modules/embla-carousel-reactive-utils/",\
+        "packageDependencies": [\
+          ["embla-carousel-reactive-utils", "npm:8.1.7"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:a42df60b966170e4eea7314cea1c916578b4503268afebe038b63173b4dbfb3adf0981fdd72a5c4010f45ca1209a57108825a4911fc12810c260f8e6fcef677e#npm:8.1.7", {\
+        "packageLocation": "./.yarn/__virtual__/embla-carousel-reactive-utils-virtual-3187a6c19c/4/AppData/Local/Yarn/Berry/cache/embla-carousel-reactive-utils-npm-8.1.7-a85ed874cc-10c0.zip/node_modules/embla-carousel-reactive-utils/",\
+        "packageDependencies": [\
+          ["embla-carousel-reactive-utils", "virtual:a42df60b966170e4eea7314cea1c916578b4503268afebe038b63173b4dbfb3adf0981fdd72a5c4010f45ca1209a57108825a4911fc12810c260f8e6fcef677e#npm:8.1.7"],\
+          ["@types/embla-carousel", null],\
+          ["embla-carousel", "npm:8.1.7"]\
+        ],\
+        "packagePeers": [\
+          "@types/embla-carousel",\
+          "embla-carousel"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["emoji-regex", [\
       ["npm:8.0.0", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/emoji-regex-npm-8.0.0-213764015c-10c0.zip/node_modules/emoji-regex/",\
@@ -12729,6 +12808,8 @@ const RAW_RUNTIME_STATE =
           ["@types/react", "npm:18.3.3"],\
           ["@types/react-dom", "npm:18.3.0"],\
           ["clsx", "npm:2.1.1"],\
+          ["embla-carousel-autoplay", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:8.1.7"],\
+          ["embla-carousel-react", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:8.1.7"],\
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-next", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:14.2.5"],\
           ["eslint-plugin-storybook", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:0.8.0"],\
