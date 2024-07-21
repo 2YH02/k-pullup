@@ -4,6 +4,7 @@ export interface IconProps {
   size?: number | string;
   color?: "primary" | "black";
   className?: React.ComponentProps<"svg">["className"];
+  link?: boolean;
 }
 
 export const iconColorMap = {

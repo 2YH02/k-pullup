@@ -11,7 +11,7 @@ interface IconButtonProps {
 const IconButton = ({ icon, text, className, onClick }: IconButtonProps) => {
   return (
     <button
-      className={cn("w-[50px] h-[50px] flex flex-col items-center justify-center rounded-md gap-1", className)}
+      className={cn("w-[55px] h-[55px] flex flex-col items-center justify-center rounded-md gap-1", className)}
       onClick={onClick}
     >
       <div>{icon}</div>
