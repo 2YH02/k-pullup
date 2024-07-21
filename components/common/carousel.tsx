@@ -30,7 +30,7 @@ type CarouselContextProps = {
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
 
-function useCarousel() {
+const useCarousel = () => {
   const context = React.useContext(CarouselContext);
 
   if (!context) {
@@ -38,7 +38,7 @@ function useCarousel() {
   }
 
   return context;
-}
+};
 
 const Carousel = React.forwardRef<
   HTMLDivElement,

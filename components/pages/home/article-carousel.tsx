@@ -3,6 +3,7 @@
 import { Carousel, CarouselContent, CarouselItem } from "@common/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
+// TODO: 턱걸이 아티클 찾아서 링크 연결하기
 
 const ArticleCarousel = () => {
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: false }));

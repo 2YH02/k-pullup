@@ -1,5 +1,6 @@
+"use client";
+
 import { Carousel, CarouselContent, CarouselItem } from "@common/carousel";
-// TODO: 아이템 넓이 반응형 추가하기
 
 const RankingCarousel = () => {
   const list = [
@@ -9,14 +10,19 @@ const RankingCarousel = () => {
     { color: "bg-[#DD761C]" },
     { color: "bg-[#D4BDAC]" },
   ];
+
   return (
-    <Carousel className="px-1">
-      <CarouselContent className="-ml-1">
+    <Carousel
+      opts={{ dragFree: true }}
+      className="px-1"
+    >
+      <CarouselContent className="-ml-1 gap-3 w-28 h-28">
         {list.map((item, index) => (
-          <CarouselItem key={item.color} className="pl-1 basis-1/3">
-            <div
-              className={`p-1 ${item.color} rounded-lg w-24 h-24 select-none`}
-            >
+          <CarouselItem
+            key={item.color}
+            className="pl-1"
+          >
+            <div className={`p-1 ${item.color} rounded-lg w-full h-full select-none`}>
               {index + 1}
             </div>
           </CarouselItem>
