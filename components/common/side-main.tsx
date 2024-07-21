@@ -10,6 +10,7 @@ import cn from "@lib/cn";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Text from "./text";
+// TODO: 스크롤 중 main 드래그 막기
 
 interface SideMainProps {
   withNav?: boolean;
