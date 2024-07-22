@@ -10,8 +10,6 @@ import cn from "@lib/cn";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Text from "./text";
-// TODO: 스크롤 중 main 드래그 막기
-// TODO: 메인 드래그 상태 전역 저장
 
 interface SideMainProps {
   withNav?: boolean;
@@ -22,6 +20,7 @@ interface SideMainProps {
   headerIcon?: React.ReactNode;
   fullHeight?: boolean;
   headerPosition?: "sticky" | "fixed";
+  background?: "white" | "grey";
   headerIconClick?: VoidFunction;
 }
 
@@ -60,6 +59,7 @@ const SideMain = ({
   hasBackButton,
   fullHeight,
   headerPosition,
+  background = "white",
   headerIconClick,
   children,
 }: SideMainProps) => {
@@ -113,7 +113,7 @@ const SideMain = ({
       if (headerTitle) {
         return withNav
           ? "h-[calc(100%-96px)] mo:h-[calc(100%-96px)]"
-          : "h-[calc(100%-40px)] mo:h-[calc(100%-40px)]";
+          : "h-[calc(100%-40px)] mo:h-[calc(100%-40px)] mo:mt-10";
       } else {
         return withNav ? "mo:h-[calc(100%-54px)]" : "mo:h-full";
       }
@@ -138,6 +138,9 @@ const SideMain = ({
           fullHeight ? "" : "mo:rounded-t-lg"
         }
         mo:bottom-0 mo:no-touch ${fullHeight ? "mo:h-full" : "mo:h-[85%]"}`,
+        background === "white"
+          ? "bg-white dark:bg-black-light"
+          : "bg-grey-light dark:bg-black",
         className
       )}
       style={{ height: isMoblie && !fullHeight ? `${sheetHeight}%` : "" }}
@@ -203,8 +206,10 @@ const MainHeader = ({
       )}
     >
       <button
-        className="flex items-center justify-center w-10 h-10"
-        onClick={() => router.back()}
+        className={`flex items-center justify-center w-10 h-10 ${
+          hasBackButton ? "cursor-pointer" : "cursor-default"
+        }`}
+        onClick={hasBackButton ? () => router.back() : undefined}
       >
         {hasBackButton && <ArrowLeftIcon color="black" />}
       </button>
