@@ -1,10 +1,21 @@
 import cn from "@/lib/cn";
-// TODO: 토글 버튼 스토리 추가
 
 interface ToggleButtonProps {
+  /**
+   * 초기 toggle 값
+   */
   initValue?: boolean;
+  /**
+   * 버튼 사이즈
+   */
   size?: "sm" | "md" | "lg";
+  /**
+   * true일 때 사용할 함수
+   */
   onTrue: VoidFunction;
+  /**
+   * false일 때 사용할 함수
+   */
   onFalse: VoidFunction;
 }
 
