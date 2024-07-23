@@ -8,7 +8,7 @@ const ChatBubbleIcon = ({
   link,
 }: IconProps) => {
   const style = link
-    ? "stroke-grey-dark fill-[#88D66C] dark:stroke-[#555]"
+    ? "stroke-grey-dark fill-[#88D66C] dark:stroke-[#555] dark:fill-[#7dc464]"
     : "dark:fill-grey-light";
 
   return (

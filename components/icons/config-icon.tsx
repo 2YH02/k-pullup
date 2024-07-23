@@ -8,7 +8,7 @@ const ConfigIcon = ({
   link,
 }: IconProps) => {
   const style2 = link
-    ? "stroke-grey-dark fill-[#7E8EF1] dark:stroke-[#555]"
+    ? "stroke-grey-dark fill-[#7E8EF1] dark:stroke-[#555] dark:fill-[#7381df]"
     : "dark:fill-grey-light";
 
   const style1 = link

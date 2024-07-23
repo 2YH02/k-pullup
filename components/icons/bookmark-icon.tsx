@@ -7,7 +7,7 @@ const BookmarkIcon = ({
   className,
   link,
 }: IconProps) => {
-  const style = link ? "stroke-grey-dark fill-beige dark:stroke-[#555]" : "dark:fill-grey-light";
+  const style = link ? "stroke-grey-dark fill-beige dark:fill-[#e9d2b5] dark:stroke-[#555]" : "dark:fill-grey-light";
 
   return (
     <svg

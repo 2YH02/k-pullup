@@ -8,7 +8,7 @@ const LocationPinIcon = ({
   link,
 }: IconProps) => {
   const style = link
-    ? "stroke-grey-dark fill-[#E49BFF] dark:stroke-[#555]"
+    ? "stroke-grey-dark fill-[#E49BFF] dark:stroke-[#555] dark:fill-[#cf8ce7]"
     : "dark:fill-grey-light";
   return (
     <svg

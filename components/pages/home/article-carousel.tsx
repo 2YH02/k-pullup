@@ -1,32 +1,57 @@
 "use client";
 
 import { Carousel, CarouselContent, CarouselItem } from "@common/carousel";
+import Text from "@common/text";
 import Autoplay from "embla-carousel-autoplay";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
+import { PullupIcon, PullupProsIcon, PullupRankingIcon } from "./slide-icons";
 // TODO: 턱걸이 아티클 찾아서 링크 연결하기
-// TODO: 첫 번째 슬라이드 - 철봉 가이드 article 페이지에 유튜브 영상 포함해서 추가
+// TODO: 슬라이드 스타일 변경
+
+interface List {
+  title: string;
+  icon?: React.ReactNode;
+  color?: React.ComponentProps<"button">["className"];
+  url: string;
+}
 
 const ArticleCarousel = () => {
   const router = useRouter();
 
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: false }));
-  const list = [
-    { title: "철봉 가이드", color: "bg-beige" },
-    { title: "철봉 장비 소개", color: "bg-coral" },
-    { title: "철봉 안전 수칙 및 주의사항", color: "bg-[#6DC5D1]" },
+  const list: List[] = [
+    {
+      title: "철봉 가이드",
+      icon: <PullupIcon />,
+      color: "bg-beige dark:bg-[#b4a694]",
+      url: "/article/1",
+    },
+    {
+      title: "철봉 장점 및 주의사항",
+      icon: <PullupProsIcon />,
+      color: "bg-coral dark:bg-[#cf968e]",
+      url: "/article/2",
+    },
+    {
+      title: "핫한 지역",
+      icon: <PullupRankingIcon />,
+      color: "bg-[#6DC5D1] dark:bg-[#59a2ac]",
+      url: "/ranking",
+    },
   ];
 
   return (
     <Carousel plugins={[plugin.current]} className="px-1">
       <CarouselContent>
-        {list.map((item, index) => (
+        {list.map((item) => (
           <CarouselItem key={item.title}>
             <button
               className={`h-28 w-full ${item.color} rounded-lg flex items-center justify-center text-lg select-none`}
-              onClick={() => router.push(`/article/${index + 1}`)}
+              onClick={() => router.push(item.url)}
             >
-              {item.title}
+              {item.icon && <div className="mr-5">{item.icon}</div>}
+              <Text className="dark:text-black">{item.title}</Text>
             </button>
           </CarouselItem>
         ))}
