@@ -2,6 +2,7 @@
 
 import useIsMounted from "@hooks/useIsMounted";
 import ReactPlayer from "react-player";
+import Skeleton from "./skeleton";
 
 interface YoutubePlayerProps {
   url: string;
@@ -11,7 +12,11 @@ const YoutubePlayer = ({ url }: YoutubePlayerProps) => {
   const isMounted = useIsMounted();
 
   if (!isMounted) {
-    return null;
+    return (
+      <div className="player-wrapper">
+        <Skeleton className="react-player h-full w-full" />
+      </div>
+    );
   }
 
   return (
