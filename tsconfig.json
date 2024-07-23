@@ -21,10 +21,12 @@
       "@/*": ["./*"],
       "@lib/*": ["./lib/*"],
       "@components/*": ["./components/*"],
+      "@pages/*": ["./components/pages/*"],
       "@common/*": ["./components/common/*"],
       "@layout/*": ["./components/layout/*"],
       "@icons/*": ["./components/icons/*"],
-      "@store/*": ["./store/*"]
+      "@store/*": ["./store/*"],
+      "@provider/*": ["./components/provider/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

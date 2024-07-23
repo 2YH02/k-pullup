@@ -1,4 +1,4 @@
-import AppSetting from "@components/pages/config/app-setting";
+import AppSetting from "@pages/config/app-setting";
 import SideMain from "@common/side-main";
 
 const ConfigPage = () => {
