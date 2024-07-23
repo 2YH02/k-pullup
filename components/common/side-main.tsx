@@ -134,7 +134,7 @@ const SideMain = ({
     <main
       className={cn(
         `absolute web:top-6 web:bottom-6 web:left-6 web:max-w-96 w-full web:rounded-lg
-        overflow-hidden shadow-md bg-white dark:bg-black-light ${
+        overflow-hidden shadow-md ${
           fullHeight ? "" : "mo:rounded-t-lg"
         }
         mo:bottom-0 mo:no-touch ${fullHeight ? "mo:h-full" : "mo:h-[85%]"}`,

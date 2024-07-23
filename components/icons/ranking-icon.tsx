@@ -7,7 +7,9 @@ const RankingIcon = ({
   className,
   link,
 }: IconProps) => {
-  const style1 = link ? "stroke-grey-dark" : "dark:fill-grey-light";
+  const style1 = link
+    ? "stroke-grey-dark dark:stroke-[#555]"
+    : "dark:fill-grey-light";
   const style2 = link ? "fill-[#6DC5D1]" : "";
   const style3 = link ? "fill-coral" : "";
 

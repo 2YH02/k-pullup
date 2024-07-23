@@ -50,7 +50,7 @@ const Input = ({
     <div
       className={cn(
         `relative w-full rounded-3xl overflow-hidden h-10 px-4 pr-10 text-base font-medium border-2
-        bg-white border-primary ${
+        bg-white dark:bg-black-light border-primary ${
           isInvalid ? "border-red dark:border-red" : "dark:border-grey"
         } ${isSearchButton ? "cursor-pointer" : ""}`,
         className

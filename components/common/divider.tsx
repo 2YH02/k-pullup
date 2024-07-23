@@ -9,7 +9,9 @@ const Divider = ({ orientation, className }: DividerProps) => {
   return (
     <div
       className={cn(
-        `bg-grey-light ${orientation === "vertical" ? "h-full" : "w-full"}`,
+        `bg-grey-light dark:bg-grey-dark ${
+          orientation === "vertical" ? "h-full" : "w-full"
+        }`,
         className
       )}
     />
