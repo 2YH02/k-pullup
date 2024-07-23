@@ -7,8 +7,6 @@ import { useTheme } from "next-themes";
 const AppSetting = () => {
   const { setTheme, theme } = useTheme();
 
-  console.log(theme);
-
   return (
     <List title="앱 설정">
       <ListItem

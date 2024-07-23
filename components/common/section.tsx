@@ -1,4 +1,5 @@
 import cn from "@/lib/cn";
+import Text from "./text";
 
 interface SectionProps {
   children?: React.ReactNode;
@@ -10,6 +11,14 @@ const Section = ({ className, children }: SectionProps) => {
     <section className={cn("p-4 bg-white dark:bg-black-light", className)}>
       {children}
     </section>
+  );
+};
+
+export const SectionTitle = ({ title }: { title: string }) => {
+  return (
+    <Text className="mb-2" typography="t5" fontWeight="bold">
+      {title}
+    </Text>
   );
 };
 

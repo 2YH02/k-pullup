@@ -26,7 +26,8 @@
       "@layout/*": ["./components/layout/*"],
       "@icons/*": ["./components/icons/*"],
       "@store/*": ["./store/*"],
-      "@provider/*": ["./components/provider/*"]
+      "@provider/*": ["./components/provider/*"],
+      "@hooks/*": ["./hooks/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

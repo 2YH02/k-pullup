@@ -53,6 +53,7 @@ const RAW_RUNTIME_STATE =
           ["postcss", "npm:8.4.39"],\
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:18.3.1"],\
+          ["react-player", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:2.16.0"],\
           ["storybook", "npm:8.2.2"],\
           ["tailwind-merge", "npm:2.4.0"],\
           ["tailwindcss", "npm:3.4.4"],\
@@ -10912,6 +10913,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["load-script", [\
+      ["npm:1.0.0", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/load-script-npm-1.0.0-32a3163a57-10c0.zip/node_modules/load-script/",\
+        "packageDependencies": [\
+          ["load-script", "npm:1.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["loader-runner", [\
       ["npm:4.3.0", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/loader-runner-npm-4.3.0-9ca67df372-10c0.zip/node_modules/loader-runner/",\
@@ -11177,6 +11187,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["memfs", "npm:3.5.3"],\
           ["fs-monkey", "npm:1.0.6"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["memoize-one", [\
+      ["npm:5.2.1", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/memoize-one-npm-5.2.1-ee0f8be979-10c0.zip/node_modules/memoize-one/",\
+        "packageDependencies": [\
+          ["memoize-one", "npm:5.2.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -12845,6 +12864,7 @@ const RAW_RUNTIME_STATE =
           ["postcss", "npm:8.4.39"],\
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:18.3.1"],\
+          ["react-player", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:2.16.0"],\
           ["storybook", "npm:8.2.2"],\
           ["tailwind-merge", "npm:2.4.0"],\
           ["tailwindcss", "npm:3.4.4"],\
@@ -13131,6 +13151,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["react-fast-compare", [\
+      ["npm:3.2.2", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/react-fast-compare-npm-3.2.2-45b585a872-10c0.zip/node_modules/react-fast-compare/",\
+        "packageDependencies": [\
+          ["react-fast-compare", "npm:3.2.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["react-is", [\
       ["npm:16.13.1", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/react-is-npm-16.13.1-a9b9382b4f-10c0.zip/node_modules/react-is/",\
@@ -13157,6 +13186,33 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/react-is-npm-18.3.1-370a81e1e9-10c0.zip/node_modules/react-is/",\
         "packageDependencies": [\
           ["react-is", "npm:18.3.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-player", [\
+      ["npm:2.16.0", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/react-player-npm-2.16.0-c3172d3dd2-10c0.zip/node_modules/react-player/",\
+        "packageDependencies": [\
+          ["react-player", "npm:2.16.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:2.16.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-player-virtual-e7a6fa3a6c/4/AppData/Local/Yarn/Berry/cache/react-player-npm-2.16.0-c3172d3dd2-10c0.zip/node_modules/react-player/",\
+        "packageDependencies": [\
+          ["react-player", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:2.16.0"],\
+          ["@types/react", "npm:18.3.3"],\
+          ["deepmerge", "npm:4.3.1"],\
+          ["load-script", "npm:1.0.0"],\
+          ["memoize-one", "npm:5.2.1"],\
+          ["prop-types", "npm:15.8.1"],\
+          ["react", "npm:18.3.1"],\
+          ["react-fast-compare", "npm:3.2.2"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
         ],\
         "linkType": "HARD"\
       }]\

@@ -4,6 +4,7 @@ import { Carousel, CarouselContent, CarouselItem } from "@common/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
 // TODO: 턱걸이 아티클 찾아서 링크 연결하기
+// TODO: 첫 번째 슬라이드 - 철봉 가이드 article 페이지에 유튜브 영상 포함해서 추가
 
 const ArticleCarousel = () => {
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: false }));

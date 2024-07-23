@@ -1,14 +1,14 @@
 import Badge from "@common/badge";
 import Divider from "@common/divider";
 import Input from "@common/input";
-import Section from "@common/section";
+import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
-import Text from "@common/text";
-import ArticleCarousel from "@components/pages/home/article-carousel";
-import IconLinkList from "@components/pages/home/icon-link-list";
-import RankingCarousel from "@components/pages/home/ranking-carousel";
 import LocationIcon from "@icons/location-icon";
 import SearchIcon from "@icons/search-icon";
+import ArticleCarousel from "@pages/home/article-carousel";
+import IconLinkList from "@pages/home/icon-link-list";
+import Players from "@pages/home/players";
+import RankingCarousel from "@pages/home/ranking-carousel";
 
 const Home = () => {
   return (
@@ -38,13 +38,18 @@ const Home = () => {
         <IconLinkList />
       </Section>
 
-      <Divider className="h-2"/>
+      <Divider className="h-2" />
 
       <Section>
-        <Text className="px-1" typography="t6" fontWeight="bold">
-          슬라이드
-        </Text>
+        <SectionTitle title="슬라이드" />
         <RankingCarousel />
+      </Section>
+
+      <Divider className="h-2" />
+
+      <Section>
+        <SectionTitle title="철봉 가이드" />
+        <Players />
       </Section>
     </SideMain>
   );
