@@ -1,3 +1,4 @@
+import GeoProvider from "@provider/geo-provider";
 import KakaoMap from "@layout/kakao-map";
 import ThemeProvider from "@provider/theme-provider";
 import type { Metadata } from "next";
@@ -60,7 +61,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <GeoProvider>{children}</GeoProvider>
           <KakaoMap />
         </ThemeProvider>
       </body>

@@ -1,14 +1,13 @@
 import newPictures from "@api/marker/new-pictures";
-import Badge from "@common/badge";
 import Divider from "@common/divider";
 import Input from "@common/input";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
-import LocationIcon from "@icons/location-icon";
 import SearchIcon from "@icons/search-icon";
 import ImageCarousel from "@layout/image-carousel";
 import ArticleCarousel from "@pages/home/article-carousel";
 import IconLinkList from "@pages/home/icon-link-list";
+import LocationBadge from "@pages/home/location-badge";
 import Players from "@pages/home/players";
 
 const Home = async () => {
@@ -17,13 +16,10 @@ const Home = async () => {
   return (
     <SideMain withNav>
       <Section className="flex items-center justify-center web:pb-0">
-        <Badge
-          text="충남 계룡시"
-          icon={<LocationIcon size={20} className="fill-primary-dark" />}
-        />
+        <LocationBadge />
       </Section>
 
-      <Section className="mo:bg-transparent mo:dark:bg-transparent  mo:fixed mo:w-full mo:top-4 mo:left-1/2 mo:-translate-x-1/2 mo:py-0">
+      <Section className="mo:bg-transparent mo:dark:bg-transparent mo:fixed mo:w-full mo:top-4 mo:left-1/2 mo:-translate-x-1/2 mo:py-0">
         <Input
           isInvalid={false}
           placeholder="검색"
@@ -39,6 +35,12 @@ const Home = async () => {
 
       <Section className="pt-0">
         <IconLinkList />
+      </Section>
+
+      <Divider className="h-2" />
+
+      <Section>
+        <SectionTitle title="...주변 철봉" />
       </Section>
 
       <Divider className="h-2" />

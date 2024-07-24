@@ -1,10 +1,14 @@
 "use client";
 
-import useIsMounted from "@/hooks/useIsMounted";
+import useIsMounted from "@hooks/useIsMounted";
+import useGeolocationStore from "@store/useGeolocationStore";
+import useMapStore from "@store/useMapStore";
 import Script from "next/script";
 
 const KakaoMap = () => {
   const isMounted = useIsMounted();
+  const { setCurLocation } = useGeolocationStore();
+  const { setMap } = useMapStore();
 
   const handleLoadMap = () => {
     window.kakao.maps.load(() => {
@@ -15,6 +19,17 @@ const KakaoMap = () => {
       };
 
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
+      setMap(map);
+
+      const handleDrag = () => {
+        const latlng = map.getCenter();
+        setCurLocation({
+          lat: latlng.getLat(),
+          lng: latlng.getLng(),
+        });
+      };
+
+      window.kakao.maps.event.addListener(map, "dragend", handleDrag);
     });
   };
 
