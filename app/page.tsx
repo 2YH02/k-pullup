@@ -7,7 +7,7 @@ import LocationIcon from "@icons/location-icon";
 import SearchIcon from "@icons/search-icon";
 import ArticleCarousel from "@pages/home/article-carousel";
 import IconLinkList from "@pages/home/icon-link-list";
-import Players from "@pages/home/players";
+// import Players from "@pages/home/players";
 import RankingCarousel from "@pages/home/ranking-carousel";
 
 const Home = () => {
@@ -49,7 +49,7 @@ const Home = () => {
 
       <Section>
         <SectionTitle title="철봉 가이드" />
-        <Players />
+        {/* <Players /> */}
       </Section>
     </SideMain>
   );

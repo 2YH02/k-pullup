@@ -1,7 +1,14 @@
+// import KakaoMap from "@layout/kakao-map";
 import ThemeProvider from "@provider/theme-provider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 
 const pretendard = localFont({
   src: [
@@ -54,6 +61,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          {/* <KakaoMap /> */}
         </ThemeProvider>
       </body>
     </html>
