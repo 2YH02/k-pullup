@@ -41,7 +41,7 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
     } else {
       setGeoLocationError("위치 정보 제공 안됨");
     }
-  }, []);
+  }, [setMyLocation, setCurLocation, setGeoLocationError]);
 
   useEffect(() => {
     if (!map || !myLocation) return;
@@ -52,7 +52,7 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
     );
 
     map.setCenter(moveLatLon);
-  }, [map]);
+  }, [map, myLocation]);
 
   useEffect(() => {
     if (!curLocation) return;
@@ -92,7 +92,7 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
     };
 
     fetchRegion();
-  }, [curLocation]);
+  }, [curLocation, setGeoLocationError, setRegion]);
 
   return <>{children}</>;
 };

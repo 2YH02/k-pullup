@@ -24,7 +24,7 @@ const AroundMarkerCarousel = () => {
       const data = await closeMarker({
         lat: myLocation.lat,
         lng: myLocation.lng,
-        distance: 1000,
+        distance: 2000,
         pageParam: 1,
       });
 
@@ -61,7 +61,7 @@ const AroundMarkerCarousel = () => {
           <div className="flex flex-col justify-center h-28">
             <div className="mb-2">
               <Text display="block">
-                현재 위치 주변에 1000m 내에 철봉이 없습니다.
+                현재 위치 주변에 2,000m 내에 철봉이 없습니다.
               </Text>
               <Text display="block">더 넓은 범위에서 찾아보세요!</Text>
             </div>

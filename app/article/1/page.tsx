@@ -11,7 +11,8 @@ const ArticleItemPage = () => {
           <YoutubePlayer url="https://www.youtube.com/watch?v=eGo4IYlbE5g" />
         </div>
         <Text typography="t5" className="mb-2">
-          이 영상은 '완벽한 풀업'을 위한 가장 효과적인 방법을 알려줍니다.
+          이 영상은 &apos;완벽한 풀업&apos;을 위한 가장 효과적인 방법을
+          알려줍니다.
         </Text>
         <Text typography="t5" className="mb-2">
           운동을 하는 동안 자세한 동작 설명과 함께 흔히 하는 실수들을 경고하고
