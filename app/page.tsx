@@ -1,3 +1,4 @@
+import newPictures from "@api/marker/new-pictures";
 import Badge from "@common/badge";
 import Divider from "@common/divider";
 import Input from "@common/input";
@@ -5,12 +6,14 @@ import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import LocationIcon from "@icons/location-icon";
 import SearchIcon from "@icons/search-icon";
+import ImageCarousel from "@layout/image-carousel";
 import ArticleCarousel from "@pages/home/article-carousel";
 import IconLinkList from "@pages/home/icon-link-list";
-// import Players from "@pages/home/players";
-import RankingCarousel from "@pages/home/ranking-carousel";
+import Players from "@pages/home/players";
 
-const Home = () => {
+const Home = async () => {
+  const images = await newPictures();
+
   return (
     <SideMain withNav>
       <Section className="flex items-center justify-center web:pb-0">
@@ -41,15 +44,15 @@ const Home = () => {
       <Divider className="h-2" />
 
       <Section>
-        <SectionTitle title="슬라이드" />
-        <RankingCarousel />
+        <SectionTitle title="최근 추가된 이미지" />
+        <ImageCarousel data={images} />
       </Section>
 
       <Divider className="h-2" />
 
       <Section>
         <SectionTitle title="철봉 가이드" />
-        {/* <Players /> */}
+        <Players />
       </Section>
     </SideMain>
   );

@@ -1,4 +1,4 @@
-// import KakaoMap from "@layout/kakao-map";
+import KakaoMap from "@layout/kakao-map";
 import ThemeProvider from "@provider/theme-provider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -61,7 +61,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          {/* <KakaoMap /> */}
+          <KakaoMap />
         </ThemeProvider>
       </body>
     </html>

@@ -42,7 +42,7 @@ const ArticleCarousel = () => {
   ];
 
   return (
-    <Carousel plugins={[plugin.current]} className="px-1">
+    <Carousel plugins={[plugin.current]}>
       <CarouselContent>
         {list.map((item) => (
           <CarouselItem key={item.title}>

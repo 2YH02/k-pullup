@@ -10,10 +10,10 @@ const ArticleItemPage = () => {
         <div className="relative mb-4">
           <Image
             src={"/pullup3.jpg"}
+            alt="상세"
             width={0}
             height={0}
             sizes="100vw"
-            alt="상세"
             className="w-full h-auto"
           />
         </div>
