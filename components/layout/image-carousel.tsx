@@ -6,9 +6,10 @@ import Image from "next/image";
 
 interface ImageCarouselProps {
   data: newPicturesRes[];
+  priority?: boolean;
 }
 
-const ImageCarousel = ({ data }: ImageCarouselProps) => {
+const ImageCarousel = ({ data, priority = false }: ImageCarouselProps) => {
   return (
     <Carousel opts={{ dragFree: true }}>
       <CarouselContent className="-ml-1 gap-3 w-28 h-28 p-1">
@@ -25,6 +26,7 @@ const ImageCarousel = ({ data }: ImageCarouselProps) => {
                 height={0}
                 sizes="100vw"
                 className="w-full h-full object-cover"
+                priority={priority}
               />
             </button>
           </CarouselItem>

@@ -5,6 +5,7 @@ import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import SearchIcon from "@icons/search-icon";
 import ImageCarousel from "@layout/image-carousel";
+import AroundMarkerCarousel from "@pages/home/around-marker-carousel";
 import ArticleCarousel from "@pages/home/article-carousel";
 import IconLinkList from "@pages/home/icon-link-list";
 import LocationBadge from "@pages/home/location-badge";
@@ -40,15 +41,13 @@ const Home = async () => {
       <Divider className="h-2" />
 
       <Section>
-        <SectionTitle title="...주변 철봉" />
+        <SectionTitle title="최근 추가된 이미지" />
+        <ImageCarousel data={images} priority={true} />
       </Section>
 
       <Divider className="h-2" />
 
-      <Section>
-        <SectionTitle title="최근 추가된 이미지" />
-        <ImageCarousel data={images} />
-      </Section>
+      <AroundMarkerCarousel />
 
       <Divider className="h-2" />
 

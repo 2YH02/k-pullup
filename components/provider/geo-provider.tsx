@@ -1,6 +1,7 @@
 "use client";
 
 import getAddress from "@/api/common/get-address";
+import useMapStore from "@/store/useMapStore";
 import useGeolocationStore from "@store/useGeolocationStore";
 import { useEffect } from "react";
 
@@ -10,12 +11,14 @@ interface GeoProviderProps {
 
 const GeoProvider = ({ children }: GeoProviderProps) => {
   const {
+    myLocation,
     curLocation,
     setRegion,
     setMyLocation,
     setCurLocation,
     setGeoLocationError,
   } = useGeolocationStore();
+  const { map } = useMapStore();
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -39,6 +42,17 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
       setGeoLocationError("위치 정보 제공 안됨");
     }
   }, []);
+
+  useEffect(() => {
+    if (!map || !myLocation) return;
+
+    const moveLatLon = new window.kakao.maps.LatLng(
+      myLocation.lat,
+      myLocation.lng
+    );
+
+    map.setCenter(moveLatLon);
+  }, [map]);
 
   useEffect(() => {
     if (!curLocation) return;
