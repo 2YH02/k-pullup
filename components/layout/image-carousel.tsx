@@ -12,13 +12,10 @@ interface ImageCarouselProps {
 const ImageCarousel = ({ data, priority = false }: ImageCarouselProps) => {
   return (
     <Carousel opts={{ dragFree: true }}>
-      <CarouselContent className="-ml-1 gap-3 w-28 h-28 p-1">
+      <CarouselContent className="-ml-1 gap-3 w-32 h-32 p-1">
         {data.map((item) => (
-          <CarouselItem
-            key={item.markerId}
-            className="p-0 rounded-sm shadow-md overflow-hidden"
-          >
-            <button className="w-full h-full">
+          <CarouselItem key={item.markerId} className="p-0">
+            <button className="w-full h-full overflow-hidden rounded-lg shadow-md">
               <Image
                 src={item.photoURL}
                 alt={`${item.markerId} 상세`}
