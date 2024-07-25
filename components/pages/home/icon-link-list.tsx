@@ -17,7 +17,7 @@ const IconLinkList = () => {
         <IconButton
           icon={<RankingIcon size={34} link />}
           text="랭킹"
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/ranking")}
         />
         <IconButton
           icon={<BookmarkIcon size={34} link />}

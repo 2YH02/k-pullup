@@ -38,6 +38,9 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      backgroundSize: {
+        "50%": "50%",
+      },
       keyframes: {
         grow: {
           "0%": { transform: "scale(0.2)" },
