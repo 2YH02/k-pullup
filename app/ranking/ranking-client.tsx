@@ -1,11 +1,19 @@
 "use client";
 
+import type { RankingInfo } from "@api/marker/marker-ranking";
 import Badge from "@common/badge";
 import CheckedIcon from "@icons/checked-icon";
-import RankingItem from "@pages/ranking/ranking-item";
+import AreaRankingList from "@pages/ranking/area-ranking-list";
+import RankingList from "@pages/ranking/ranking-list";
+import { useState } from "react";
 
-const RankingClient = () => {
-  const data = Array(10).fill(0);
+interface RankingClientProps {
+  data: RankingInfo[];
+}
+
+const RankingClient = ({ data }: RankingClientProps) => {
+  const [ranking, setRanking] = useState<"all" | "area">("all");
+
   return (
     <>
       <div className="bg-[url('/ranking.webp')] h-40 bg-center bg-50%">
@@ -17,20 +25,27 @@ const RankingClient = () => {
             <Badge
               text="전체"
               className="bg-white mx-2 w-20"
-              icon={<CheckedIcon size={20} />}
+              textStyle={ranking === "area" ? "text-grey" : ""}
+              icon={ranking === "all" && <CheckedIcon size={20} />}
+              isButton
+              onClick={() => setRanking("all")}
             />
             <Badge
               text="주변"
-              className="bg-white mx-2 w-20 text-grey"
-              textStyle="text-grey"
-              //   icon={<CheckedIcon size={20} />}
+              className="bg-white mx-2 w-20"
+              textStyle={ranking === "all" ? "text-grey" : ""}
+              icon={ranking === "area" && <CheckedIcon size={20} />}
+              isButton
+              onClick={() => setRanking("area")}
             />
           </div>
         </div>
         <div>
-          {data.map((_, index) => {
-            return <RankingItem key={index} title="충청남도 계룡시" />;
-          })}
+          {ranking === "all" ? (
+            <RankingList data={data} />
+          ) : (
+            <AreaRankingList />
+          )}
         </div>
       </div>
     </>

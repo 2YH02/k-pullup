@@ -1,10 +1,13 @@
+import markerRanking from "@api/marker/marker-ranking";
 import SideMain from "@common/side-main";
 import RankingClient from "./ranking-client";
 
-const RankingPage = () => {
+const RankingPage = async () => {
+  const rankingData = await markerRanking();
+
   return (
     <SideMain headerTitle="많이 찾는" withNav>
-      <RankingClient />
+      <RankingClient data={rankingData} />
     </SideMain>
   );
 };
