@@ -22,6 +22,7 @@ const RankingClient = () => {
             <Badge
               text="주변"
               className="bg-white mx-2 w-20 text-grey"
+              textStyle="text-grey"
               //   icon={<CheckedIcon size={20} />}
             />
           </div>

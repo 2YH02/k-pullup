@@ -10,6 +10,7 @@ const meta = {
   argTypes: {
     icon: { control: "text" },
     text: { control: "text" },
+    textStyle: { control: "text" },
     withBorder: { control: "boolean" },
     className: { control: "text" },
     isButton: { control: "boolean" },

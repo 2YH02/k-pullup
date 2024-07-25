@@ -1,5 +1,6 @@
 import cn from "@lib/cn";
 import Text from "./text";
+// TODO: 텍스트 색상 props 추가, 스토리 업데이트
 
 interface BadgeProps {
   /**
@@ -19,6 +20,10 @@ interface BadgeProps {
    */
   className?: React.ComponentProps<"span">["className"];
   /**
+   * tailwind 스타일 클래스 (for Text)
+   */
+  textStyle?: React.ComponentProps<"span">["className"];
+  /**
    * 버튼으로 동작
    */
   isButton?: boolean;
@@ -33,8 +38,9 @@ const Badge = ({
   text,
   withBorder = true,
   isButton = false,
-  onClick,
   className,
+  textStyle,
+  onClick,
 }: BadgeProps) => {
   const Component = isButton ? "button" : "span";
 
@@ -50,7 +56,7 @@ const Badge = ({
     >
       <div className="flex items-center justify-center">
         {icon && <span className="mr-1">{icon}</span>}
-        <Text typography="t6" fontWeight="bold">
+        <Text typography="t6" fontWeight="bold" className={textStyle}>
           {text}
         </Text>
       </div>
