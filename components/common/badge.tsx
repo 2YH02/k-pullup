@@ -1,6 +1,5 @@
 import cn from "@lib/cn";
 import Text from "./text";
-// TODO: 텍스트 색상 props 추가, 스토리 업데이트
 
 interface BadgeProps {
   /**

@@ -139,7 +139,7 @@ const SideMain = ({
         }
         mo:bottom-0 mo:no-touch ${fullHeight ? "mo:h-full" : "mo:h-[85%]"}`,
         background === "white"
-          ? "bg-white dark:bg-black-light"
+          ? "bg-white dark:bg-black"
           : "bg-grey-light dark:bg-black",
         className
       )}
@@ -157,7 +157,7 @@ const SideMain = ({
       )}
 
       {!fullHeight && (
-        <div className="sticky top-0 py-3 bg-white dark:bg-black-light z-20 web:hidden">
+        <div className="sticky top-0 py-3 bg-white dark:bg-black z-20 web:hidden">
           <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />
         </div>
       )}
@@ -201,7 +201,7 @@ const MainHeader = ({
     <div
       className={cn(
         `web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 shadow-sm z-20 bg-white 
-        dark:bg-black-light dark:border-b dark:border-solid dark:border-grey-dark`,
+        dark:bg-black dark:border-b dark:border-solid dark:border-grey-dark`,
         getHeaderPosition()
       )}
     >

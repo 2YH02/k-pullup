@@ -12,7 +12,7 @@ interface ListProps {
 
 const List = ({ title, children }: ListProps) => {
   return (
-    <div>
+    <div className="mb-3">
       <Text className="p-2">{title}</Text>
       <ul className="bg-white dark:bg-black-light p-2">{children}</ul>
     </div>
@@ -25,8 +25,9 @@ interface ListItemProps {
   link?: boolean;
   url?: string;
   initValue?: boolean;
-  onTrue: VoidFunction;
-  onFalse: VoidFunction;
+  onClick?: VoidFunction;
+  onTrue?: VoidFunction;
+  onFalse?: VoidFunction;
 }
 
 export const ListItem = ({
@@ -35,6 +36,7 @@ export const ListItem = ({
   link,
   url,
   initValue,
+  onClick,
   onTrue,
   onFalse,
 }: ListItemProps) => {
@@ -42,13 +44,15 @@ export const ListItem = ({
   return (
     <li
       className={`flex justify-between items-center ${
-        link && url ? "cursor-pointer" : "cursor-default"
+        (link && url) || onClick ? "cursor-pointer" : "cursor-default"
       }`}
       onClick={
         link && url
           ? () => {
               router.push(url);
             }
+          : onClick
+          ? onClick
           : undefined
       }
     >
@@ -58,12 +62,19 @@ export const ListItem = ({
           {description}
         </Text>
       </div>
-      {link && url ? (
+
+      {link && url && (
         <div>
           <ArrowRightIcon size={20} color="black" />
         </div>
-      ) : (
+      )}
+      {onTrue && onFalse && (
         <ToggleButton onTrue={onTrue} onFalse={onFalse} initValue={initValue} />
+      )}
+      {onClick && (
+        <div>
+          <ArrowRightIcon size={20} color="black" />
+        </div>
       )}
     </li>
   );

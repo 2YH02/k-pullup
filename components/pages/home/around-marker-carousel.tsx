@@ -9,7 +9,6 @@ import Text from "@common/text";
 import useGeolocationStore from "@store/useGeolocationStore";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-// TODO: Geolocation 거절 시 화면 추가
 
 const AroundMarkerCarousel = () => {
   const { myLocation } = useGeolocationStore();

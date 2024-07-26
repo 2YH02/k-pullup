@@ -61,8 +61,9 @@ const SigninForm = () => {
     }
 
     setLoading(false);
-    // TODO: 이후 returnUrl 추가
-    router.push("/");
+    // TODO: returnUrl 추가
+    router.replace("/mypage");
+    router.refresh();
   };
 
   const isAvailable = Object.keys(errors).length === 0;
@@ -94,7 +95,7 @@ const SigninForm = () => {
         <Button
           onClick={onSubmit}
           disabled={!isAvailable || loading}
-          className="flex items-center justify-center w-24 h-12"
+          className="flex items-center justify-center w-20 h-10 p-0 text-grey-dark disabled:text-grey-dark"
         >
           {loading ? <LoadingIcon size="sm" className="mr-0 ml-0" /> : "로그인"}
         </Button>

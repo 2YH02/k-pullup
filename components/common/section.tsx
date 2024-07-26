@@ -8,7 +8,7 @@ interface SectionProps {
 
 const Section = ({ className, children }: SectionProps) => {
   return (
-    <section className={cn("p-4 bg-white dark:bg-black-light", className)}>
+    <section className={cn("p-4 bg-white dark:bg-black", className)}>
       {children}
     </section>
   );
