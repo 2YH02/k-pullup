@@ -29,6 +29,7 @@
       "@provider/*": ["./components/provider/*"],
       "@hooks/*": ["./hooks/*"],
       "@api/*": ["./api/*"],
+      "@constant/*": ["./constant/*"],
       "@types/*": ["./types/*"]
     }
   },
