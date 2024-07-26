@@ -25,16 +25,32 @@ const RankingClient = ({ data }: RankingClientProps) => {
             <Badge
               text="전체"
               className="bg-white mx-2 w-20"
-              textStyle={ranking === "area" ? "text-grey" : ""}
-              icon={ranking === "all" && <CheckedIcon size={20} />}
+              textStyle={
+                ranking === "area"
+                  ? "text-grey dark:text-grey-dark"
+                  : "dark:text-black"
+              }
+              icon={
+                ranking === "all" && (
+                  <CheckedIcon size={20} className="dark:fill-grey-dark" />
+                )
+              }
               isButton
               onClick={() => setRanking("all")}
             />
             <Badge
               text="주변"
               className="bg-white mx-2 w-20"
-              textStyle={ranking === "all" ? "text-grey" : ""}
-              icon={ranking === "area" && <CheckedIcon size={20} />}
+              textStyle={
+                ranking === "all"
+                  ? "text-grey dark:text-grey-dark"
+                  : "dark:text-black"
+              }
+              icon={
+                ranking === "area" && (
+                  <CheckedIcon size={20} className="dark:fill-black" />
+                )
+              }
               isButton
               onClick={() => setRanking("area")}
             />

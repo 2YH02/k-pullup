@@ -6,7 +6,7 @@ const RankingPage = async () => {
   const rankingData = await markerRanking();
 
   return (
-    <SideMain headerTitle="많이 찾는 위치" withNav>
+    <SideMain headerTitle="많이 찾는 위치" hasBackButton withNav>
       <RankingClient data={rankingData} />
     </SideMain>
   );
