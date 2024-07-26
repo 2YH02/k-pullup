@@ -1,7 +1,24 @@
-const LoadingIcon = () => {
+import cn from "@lib/cn";
+
+interface LoadingIconProps {
+  size?: "sm" | "md" | "lg";
+  className?: React.ComponentProps<"svg">["className"];
+}
+
+const loadingSizeMap = {
+  sm: "w-5 h-5",
+  md: "w-10 h-10",
+  lg: "w-12 h-12",
+};
+
+const LoadingIcon = ({ size = "md", className }: LoadingIconProps) => {
+  const loadingSize = loadingSizeMap[size];
   return (
     <svg
-      className="animate-spin -ml-1 mr-3 h-10 w-10 text-primary"
+      className={cn(
+        `animate-spin -ml-1 mr-3 text-primary ${loadingSize}`,
+        className
+      )}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

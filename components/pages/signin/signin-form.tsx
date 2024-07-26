@@ -1,11 +1,14 @@
 "use client";
 
+import signin from "@api/auth/signin";
 import Button from "@common/button";
 import InputField from "@common/input-field";
 import Text from "@common/text";
 import useInput from "@hooks/useInput";
+import LoadingIcon from "@icons/loading-icon";
 import { validateSigin } from "@lib/validate";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
 interface SigninValue {
@@ -14,12 +17,15 @@ interface SigninValue {
 }
 
 const SigninForm = () => {
+  const router = useRouter();
+
   const emailValue = useInput("");
   const passwordValue = useInput("");
 
   const [viewInputError, setViewInputError] = useState<Partial<SigninValue>>(
     {}
   );
+  const [loading, setLoading] = useState(false);
 
   const errors = useMemo(() => {
     const formValues = {
@@ -37,15 +43,26 @@ const SigninForm = () => {
     }));
   };
 
-  const sigin = () => {
+  const onSubmit = async () => {
+    setLoading(true);
     const siginData = {
       email: emailValue.value,
       password: passwordValue.value,
     };
 
-    const data = validateSigin(siginData);
+    const response = await signin(siginData);
 
-    console.log(data);
+    if (response.error) {
+      errors.email = "이메일 혹은 비밀번호를 확인해주세요.";
+      errors.password = "이메일 혹은 비밀번호를 확인해주세요.";
+
+      setLoading(false);
+      return;
+    }
+
+    setLoading(false);
+    // TODO: 이후 returnUrl 추가
+    router.push("/");
   };
 
   const isAvailable = Object.keys(errors).length === 0;
@@ -73,9 +90,13 @@ const SigninForm = () => {
           onChange={passwordValue.handleChange}
         />
       </div>
-      <div>
-        <Button onClick={sigin} disabled={!isAvailable}>
-          로그인
+      <div className="mt-3">
+        <Button
+          onClick={onSubmit}
+          disabled={!isAvailable || loading}
+          className="flex items-center justify-center w-24 h-12"
+        >
+          {loading ? <LoadingIcon size="sm" className="mr-0 ml-0" /> : "로그인"}
         </Button>
       </div>
       <div className="mt-3">
