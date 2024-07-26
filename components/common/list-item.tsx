@@ -2,6 +2,8 @@
 
 import Text from "@common/text";
 import { useState } from "react";
+// TODO: 리스트 아이템 이름 카드로 변경
+// TODO: props as 추가 (리스트, 버튼, default = div)
 
 interface ListItemProps {
   children: React.ReactNode;
