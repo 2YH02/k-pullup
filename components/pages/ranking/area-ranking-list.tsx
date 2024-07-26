@@ -4,13 +4,15 @@ import areaRanking from "@api/marker/area-ranking";
 import { RankingInfo } from "@api/marker/marker-ranking";
 import Badge from "@common/badge";
 import { Carousel, CarouselContent, CarouselItem } from "@common/carousel";
+import ListItem, { ListContents, ListLeft } from "@common/list-item";
+import Section from "@common/section";
 import Text from "@common/text";
 import { CITIES, CITIES_BADGE_TITLE } from "@constant/index";
 import CheckedIcon from "@icons/checked-icon";
 import LoadingIcon from "@icons/loading-icon";
+import LocationIcon from "@icons/location-icon";
 import useGeolocationStore from "@store/useGeolocationStore";
 import { useCallback, useEffect, useState } from "react";
-import RankingItem from "./ranking-item";
 
 type BadgeTitles = typeof CITIES_BADGE_TITLE;
 type BadgeTitle = BadgeTitles[number];
@@ -104,17 +106,28 @@ const AreaRankingList = () => {
           curState={curBadge}
         />
       </div>
-      <ul>
-        {data?.map((item, index) => {
-          return (
-            <RankingItem
-              key={item.markerId}
-              title={item.address}
-              ranking={index + 1}
-            />
-          );
-        })}
-      </ul>
+      <Section>
+        <ul>
+          {data?.map((item, index) => {
+            return (
+              <ListItem
+                key={item.markerId}
+                icon={
+                  <LocationIcon className="fill-grey-dark dark:fill-grey-light" />
+                }
+              >
+                <ListLeft>
+                  <div className="flex items-center">
+                    <Text fontWeight="bold">{index + 1}</Text>
+                    <Text typography="t7">등</Text>
+                  </div>
+                </ListLeft>
+                <ListContents title={item.address} />
+              </ListItem>
+            );
+          })}
+        </ul>
+      </Section>
     </div>
   );
 };

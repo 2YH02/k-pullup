@@ -1,5 +1,8 @@
 import type { RankingInfo } from "@api/marker/marker-ranking";
-import RankingItem from "./ranking-item";
+import ListItem, { ListContents, ListLeft } from "@common/list-item";
+import Section from "@common/section";
+import Text from "@common/text";
+import LocationIcon from "@icons/location-icon";
 
 interface RankingListProps {
   data: RankingInfo[];
@@ -7,17 +10,28 @@ interface RankingListProps {
 
 const RankingList = ({ data }: RankingListProps) => {
   return (
-    <ul>
-      {data.map((item, index) => {
-        return (
-          <RankingItem
-            key={item.markerId}
-            title={item.address}
-            ranking={index + 1}
-          />
-        );
-      })}
-    </ul>
+    <Section>
+      <ul>
+        {data.map((item, index) => {
+          return (
+            <ListItem
+              key={item.markerId}
+              icon={
+                <LocationIcon className="fill-grey-dark dark:fill-grey-light" />
+              }
+            >
+              <ListLeft>
+                <div className="flex items-center">
+                  <Text fontWeight="bold">{index + 1}</Text>
+                  <Text typography="t7">등</Text>
+                </div>
+              </ListLeft>
+              <ListContents title={item.address} />
+            </ListItem>
+          );
+        })}
+      </ul>
+    </Section>
   );
 };
 
