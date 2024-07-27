@@ -1,6 +1,8 @@
-import GeoProvider from "@provider/geo-provider";
 import KakaoMap from "@layout/kakao-map";
+import AlertProvider from "@provider/alert-provider";
+import GeoProvider from "@provider/geo-provider";
 import ThemeProvider from "@provider/theme-provider";
+import UserProvider from "@provider/user-provider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -61,9 +63,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <GeoProvider>{children}</GeoProvider>
+          <AlertProvider>
+            <UserProvider>
+              <GeoProvider>{children}</GeoProvider>
+            </UserProvider>
+          </AlertProvider>
           <KakaoMap />
         </ThemeProvider>
+        <div id="portal"></div>
       </body>
     </html>
   );

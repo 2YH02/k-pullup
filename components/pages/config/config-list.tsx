@@ -14,7 +14,7 @@ const List = ({ title, children }: ListProps) => {
   return (
     <div className="mb-3">
       <Text className="p-2">{title}</Text>
-      <ul className="bg-white dark:bg-black-light p-2">{children}</ul>
+      <ul className="bg-white dark:bg-black-light">{children}</ul>
     </div>
   );
 };
@@ -45,7 +45,7 @@ export const ListItem = ({
     <li
       className={`flex justify-between items-center ${
         (link && url) || onClick ? "cursor-pointer" : "cursor-default"
-      }`}
+      } p-2 border-b border-solid border-grey-light`}
       onClick={
         link && url
           ? () => {

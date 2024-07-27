@@ -6,8 +6,8 @@ export interface LoginReq {
 }
 
 export interface LoginRes {
-  token?: string;
-  user?: User;
+  token: string;
+  user: User;
   error?: string;
 }
 

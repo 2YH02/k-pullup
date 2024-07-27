@@ -7,6 +7,7 @@ import Text from "@common/text";
 import useInput from "@hooks/useInput";
 import LoadingIcon from "@icons/loading-icon";
 import { validateSigin } from "@lib/validate";
+import useUserStore from "@store/useUserStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -18,6 +19,8 @@ interface SigninValue {
 
 const SigninForm = () => {
   const router = useRouter();
+
+  const { setUser } = useUserStore();
 
   const emailValue = useInput("");
   const passwordValue = useInput("");
@@ -60,6 +63,7 @@ const SigninForm = () => {
       return;
     }
 
+    setUser(response.user);
     setLoading(false);
     // TODO: returnUrl 추가
     router.replace("/mypage");
