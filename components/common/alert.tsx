@@ -7,7 +7,7 @@ interface Props {
   title: React.ReactNode;
   description?: React.ReactNode;
   buttonLabel?: string;
-  onClick: VoidFunction;
+  onClick?: VoidFunction;
 }
 
 const Alert = ({
@@ -36,9 +36,13 @@ const Alert = ({
 
         {description && <Text typography="t7">{description}</Text>}
 
-        <div className="flex justify-end">
-          <Button onClick={onClick} size="sm">{buttonLabel}</Button>
-        </div>
+        {onClick && (
+          <div className="flex justify-end mt-3">
+            <Button onClick={onClick} size="sm">
+              {buttonLabel}
+            </Button>
+          </div>
+        )}
       </div>
     </Dimmed>
   );

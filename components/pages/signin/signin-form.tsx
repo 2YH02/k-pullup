@@ -120,11 +120,11 @@ const SigninForm = () => {
           <Text typography="t6" className="mr-1">
             비밀번호를 잊어버리셨나요?
           </Text>
-          <button>
+          <Link href="/reset-password">
             <Text typography="t6" className="text-grey-dark hover:underline">
               비밀번호 초기화하기
             </Text>
-          </button>
+          </Link>
         </div>
       </div>
     </div>

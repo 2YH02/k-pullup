@@ -23,10 +23,12 @@ const useAlertStore = create<AlertState>()((set) => ({
     set({
       alertState: {
         ...options,
-        onClick: () => {
-          set({ alertState: defaultValues });
-          onClick();
-        },
+        onClick: onClick
+          ? () => {
+              set({ alertState: defaultValues });
+              onClick();
+            }
+          : undefined,
         open: true,
       },
     }),
