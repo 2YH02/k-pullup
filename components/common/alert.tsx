@@ -2,11 +2,10 @@
 
 import LoadingIcon from "@icons/loading-icon";
 import useAlertStore from "@store/useAlertStore";
+import { useState } from "react";
 import Button from "./button";
 import Dimmed from "./dimmed";
 import Text from "./text";
-import { useState } from "react";
-// TODO: dimmed 영역 클릭 시 닫기
 
 interface Props {
   open?: boolean;
@@ -48,7 +47,7 @@ const Alert = ({
   };
 
   return (
-    <Dimmed>
+    <Dimmed onClose={closeAlert}>
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 p-6
         overflow-hidden bg-white dark:bg-black rounded-lg z-40"
