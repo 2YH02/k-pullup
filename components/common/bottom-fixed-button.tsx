@@ -3,10 +3,12 @@ import Button, { type ButtonProps } from "./button";
 
 interface BottomFixedButtonProps extends ButtonProps {
   containerStyle?: React.ComponentProps<"div">["className"];
+  children: React.ReactNode;
 }
 
 const BottomFixedButton = ({
   containerStyle,
+  children,
   ...props
 }: BottomFixedButtonProps) => {
   return (
@@ -17,7 +19,7 @@ const BottomFixedButton = ({
       )}
     >
       <Button {...props} full>
-        다음
+        {children}
       </Button>
     </div>
   );

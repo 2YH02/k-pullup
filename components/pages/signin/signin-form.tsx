@@ -9,7 +9,7 @@ import LoadingIcon from "@icons/loading-icon";
 import { validateSigin } from "@lib/validate";
 import useUserStore from "@store/useUserStore";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
 interface SigninValue {
@@ -17,11 +17,12 @@ interface SigninValue {
   password: string;
 }
 
-const SigninForm = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+interface SinginFormProps {
+  returnUrl?: string;
+}
 
-  const returnUrl = searchParams.get("returnUrl");
+const SigninForm = ({ returnUrl }: SinginFormProps) => {
+  const router = useRouter();
 
   const { setUser } = useUserStore();
 

@@ -54,7 +54,12 @@ const SignupClient = () => {
     if (signupValue.step === 3) {
       fetchSignup();
     }
-  }, [signupValue.step]);
+  }, [
+    signupValue.step,
+    signupValue.email,
+    signupValue.username,
+    signupValue.password,
+  ]);
 
   const handlePrev = () => {
     openAlert({

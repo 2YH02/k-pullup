@@ -41,7 +41,7 @@ const Timer = ({ start, reset, count = 300 }: TimerProps) => {
     if (reset) {
       setTime(count);
     }
-  }, [reset]);
+  }, [reset, setTime, count]);
 
   const formatTime = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);

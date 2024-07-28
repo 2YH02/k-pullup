@@ -14,7 +14,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setUser(user);
     };
     fetchUser();
-  }, []);
+  }, [setUser]);
 
   return <>{children}</>;
 };

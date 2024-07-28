@@ -70,7 +70,7 @@ const EnterPassword = ({ next }: EnterPasswordProps) => {
         disabled={!!errorMessage.confirm || !!errorMessage.password}
         containerStyle="px-0"
       >
-        다음
+        회원가입
       </BottomFixedButton>
     </Section>
   );

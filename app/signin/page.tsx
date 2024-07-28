@@ -4,7 +4,15 @@ import SideMain from "@common/side-main";
 import SigninForm from "@pages/signin/signin-form";
 import Image from "next/image";
 
-const SigninPage = () => {
+interface PageProps {
+  searchParams: {
+    returnUrl: string;
+  };
+}
+
+const SigninPage = ({ searchParams }: PageProps) => {
+  const { returnUrl } = searchParams;
+
   return (
     <SideMain headerTitle="로그인" fullHeight hasBackButton>
       <div className="w-full h-full flex flex-col justify-center">
@@ -24,7 +32,7 @@ const SigninPage = () => {
           </Text>
         </Section>
         <Section className="px-9">
-          <SigninForm />
+          <SigninForm returnUrl={returnUrl} />
         </Section>
       </div>
     </SideMain>
