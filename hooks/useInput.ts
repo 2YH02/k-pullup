@@ -14,7 +14,7 @@ const useInput = (initValue: string) => {
   };
 
   const resetValue = () => {
-    setValue("");
+    setValue(initValue);
   };
 
   return { value, onChange, setInputValue, resetValue };

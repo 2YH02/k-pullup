@@ -45,7 +45,7 @@ export const ListItem = ({
     <li
       className={`flex justify-between items-center ${
         (link && url) || onClick ? "cursor-pointer" : "cursor-default"
-      } p-2 border-b border-solid border-grey-light`}
+      } p-2 border-b border-solid border-grey-light dark:border-grey-dark`}
       onClick={
         link && url
           ? () => {
