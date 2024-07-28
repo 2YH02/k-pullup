@@ -2,7 +2,7 @@ import type { RankingInfo } from "@api/marker/marker-ranking";
 import ListItem, { ListContents, ListLeft } from "@common/list-item";
 import Section from "@common/section";
 import Text from "@common/text";
-import LocationIcon from "@icons/location-icon";
+import PinIcon from "@icons/pin-icon";
 
 interface RankingListProps {
   data: RankingInfo[];
@@ -16,9 +16,8 @@ const RankingList = ({ data }: RankingListProps) => {
           return (
             <ListItem
               key={item.markerId}
-              icon={
-                <LocationIcon className="fill-grey-dark dark:fill-grey-light" />
-              }
+              icon={<PinIcon size={30} />}
+              onClick={() => {}}
             >
               <ListLeft>
                 <div className="flex items-center">

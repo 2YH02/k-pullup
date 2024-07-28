@@ -5,12 +5,13 @@ import { RankingInfo } from "@api/marker/marker-ranking";
 import Badge from "@common/badge";
 import { Carousel, CarouselContent, CarouselItem } from "@common/carousel";
 import ListItem, { ListContents, ListLeft } from "@common/list-item";
+import ScrollToTop from "@common/scroll-to-top";
 import Section from "@common/section";
 import Text from "@common/text";
 import { CITIES, CITIES_BADGE_TITLE } from "@constant/index";
 import CheckedIcon from "@icons/checked-icon";
 import LoadingIcon from "@icons/loading-icon";
-import LocationIcon from "@icons/location-icon";
+import PinIcon from "@icons/pin-icon";
 import useGeolocationStore from "@store/useGeolocationStore";
 import { useCallback, useEffect, useState } from "react";
 
@@ -67,7 +68,7 @@ const AreaRankingList = () => {
 
   if (loading) {
     return (
-      <div>
+      <div className="px-4">
         <BadgeCarousel
           data={CITIES_BADGE_TITLE}
           onClick={changeCurBadge}
@@ -82,7 +83,7 @@ const AreaRankingList = () => {
 
   if (data?.length === 0) {
     return (
-      <div>
+      <div className="px-4">
         <BadgeCarousel
           data={CITIES_BADGE_TITLE}
           onClick={changeCurBadge}
@@ -99,7 +100,7 @@ const AreaRankingList = () => {
 
   return (
     <div>
-      <div className="px-2">
+      <div className="px-4">
         <BadgeCarousel
           data={CITIES_BADGE_TITLE}
           onClick={changeCurBadge}
@@ -110,12 +111,7 @@ const AreaRankingList = () => {
         <ul>
           {data?.map((item, index) => {
             return (
-              <ListItem
-                key={item.markerId}
-                icon={
-                  <LocationIcon className="fill-grey-dark dark:fill-grey-light" />
-                }
-              >
+              <ListItem key={item.markerId} icon={<PinIcon size={30} />}>
                 <ListLeft>
                   <div className="flex items-center">
                     <Text fontWeight="bold">{index + 1}</Text>
@@ -128,6 +124,7 @@ const AreaRankingList = () => {
           })}
         </ul>
       </Section>
+      {data && data.length > 13 && <ScrollToTop />}
     </div>
   );
 };

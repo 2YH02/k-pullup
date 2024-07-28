@@ -63,7 +63,7 @@ const Mypage = async () => {
         </ShadowBox>
       </Section>
 
-      <LinkList />
+      {!noUser && <LinkList />}
     </SideMain>
   );
 };

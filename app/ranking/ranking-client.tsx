@@ -2,6 +2,7 @@
 
 import type { RankingInfo } from "@api/marker/marker-ranking";
 import Badge from "@common/badge";
+import ScrollToTop from "@common/scroll-to-top";
 import CheckedIcon from "@icons/checked-icon";
 import AreaRankingList from "@pages/ranking/area-ranking-list";
 import RankingList from "@pages/ranking/ranking-list";
@@ -58,7 +59,10 @@ const RankingClient = ({ data }: RankingClientProps) => {
         </div>
         <div>
           {ranking === "all" ? (
-            <RankingList data={data} />
+            <>
+              <RankingList data={data} />
+              {data.length > 13 && <ScrollToTop />}
+            </>
           ) : (
             <AreaRankingList />
           )}

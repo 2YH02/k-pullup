@@ -9,7 +9,7 @@ import LoadingIcon from "@icons/loading-icon";
 import { validateSigin } from "@lib/validate";
 import useUserStore from "@store/useUserStore";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 
 interface SigninValue {
@@ -19,6 +19,9 @@ interface SigninValue {
 
 const SigninForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const returnUrl = searchParams.get("returnUrl");
 
   const { setUser } = useUserStore();
 
@@ -65,8 +68,11 @@ const SigninForm = () => {
 
     setUser(response.user);
     setLoading(false);
-    // TODO: returnUrl 추가
-    router.replace("/mypage");
+    if (returnUrl) {
+      router.replace(returnUrl);
+    } else {
+      router.replace("/mypage");
+    }
     router.refresh();
   };
 

@@ -7,8 +7,9 @@ import SignIcon from "@icons/sign-icon";
 import UserIcon from "@icons/user-icon";
 import BottomNav from "@layout/bottom-nav";
 import cn from "@lib/cn";
+import useScrollRefStore from "@store/useScrollRefStore";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Text from "./text";
 
 interface SideMainProps {
@@ -65,8 +66,15 @@ const SideMain = ({
   prevClick,
   children,
 }: SideMainProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { setContainerRef } = useScrollRefStore();
+
   const [sheetHeight, setSheetHeight] = useState(85);
   const [isMoblie, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setContainerRef(containerRef);
+  }, [setContainerRef]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -166,6 +174,7 @@ const SideMain = ({
       )}
 
       <div
+        ref={containerRef}
         className={cn(
           "mo:h-[calc(100%-86px)] overflow-y-auto overflow-x-hidden web:scrollbar-thin mo:scrollbar-hidden",
           getBodyHeight()
