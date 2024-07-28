@@ -56,7 +56,7 @@ const SendPasswordForm = () => {
       </Text>
       <InputField
         value={inputValue.value}
-        onChange={inputValue.handleChange}
+        onChange={inputValue.onChange}
         onBlur={handleBlur}
         isError={viewError && errorMessage !== null}
         message={viewError ? errorMessage : ""}

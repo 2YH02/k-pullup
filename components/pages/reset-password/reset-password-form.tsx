@@ -55,6 +55,7 @@ const ResetPasswordForm = ({ token }: { token: string }) => {
         router.refresh();
         setLoading(false);
       },
+      cancel: true,
     });
   };
 
@@ -70,7 +71,7 @@ const ResetPasswordForm = ({ token }: { token: string }) => {
       <InputField
         type="password"
         value={inputValue.value}
-        onChange={inputValue.handleChange}
+        onChange={inputValue.onChange}
         onBlur={handleBlur}
         isError={viewError && errorMessage !== null}
         message={viewError ? errorMessage : ""}

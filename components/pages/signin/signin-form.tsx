@@ -81,7 +81,7 @@ const SigninForm = () => {
           value={emailValue.value}
           isError={Boolean(viewInputError.email) && Boolean(errors.email)}
           message={Boolean(viewInputError.email) ? errors.email : ""}
-          onChange={emailValue.handleChange}
+          onChange={emailValue.onChange}
           onBlur={handleBlur}
         />
         <InputField
@@ -92,7 +92,7 @@ const SigninForm = () => {
           isError={Boolean(viewInputError.password) && Boolean(errors.password)}
           message={Boolean(viewInputError.password) ? errors.password : ""}
           onBlur={handleBlur}
-          onChange={passwordValue.handleChange}
+          onChange={passwordValue.onChange}
         />
       </div>
       <div className="mt-3">

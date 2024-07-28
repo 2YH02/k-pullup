@@ -22,6 +22,7 @@ interface SideMainProps {
   headerPosition?: "sticky" | "fixed";
   background?: "white" | "grey";
   headerIconClick?: VoidFunction;
+  prevClick?: VoidFunction;
 }
 
 const menus = [
@@ -61,6 +62,7 @@ const SideMain = ({
   headerPosition,
   background = "white",
   headerIconClick,
+  prevClick,
   children,
 }: SideMainProps) => {
   const [sheetHeight, setSheetHeight] = useState(85);
@@ -153,6 +155,7 @@ const SideMain = ({
           hasBackButton={hasBackButton}
           headerPosition={headerPosition}
           iconClick={headerIconClick}
+          prevClick={prevClick}
         />
       )}
 
@@ -181,6 +184,7 @@ interface MainHeaderProps {
   hasBackButton?: boolean;
   headerPosition?: "sticky" | "fixed";
   iconClick?: VoidFunction;
+  prevClick?: VoidFunction;
 }
 
 const MainHeader = ({
@@ -189,6 +193,7 @@ const MainHeader = ({
   headerIcon,
   headerPosition,
   iconClick,
+  prevClick,
 }: MainHeaderProps) => {
   const router = useRouter();
 
@@ -205,25 +210,39 @@ const MainHeader = ({
         getHeaderPosition()
       )}
     >
-      <button
-        className={`flex items-center justify-center w-10 h-10 ${
-          hasBackButton ? "cursor-pointer" : "cursor-default"
-        }`}
-        onClick={hasBackButton ? () => router.back() : undefined}
-      >
-        {hasBackButton && <ArrowLeftIcon color="black" />}
-      </button>
+      {hasBackButton ? (
+        <button
+          className={`flex items-center justify-center w-10 h-10 ${
+            hasBackButton ? "cursor-pointer" : "cursor-default"
+          }`}
+          onClick={
+            hasBackButton
+              ? prevClick
+                ? prevClick
+                : () => router.back()
+              : undefined
+          }
+        >
+          {hasBackButton && <ArrowLeftIcon color="black" />}
+        </button>
+      ) : (
+        <div className="w-10 h-10" />
+      )}
 
       <Text typography="t5" fontWeight="bold" className="grow text-center">
         {titile}
       </Text>
 
-      <button
-        className="flex items-center justify-center w-10 h-10"
-        onClick={iconClick}
-      >
-        {headerIcon && headerIcon}
-      </button>
+      {iconClick ? (
+        <button
+          className={`flex items-center justify-center w-10 h-10`}
+          onClick={iconClick}
+        >
+          {headerIcon && headerIcon}
+        </button>
+      ) : (
+        <div className="w-10 h-10" />
+      )}
     </div>
   );
 };

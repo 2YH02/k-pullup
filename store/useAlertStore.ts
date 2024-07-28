@@ -15,11 +15,13 @@ const defaultValues: AlertProps = {
   title: null,
   description: null,
   onClick: () => {},
+  onClickAsync: async () => {},
+  cancel: false,
 };
 
 const useAlertStore = create<AlertState>()((set) => ({
   alertState: defaultValues,
-  openAlert: ({ onClick, ...options }: AlertOptions) =>
+  openAlert: ({ onClick, onClickAsync, ...options }: AlertOptions) =>
     set({
       alertState: {
         ...options,
@@ -27,6 +29,11 @@ const useAlertStore = create<AlertState>()((set) => ({
           ? () => {
               set({ alertState: defaultValues });
               onClick();
+            }
+          : undefined,
+        onClickAsync: onClickAsync
+          ? async () => {
+              await onClickAsync();
             }
           : undefined,
         open: true,

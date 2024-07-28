@@ -1,13 +1,21 @@
+"use client";
+
+import LoadingIcon from "@icons/loading-icon";
+import useAlertStore from "@store/useAlertStore";
 import Button from "./button";
 import Dimmed from "./dimmed";
 import Text from "./text";
+import { useState } from "react";
+// TODO: dimmed 영역 클릭 시 닫기
 
 interface Props {
   open?: boolean;
   title: React.ReactNode;
   description?: React.ReactNode;
   buttonLabel?: string;
+  cancel?: boolean;
   onClick?: VoidFunction;
+  onClickAsync?: () => Promise<void>;
 }
 
 const Alert = ({
@@ -15,9 +23,29 @@ const Alert = ({
   title,
   description,
   buttonLabel = "확인",
+  cancel,
   onClick,
+  onClickAsync,
 }: Props) => {
+  const { closeAlert } = useAlertStore();
+  const [loading, setLoading] = useState(false);
+
   if (!open) return null;
+
+  const handleClick = async () => {
+    if (onClickAsync) {
+      setLoading(true);
+      try {
+        await onClickAsync();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    } else if (onClick) {
+      onClick();
+    }
+  };
 
   return (
     <Dimmed>
@@ -36,11 +64,34 @@ const Alert = ({
 
         {description && <Text typography="t7">{description}</Text>}
 
-        {onClick && (
+        {(onClick || cancel) && (
           <div className="flex justify-end mt-3">
-            <Button onClick={onClick} size="sm">
-              {buttonLabel}
-            </Button>
+            <div className="flex">
+              {cancel && (
+                <Button
+                  onClick={closeAlert}
+                  size="sm"
+                  variant="contrast"
+                  className="flex items-center justify-center w-16 h-8 p-0"
+                >
+                  취소
+                </Button>
+              )}
+              {(onClick || onClickAsync) && (
+                <Button
+                  onClick={handleClick}
+                  size="sm"
+                  className="ml-2 flex items-center justify-center w-16 h-8 p-0"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <LoadingIcon size="sm" className="mr-0 ml-0 text-white" />
+                  ) : (
+                    buttonLabel
+                  )}
+                </Button>
+              )}
+            </div>
           </div>
         )}
       </div>
