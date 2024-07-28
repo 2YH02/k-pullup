@@ -3,4 +3,5 @@ export interface User {
   username: string;
   email: string;
   chulbong?: boolean;
+  error?: string;
 }

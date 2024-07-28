@@ -63,7 +63,7 @@ const UserSetting = () => {
     });
   };
 
-  if (!user) return null;
+  if (!user || user.error) return null;
 
   return (
     <List title="사용자 설정">

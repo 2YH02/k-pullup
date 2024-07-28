@@ -11,6 +11,10 @@ export const iconColorMap = {
   primary: "fill-primary",
   black: "fill-black",
 };
+export const iconStorkeColorMap = {
+  primary: "stroke-primary",
+  black: "stroke-black",
+};
 
 const HomeIcon = ({ size = 25, color = "primary", className }: IconProps) => {
   return (

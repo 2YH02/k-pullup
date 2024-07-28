@@ -5,6 +5,7 @@
 :root {
   --background: #838383;
   --color: #111827;
+  --color-primary: #fab4ab;
 }
 
 body {
@@ -42,6 +43,12 @@ a {
   }
   .shadow-simple {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  }
+  .shadow-dark-primary {
+    box-shadow: rgba(249, 180, 171, 0.8) 0px 3px 8px;
+  }
+  .shadow-simple-primary {
+    box-shadow: rgba(249, 180, 171, 0.6) 0px 1px 4px;
   }
 
   .no-touch {
