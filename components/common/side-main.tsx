@@ -117,7 +117,7 @@ const SideMain = ({
           ? "h-[calc(100%-96px)] mo:h-[calc(100%-96px)] mo:mt-10"
           : "h-[calc(100%-40px)] mo:h-[calc(100%-40px)] mo:mt-10";
       } else {
-        return withNav ? "mo:h-[calc(100%-54px)]" : "mo:h-full";
+        return withNav ? "mo:h-[calc(100%-54px)]" : "h-full mo:h-full";
       }
     } else {
       if (headerTitle) {

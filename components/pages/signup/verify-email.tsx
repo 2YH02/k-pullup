@@ -1,14 +1,15 @@
 import sendSignupCode from "@api/auth/send-signup-code";
 import verifyCode from "@api/auth/verifyCode";
+import BottomFixedButton from "@common/bottom-fixed-button";
 import Button from "@common/button";
 import GrowBox from "@common/grow-box";
 import InputField from "@common/input-field";
+import Section from "@common/section";
 import Timer from "@common/timer";
 import useInput from "@hooks/useInput";
 import LoadingIcon from "@icons/loading-icon";
 import { validateCode, validateEmail, validateMassage } from "@lib/validate";
 import { useEffect, useState } from "react";
-// TODO: 이메일 전송, 인증 확인 기능 구현
 
 interface VerifyEmailProps {
   next: (value: string) => void;
@@ -126,7 +127,7 @@ const VerifyEmail = ({ next }: VerifyEmailProps) => {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <Section className="h-full pb-0 flex flex-col">
       <div className="mb-10">
         <InputField
           label="이메일"
@@ -198,19 +199,16 @@ const VerifyEmail = ({ next }: VerifyEmailProps) => {
 
       <GrowBox />
 
-      {/* TODO: 이후 fixed bottom 버튼 공통 컴포넌트화 고려 */}
-      <div className="sticky bottom-0 py-4 w-full bg-white dark:bg-black">
-        <Button
-          onClick={() => {
-            next(email.value);
-          }}
-          disabled={!completed.email || !completed.code}
-          full
-        >
-          다음
-        </Button>
-      </div>
-    </div>
+      <BottomFixedButton
+        onClick={() => {
+          next(email.value);
+        }}
+        disabled={!completed.email || !completed.code}
+        containerStyle="px-0"
+      >
+        다음
+      </BottomFixedButton>
+    </Section>
   );
 };
 

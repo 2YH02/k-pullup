@@ -1,9 +1,12 @@
 "use client";
 
-import Section from "@common/section";
+import signup from "@api/auth/signup";
 import SideMain from "@common/side-main";
 import EnterPassword from "@pages/signup/enter-password";
 import EnterUsername from "@pages/signup/enter-username";
+import SignupComplete, {
+  type SignupStatus,
+} from "@pages/signup/signup-complete";
 import VerifyEmail from "@pages/signup/verify-email";
 import useAlertStore from "@store/useAlertStore";
 import { useRouter } from "next/navigation";
@@ -14,24 +17,44 @@ const SignupClient = () => {
 
   const { openAlert } = useAlertStore();
 
-  const [signinValue, setSigninValue] = useState({
+  const [signupValue, setSignupValue] = useState({
     email: "",
     username: "",
     password: "",
     step: 0,
   });
 
+  const [signupStatus, setSignupStatus] = useState<SignupStatus>("pending");
+
   const headerTitle = useMemo(() => {
-    if (signinValue.step === 0) return "이메일 확인";
-    if (signinValue.step === 1) return "사용자 이름 입력";
-    if (signinValue.step === 2) return "비밀번호 입력";
-  }, [signinValue.step]);
+    if (signupValue.step === 0) return "이메일 확인";
+    if (signupValue.step === 1) return "사용자 이름 입력";
+    if (signupValue.step === 2) return "비밀번호 입력";
+  }, [signupValue.step]);
 
   useEffect(() => {
-    if (signinValue.step === 3) {
-      console.log(signinValue);
+    const fetchSignup = async () => {
+      const response = await signup({
+        email: signupValue.email,
+        username: signupValue.username,
+        password: signupValue.password,
+      });
+
+      if (!response.ok) {
+        setTimeout(() => {
+          setSignupStatus("error");
+        }, 1100);
+        return;
+      }
+
+      setTimeout(() => {
+        setSignupStatus("complete");
+      }, 1100);
+    };
+    if (signupValue.step === 3) {
+      fetchSignup();
     }
-  }, [signinValue.step]);
+  }, [signupValue.step]);
 
   const handlePrev = () => {
     openAlert({
@@ -44,21 +67,23 @@ const SignupClient = () => {
   };
 
   const handleEmailChange = (email: string) => {
-    setSigninValue((prev) => ({
+    setSignupValue((prev) => ({
       ...prev,
       email,
       step: prev.step + 1,
     }));
   };
+
   const handleUserNameChange = (username: string) => {
-    setSigninValue((prev) => ({
+    setSignupValue((prev) => ({
       ...prev,
       username,
       step: prev.step + 1,
     }));
   };
-  const handlePasswordChange = (password: string) => {
-    setSigninValue((prev) => ({
+
+  const handlePasswordChange = async (password: string) => {
+    setSignupValue((prev) => ({
       ...prev,
       password,
       step: prev.step + 1,
@@ -70,17 +95,12 @@ const SignupClient = () => {
       headerTitle={headerTitle}
       prevClick={handlePrev}
       fullHeight
-      hasBackButton={signinValue.step === 3 ? false : true}
+      hasBackButton={signupValue.step === 3 ? false : true}
     >
-      <Section className="h-full pb-0">
-        {signinValue.step === 0 && <VerifyEmail next={handleEmailChange} />}
-        {signinValue.step === 1 && (
-          <EnterUsername next={handleUserNameChange} />
-        )}
-        {signinValue.step === 2 && (
-          <EnterPassword next={handlePasswordChange} />
-        )}
-      </Section>
+      {signupValue.step === 0 && <VerifyEmail next={handleEmailChange} />}
+      {signupValue.step === 1 && <EnterUsername next={handleUserNameChange} />}
+      {signupValue.step === 2 && <EnterPassword next={handlePasswordChange} />}
+      {signupValue.step === 3 && <SignupComplete status={signupStatus} />}
     </SideMain>
   );
 };
