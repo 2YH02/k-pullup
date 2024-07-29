@@ -28,7 +28,7 @@
       "@store/*": ["./store/*"],
       "@provider/*": ["./components/provider/*"],
       "@hooks/*": ["./hooks/*"],
-      "@api/*": ["./api/*"],
+      "@api/*": ["./lib/api/*"],
       "@constant/*": ["./constant/*"],
       "@types/*": ["./types/*"]
     }

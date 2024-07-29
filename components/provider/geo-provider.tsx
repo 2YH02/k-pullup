@@ -1,6 +1,6 @@
 "use client";
 
-import getAddress from "@/api/common/get-address";
+import getAddress from "@api/common/get-address";
 import useMapStore from "@/store/useMapStore";
 import useGeolocationStore from "@store/useGeolocationStore";
 import { useEffect } from "react";
