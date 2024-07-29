@@ -8,10 +8,11 @@ import { useMemo } from "react";
 export type SignupStatus = "pending" | "complete" | "error";
 
 interface SignupCompleteProps {
+  returnUrl?: string;
   status: SignupStatus;
 }
 
-const SignupComplete = ({ status }: SignupCompleteProps) => {
+const SignupComplete = ({ status, returnUrl }: SignupCompleteProps) => {
   const router = useRouter();
 
   const message = useMemo(() => {
@@ -42,7 +43,11 @@ const SignupComplete = ({ status }: SignupCompleteProps) => {
       {status !== "pending" && (
         <Button
           onClick={() => {
-            router.replace("/signin");
+            if (returnUrl) {
+              router.replace(`/signin?returnUrl=${returnUrl}`);
+            } else {
+              router.replace(`/signin`);
+            }
           }}
           full
           className="mt-10"

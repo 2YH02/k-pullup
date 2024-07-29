@@ -1,10 +1,17 @@
 import SignupClient from "./signup-client";
-// TODO: 회원가입 returnUrl 로그인에서 공유
 
-const SignupPage = () => {
+interface PageProps {
+  searchParams: {
+    returnUrl: string;
+  };
+}
+
+const SignupPage = ({ searchParams }: PageProps) => {
+  const { returnUrl } = searchParams;
+
   return (
     <>
-      <SignupClient />
+      <SignupClient returnUrl={returnUrl} />
     </>
   );
 };

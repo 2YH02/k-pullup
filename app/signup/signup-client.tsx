@@ -12,7 +12,11 @@ import useAlertStore from "@store/useAlertStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-const SignupClient = () => {
+interface SignupClientProps {
+  returnUrl?: string;
+}
+
+const SignupClient = ({ returnUrl }: SignupClientProps) => {
   const router = useRouter();
 
   const { openAlert } = useAlertStore();
@@ -105,7 +109,9 @@ const SignupClient = () => {
       {signupValue.step === 0 && <VerifyEmail next={handleEmailChange} />}
       {signupValue.step === 1 && <EnterUsername next={handleUserNameChange} />}
       {signupValue.step === 2 && <EnterPassword next={handlePasswordChange} />}
-      {signupValue.step === 3 && <SignupComplete status={signupStatus} />}
+      {signupValue.step === 3 && (
+        <SignupComplete status={signupStatus} returnUrl={returnUrl} />
+      )}
     </SideMain>
   );
 };
