@@ -7,9 +7,10 @@ interface ListItemProps {
   children: React.ReactNode;
   icon?: React.ReactNode;
   onClick?: VoidFunction;
+  onIconClick?: VoidFunction;
 }
 
-const ListItem = ({ children, icon, onClick }: ListItemProps) => {
+const ListItem = ({ children, icon, onClick, onIconClick }: ListItemProps) => {
   const [hover, setHover] = useState(false);
 
   const Container = onClick ? "button" : "div";
@@ -29,7 +30,21 @@ const ListItem = ({ children, icon, onClick }: ListItemProps) => {
       >
         {children}
 
-        {icon && <div className="flex-shrink-0">{icon}</div>}
+        {icon && (
+          <div
+            className="flex-shrink-0"
+            onClick={
+              onIconClick
+                ? (e) => {
+                    e.stopPropagation();
+                    onIconClick();
+                  }
+                : undefined
+            }
+          >
+            {icon}
+          </div>
+        )}
       </Container>
     </li>
   );
@@ -47,7 +62,7 @@ export const ListContents = ({
   return (
     <div className="flex grow">
       {children}
-      <div className="flex flex-col">
+      <div className="flex flex-col select-none">
         <Text
           fontWeight="bold"
           typography="t5"

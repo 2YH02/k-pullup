@@ -1,52 +1,46 @@
-"use client";
-
 import Section from "@common/section";
 import ShadowBox from "@common/shadow-box";
 import Text from "@common/text";
+import Link from "next/link";
 
 const LinkList = () => {
   return (
     <Section className="flex flex-col">
-      <ShadowBox
-        className="flex items-center p-4 mb-4"
-        withAction
-        onClick={() => {}}
-      >
-        <div className="mr-10">
-          <BookmarkIcon />
-        </div>
-        <Text fontWeight="bold">저장한 장소</Text>
-      </ShadowBox>
-      <ShadowBox
-        className="flex items-center p-4 mb-4"
-        withAction
-        onClick={() => {}}
-      >
-        <div className="mr-10">
-          <MylocateIcon />
-        </div>
-        <Text fontWeight="bold">등록한 장소</Text>
-      </ShadowBox>
-      <ShadowBox
-        className="flex items-center p-4 mb-4"
-        withAction
-        onClick={() => {}}
-      >
-        <div className="mr-10">
-          <Proposal />
-        </div>
-        <Text fontWeight="bold">정보 수정 요청 목록</Text>
-      </ShadowBox>
-      <ShadowBox
-        className="flex items-center p-4"
-        withAction
-        onClick={() => {}}
-      >
-        <div className="mr-10">
-          <Received />
-        </div>
-        <Text fontWeight="bold">받은 정보 수정 요청 목록</Text>
-      </ShadowBox>
+      <Link href="/mypage/bookmark">
+        <ShadowBox className="flex items-center p-4 mb-4" withAction>
+          <div className="mr-10">
+            <BookmarkIcon />
+          </div>
+          <Text fontWeight="bold">저장한 장소</Text>
+        </ShadowBox>
+      </Link>
+
+      <Link href="/mypage/locate">
+        <ShadowBox className="flex items-center p-4 mb-4" withAction>
+          <div className="mr-10">
+            <MylocateIcon />
+          </div>
+          <Text fontWeight="bold">등록한 장소</Text>
+        </ShadowBox>
+      </Link>
+
+      <Link href="/mypage/report">
+        <ShadowBox className="flex items-center p-4 mb-4" withAction>
+          <div className="mr-10">
+            <Proposal />
+          </div>
+          <Text fontWeight="bold">정보 수정 요청 목록</Text>
+        </ShadowBox>
+      </Link>
+
+      <Link href="/mypage/myreport">
+        <ShadowBox className="flex items-center p-4" withAction>
+          <div className="mr-10">
+            <Received />
+          </div>
+          <Text fontWeight="bold">받은 정보 수정 요청 목록</Text>
+        </ShadowBox>
+      </Link>
     </Section>
   );
 };

@@ -3,6 +3,7 @@ import ListItem, { ListContents, ListLeft } from "@common/list-item";
 import Section from "@common/section";
 import Text from "@common/text";
 import PinIcon from "@icons/pin-icon";
+// TODO: 리스트 클릭 시 지도 이동, 상세페이지 진입
 
 interface RankingListProps {
   data: RankingInfo[];
