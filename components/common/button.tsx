@@ -4,7 +4,7 @@ import cn from "@lib/cn";
 
 const buttonColorMap = {
   primary: cn(
-    "bg-primary",
+    "bg-primary dark:bg-primary-dark",
     "text-white",
     "disabled:bg-primary/50",
     "disabled:text-white/70"
@@ -31,7 +31,7 @@ const buttonColorMap = {
 
 const buttonContrastColorMap = {
   primary: cn(
-    "bg-white",
+    "bg-white dark:bg-black",
     "text-primary",
     "border",
     "border-primary",
@@ -124,7 +124,7 @@ const Button = ({
     sizeClass,
     fullClass,
     "rounded",
-    "focus:outline-none",
+    "focus:outline-none select-none",
     !disabled && "hover:bg-opacity-75"
   );
 

@@ -6,16 +6,29 @@ import Image from "next/image";
 
 interface ImageCarouselProps {
   data: newPicturesRes[];
+  size?: "sm" | "md" | "lg";
   priority?: boolean;
+  onClick?: VoidFunction;
 }
 
-const ImageCarousel = ({ data, priority = false }: ImageCarouselProps) => {
+const ImageCarousel = ({
+  data,
+  size = "lg",
+  priority = false,
+  onClick,
+}: ImageCarouselProps) => {
+  const carouselSize =
+    size === "sm" ? "w-12 h-12" : size === "md" ? "w-24 h-24" : "w-32 h-32";
+
   return (
     <Carousel opts={{ dragFree: true }}>
-      <CarouselContent className="-ml-1 gap-3 w-32 h-32 p-1">
+      <CarouselContent className={`-ml-1 gap-3 ${carouselSize} p-1`}>
         {data.map((item) => (
           <CarouselItem key={item.markerId} className="p-0">
-            <button className="w-full h-full overflow-hidden rounded-lg shadow-md">
+            <button
+              className="w-full h-full overflow-hidden rounded-lg shadow-md"
+              onClick={onClick ? onClick : undefined}
+            >
               <Image
                 src={item.photoURL}
                 alt={`${item.markerId} 상세`}
