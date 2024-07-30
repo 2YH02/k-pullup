@@ -222,15 +222,15 @@ const BookmarkIcon = () => {
   );
 };
 
-const Received = () => {
+export const Received = ({ size = 40 }: { size?: number }) => {
   return (
     <svg
       data-name="Layer 1"
       id="Layer_1"
       viewBox="0 0 500 500"
       xmlns="http://www.w3.org/2000/svg"
-      width={40}
-      height={40}
+      width={size}
+      height={size}
     >
       <circle className="fill-[#88a451]" cx="217.44" cy="282.56" r="206.7" />
       <path

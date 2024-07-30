@@ -27,7 +27,7 @@ const ReportClient = ({ data }: ReportClientProps) => {
     });
   };
 
-  if (reports.length <= 0) {
+  if (reports.length <= 0 || !reports) {
     return (
       <SideMain headerTitle="저장한 장소" hasBackButton>
         <Section className="mt-10">

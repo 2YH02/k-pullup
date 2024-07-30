@@ -21,6 +21,7 @@ const ReportListItem = ({ data, onDelete }: ReportListItemProps) => {
   const { openAlert, closeAlert } = useAlertStore();
 
   const images = useMemo(() => {
+    if (!data.photoUrls || data.photoUrls.length <= 0) return null;
     const newImages = data.photoUrls.map((image, index) => {
       return { markerId: index, photoURL: image };
     });
@@ -65,23 +66,26 @@ const ReportListItem = ({ data, onDelete }: ReportListItemProps) => {
           </div>
         </div>
       </div>
-
-      <div className="mb-4">
-        <Text fontWeight="bold" className="mb-1">
-          추가된 이미지
-        </Text>
-        <ImageCarousel data={images} size="md" />
-      </div>
+      {images && (
+        <div className="mb-4">
+          <Text fontWeight="bold" className="mb-1">
+            추가된 이미지
+          </Text>
+          <ImageCarousel data={images} size="md" />
+        </div>
+      )}
 
       <div className="flex justify-center mt-3">
-        <Button
-          onClick={handleDelete}
-          size="sm"
-          variant="contrast"
-          className="mr-4"
-        >
-          요청 취소
-        </Button>
+        {data.status === "PENDING" && (
+          <Button
+            onClick={handleDelete}
+            size="sm"
+            variant="contrast"
+            className="mr-4"
+          >
+            요청 삭제
+          </Button>
+        )}
         <Button
           onClick={() => router.push(`/pullup/${data.markerId}`)}
           size="sm"
@@ -93,7 +97,7 @@ const ReportListItem = ({ data, onDelete }: ReportListItemProps) => {
   );
 };
 
-const StatusBadge = ({ status }: { status: ReportStatus }) => {
+export const StatusBadge = ({ status }: { status: ReportStatus }) => {
   const badgeText = useMemo(() => {
     if (status === "APPROVED") return "승인됨";
     else if (status === "DENIED") return "거절됨";

@@ -221,7 +221,7 @@ const MainHeader = ({
     >
       {hasBackButton ? (
         <button
-          className={`flex items-center justify-center w-10 h-10 ${
+          className={`flex items-center justify-center shrink-0 w-10 h-10 ${
             hasBackButton ? "cursor-pointer" : "cursor-default"
           }`}
           onClick={
@@ -238,13 +238,17 @@ const MainHeader = ({
         <div className="w-10 h-10" />
       )}
 
-      <Text typography="t5" fontWeight="bold" className="grow text-center">
+      <Text
+        typography="t5"
+        fontWeight="bold"
+        className="grow text-center truncate"
+      >
         {titile}
       </Text>
 
       {iconClick ? (
         <button
-          className={`flex items-center justify-center w-10 h-10`}
+          className={`flex items-center shrink-0 justify-center w-10 h-10`}
           onClick={iconClick}
         >
           {headerIcon && headerIcon}
