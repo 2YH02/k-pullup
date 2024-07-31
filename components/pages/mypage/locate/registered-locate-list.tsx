@@ -36,9 +36,9 @@ const RegisteredLocateList = ({ data }: RegisteredListProps) => {
 
     setMarkers((prevMarkers) => [...prevMarkers, ...newData.markers]);
     setCurrentPage(newData.currentPage);
-    
+
     setIsLoading(false);
-  }, [currentPage, isLoading]);
+  }, [currentPage, isLoading, data.totalPages]);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(

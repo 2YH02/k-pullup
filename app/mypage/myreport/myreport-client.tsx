@@ -64,6 +64,7 @@ const MyreportClient = ({ data }: MyreportClientProps) => {
             onClick: () => {},
           });
 
+          router.refresh();
           return;
         }
 
@@ -107,6 +108,7 @@ const MyreportClient = ({ data }: MyreportClientProps) => {
             onClick: () => {},
           });
 
+          router.refresh();
           return;
         }
 
