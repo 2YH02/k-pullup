@@ -72,6 +72,7 @@ const SignupClient = ({ returnUrl }: SignupClientProps) => {
       onClick: () => {
         router.push("/signin");
       },
+      cancel: true,
     });
   };
 

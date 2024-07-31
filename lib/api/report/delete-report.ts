@@ -9,10 +9,10 @@ const deleteReport = async (markerId: number, reportId: number) => {
   );
 
   if (!response.ok) {
-    console.log(response);
     const errorData = await response.json();
-    console.log(errorData);
-    // throw new Error(errorData.error || "Failed to fetch favorites");
+    throw new Error(
+      errorData.error || errorData.message || "Failed to fetch favorites"
+    );
   }
 
   return response;

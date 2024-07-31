@@ -18,7 +18,7 @@ const Error = ({
 
   useEffect(() => {
     router.refresh();
-  }, [error.message]);
+  }, [error.message, router]);
 
   if (error.message === "No authorization token provided") {
     return (

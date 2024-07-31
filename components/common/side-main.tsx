@@ -8,6 +8,7 @@ import UserIcon from "@icons/user-icon";
 import BottomNav from "@layout/bottom-nav";
 import cn from "@lib/cn";
 import useScrollRefStore from "@store/useScrollRefStore";
+import useSheetHeightStore from "@store/useSheetHeightStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Text from "./text";
@@ -22,6 +23,7 @@ interface SideMainProps {
   fullHeight?: boolean;
   headerPosition?: "sticky" | "fixed";
   background?: "white" | "grey";
+  dragable?: boolean;
   headerIconClick?: VoidFunction;
   prevClick?: VoidFunction;
 }
@@ -62,14 +64,15 @@ const SideMain = ({
   fullHeight,
   headerPosition,
   background = "white",
+  dragable = true,
   headerIconClick,
   prevClick,
   children,
 }: SideMainProps) => {
+  const { sheetHeight, setSheetHeight } = useSheetHeightStore();
   const containerRef = useRef<HTMLDivElement>(null);
   const { setContainerRef } = useScrollRefStore();
 
-  const [sheetHeight, setSheetHeight] = useState(85);
   const [isMoblie, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -91,7 +94,7 @@ const SideMain = ({
   }, []);
 
   const dragStart: React.PointerEventHandler<HTMLDivElement> = (e) => {
-    if (!isMoblie || fullHeight) return;
+    if (!isMoblie || fullHeight || !dragable) return;
     const startY = e.clientY;
     let newHeight: number;
 
@@ -169,7 +172,7 @@ const SideMain = ({
 
       {!fullHeight && (
         <div className="sticky top-0 py-3 bg-white dark:bg-black z-20 web:hidden">
-          <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />
+          {dragable && <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />}
         </div>
       )}
 

@@ -59,7 +59,7 @@ const Input = ({
       <input
         className={`w-full h-full focus:outline-none focus:border-primary-dark ${
           isSearchButton ? "cursor-pointer" : ""
-        } dark:bg-black-light dark:focus:border-grey-light dark:text-white`}
+        } dark:bg-black-light dark:focus:border-grey-light text-black dark:text-white`}
         aria-invalid={isInvalid}
         onClick={isSearchButton ? handleClick : undefined}
         onFocus={isSearchButton ? handleFocus : undefined}

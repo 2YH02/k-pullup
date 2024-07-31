@@ -349,15 +349,15 @@ export const Received = ({ size = 40 }: { size?: number }) => {
   );
 };
 
-const Proposal = () => {
+export const Proposal = ({ size = 40 }: { size?: number }) => {
   return (
     <svg
       data-name="Layer 1"
       id="Layer_1"
       viewBox="0 0 500 500"
       xmlns="http://www.w3.org/2000/svg"
-      width={40}
-      height={40}
+      width={size}
+      height={size}
     >
       <polygon
         className="fill-[#f8e6c5]"

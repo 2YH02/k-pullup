@@ -42,12 +42,14 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:20.14.10"],\
           ["@types/react", "npm:18.3.3"],\
           ["@types/react-dom", "npm:18.3.0"],\
+          ["@types/uuid", "npm:10.0.0"],\
           ["clsx", "npm:2.1.1"],\
           ["embla-carousel-autoplay", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:8.1.7"],\
           ["embla-carousel-react", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:8.1.7"],\
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-next", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:14.2.5"],\
           ["eslint-plugin-storybook", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:0.8.0"],\
+          ["img-toolkit", "npm:1.0.2"],\
           ["next", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:14.2.5"],\
           ["next-themes", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:0.3.0"],\
           ["postcss", "npm:8.4.39"],\
@@ -58,6 +60,7 @@ const RAW_RUNTIME_STATE =
           ["tailwind-merge", "npm:2.4.0"],\
           ["tailwindcss", "npm:3.4.4"],\
           ["typescript", "patch:typescript@npm%3A5.5.3#optional!builtin<compat/typescript>::version=5.5.3&hash=379a07"],\
+          ["uuid", "npm:10.0.0"],\
           ["webpack", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:5.93.0"],\
           ["webpack-cli", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:5.1.4"],\
           ["zustand", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:4.5.4"]\
@@ -5147,6 +5150,13 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@types/uuid", [\
+      ["npm:10.0.0", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@types-uuid-npm-10.0.0-9ac1066765-10c0.zip/node_modules/@types/uuid/",\
+        "packageDependencies": [\
+          ["@types/uuid", "npm:10.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:9.0.8", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/@types-uuid-npm-9.0.8-3eeeaa5abb-10c0.zip/node_modules/@types/uuid/",\
         "packageDependencies": [\
@@ -10030,6 +10040,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["img-toolkit", [\
+      ["npm:1.0.2", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/img-toolkit-npm-1.0.2-755967a410-10c0.zip/node_modules/img-toolkit/",\
+        "packageDependencies": [\
+          ["img-toolkit", "npm:1.0.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["import-fresh", [\
       ["npm:3.3.0", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/import-fresh-npm-3.3.0-3e34265ca9-10c0.zip/node_modules/import-fresh/",\
@@ -12853,12 +12872,14 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:20.14.10"],\
           ["@types/react", "npm:18.3.3"],\
           ["@types/react-dom", "npm:18.3.0"],\
+          ["@types/uuid", "npm:10.0.0"],\
           ["clsx", "npm:2.1.1"],\
           ["embla-carousel-autoplay", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:8.1.7"],\
           ["embla-carousel-react", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:8.1.7"],\
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-next", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:14.2.5"],\
           ["eslint-plugin-storybook", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:0.8.0"],\
+          ["img-toolkit", "npm:1.0.2"],\
           ["next", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:14.2.5"],\
           ["next-themes", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:0.3.0"],\
           ["postcss", "npm:8.4.39"],\
@@ -12869,6 +12890,7 @@ const RAW_RUNTIME_STATE =
           ["tailwind-merge", "npm:2.4.0"],\
           ["tailwindcss", "npm:3.4.4"],\
           ["typescript", "patch:typescript@npm%3A5.5.3#optional!builtin<compat/typescript>::version=5.5.3&hash=379a07"],\
+          ["uuid", "npm:10.0.0"],\
           ["webpack", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:5.93.0"],\
           ["webpack-cli", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:5.1.4"],\
           ["zustand", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:4.5.4"]\
@@ -15350,6 +15372,13 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["uuid", [\
+      ["npm:10.0.0", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/uuid-npm-10.0.0-4872b46ff8-10c0.zip/node_modules/uuid/",\
+        "packageDependencies": [\
+          ["uuid", "npm:10.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:9.0.1", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/uuid-npm-9.0.1-39a8442bc6-10c0.zip/node_modules/uuid/",\
         "packageDependencies": [\
