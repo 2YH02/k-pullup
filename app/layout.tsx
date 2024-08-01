@@ -2,6 +2,7 @@ import KakaoMap from "@layout/kakao-map";
 import AlertProvider from "@provider/alert-provider";
 import ChatIdProvider from "@provider/chat-Id-provider";
 import GeoProvider from "@provider/geo-provider";
+import ImageModalProvider from "@provider/image-modal-provider";
 import ThemeProvider from "@provider/theme-provider";
 import { Toaster } from "@provider/toaster";
 import UserProvider from "@provider/user-provider";
@@ -67,15 +68,18 @@ export default function RootLayout({
         >
           <ChatIdProvider>
             <AlertProvider>
-              <UserProvider>
-                <GeoProvider>{children}</GeoProvider>
-                <Toaster />
-              </UserProvider>
+              <ImageModalProvider>
+                <UserProvider>
+                  <GeoProvider>{children}</GeoProvider>
+                  <Toaster />
+                </UserProvider>
+              </ImageModalProvider>
             </AlertProvider>
             <KakaoMap />
           </ChatIdProvider>
         </ThemeProvider>
         <div id="portal"></div>
+        <div id="image-portal"></div>
       </body>
     </html>
   );

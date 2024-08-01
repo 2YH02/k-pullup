@@ -1,3 +1,6 @@
+"use client";
+
+import useImageModalStore from "@/store/useImageModalStore";
 import Divider from "@common/divider";
 import Text from "@common/text";
 import ChatBubbleIcon from "@icons/chat-bubble-icon";
@@ -11,7 +14,10 @@ interface ButtonListProps {
 const ButtonList = ({ isChulbong = false }: ButtonListProps) => {
   return (
     <div className="flex border-t border-solid border-grey-light">
-      <button className="p-1 pt-3 flex flex-col items-center justify-center flex-1">
+      <button
+        className="p-1 pt-3 flex flex-col items-center justify-center flex-1"
+        onClick={() => {}}
+      >
         <BookmarkIcon active={true} />
         <Text typography="t6" className="mt-1">
           북마크

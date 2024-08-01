@@ -5,6 +5,7 @@ import cn from "@lib/cn";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import * as React from "react";
 
 type CarouselApi = UseEmblaCarouselType[1];
@@ -206,7 +207,8 @@ const CarouselPrevious = () => {
       disabled={!canScrollPrev}
       onClick={scrollPrev}
     >
-      오<span className="sr-only">Previous slide</span>
+      <ArrowLeftIcon />
+      <span className="sr-only">Previous slide</span>
     </Button>
   );
 };
@@ -226,7 +228,8 @@ const CarouselNext = () => {
       disabled={!canScrollNext}
       onClick={scrollNext}
     >
-      왼<span className="sr-only">Next slide</span>
+      <ArrowRightIcon />
+      <span className="sr-only">Next slide</span>
     </Button>
   );
 };
@@ -237,5 +240,6 @@ export {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-  type CarouselApi,
+  type CarouselApi
 };
+
