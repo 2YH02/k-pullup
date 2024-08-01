@@ -1,12 +1,13 @@
 import KakaoMap from "@layout/kakao-map";
 import AlertProvider from "@provider/alert-provider";
+import ChatIdProvider from "@provider/chat-Id-provider";
 import GeoProvider from "@provider/geo-provider";
 import ThemeProvider from "@provider/theme-provider";
+import { Toaster } from "@provider/toaster";
 import UserProvider from "@provider/user-provider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import ChatIdProvider from "@/components/provider/chat-Id-provider";
 
 declare global {
   interface Window {
@@ -68,6 +69,7 @@ export default function RootLayout({
             <AlertProvider>
               <UserProvider>
                 <GeoProvider>{children}</GeoProvider>
+                <Toaster />
               </UserProvider>
             </AlertProvider>
             <KakaoMap />

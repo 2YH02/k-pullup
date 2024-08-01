@@ -9,6 +9,7 @@ import ListItem, { ListContents } from "@common/list-item";
 import Skeleton from "@common/skeleton";
 import useMapControl from "@hooks/useMapControl";
 import PinIcon from "@icons/pin-icon";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface RegisteredListProps {
@@ -16,6 +17,8 @@ interface RegisteredListProps {
 }
 
 const RegisteredLocateList = ({ data }: RegisteredListProps) => {
+  const router = useRouter();
+
   const { move } = useMapControl();
 
   const [markers, setMarkers] = useState<RegisteredMarker[]>(data.markers);
@@ -71,9 +74,10 @@ const RegisteredLocateList = ({ data }: RegisteredListProps) => {
             <ListItem
               key={marker.markerId}
               icon={<PinIcon size={25} />}
-              onClick={() =>
-                move({ lat: marker.latitude, lng: marker.longitude })
-              }
+              onClick={() => {
+                move({ lat: marker.latitude, lng: marker.longitude });
+                router.push(`/pullup/${marker.markerId}`);
+              }}
             >
               <ListContents
                 title={marker.address}

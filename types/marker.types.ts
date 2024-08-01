@@ -22,4 +22,5 @@ export interface Marker {
   favorited?: boolean;
   address?: string;
   favCount?: number;
+  error?: string;
 }

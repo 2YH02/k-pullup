@@ -6,6 +6,7 @@ import SideMain from "@common/side-main";
 import Text from "@common/text";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+// TODO: 리스트 없을 때 오류 모바일 확인 필요
 
 const Error = ({
   error,
