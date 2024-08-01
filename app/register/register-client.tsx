@@ -103,6 +103,7 @@ const RegisterClient = () => {
     registerValue.latitude,
     registerValue.longitude,
     registerValue.photos,
+    setUser,
   ]);
 
   useEffect(() => {

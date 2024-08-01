@@ -103,7 +103,7 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
     return () => {
       ws.current?.close();
     };
-  }, []);
+  }, [cidState.cid]);
 
   useEffect(() => {
     if (!ws) return;
