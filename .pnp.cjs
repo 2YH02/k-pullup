@@ -49,6 +49,7 @@ const RAW_RUNTIME_STATE =
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-next", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:14.2.5"],\
           ["eslint-plugin-storybook", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:0.8.0"],\
+          ["framer-motion", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:11.3.19"],\
           ["img-toolkit", "npm:1.0.2"],\
           ["next", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:14.2.5"],\
           ["next-themes", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:0.3.0"],\
@@ -9313,6 +9314,37 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["framer-motion", [\
+      ["npm:11.3.19", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/framer-motion-npm-11.3.19-553b2c2eb5-10c0.zip/node_modules/framer-motion/",\
+        "packageDependencies": [\
+          ["framer-motion", "npm:11.3.19"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:11.3.19", {\
+        "packageLocation": "./.yarn/__virtual__/framer-motion-virtual-832e04bf65/4/AppData/Local/Yarn/Berry/cache/framer-motion-npm-11.3.19-553b2c2eb5-10c0.zip/node_modules/framer-motion/",\
+        "packageDependencies": [\
+          ["framer-motion", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:11.3.19"],\
+          ["@emotion/is-prop-valid", null],\
+          ["@types/emotion__is-prop-valid", null],\
+          ["@types/react", "npm:18.3.3"],\
+          ["@types/react-dom", "npm:18.3.0"],\
+          ["react", "npm:18.3.1"],\
+          ["react-dom", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:18.3.1"],\
+          ["tslib", "npm:2.6.3"]\
+        ],\
+        "packagePeers": [\
+          "@emotion/is-prop-valid",\
+          "@types/emotion__is-prop-valid",\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["fresh", [\
       ["npm:0.5.2", {\
         "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/fresh-npm-0.5.2-ad2bb4c0a2-10c0.zip/node_modules/fresh/",\
@@ -12879,6 +12911,7 @@ const RAW_RUNTIME_STATE =
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-next", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:14.2.5"],\
           ["eslint-plugin-storybook", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:0.8.0"],\
+          ["framer-motion", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:11.3.19"],\
           ["img-toolkit", "npm:1.0.2"],\
           ["next", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:14.2.5"],\
           ["next-themes", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:0.3.0"],\

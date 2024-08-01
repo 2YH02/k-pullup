@@ -1,8 +1,9 @@
 "use client";
 
-import setNewMarker, { SetMarkerRes } from "@lib/api/marker/set-new-marker";
 import { KakaoMarker } from "@/types/kakao-map.types";
 import SideMain from "@common/side-main";
+import AuthError from "@layout/auth-error";
+import setNewMarker, { SetMarkerRes } from "@lib/api/marker/set-new-marker";
 import FacilitiesComplete from "@pages/register/facilities-complete";
 import SelectLocation from "@pages/register/select-location";
 import SetDescription from "@pages/register/set-description";
@@ -11,10 +12,9 @@ import UploadComplete from "@pages/register/upload-complete";
 import UploadImage from "@pages/register/upload-image";
 import useAlertStore from "@store/useAlertStore";
 import useMapStore from "@store/useMapStore";
+import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import useUserStore from "@/store/useUserStore";
-import AuthError from "@/components/layout/auth-error";
 
 export type UploadStatus = "image" | "location" | "error" | "complete";
 

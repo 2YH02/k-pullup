@@ -6,6 +6,7 @@ import UserProvider from "@provider/user-provider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import ChatIdProvider from "@/components/provider/chat-Id-provider";
 
 declare global {
   interface Window {
@@ -63,12 +64,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AlertProvider>
-            <UserProvider>
-              <GeoProvider>{children}</GeoProvider>
-            </UserProvider>
-          </AlertProvider>
-          <KakaoMap />
+          <ChatIdProvider>
+            <AlertProvider>
+              <UserProvider>
+                <GeoProvider>{children}</GeoProvider>
+              </UserProvider>
+            </AlertProvider>
+            <KakaoMap />
+          </ChatIdProvider>
         </ThemeProvider>
         <div id="portal"></div>
       </body>

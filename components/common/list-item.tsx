@@ -5,18 +5,27 @@ import { useState } from "react";
 
 interface ListItemProps {
   children: React.ReactNode;
+  as?: "div" | "li";
   icon?: React.ReactNode;
   onClick?: VoidFunction;
   onIconClick?: VoidFunction;
 }
 
-const ListItem = ({ children, icon, onClick, onIconClick }: ListItemProps) => {
+const ListItem = ({
+  children,
+  as = "li",
+  icon,
+  onClick,
+  onIconClick,
+}: ListItemProps) => {
   const [hover, setHover] = useState(false);
 
   const Container = onClick ? "button" : "div";
 
+  const List = as === "li" ? "li" : "div";
+
   return (
-    <li>
+    <List>
       <Container
         className={`flex items-center shadow-simple p-4 ${
           onClick ? "w-full" : ""
@@ -46,7 +55,7 @@ const ListItem = ({ children, icon, onClick, onIconClick }: ListItemProps) => {
           </div>
         )}
       </Container>
-    </li>
+    </List>
   );
 };
 

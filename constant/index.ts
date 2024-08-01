@@ -38,3 +38,21 @@ export const CITIES_BADGE_TITLE = [
   "강원",
   "제주",
 ];
+
+export const REGION_CHAT = [
+  { title: "서울 채팅방", code: "so" },
+  { title: "경기 채팅방", code: "gg" },
+  { title: "인천 채팅방", code: "ic" },
+  { title: "부산 채팅방", code: "bs" },
+  { title: "대전 채팅방", code: "dj" },
+  { title: "제주도 채팅방", code: "jj" },
+  { title: "충남 채팅방", code: "cn" },
+  { title: "충북 채팅방", code: "cb" },
+  { title: "전남 채팅방", code: "jn" },
+  { title: "전북 채팅방", code: "jb" },
+  { title: "경남 채팅방", code: "gn" },
+  { title: "경북 채팅방", code: "gb" },
+  { title: "대구 채팅방", code: "dg" },
+  { title: "강원 채팅방", code: "gw" },
+  { title: "울산 채팅방", code: "us" },
+];
