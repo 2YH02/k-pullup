@@ -26,6 +26,10 @@ a {
   display: inline-block;
 }
 
+li {
+  list-style: none;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #111827;

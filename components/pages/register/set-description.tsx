@@ -3,6 +3,7 @@ import GrowBox from "@common/grow-box";
 import Section from "@common/section";
 import Text from "@common/text";
 import useInput from "@hooks/useInput";
+// TODO: textarea 공통 컴포넌트로 적용
 
 interface SetDescriptionProps {
   next: (description?: string | null) => void;

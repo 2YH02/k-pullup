@@ -7,6 +7,7 @@ import getFacilities from "@lib/api/marker/get-facilities";
 import getWeather from "@lib/api/marker/get-weather";
 import markerDetail from "@lib/api/marker/marker-detail";
 import ButtonList from "@pages/pullup/button-list";
+import Comments from "@pages/pullup/comments";
 import ImageCarousel from "@pages/pullup/image-carousel";
 import ImageList from "@pages/pullup/image-list";
 import NotFoud from "@pages/pullup/not-foud";
@@ -20,27 +21,25 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
   const decodeCookie = decodeURIComponent(cookieStore.toString());
 
   const marker = await markerDetail({ id: ~~id, cookie: decodeCookie });
-  // const facilities = await getFacilities(~~id);
+  const facilities = await getFacilities(~~id);
 
   if (marker.error === "Marker not found") {
     return <NotFoud />;
   }
 
-  // const weather = await getWeather(marker.latitude, marker.longitude);
+  const weather = await getWeather(marker.latitude, marker.longitude);
 
-  // console.log(weather);
-
-  // const 철봉 = facilities.find((item) => item.facilityId === 1);
-  // const 평행봉 = facilities.find((item) => item.facilityId === 2);
+  const 철봉 = facilities.find((item) => item.facilityId === 1);
+  const 평행봉 = facilities.find((item) => item.facilityId === 2);
 
   const tabData = [
     { title: "사진", contents: <ImageList photos={marker.photos} /> },
-    { title: "댓글", contents: <div>댓글들</div> },
+    { title: "댓글", contents: <Comments markerId={marker.markerId} /> },
   ];
 
   return (
     <SideMain headerTitle="위치 상세" hasBackButton withNav>
-      {/* <Section>
+      <Section>
         <div>
           <ImageCarousel photos={marker.photos} />
         </div>
@@ -78,7 +77,7 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
         <Text typography="t6" className="w-full break-words">
           {marker.description || "작성된 설명이 없습니다."}
         </Text>
-      </Section> */}
+      </Section>
 
       <Section className="pb-1">
         <ButtonList />

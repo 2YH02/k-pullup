@@ -1,6 +1,5 @@
 "use client";
 
-import useImageModalStore from "@/store/useImageModalStore";
 import Divider from "@common/divider";
 import Text from "@common/text";
 import ChatBubbleIcon from "@icons/chat-bubble-icon";
@@ -13,7 +12,7 @@ interface ButtonListProps {
 
 const ButtonList = ({ isChulbong = false }: ButtonListProps) => {
   return (
-    <div className="flex border-t border-solid border-grey-light">
+    <div className="flex border-t border-solid border-grey-light dark:border-grey-dark">
       <button
         className="p-1 pt-3 flex flex-col items-center justify-center flex-1"
         onClick={() => {}}
@@ -32,7 +31,7 @@ const ButtonList = ({ isChulbong = false }: ButtonListProps) => {
       </button>
       <Divider className="w-[1px] my-2" />
       <button className="p-1 pt-3 flex flex-col items-center justify-center flex-1">
-        <ChatBubbleIcon size={25} />
+        <ChatBubbleIcon size={25} className="fill-primary dark:fill-primary" />
         <Text typography="t6" className="mt-1">
           채팅
         </Text>

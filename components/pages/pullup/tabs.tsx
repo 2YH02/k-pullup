@@ -1,6 +1,7 @@
 "use client";
 
 import Section from "@common/section";
+import Text from "@common/text";
 import { useMemo, useState } from "react";
 // TODO: 이후에 공통 컴포넌트로 폴더 이동
 
@@ -22,7 +23,7 @@ const Tabs = ({ tabs }: TabsProps) => {
 
   return (
     <div>
-      <div className="flex">
+      <div className="bg-white dark:bg-black sticky top-0 flex">
         {tabs.map((tab) => {
           return (
             <button
@@ -34,7 +35,7 @@ const Tabs = ({ tabs }: TabsProps) => {
               }`}
               onClick={() => setCurTab(tab.title)}
             >
-              {tab.title}
+              <Text>{tab.title}</Text>
             </button>
           );
         })}
