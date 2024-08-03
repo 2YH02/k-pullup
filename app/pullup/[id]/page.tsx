@@ -13,6 +13,7 @@ import ImageList from "@pages/pullup/image-list";
 import NotFoud from "@pages/pullup/not-foud";
 import Tabs from "@pages/pullup/tabs";
 import { cookies } from "next/headers";
+import Link from "next/link";
 
 const PullupPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -39,7 +40,7 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <SideMain headerTitle="위치 상세" hasBackButton withNav>
-      <Section>
+      <Section className="pb-0">
         <div>
           <ImageCarousel photos={marker.photos} />
         </div>
@@ -80,6 +81,12 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
         <Text typography="t6" className="w-full break-words">
           {marker.description || "작성된 설명이 없습니다."}
         </Text>
+
+        <Link href={`/pullup/${id}/report`}>
+          <Text typography="t7" className="mt-4 underline">
+            정보 수정 요청
+          </Text>
+        </Link>
       </Section>
 
       <Section className="pb-1">

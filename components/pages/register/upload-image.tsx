@@ -16,10 +16,12 @@ export interface ImageUploadState {
 }
 
 interface ImageUploadProps {
+  withButton?: boolean;
+  title?: string[];
   next: (photos: File[] | null) => void;
 }
 
-const UploadImage = ({ next }: ImageUploadProps) => {
+const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [images, setImages] = useState<ImageUploadState[]>([]);
@@ -95,10 +97,17 @@ const UploadImage = ({ next }: ImageUploadProps) => {
   return (
     <Section className="h-full pb-0 flex flex-col">
       <div className="my-5">
-        <Text fontWeight="bold">정확한 이미지를 등록해 주시면,</Text>
-        <Text fontWeight="bold">
-          다른 사람이 해당 위치를 찾는 데 큰 도움이 됩니다!
-        </Text>
+        {title && (
+          <>
+            {title.map((text) => {
+              return (
+                <Text fontWeight="bold" key={text}>
+                  {text}
+                </Text>
+              );
+            })}
+          </>
+        )}
       </div>
       <div className="flex flex-col justify-center mb-4">
         <div>
@@ -167,23 +176,25 @@ const UploadImage = ({ next }: ImageUploadProps) => {
 
       <GrowBox />
 
-      <BottomFixedButton
-        onClick={() => {
-          const imageData = images.map((image) => image.file as File);
-          next(imageData.length <= 0 ? null : imageData);
-        }}
-        disabled={loading}
-        className="flex items-center justify-center h-12"
-        containerStyle="px-0"
-      >
-        {loading ? (
-          <LoadingIcon size="sm" className="text-white" />
-        ) : images.length <= 0 ? (
-          "이미지 없이 다음으로"
-        ) : (
-          "다음"
-        )}
-      </BottomFixedButton>
+      {withButton && (
+        <BottomFixedButton
+          onClick={() => {
+            const imageData = images.map((image) => image.file as File);
+            next(imageData.length <= 0 ? null : imageData);
+          }}
+          disabled={loading}
+          className="flex items-center justify-center h-12"
+          containerStyle="px-0"
+        >
+          {loading ? (
+            <LoadingIcon size="sm" className="text-white" />
+          ) : images.length <= 0 ? (
+            "이미지 없이 다음으로"
+          ) : (
+            "다음"
+          )}
+        </BottomFixedButton>
+      )}
     </Section>
   );
 };

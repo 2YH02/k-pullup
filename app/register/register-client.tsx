@@ -234,7 +234,15 @@ const RegisterClient = () => {
           marker={marker as KakaoMarker}
         />
       )}
-      {registerValue.step === 1 && <UploadImage next={handleImageChange} />}
+      {registerValue.step === 1 && (
+        <UploadImage
+          next={handleImageChange}
+          title={[
+            "정확한 이미지를 등록해 주시면,",
+            "다른 사람이 해당 위치를 찾는 데 큰 도움이 됩니다!",
+          ]}
+        />
+      )}
       {registerValue.step === 2 && <SetDescription next={handleDescChange} />}
       {registerValue.step === 3 && (
         <UploadComplete
