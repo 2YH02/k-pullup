@@ -21,25 +21,25 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
   const decodeCookie = decodeURIComponent(cookieStore.toString());
 
   const marker = await markerDetail({ id: ~~id, cookie: decodeCookie });
-  const facilities = await getFacilities(~~id);
+  // const facilities = await getFacilities(~~id);
 
   if (marker.error === "Marker not found") {
     return <NotFoud />;
   }
 
-  const weather = await getWeather(marker.latitude, marker.longitude);
+  // const weather = await getWeather(marker.latitude, marker.longitude);
 
-  const 철봉 = facilities.find((item) => item.facilityId === 1);
-  const 평행봉 = facilities.find((item) => item.facilityId === 2);
+  // const 철봉 = facilities.find((item) => item.facilityId === 1);
+  // const 평행봉 = facilities.find((item) => item.facilityId === 2);
 
-  const tabData = [
-    { title: "사진", contents: <ImageList photos={marker.photos} /> },
-    { title: "댓글", contents: <Comments markerId={marker.markerId} /> },
-  ];
+  // const tabData = [
+  //   { title: "사진", contents: <ImageList photos={marker.photos} /> },
+  //   { title: "댓글", contents: <Comments markerId={marker.markerId} /> },
+  // ];
 
   return (
     <SideMain headerTitle="위치 상세" hasBackButton withNav>
-      <Section>
+      {/* <Section>
         <div>
           <ImageCarousel photos={marker.photos} />
         </div>
@@ -77,15 +77,18 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
         <Text typography="t6" className="w-full break-words">
           {marker.description || "작성된 설명이 없습니다."}
         </Text>
-      </Section>
+      </Section> */}
 
       <Section className="pb-1">
-        <ButtonList />
+        <ButtonList
+          markerId={marker.markerId}
+          favorited={marker.favorited || false}
+        />
       </Section>
 
       <Divider className="h-3" />
 
-      <Tabs tabs={tabData} />
+      {/* <Tabs tabs={tabData} /> */}
     </SideMain>
   );
 };

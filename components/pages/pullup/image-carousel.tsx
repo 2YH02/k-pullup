@@ -1,8 +1,8 @@
 "use client";
 
-import Skeleton from "@/components/common/skeleton";
 import type { Photo } from "@/types/marker.types";
 import { Carousel, CarouselContent, CarouselItem } from "@common/carousel";
+import Skeleton from "@common/skeleton";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { useRef, useState } from "react";

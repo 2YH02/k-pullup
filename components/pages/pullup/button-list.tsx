@@ -5,23 +5,26 @@ import Text from "@common/text";
 import ChatBubbleIcon from "@icons/chat-bubble-icon";
 import PinIcon from "@icons/pin-icon";
 import { ShareIcon, Trash2Icon } from "lucide-react";
+import BookmarkButton from "./bookmark-button";
 
 interface ButtonListProps {
   isChulbong?: boolean;
+  markerId: number;
+  favorited: boolean;
 }
 
-const ButtonList = ({ isChulbong = false }: ButtonListProps) => {
+const ButtonList = ({
+  isChulbong = false,
+  markerId,
+  favorited,
+}: ButtonListProps) => {
   return (
     <div className="flex border-t border-solid border-grey-light dark:border-grey-dark">
-      <button
-        className="p-1 pt-3 flex flex-col items-center justify-center flex-1"
-        onClick={() => {}}
-      >
-        <BookmarkIcon active={true} />
-        <Text typography="t6" className="mt-1">
-          북마크
-        </Text>
-      </button>
+      <BookmarkButton
+        className="p-1 pt-3 flex-1"
+        markerId={markerId}
+        favorited={favorited}
+      />
       <Divider className="w-[1px] my-2" />
       <button className="p-1 pt-3 flex flex-col items-center justify-center flex-1">
         <ShareIcon size={25} className="stroke-primary" />
