@@ -1,4 +1,5 @@
 import KakaoMap from "@layout/kakao-map";
+import Roadview from "@layout/roadview";
 import AlertProvider from "@provider/alert-provider";
 import ChatIdProvider from "@provider/chat-Id-provider";
 import GeoProvider from "@provider/geo-provider";
@@ -71,6 +72,7 @@ export default function RootLayout({
               <ImageModalProvider>
                 <UserProvider>
                   <GeoProvider>{children}</GeoProvider>
+                  <Roadview />
                   <Toaster />
                 </UserProvider>
               </ImageModalProvider>
