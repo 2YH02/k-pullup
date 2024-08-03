@@ -3,16 +3,17 @@ import { create } from "zustand";
 
 interface MapState {
   map: KakaoMap | null;
-  markers: KakaoMarker[] | null;
+  markers: KakaoMarker[];
   setMap: (map: KakaoMap) => void;
   setMarkers: (markers: KakaoMarker[]) => void;
 }
 
 const useMapStore = create<MapState>()((set) => ({
   map: null,
-  markers: null,
+  markers: [],
   setMap: (map: KakaoMap) => set({ map }),
-  setMarkers: (markers: KakaoMarker[]) => set({ markers }),
+  setMarkers: (markers: KakaoMarker[]) =>
+    set((prev) => ({ markers: [...prev.markers, ...markers] })),
 }));
 
 export default useMapStore;

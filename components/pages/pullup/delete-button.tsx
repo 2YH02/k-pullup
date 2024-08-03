@@ -1,5 +1,5 @@
 import IconButton from "@common/icon-button";
-import useMapStore from "@store/useMapStore";
+import useMarkerControl from "@hooks/useMarkerControl";
 import { Trash2Icon } from "lucide-react";
 
 interface DeleteButtonProps {
@@ -7,13 +7,10 @@ interface DeleteButtonProps {
 }
 
 const DeleteButton = ({ markerId }: DeleteButtonProps) => {
-  const { markers } = useMapStore();
+  const { deleteMarker } = useMarkerControl();
 
   const handleDelete = () => {
-    if (!markers) return;
-    const marker = markers.find((marker) => marker.Gb === String(markerId));
-
-    marker?.setMap(null);
+    deleteMarker(markerId);
   };
   return (
     <IconButton

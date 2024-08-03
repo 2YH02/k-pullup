@@ -1,24 +1,25 @@
 "use client";
 
 import useIsMounted from "@hooks/useIsMounted";
+import useMarkerControl from "@hooks/useMarkerControl";
 import LoadingIcon from "@icons/loading-icon";
 import getAllMarker, { type MarkerRes } from "@lib/api/marker/get-all-marker";
 import useGeolocationStore from "@store/useGeolocationStore";
 import useMapStore from "@store/useMapStore";
-import { useRouter } from "next/navigation";
 import Script from "next/script";
 import { useEffect, useState } from "react";
 
 const KakaoMap = () => {
-  const router = useRouter();
   const isMounted = useIsMounted();
 
   const { setCurLocation } = useGeolocationStore();
-  const { map, setMap, setMarkers } = useMapStore();
+  const { map, setMap } = useMapStore();
+  const { createMarker } = useMarkerControl();
 
   const [markerLoading, setMarkerLoading] = useState(false);
 
   useEffect(() => {
+    if (!map) return;
     const loadMarker = async (data: MarkerRes[]) => {
       const positions = data.map((marker) => {
         return {
@@ -30,41 +31,23 @@ const KakaoMap = () => {
         };
       });
 
-      const imageSize = new window.kakao.maps.Size(39, 39);
-      const imageOption = { offset: new window.kakao.maps.Point(27, 45) };
-
-      const pin = new window.kakao.maps.MarkerImage(
-        "/pin-active.svg",
-        imageSize,
-        imageOption
-      );
-
-      const markers = positions.map((position) => {
-        const marker = new window.kakao.maps.Marker({
-          map: map,
-          position: position.latlng,
-          title: position.title,
-          image: pin,
-          clickable: true,
+      positions.forEach((position) => {
+        createMarker({
+          map,
+          options: {
+            image: "active",
+            markerId: position.title,
+            position: position.latlng,
+          },
         });
-
-        window.kakao.maps.event.addListener(marker, "click", () => {
-          router.push(`/pullup/${position.title}`);
-        });
-
-        return marker;
       });
-
-      return markers;
     };
 
     const fetch = async () => {
-      if (!map) return;
       setMarkerLoading(true);
       const data = await getAllMarker();
 
-      const newMarkers = await loadMarker(data);
-      setMarkers(newMarkers);
+      await loadMarker(data);
       setMarkerLoading(false);
     };
 
