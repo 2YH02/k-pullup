@@ -19,8 +19,8 @@ const useMarkerControl = () => {
   const { markers, setMarkers } = useMapStore();
 
   const createMarker = ({ options, map }: CreateMarker) => {
-    const imageSize = new window.kakao.maps.Size(39, 39);
-    const imageOption = { offset: new window.kakao.maps.Point(27, 45) };
+    const imageSize = new window.kakao.maps.Size(44, 49);
+    const imageOption = { offset: new window.kakao.maps.Point(21, 39) };
 
     const imageUrl =
       options.image === "pending"

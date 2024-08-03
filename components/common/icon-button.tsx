@@ -6,12 +6,13 @@ interface IconButtonProps {
   icon: React.ReactNode;
   text?: React.ReactNode;
   className?: React.ComponentProps<"button">["className"];
+  disabled?: boolean;
   onClick?: VoidFunction;
 }
 
 const IconButton = forwardRef(
   (
-    { icon, text, className, onClick }: IconButtonProps,
+    { icon, text, className, disabled, onClick }: IconButtonProps,
     ref?: React.Ref<HTMLButtonElement>
   ) => {
     return (
@@ -22,6 +23,7 @@ const IconButton = forwardRef(
         )}
         onClick={onClick}
         ref={ref}
+        disabled={disabled}
       >
         <div>{icon}</div>
         {text && <Text typography="t7">{text}</Text>}

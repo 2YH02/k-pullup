@@ -1,5 +1,6 @@
 "use client";
 
+import useMarkerControl from "@/hooks/useMarkerControl";
 import { KakaoMarker } from "@/types/kakao-map.types";
 import SideMain from "@common/side-main";
 import AuthError from "@layout/auth-error";
@@ -31,6 +32,8 @@ const RegisterClient = () => {
 
   const { user, setUser } = useUserStore();
 
+  const { createMarker } = useMarkerControl();
+
   const { map } = useMapStore();
   const { openAlert } = useAlertStore();
 
@@ -58,7 +61,8 @@ const RegisterClient = () => {
   }, [registerValue.step]);
 
   useEffect(() => {
-    const fetchSignup = async () => {
+    if (!map) return;
+    const fetch = async () => {
       if (!registerValue.latitude || !registerValue.longitude) return;
       const response = await setNewMarker({
         description: registerValue.description || "",
@@ -81,6 +85,21 @@ const RegisterClient = () => {
 
       setNewMarkerId(newMarker.markerId);
 
+      const markerPosition = new window.kakao.maps.LatLng(
+        newMarker.latitude,
+        newMarker.longitude
+      );
+
+      marker?.setMap(null);
+      createMarker({
+        map,
+        options: {
+          image: "active",
+          markerId: newMarker.markerId,
+          position: markerPosition,
+        },
+      });
+
       if (uploadStatus === "image") {
         setTimeout(() => {
           setUploadStatus("location");
@@ -95,7 +114,7 @@ const RegisterClient = () => {
       }
     };
     if (registerValue.step === 3) {
-      fetchSignup();
+      fetch();
     }
   }, [
     registerValue.step,
