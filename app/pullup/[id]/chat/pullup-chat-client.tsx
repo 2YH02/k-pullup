@@ -103,7 +103,7 @@ const PullupChatClient = ({ markerId }: PullupChatClientProps) => {
     return () => {
       ws.current?.close();
     };
-  }, [cidState.cid]);
+  }, [cidState.cid, markerId]);
 
   useEffect(() => {
     if (!ws) return;

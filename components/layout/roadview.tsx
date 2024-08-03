@@ -103,7 +103,7 @@ const Roadview = () => {
         miniMap.setCenter(position);
       });
     });
-  }, [map, open, lng, lat]);
+  }, [map, open, lng, lat, toast]);
 
   useEffect(() => {
     if (!mapData) return;

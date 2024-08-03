@@ -52,7 +52,7 @@ const KakaoMap = () => {
     };
 
     fetch();
-  }, [map]);
+  }, [map, createMarker]);
 
   const handleLoadMap = () => {
     window.kakao.maps.load(() => {

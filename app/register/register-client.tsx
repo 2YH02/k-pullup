@@ -1,8 +1,8 @@
 "use client";
 
-import useMarkerControl from "@/hooks/useMarkerControl";
 import { KakaoMarker } from "@/types/kakao-map.types";
 import SideMain from "@common/side-main";
+import useMarkerControl from "@hooks/useMarkerControl";
 import AuthError from "@layout/auth-error";
 import setNewMarker, { SetMarkerRes } from "@lib/api/marker/set-new-marker";
 import FacilitiesComplete from "@pages/register/facilities-complete";
