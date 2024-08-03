@@ -26,7 +26,7 @@ const ButtonList = ({ marker }: ButtonListProps) => {
         lng={marker.longitude}
       />
       <Divider className="w-[1px] my-2" />
-      <ChatButton />
+      <ChatButton markerId={marker.markerId} />
       <Divider className="w-[1px] my-2" />
       <RoadviewButton />
       {marker.isChulbong && (

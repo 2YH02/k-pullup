@@ -1,7 +1,13 @@
 import IconButton from "@common/icon-button";
 import ChatBubbleIcon from "@icons/chat-bubble-icon";
+import { useRouter } from "next/navigation";
 
-const ChatButton = () => {
+interface ChatButtonProps {
+  markerId: number;
+}
+
+const ChatButton = ({ markerId }: ChatButtonProps) => {
+  const router = useRouter();
   return (
     <IconButton
       icon={
@@ -9,6 +15,7 @@ const ChatButton = () => {
       }
       text="채팅"
       className="flex-1"
+      onClick={() => router.push(`/pullup/${markerId}/chat`)}
     />
   );
 };
