@@ -1,17 +1,15 @@
 "use client";
 
-import deleteFavorite from "@/lib/api/favorite/delete-favorite";
-import setFavorite from "@/lib/api/favorite/set-favorite";
-import Text from "@common/text";
+import IconButton from "@common/icon-button";
 import { useToast } from "@hooks/useToast";
-import cn from "@lib/cn";
+import deleteFavorite from "@lib/api/favorite/delete-favorite";
+import setFavorite from "@lib/api/favorite/set-favorite";
 import useAlertStore from "@store/useAlertStore";
 import { useState } from "react";
 // TODO: 이후 공통 컴포넌트로 이동 고려 (상세 페이지 다른 버튼들도 똑같이)
 // TODO: 자식 요소 children으로 받을지 고려
 
 interface BookmarkButtonProps {
-  className?: string;
   markerId: number;
   favorited?: boolean;
 }
@@ -19,7 +17,6 @@ interface BookmarkButtonProps {
 const BookmarkButton = ({
   favorited = false,
   markerId,
-  className,
 }: BookmarkButtonProps) => {
   const [isActive, setIsActive] = useState(favorited);
   const { openAlert, closeAlert } = useAlertStore();
@@ -64,15 +61,12 @@ const BookmarkButton = ({
     });
   };
   return (
-    <button
-      className={cn("flex flex-col items-center justify-center", className)}
+    <IconButton
+      icon={<BookmarkIcon active={isActive} />}
+      text="북마크"
+      className="flex-1"
       onClick={handleClick}
-    >
-      <BookmarkIcon active={isActive} />
-      <Text typography="t6" className="mt-1">
-        북마크
-      </Text>
-    </button>
+    />
   );
 };
 

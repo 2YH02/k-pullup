@@ -81,8 +81,7 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
 
       <Section className="pb-1">
         <ButtonList
-          markerId={marker.markerId}
-          favorited={marker.favorited || false}
+          marker={marker}
         />
       </Section>
 
