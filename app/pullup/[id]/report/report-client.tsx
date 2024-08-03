@@ -8,6 +8,7 @@ import Textarea from "@common/textarea";
 import { ReportValue } from "@lib/api/report/report-marker";
 import UploadImage from "@pages/register/upload-image";
 import { useState } from "react";
+// TODO: 리포트 기능 완성
 
 interface ReportClientProps {
   id: number;

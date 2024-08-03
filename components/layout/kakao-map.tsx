@@ -8,6 +8,7 @@ import useGeolocationStore from "@store/useGeolocationStore";
 import useMapStore from "@store/useMapStore";
 import Script from "next/script";
 import { useEffect, useState } from "react";
+// TODO: 지도 클러스터러 추가 및 최적화
 
 const KakaoMap = () => {
   const isMounted = useIsMounted();
@@ -52,7 +53,7 @@ const KakaoMap = () => {
     };
 
     fetch();
-  }, [map, createMarker]);
+  }, [map]);
 
   const handleLoadMap = () => {
     window.kakao.maps.load(() => {
