@@ -32,7 +32,7 @@ const ButtonList = ({ marker }: ButtonListProps) => {
       {marker.isChulbong && (
         <>
           <Divider className="w-[1px] my-2" />
-          <DeleteButton />
+          <DeleteButton markerId={marker.markerId} />
         </>
       )}
     </div>

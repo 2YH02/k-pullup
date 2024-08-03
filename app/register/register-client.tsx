@@ -110,9 +110,9 @@ const RegisterClient = () => {
     if (!map) return;
 
     const imageSize = new window.kakao.maps.Size(44, 49);
-    const imageOption = { offset: new window.kakao.maps.Point(24, 39) };
+    const imageOption = { offset: new window.kakao.maps.Point(21, 39) };
     const markerImage = new window.kakao.maps.MarkerImage(
-      "/pin.svg",
+      "/pin-pending.svg",
       imageSize,
       imageOption
     );
