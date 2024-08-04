@@ -6,6 +6,7 @@ import deleteFavorite from "@lib/api/favorite/delete-favorite";
 import setFavorite from "@lib/api/favorite/set-favorite";
 import useAlertStore from "@store/useAlertStore";
 import { useState } from "react";
+// TODO: 401에러 헨들링 추가
 // TODO: 이후 공통 컴포넌트로 이동 고려 (상세 페이지 다른 버튼들도 똑같이)
 // TODO: 자식 요소 children으로 받을지 고려
 

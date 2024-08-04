@@ -9,6 +9,7 @@ import LoadingIcon from "@icons/loading-icon";
 import downloadPdf from "@lib/api/marker/download-pdf";
 import { ShareIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+// TODO: 공유 모달 z-index 확인 필요
 
 interface ShareButtonProps {
   markerId: number;

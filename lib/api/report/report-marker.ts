@@ -19,10 +19,10 @@ const reportMarker = async (multipart: ReportValue) => {
   formData.append("latitude", multipart.latitude.toString());
   formData.append("longitude", multipart.longitude.toString());
 
-  if (multipart.newLatitude && multipart.newLongitude) {
-    formData.append("newLatitude", multipart.newLatitude.toString());
-    formData.append("newLongitude", multipart.newLongitude.toString());
-  }
+  // if (multipart.newLatitude && multipart.newLongitude) {
+  //   formData.append("newLatitude", multipart.newLatitude.toString());
+  //   formData.append("newLongitude", multipart.newLongitude.toString());
+  // }
 
   formData.append("description", multipart.description);
 

@@ -6,7 +6,7 @@ import Section from "@common/section";
 import Text from "@common/text";
 import { resizeImage } from "img-toolkit";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { v4 } from "uuid";
 
 export interface ImageUploadState {
@@ -29,6 +29,14 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (withButton) return;
+    const files = images.map((image) => {
+      return image.file;
+    });
+    next(files as File[]);
+  }, [images]);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true);
