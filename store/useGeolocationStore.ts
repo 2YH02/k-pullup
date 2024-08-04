@@ -29,7 +29,7 @@ interface GeolocationState {
 const useGeolocationStore = create<GeolocationState>()((set) => ({
   region: null,
   myLocation: null,
-  curLocation: null,
+  curLocation: { lat: 33.450701, lng: 126.570667 },
   geoLocationError: null,
   setMyLocation: (myLocation) => set({ myLocation }),
   setCurLocation: (curLocation) => set({ curLocation }),

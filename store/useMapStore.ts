@@ -6,6 +6,7 @@ interface MapState {
   markers: KakaoMarker[];
   setMap: (map: KakaoMap) => void;
   setMarkers: (markers: KakaoMarker[]) => void;
+  deleteAllMarker: () => void;
 }
 
 const useMapStore = create<MapState>()((set) => ({
@@ -14,6 +15,14 @@ const useMapStore = create<MapState>()((set) => ({
   setMap: (map: KakaoMap) => set({ map }),
   setMarkers: (markers: KakaoMarker[]) =>
     set((prev) => ({ markers: [...prev.markers, ...markers] })),
+  deleteAllMarker: () =>
+    set((prev) => {
+      prev.markers.forEach((marker) => {
+        marker.setMap(null);
+      });
+
+      return { ...prev };
+    }),
 }));
 
 export default useMapStore;

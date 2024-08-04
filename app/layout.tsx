@@ -4,6 +4,7 @@ import AlertProvider from "@provider/alert-provider";
 import ChatIdProvider from "@provider/chat-Id-provider";
 import GeoProvider from "@provider/geo-provider";
 import ImageModalProvider from "@provider/image-modal-provider";
+import LoadMarker from "@provider/load-marker";
 import ThemeProvider from "@provider/theme-provider";
 import { Toaster } from "@provider/toaster";
 import UserProvider from "@provider/user-provider";
@@ -71,6 +72,7 @@ export default function RootLayout({
             <AlertProvider>
               <ImageModalProvider>
                 <UserProvider>
+                  <LoadMarker />
                   <GeoProvider>{children}</GeoProvider>
                   <Roadview />
                   <Toaster />
