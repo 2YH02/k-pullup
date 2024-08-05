@@ -172,7 +172,11 @@ const SideMain = ({
 
       {!fullHeight && (
         <div className="sticky top-0 py-3 bg-white dark:bg-black z-20 web:hidden">
-          {dragable && <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />}
+          <div
+            className={`w-1/6 h-1 mx-auto rounded-lg ${
+              !dragable ? "bg-white dark:bg-black" : "bg-grey"
+            }`}
+          />
         </div>
       )}
 

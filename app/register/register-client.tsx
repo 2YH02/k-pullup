@@ -16,7 +16,6 @@ import useMarkerStore from "@store/useMarkerStore";
 import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-// TODO: 모바일 네비게이션 높이 확인 필요
 
 export type UploadStatus = "image" | "location" | "error" | "complete";
 

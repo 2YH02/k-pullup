@@ -9,7 +9,6 @@ import LoadingIcon from "@icons/loading-icon";
 import downloadPdf from "@lib/api/marker/download-pdf";
 import { ShareIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-// TODO: 공유 모달 z-index 확인 필요
 
 interface ShareButtonProps {
   markerId: number;
@@ -95,7 +94,7 @@ const ShareButton = ({ markerId, lat, lng }: ShareButtonProps) => {
       {viewModal && (
         <div
           className="shadow-simple absolute top-full -left-4 p-3 bg-white w-[230px]
-          rounded-lg border border-solid border-grey-light dark:border-none"
+          rounded-lg border border-solid border-grey-light dark:border-none z-50"
           ref={modalRef}
         >
           <div className="flex justify-start">
