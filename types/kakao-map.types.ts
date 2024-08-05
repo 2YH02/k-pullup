@@ -15,7 +15,7 @@ export interface KaKaoMapMouseEvent {
 
 export interface KakaoMap {
   getCenter: () => LatLngFunctions;
-  setLevel: (level: number) => void;
+  setLevel: (level: number, options?: { anchor: any }) => void;
   setCenter: (pos: Pos) => LatLngFunctions;
   panTo: (pos: Pos) => LatLngFunctions;
   getLevel: () => number;

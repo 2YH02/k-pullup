@@ -7,7 +7,6 @@ import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
 import Script from "next/script";
 import { useEffect } from "react";
-// TODO: 지도 클러스터러 추가 및 최적화
 
 const KakaoMap = () => {
   const isMounted = useIsMounted();

@@ -1,8 +1,8 @@
 import deleteMarker from "@api/marker/delete-marker";
 import IconButton from "@common/icon-button";
-import useMarkerControl from "@hooks/useMarkerControl";
 import { useToast } from "@hooks/useToast";
 import useAlertStore from "@store/useAlertStore";
+import useMarkerStore from "@store/useMarkerStore";
 import { Trash2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -13,7 +13,7 @@ interface DeleteButtonProps {
 const DeleteButton = ({ markerId }: DeleteButtonProps) => {
   const router = useRouter();
 
-  const { deleteMarker: deleteOne } = useMarkerControl();
+  const { deleteMarker: deleteOne } = useMarkerStore();
   const { openAlert, closeAlert } = useAlertStore();
   const { toast } = useToast();
 

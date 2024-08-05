@@ -1,10 +1,9 @@
 "use client";
 
 import { KakaoMarker } from "@/types/kakao-map.types";
+import setNewMarker, { SetMarkerRes } from "@api/marker/set-new-marker";
 import SideMain from "@common/side-main";
-import useMarkerControl from "@hooks/useMarkerControl";
 import AuthError from "@layout/auth-error";
-import setNewMarker, { SetMarkerRes } from "@lib/api/marker/set-new-marker";
 import FacilitiesComplete from "@pages/register/facilities-complete";
 import SelectLocation from "@pages/register/select-location";
 import SetDescription from "@pages/register/set-description";
@@ -13,6 +12,7 @@ import UploadComplete from "@pages/register/upload-complete";
 import UploadImage from "@pages/register/upload-image";
 import useAlertStore from "@store/useAlertStore";
 import useMapStore from "@store/useMapStore";
+import useMarkerStore from "@store/useMarkerStore";
 import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -33,7 +33,7 @@ const RegisterClient = () => {
 
   const { user, setUser } = useUserStore();
 
-  const { createMarker } = useMarkerControl();
+  const { setMarker: setMarkerToStore } = useMarkerStore();
 
   const { map } = useMapStore();
   const { openAlert } = useAlertStore();
@@ -65,6 +65,7 @@ const RegisterClient = () => {
     if (!map) return;
     const fetch = async () => {
       if (!registerValue.latitude || !registerValue.longitude) return;
+
       const response = await setNewMarker({
         description: registerValue.description || "",
         latitude: registerValue.latitude,
@@ -86,20 +87,12 @@ const RegisterClient = () => {
 
       setNewMarkerId(newMarker.markerId);
 
-      const markerPosition = new window.kakao.maps.LatLng(
-        newMarker.latitude,
-        newMarker.longitude
-      );
-
       marker?.setMap(null);
-      createMarker({
-        map,
-        options: {
-          image: "active",
-          markerId: newMarker.markerId,
-          position: markerPosition,
-        },
-      });
+      setMarkerToStore([newMarker]);
+
+      map.setCenter(
+        new window.kakao.maps.LatLng(newMarker.latitude, newMarker.longitude)
+      );
 
       if (uploadStatus === "image") {
         setTimeout(() => {
