@@ -6,6 +6,7 @@ import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
 import { useRouter } from "next/navigation";
 import { createRoot } from "react-dom/client";
+import useMapControl from "./useMapControl";
 
 interface CreateMarkerOption {
   image?: "pending" | "active" | "selected";
@@ -40,6 +41,8 @@ interface ReloadMarkers {
 const useMarkerControl = () => {
   const router = useRouter();
 
+  const { move } = useMapControl();
+
   const { setMarkers, setOverlays } = useMapStore();
 
   const { marker } = useMarkerStore();
@@ -73,6 +76,7 @@ const useMarkerControl = () => {
     setMarkers([marker]);
 
     window.kakao.maps.event.addListener(marker, "click", () => {
+      move({ latlng: options.position });
       router.push(`/pullup/${options.markerId}`);
     });
   };

@@ -10,6 +10,7 @@ import ButtonList from "@pages/pullup/button-list";
 import Comments from "@pages/pullup/comments";
 import ImageCarousel from "@pages/pullup/image-carousel";
 import ImageList from "@pages/pullup/image-list";
+import MoveMap from "@pages/pullup/move-map";
 import NotFoud from "@pages/pullup/not-foud";
 import Tabs from "@pages/pullup/tabs";
 import { cookies } from "next/headers";
@@ -40,6 +41,7 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <SideMain headerTitle="위치 상세" hasBackButton withNav>
+      <MoveMap lat={marker.latitude} lng={marker.longitude} />
       <Section className="pb-0">
         <div>
           <ImageCarousel photos={marker.photos} />

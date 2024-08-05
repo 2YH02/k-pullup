@@ -10,7 +10,7 @@ import { validateSigin } from "@lib/validate";
 import useUserStore from "@store/useUserStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 interface SigninValue {
   email: string;
@@ -42,6 +42,48 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
 
     return validateSigin(formValues);
   }, [emailValue.value, passwordValue.value]);
+
+  useEffect(() => {
+    const onSubmit = async () => {
+      setLoading(true);
+      const siginData = {
+        email: emailValue.value,
+        password: passwordValue.value,
+      };
+
+      const response = await signin(siginData);
+
+      if (response.error) {
+        errors.email = "이메일 혹은 비밀번호를 확인해주세요.";
+        errors.password = "이메일 혹은 비밀번호를 확인해주세요.";
+
+        setLoading(false);
+        return;
+      }
+
+      setUser(response.user);
+      setLoading(false);
+      if (returnUrl) {
+        router.replace(returnUrl);
+      } else {
+        router.replace("/mypage");
+      }
+      router.refresh();
+    };
+    const isAvailable = Object.keys(errors).length === 0;
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        if (!isAvailable) return;
+        onSubmit();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [errors]);
 
   const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     setViewInputError((prev) => ({

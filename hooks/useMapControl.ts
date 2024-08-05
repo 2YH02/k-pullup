@@ -1,3 +1,4 @@
+import { Pos } from "@/types/kakao-map.types";
 import useMapStore from "@store/useMapStore";
 import { useCallback } from "react";
 
@@ -5,12 +6,16 @@ const useMapControl = () => {
   const { map } = useMapStore();
 
   const move = useCallback(
-    ({ lat, lng }: { lat: number; lng: number }) => {
+    ({ lat, lng, latlng }: { lat?: number; lng?: number; latlng?: Pos }) => {
       if (!map) return;
 
-      const moveLatLon = new window.kakao.maps.LatLng(lat, lng);
+      if (latlng) {
+        map.panTo(latlng);
+      } else {
+        const moveLatLon = new window.kakao.maps.LatLng(lat, lng);
 
-      map.panTo(moveLatLon);
+        map.panTo(moveLatLon);
+      }
     },
     [map]
   );
