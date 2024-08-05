@@ -15,7 +15,13 @@ export interface ReportsRes {
   address: string;
 }
 
-const mySuggested = async (cookie?: string): Promise<ReportsRes[]> => {
+interface Response {
+  data?: ReportsRes[];
+  error?: string;
+  message?: string;
+}
+
+const mySuggested = async (cookie?: string) => {
   const isServer = typeof window === "undefined";
 
   const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
@@ -29,14 +35,23 @@ const mySuggested = async (cookie?: string): Promise<ReportsRes[]> => {
   });
 
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(
-      errorData.error || errorData.message || "Failed to fetch suggested report"
-    );
+    const msg = await response.json();
+    if (response.status === 401) {
+      const data: Response = {
+        error: msg.error,
+      };
+      return data;
+    } else {
+      const data: Response = {
+        error: msg.message,
+      };
+      return data;
+    }
   }
 
-  const data: ReportsRes[] = await response.json();
-
+  const data: Response = {
+    data: await response.json(),
+  };
   return data;
 };
 

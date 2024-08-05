@@ -5,9 +5,14 @@ export interface Favorite {
   description: string;
   address?: string;
 }
-// TODO: 모든 api 요청 함수 형식 favorites와 똑같이 바꾸기
 
-const favorites = async (cookie?: string): Promise<Favorite[]> => {
+interface Response {
+  data?: Favorite[];
+  error?: string;
+  message?: string;
+}
+
+const favorites = async (cookie?: string) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/users/favorites`,
     {
@@ -20,11 +25,23 @@ const favorites = async (cookie?: string): Promise<Favorite[]> => {
   );
 
   if (!response.ok) {
-    const errorData: { error: string } = await response.json();
-    throw new Error(errorData.error || "Failed to fetch favorites");
+    const msg = await response.json();
+    if (response.status === 401) {
+      const data: Response = {
+        error: msg.error,
+      };
+      return data;
+    } else {
+      const data: Response = {
+        error: msg.message,
+      };
+      return data;
+    }
   }
 
-  const data: Favorite[] = await response.json();
+  const data: Response = {
+    data: await response.json(),
+  };
 
   return data;
 };

@@ -5,14 +5,14 @@ import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import { useRouter } from "next/navigation";
+import React from "react";
 
 interface Props extends React.ComponentProps<typeof SideMain> {
   errorTitle: string;
   prevUrl?: string;
-  returnUrl?: string;
 }
 
-const AuthError = ({ errorTitle, prevUrl, returnUrl, ...props }: Props) => {
+const NotFound = ({ errorTitle, prevUrl, ...props }: Props) => {
   const router = useRouter();
   return (
     <SideMain
@@ -23,7 +23,6 @@ const AuthError = ({ errorTitle, prevUrl, returnUrl, ...props }: Props) => {
           router.back();
         }
       }}
-      hasBackButton
       {...props}
     >
       <Section className="mt-10">
@@ -32,15 +31,15 @@ const AuthError = ({ errorTitle, prevUrl, returnUrl, ...props }: Props) => {
         </Text>
         <Button
           onClick={() => {
-            router.push(`/signin?returnUrl=${returnUrl}`);
+            router.push("/");
           }}
           full
         >
-          로그인하러 가기
+          홈으로 가기
         </Button>
       </Section>
     </SideMain>
   );
 };
 
-export default AuthError;
+export default NotFound;

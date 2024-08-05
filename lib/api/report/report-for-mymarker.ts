@@ -16,11 +16,11 @@ interface Marker {
 export interface MyMarkerReportRes {
   totalReports: number;
   markers: Marker;
+  message?: string;
+  error?: string;
 }
 
-const reportForMymarker = async (
-  cookie?: string
-): Promise<MyMarkerReportRes> => {
+const reportForMymarker = async (cookie?: string) => {
   const isServer = typeof window === "undefined";
 
   const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
@@ -32,14 +32,6 @@ const reportForMymarker = async (
     cache: "no-store",
     credentials: "include",
   });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-
-    throw new Error(
-      errorData.error || errorData.message || "Failed to fetch suggested report"
-    );
-  }
 
   const data: MyMarkerReportRes = await response.json();
 

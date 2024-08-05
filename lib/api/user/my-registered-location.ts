@@ -11,6 +11,8 @@ export interface RegisteredMarkerRes {
   markers: RegisteredMarker[];
   totalMarkers: number;
   totalPages: number;
+  error?: string;
+  message?: string;
 }
 
 const myRegisteredLocation = async ({
@@ -32,11 +34,6 @@ const myRegisteredLocation = async ({
     cache: "no-store",
     credentials: "include",
   });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.error || "Failed to fetch favorites");
-  }
 
   const data: RegisteredMarkerRes = await response.json();
 

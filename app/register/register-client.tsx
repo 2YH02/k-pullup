@@ -205,7 +205,7 @@ const RegisterClient = () => {
     return (
       <AuthError
         headerTitle="위치 등록"
-        content="로그인 후 철봉 위치를 등록해보세요."
+        errorTitle="로그인 후 철봉 위치를 등록해보세요."
         prevUrl="/"
         returnUrl="/register"
       />
