@@ -5,10 +5,8 @@ import { useToast } from "@hooks/useToast";
 import deleteFavorite from "@lib/api/favorite/delete-favorite";
 import setFavorite from "@lib/api/favorite/set-favorite";
 import useAlertStore from "@store/useAlertStore";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-// TODO: 401에러 헨들링 추가
-// TODO: 이후 공통 컴포넌트로 이동 고려 (상세 페이지 다른 버튼들도 똑같이)
-// TODO: 자식 요소 children으로 받을지 고려
 
 interface BookmarkButtonProps {
   markerId: number;
@@ -19,9 +17,12 @@ const BookmarkButton = ({
   favorited = false,
   markerId,
 }: BookmarkButtonProps) => {
-  const [isActive, setIsActive] = useState(favorited);
+  const router = useRouter();
+
   const { openAlert, closeAlert } = useAlertStore();
   const { toast } = useToast();
+
+  const [isActive, setIsActive] = useState(favorited);
 
   const handleBookmark = async () => {
     let response;
@@ -35,10 +36,22 @@ const BookmarkButton = ({
     }
 
     if (!response.ok) {
-      toast({
-        description: "잠시 후 다시 시도해주세요.",
-      });
-      closeAlert();
+      if (response.status === 401) {
+        openAlert({
+          title: "로그인이 필요합니다.",
+          description: "로그인 페이지로 이동하시겠습니까?",
+          onClick: () => {
+            router.push(`/signin?returnUrl=/pullup/${markerId}`);
+          },
+          cancel: true,
+        });
+      } else {
+        toast({
+          description: "잠시 후 다시 시도해주세요.",
+        });
+        closeAlert();
+        return;
+      }
       return;
     }
 
@@ -53,7 +66,7 @@ const BookmarkButton = ({
 
   const handleClick = () => {
     openAlert({
-      title: "북마크 추가",
+      title: isActive ? "북마크 삭제" : "북마크 추가",
       description: isActive
         ? "위치를 삭제하시겠습니까?"
         : "위치를 저장하시겠습니까?",
