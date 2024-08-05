@@ -5,6 +5,8 @@ interface MapState {
   map: KakaoMap | null;
   markers: KakaoMarker[];
   overlays: any[];
+  selectedId: number | null;
+  setSelectedId: (selectedId: number) => void;
   setMap: (map: KakaoMap) => void;
   setMarkers: (markers: KakaoMarker[]) => void;
   setOverlays: (overlay: any[]) => void;
@@ -16,6 +18,8 @@ const useMapStore = create<MapState>()((set) => ({
   map: null,
   markers: [],
   overlays: [],
+  selectedId: null,
+  setSelectedId: (selectedId: number) => set({ selectedId }),
   setMap: (map: KakaoMap) => set({ map }),
   setMarkers: (markers: KakaoMarker[]) =>
     set((prev) => ({ markers: [...prev.markers, ...markers] })),

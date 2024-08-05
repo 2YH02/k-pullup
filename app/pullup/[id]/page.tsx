@@ -41,7 +41,11 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <SideMain headerTitle="위치 상세" hasBackButton withNav>
-      <MoveMap lat={marker.latitude} lng={marker.longitude} />
+      <MoveMap
+        lat={marker.latitude}
+        lng={marker.longitude}
+        markerId={marker.markerId}
+      />
       <Section className="pb-0">
         <div>
           <ImageCarousel photos={marker.photos} />

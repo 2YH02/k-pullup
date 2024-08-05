@@ -3,11 +3,14 @@
 import useMarkerControl from "@hooks/useMarkerControl";
 import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 const LoadMarker = () => {
+  const pathname = usePathname();
+
   const { marker } = useMarkerStore();
-  const { map } = useMapStore();
+  const { map, selectedId } = useMapStore();
 
   const { reloadMarkers } = useMarkerControl();
 
@@ -15,7 +18,11 @@ const LoadMarker = () => {
     if (!map) return;
 
     const handleIdle = () => {
-      reloadMarkers({ map, options: { maxLevel: 6 } });
+      if (selectedId) {
+        reloadMarkers({ map, options: { maxLevel: 6, selectId: selectedId } });
+      } else {
+        reloadMarkers({ map, options: { maxLevel: 6 } });
+      }
     };
 
     window.kakao.maps.event.addListener(map, "idle", handleIdle);
@@ -23,12 +30,13 @@ const LoadMarker = () => {
     return () => {
       window.kakao.maps.event.removeListener(map, "idle", handleIdle);
     };
-  }, [map, marker]);
+  }, [map, marker, selectedId]);
 
   useEffect(() => {
-    if (!map) return;
+    if (!map || !!pathname.startsWith("/pullup")) return;
+
     reloadMarkers({ map, options: { maxLevel: 6 } });
-  }, [marker]);
+  }, [marker, pathname]);
 
   return null;
 };

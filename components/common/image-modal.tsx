@@ -52,7 +52,7 @@ const ImageModal = ({ open, curIndex, imageUrl }: Props) => {
   return (
     <Dimmed onClose={() => closeModal()} onWheel={handleWheel}>
       <button className="absolute top-3 right-3" onClick={() => closeModal()}>
-        <CloseIcon />
+        <CloseIcon color="white" />
       </button>
       <Carousel
         opts={{ startIndex: curIndex }}
@@ -85,6 +85,5 @@ const ImageModal = ({ open, curIndex, imageUrl }: Props) => {
     </Dimmed>
   );
 };
-
 
 export default ImageModal;

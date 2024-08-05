@@ -21,6 +21,7 @@ interface CreateOverlayOption {
 
 interface ReloadMarkersOprion {
   maxLevel: number;
+  selectId?: number;
 }
 
 interface CreateMarker {
@@ -129,17 +130,37 @@ const useMarkerControl = () => {
       }
     } else {
       for (let i = 0; i < nearbyMarker.length; i++) {
-        createMarker({
-          map,
-          options: {
-            image: "active",
-            markerId: nearbyMarker[i].markerId,
-            position: new window.kakao.maps.LatLng(
-              nearbyMarker[i].latitude,
-              nearbyMarker[i].longitude
-            ),
-          },
-        });
+        if (options.selectId) {
+          let image: "pending" | "active" | "selected";
+          if (nearbyMarker[i].markerId === options.selectId) {
+            image = "selected";
+          } else {
+            image = "active";
+          }
+          createMarker({
+            map,
+            options: {
+              image: image,
+              markerId: nearbyMarker[i].markerId,
+              position: new window.kakao.maps.LatLng(
+                nearbyMarker[i].latitude,
+                nearbyMarker[i].longitude
+              ),
+            },
+          });
+        } else {
+          createMarker({
+            map,
+            options: {
+              image: "active",
+              markerId: nearbyMarker[i].markerId,
+              position: new window.kakao.maps.LatLng(
+                nearbyMarker[i].latitude,
+                nearbyMarker[i].longitude
+              ),
+            },
+          });
+        }
       }
     }
   };
