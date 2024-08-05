@@ -9,16 +9,21 @@ import ScrollToTop from "@common/scroll-to-top";
 import Section from "@common/section";
 import Text from "@common/text";
 import { CITIES, CITIES_BADGE_TITLE } from "@constant/index";
+import useMapControl from "@hooks/useMapControl";
 import CheckedIcon from "@icons/checked-icon";
 import LoadingIcon from "@icons/loading-icon";
 import PinIcon from "@icons/pin-icon";
 import useGeolocationStore from "@store/useGeolocationStore";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 type BadgeTitles = typeof CITIES_BADGE_TITLE;
 type BadgeTitle = BadgeTitles[number];
 
 const AreaRankingList = () => {
+  const { move } = useMapControl();
+  const router = useRouter();
+
   const [data, setData] = useState<RankingInfo[] | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -111,7 +116,14 @@ const AreaRankingList = () => {
         <ul>
           {data?.map((item, index) => {
             return (
-              <ListItem key={item.markerId} icon={<PinIcon size={30} />}>
+              <ListItem
+                key={item.markerId}
+                icon={<PinIcon size={30} />}
+                onClick={() => {
+                  router.push(`/pullup/${item.markerId}`);
+                  move({ lat: item.latitude, lng: item.longitude });
+                }}
+              >
                 <ListLeft>
                   <div className="flex items-center">
                     <Text fontWeight="bold">{index + 1}</Text>

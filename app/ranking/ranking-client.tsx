@@ -7,6 +7,7 @@ import CheckedIcon from "@icons/checked-icon";
 import AreaRankingList from "@pages/ranking/area-ranking-list";
 import RankingList from "@pages/ranking/ranking-list";
 import { useState } from "react";
+// TODO: 랭킹 스타일 변경(전체, 주면 구분 X)
 
 interface RankingClientProps {
   data: RankingInfo[];

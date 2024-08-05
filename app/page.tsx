@@ -42,7 +42,7 @@ const Home = async () => {
 
       <Section>
         <SectionTitle title="최근 추가된 이미지" />
-        <ImageCarousel data={images} priority={true} />
+        <ImageCarousel data={images} priority={true} withRoute />
       </Section>
 
       <Divider className="h-2" />

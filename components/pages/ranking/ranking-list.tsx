@@ -1,15 +1,21 @@
+"use client";
+
 import type { RankingInfo } from "@api/marker/marker-ranking";
 import ListItem, { ListContents, ListLeft } from "@common/list-item";
 import Section from "@common/section";
 import Text from "@common/text";
+import useMapControl from "@hooks/useMapControl";
 import PinIcon from "@icons/pin-icon";
-// TODO: 리스트 클릭 시 지도 이동, 상세페이지 진입
+import { useRouter } from "next/navigation";
 
 interface RankingListProps {
   data: RankingInfo[];
 }
 
 const RankingList = ({ data }: RankingListProps) => {
+  const { move } = useMapControl();
+  const router = useRouter();
+
   return (
     <Section>
       <ul>
@@ -18,7 +24,10 @@ const RankingList = ({ data }: RankingListProps) => {
             <ListItem
               key={item.markerId}
               icon={<PinIcon size={30} />}
-              onClick={() => {}}
+              onClick={() => {
+                router.push(`/pullup/${item.markerId}`);
+                move({ lat: item.latitude, lng: item.longitude });
+              }}
             >
               <ListLeft>
                 <div className="flex items-center">

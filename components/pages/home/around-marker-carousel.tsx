@@ -8,9 +8,12 @@ import Skeleton from "@common/skeleton";
 import Text from "@common/text";
 import useGeolocationStore from "@store/useGeolocationStore";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const AroundMarkerCarousel = () => {
+  const router = useRouter();
+
   const { myLocation } = useGeolocationStore();
 
   const [data, setData] = useState<CloseMarker[] | null>(null);
@@ -24,7 +27,7 @@ const AroundMarkerCarousel = () => {
       setGeolocationError(true);
       return;
     }
-    
+
     setGeolocationError(false);
 
     const fetchMarker = async () => {
@@ -71,7 +74,13 @@ const AroundMarkerCarousel = () => {
             </Text>
             <Text display="block">위치 정보 제공에 동의해주세요.</Text>
           </div>
-          <Button onClick={() => {}} size="sm" className="w-32">
+          <Button
+            onClick={() => {
+              router.push("/search");
+            }}
+            size="sm"
+            className="w-32"
+          >
             주변 검색
           </Button>
         </div>
@@ -91,7 +100,13 @@ const AroundMarkerCarousel = () => {
               </Text>
               <Text display="block">더 넓은 범위에서 찾아보세요!</Text>
             </div>
-            <Button onClick={() => {}} size="sm" className="w-32">
+            <Button
+              onClick={() => {
+                router.push("/search");
+              }}
+              size="sm"
+              className="w-32"
+            >
               주변 검색
             </Button>
           </div>
@@ -100,11 +115,16 @@ const AroundMarkerCarousel = () => {
             <CarouselContent className="-ml-1 gap-3 w-32 h-[160px] p-1">
               {data.map((marker) => (
                 <CarouselItem className="p-0" key={marker.markerId}>
-                  <button className="w-full h-full flex flex-col justify-between">
+                  <button
+                    className="w-full h-full flex flex-col justify-between"
+                    onClick={() => {
+                      router.push(`/pullup/${marker.markerId}`);
+                    }}
+                  >
                     <div className="">
                       <Image
                         src={"/metaimg.webp"}
-                        alt={`임시`}
+                        alt={"상세"}
                         width={128}
                         height={128}
                         className="shadow-md rounded-md overflow-hidden"
