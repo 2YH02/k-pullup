@@ -26,7 +26,11 @@ const IconButton = forwardRef(
         disabled={disabled}
       >
         <div>{icon}</div>
-        {text && <Text typography="t7">{text}</Text>}
+        {text && (
+          <Text typography="t7" className="select-none">
+            {text}
+          </Text>
+        )}
       </button>
     );
   }
