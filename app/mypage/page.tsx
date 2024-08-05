@@ -8,7 +8,6 @@ import ArrowRightIcon from "@icons/arrow-right-icon";
 import LinkList from "@pages/mypage/link-list";
 import { cookies } from "next/headers";
 import Link from "next/link";
-// TODO: 어드민 모든 리포트 확인 페이지 추가
 
 const Mypage = async () => {
   const cookieStore = cookies();

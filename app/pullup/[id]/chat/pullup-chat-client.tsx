@@ -198,19 +198,24 @@ const PullupChatClient = ({ markerId }: PullupChatClientProps) => {
                     {message.userid === cidState.cid ? (
                       <div className="flex flex-col items-end w-full py-2">
                         <div className="max-w-1/2 p-1 rounded-lg bg-slate-700 shadow-sm">
-                          <Text>{message.msg}</Text>
+                          <Text className="text-white">{message.msg}</Text>
                         </div>
                         <div className="text-xs text-grey-dark">
-                          <Text typography="t7"> {message.name}</Text>
+                          <Text typography="t7" className="text-grey">
+                            {" "}
+                            {message.name}
+                          </Text>
                         </div>
                       </div>
                     ) : (
                       <div className="flex flex-col items-start w-full py-2">
                         <div className="max-w-1/2 p-1 rounded-lg bg-slate-600 shadow-sm">
-                          <Text>{message.msg}</Text>
+                          <Text className="text-white">{message.msg}</Text>
                         </div>
                         <div className="text-xs text-grey-dark">
-                          <Text typography="t7">{message.name}</Text>
+                          <Text typography="t7" className="text-grey">
+                            {message.name}
+                          </Text>
                         </div>
                       </div>
                     )}
