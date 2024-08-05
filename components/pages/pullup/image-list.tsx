@@ -2,6 +2,7 @@
 
 import type { Photo } from "@/types/marker.types";
 import ImageWrap from "@common/Image-wrap";
+import Text from "@common/text";
 import useImageModalStore from "@store/useImageModalStore";
 import { useMemo } from "react";
 
@@ -67,7 +68,7 @@ const ImageList = ({ photos }: Props) => {
           </div>
         </>
       ) : (
-        <div>등록된 사진이 없습니다.</div>
+        <Text>등록된 사진이 없습니다.</Text>
       )}
     </div>
   );

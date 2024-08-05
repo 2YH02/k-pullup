@@ -1,13 +1,12 @@
 "use client";
 
-import Input from "@/components/common/input";
-import LoadingIcon from "@/components/icons/loading-icon";
+import Input from "@common/input";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import useInput from "@hooks/useInput";
+import LoadingIcon from "@icons/loading-icon";
 import useChatIdStore from "@store/useChatIdStore";
-import { SendIcon } from "lucide-react";
 import { Fragment, useEffect, useRef, useState } from "react";
 
 export interface ChatMessage {
@@ -239,6 +238,21 @@ const PullupChatClient = ({ markerId }: PullupChatClientProps) => {
         )}
       </Section>
     </SideMain>
+  );
+};
+
+const SendIcon = () => {
+  return (
+    <svg
+      viewBox="0 0 48 48"
+      xmlns="http://www.w3.org/2000/svg"
+      height="22"
+      width="22"
+      className="fill-primary dark:fill-white"
+    >
+      <path d="M4.02 42l41.98-18-41.98-18-.02 14 30 4-30 4z" />
+      <path d="M0 0h48v48h-48z" fill="none" />
+    </svg>
   );
 };
 
