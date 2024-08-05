@@ -64,7 +64,7 @@ const Mypage = async () => {
         </ShadowBox>
       </Section>
 
-      {!noUser && <LinkList />}
+      {!noUser && <LinkList isAdmin={user.chulbong} />}
     </SideMain>
   );
 };
