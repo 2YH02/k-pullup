@@ -1,13 +1,10 @@
-import SideMain from "@common/side-main";
+import SearchClient from "./search-client";
 
 const SearchPage = () => {
   return (
-    <SideMain
-      headerTitle="검색"
-      hasBackButton
-      fullHeight
-      headerPosition="sticky"
-    ></SideMain>
+    <>
+      <SearchClient />
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 "use client";
 
 import ArrowLeftIcon from "@icons/arrow-left-icon";
+import ArrowRightIcon from "@icons/arrow-right-icon";
 import ChatBubbleIcon from "@icons/chat-bubble-icon";
 import HomeIcon from "@icons/home-icon";
 import SignIcon from "@icons/sign-icon";
@@ -12,12 +13,6 @@ import useSheetHeightStore from "@store/useSheetHeightStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Text from "./text";
-import {
-  ArrowLeftFromLineIcon,
-  ArrowRight,
-  ArrowRightFromLineIcon,
-} from "lucide-react";
-import ArrowRightIcon from "../icons/arrow-right-icon";
 
 interface SideMainProps {
   withNav?: boolean;
@@ -180,7 +175,7 @@ const SideMain = ({
     >
       <button
         className="absolute top-3 -right-12 flex items-center justify-center 
-        rounded-r-2xl shadow-dark w-12 h-10 bg-white dark:bg-black z-50 mo:hidden"
+        rounded-r-2xl shadow-simple w-12 h-10 bg-white dark:bg-black z-50 mo:hidden"
         onClick={() => setHide(true)}
       >
         <ArrowLeftIcon size={24} />

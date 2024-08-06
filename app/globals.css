@@ -30,6 +30,35 @@ li {
   list-style: none;
 }
 
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #d3d3d3;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #d3d3d3;
+}
+
+input[type="range"]::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #d3d3d3;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #111827;
