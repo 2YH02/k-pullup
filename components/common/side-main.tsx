@@ -129,7 +129,7 @@ const SideMain = ({
         return withNav
           ? "h-[calc(100%-96px)] mo:h-[calc(100%-97px)] mo:mt-10"
           : `h-[calc(100%-40px)] mo:h-[calc(100%-40px)] ${
-              headerPosition === "sticky" ? "" : "mt-10"
+              headerPosition === "sticky" ? "" : "mo:mt-10"
             }`;
       } else {
         return withNav ? "mo:h-[calc(100%-55px)]" : "h-full mo:h-full";
