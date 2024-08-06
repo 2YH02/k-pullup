@@ -4,7 +4,7 @@ import Text from "@common/text";
 import cn from "@lib/cn";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 
 export interface Menu {
   name: string;
@@ -78,7 +78,7 @@ const NavLink = ({
     <li className="flex grow flex-col justify-center items-center relative w-1/4 h-full z-20">
       {isActive && (
         <span
-          className={`absolute bg-primary shadow-dark dark:bg-grey h-12 w-12 rounded-full origin-center animate-grow`}
+          className={`absolute bg-primary shadow-dark dark:bg-grey h-12 w-12 rounded-full origin-center`}
         />
       )}
 
