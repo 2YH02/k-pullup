@@ -6,6 +6,8 @@ export interface SearchMarkers {
 export interface SearchRes {
   took: number;
   markers: SearchMarkers[];
+  error?: string;
+  message?: string;
 }
 
 const search = async (query: string): Promise<SearchRes> => {

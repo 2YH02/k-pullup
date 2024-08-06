@@ -30,7 +30,7 @@
       "@hooks/*": ["./hooks/*"],
       "@api/*": ["./lib/api/*"],
       "@constant/*": ["./constant/*"],
-      "@types/*": ["./types/*"]
+      "@types/*": ["./types/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

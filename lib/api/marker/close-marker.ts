@@ -3,6 +3,7 @@ interface Props {
   lng: number;
   distance: number;
   pageParam: number;
+  pageSize?: number;
 }
 
 export interface CloseMarker {
@@ -19,16 +20,19 @@ interface CloseMarkerRes {
   markers: CloseMarker[];
   totalMarkers: number;
   totalPages: number;
+  error?: string;
+  message?: string;
 }
 
 const closeMarker = async ({
   lat,
   lng,
   distance,
+  pageSize = 10,
   pageParam,
 }: Props): Promise<CloseMarkerRes> => {
   const response = await fetch(
-    `/api/v1/markers/close?latitude=${lat}&longitude=${lng}&distance=${distance}&n=5&page=${pageParam}&pageSize=10`
+    `/api/v1/markers/close?latitude=${lat}&longitude=${lng}&distance=${distance}&n=${pageSize}&page=${pageParam}&pageSize=10`
   );
 
   const data = response.json();

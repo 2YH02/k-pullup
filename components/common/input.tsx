@@ -2,6 +2,7 @@
 
 import cn from "@lib/cn";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 interface InputProps extends React.ComponentProps<"input"> {
   /**
@@ -24,6 +25,10 @@ interface InputProps extends React.ComponentProps<"input"> {
    * tailwind 스타일 클래스
    */
   className?: string;
+  /**
+   * 컴포넌트 마운트 시 focus
+   */
+  isFocus?: boolean;
 }
 
 const Input = ({
@@ -32,9 +37,18 @@ const Input = ({
   onIconClick,
   isSearchButton = false,
   className,
+  isFocus = false,
   ...props
 }: InputProps) => {
   const router = useRouter();
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!inputRef.current || !isFocus) return;
+
+    inputRef.current.focus();
+  }, [inputRef.current]);
 
   const handleClick = () => {
     if (isSearchButton) {
@@ -61,6 +75,7 @@ const Input = ({
           isSearchButton ? "cursor-pointer" : ""
         } dark:bg-black-light dark:focus:border-grey-light text-black dark:text-white`}
         aria-invalid={isInvalid}
+        ref={inputRef}
         onClick={isSearchButton ? handleClick : undefined}
         onFocus={isSearchButton ? handleFocus : undefined}
         {...props}

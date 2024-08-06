@@ -13,7 +13,7 @@ const SearchHeader = ({ value, onChange }: SearchHeaderProps) => {
   const router = useRouter();
 
   return (
-    <div className="sticky top-0 left-0 flex items-center justify-center bg-white py-3">
+    <div className="sticky top-0 left-0 flex items-center justify-center bg-white dark:bg-black py-3">
       <button className="px-3" onClick={() => router.back()}>
         <ArrowLeftIcon className="fill-black dark:fill-white" />
       </button>
@@ -24,6 +24,7 @@ const SearchHeader = ({ value, onChange }: SearchHeaderProps) => {
           value={value}
           onChange={onChange}
           placeholder="철봉 위치 주소로 검색"
+          isFocus
         />
       </div>
     </div>
