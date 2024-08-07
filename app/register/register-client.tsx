@@ -1,8 +1,10 @@
 "use client";
 
+import LoadingIcon from "@/components/icons/loading-icon";
 import { KakaoMarker } from "@/types/kakao-map.types";
 import setNewMarker, { SetMarkerRes } from "@api/marker/set-new-marker";
 import SideMain from "@common/side-main";
+import useIsMounted from "@hooks/useIsMounted";
 import AuthError from "@layout/auth-error";
 import FacilitiesComplete from "@pages/register/facilities-complete";
 import SelectLocation from "@pages/register/select-location";
@@ -30,6 +32,7 @@ interface RegisterValue {
 const RegisterClient = () => {
   const router = useRouter();
 
+  const isMounted = useIsMounted();
   const { user, setUser } = useUserStore();
 
   const { setMarker: setMarkerToStore } = useMarkerStore();
@@ -201,7 +204,19 @@ const RegisterClient = () => {
     }));
   };
 
-  if (!user || user.error) {
+  if (!isMounted || !user) {
+    return (
+      <SideMain headerTitle=" " prevClick={() => {}} hasBackButton>
+        <div className="relative w-full h-full">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <LoadingIcon className="m-0" />
+          </div>
+        </div>
+      </SideMain>
+    );
+  }
+
+  if (user.error) {
     return (
       <AuthError
         headerTitle="위치 등록"
