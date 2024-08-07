@@ -8,6 +8,7 @@ import ArrowRightIcon from "@icons/arrow-right-icon";
 import LinkList from "@pages/mypage/link-list";
 import { cookies } from "next/headers";
 import Link from "next/link";
+// TODO: 유저 provider 확인 후 정보 관리 페이지 변경 필요
 
 const Mypage = async () => {
   const cookieStore = cookies();

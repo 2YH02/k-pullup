@@ -1,7 +1,8 @@
 "use client";
 
+import getAllMarker from "@api/marker/get-all-marker";
 import useIsMounted from "@hooks/useIsMounted";
-import getAllMarker from "@lib/api/marker/get-all-marker";
+import LoadingIcon from "@icons/loading-icon";
 import useGeolocationStore from "@store/useGeolocationStore";
 import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
@@ -49,8 +50,13 @@ const KakaoMap = () => {
   };
 
   if (!isMounted) {
-    // TODO: 지도 로딩 ui 만들기
-    return <div className="relative w-dvw h-dvh bg-red" />;
+    return (
+      <div className="relative w-dvw h-dvh bg-white dark:bg-black">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <LoadingIcon className="m-0" />
+        </div>
+      </div>
+    );
   }
 
   return (
