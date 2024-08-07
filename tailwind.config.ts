@@ -47,9 +47,14 @@ const config: Config = {
           "0%": { transform: "scale(0.2)" },
           "100%": { transform: "scale(1)" },
         },
+        ripple: {
+          "0%": { width: "0", height: "0", opacity: "0.8" },
+          "100%": { width: "100px", height: "100px", opacity: "0" },
+        },
       },
       animation: {
         grow: "grow 0.1s ease-in-out forwards",
+        ripple: "ripple 1.5s infinite",
       },
     },
   },

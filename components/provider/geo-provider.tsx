@@ -28,23 +28,31 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
   );
 
   useEffect(() => {
+    const setPosition = (position: GeolocationPosition) => {
+      setMyLocation({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+      setCurLocation({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    };
+
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          setMyLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-          setCurLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
+      const watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          setPosition(position);
         },
         (err) => {
           console.error(err);
           setGeoLocationError("위치 정보 제공 안됨");
         }
       );
+
+      return () => {
+        navigator.geolocation.clearWatch(watchId);
+      };
     } else {
       setGeoLocationError("위치 정보 제공 안됨");
     }
