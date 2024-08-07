@@ -29,7 +29,7 @@ const LinkList = ({ isAdmin }: { isAdmin?: boolean }) => {
           <div className="mr-10">
             <Proposal />
           </div>
-          <Text fontWeight="bold">정보 수정 요청 목록</Text>
+          <Text fontWeight="bold">내가 요청한 수정 목록</Text>
         </ShadowBox>
       </Link>
 
@@ -38,7 +38,7 @@ const LinkList = ({ isAdmin }: { isAdmin?: boolean }) => {
           <div className="mr-10">
             <Received />
           </div>
-          <Text fontWeight="bold">받은 정보 수정 요청 목록</Text>
+          <Text fontWeight="bold">받은 수정 요청 목록</Text>
         </ShadowBox>
       </Link>
 
@@ -48,7 +48,7 @@ const LinkList = ({ isAdmin }: { isAdmin?: boolean }) => {
             <div className="mr-10">
               <AllReportIcon />
             </div>
-            <Text fontWeight="bold">모든 정보 수정 요청 목록</Text>
+            <Text fontWeight="bold">전체 수정 요청 목록</Text>
           </ShadowBox>
         </Link>
       )}

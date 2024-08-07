@@ -232,7 +232,7 @@ const MyreportClient = ({ data }: MyreportClientProps) => {
   }
 
   return (
-    <SideMain headerTitle="받은 정보 수정 요청 목록" fullHeight hasBackButton>
+    <SideMain headerTitle="전체 수정 요청 목록" fullHeight hasBackButton>
       {reportItems}
     </SideMain>
   );

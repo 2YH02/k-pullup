@@ -6,7 +6,6 @@ import Section from "@common/section";
 import SideMain from "@common/side-main";
 import NotFound from "@layout/not-found";
 import ReportListItem from "@pages/mypage/report/report-list-item";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface ReportClientProps {
@@ -14,7 +13,6 @@ interface ReportClientProps {
 }
 
 const ReportClient = ({ data }: ReportClientProps) => {
-  const router = useRouter();
 
   const [reports, setReports] = useState<ReportsRes[]>(data);
 
@@ -29,7 +27,7 @@ const ReportClient = ({ data }: ReportClientProps) => {
   if (reports.length <= 0 || !reports) {
     return (
       <NotFound
-        headerTitle="정보 수정 요청 목록"
+        headerTitle="내가 요청한 수정 목록"
         errorTitle=" 요청한 장소가 없습니다."
         fullHeight
         hasBackButton
@@ -38,7 +36,7 @@ const ReportClient = ({ data }: ReportClientProps) => {
   }
 
   return (
-    <SideMain headerTitle="정보 수정 요청 목록" fullHeight hasBackButton>
+    <SideMain headerTitle="내가 요청한 수정 목록" fullHeight hasBackButton>
       <Section>
         {reports.map((report) => {
           return (
