@@ -129,7 +129,7 @@ input[type="range"]::-ms-thumb {
   overflow: hidden;
   height: 330px;
 }
-/* 지도위에 로드뷰의 위치와 각도를 표시하기 위한 map walker 아이콘의 스타일 */
+
 .MapWalker {
   position: absolute;
   margin: -26px 0 0 -51px;

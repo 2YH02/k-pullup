@@ -60,7 +60,7 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
     <Section className="h-full pb-0 flex flex-col">
       <div className="flex flex-col  items-center mt-10">
         {location.latitude && location.longitude ? (
-          <div className="w-[130px] h-[130px] translate-y-5">
+          <div className="w-[130px] h-[130px] translate-y-5 select-none">
             <Image
               src="/next.gif"
               alt="다음"

@@ -193,7 +193,7 @@ const SideMain = ({
       )}
 
       {!fullHeight && (
-        <div className="sticky top-0 py-3 bg-white dark:bg-black z-20 web:hidden">
+        <div className="sticky top-0 py-3 bg-white dark:bg-black z-20 rounded-t-3xl web:hidden">
           <div
             className={`w-1/6 h-1 mx-auto rounded-lg ${
               !dragable ? "bg-white dark:bg-black" : "bg-grey"
@@ -275,7 +275,7 @@ const MainHeader = ({
       <Text
         typography="t5"
         fontWeight="bold"
-        className="grow text-center truncate"
+        className="grow text-center truncate select-none"
       >
         {titile}
       </Text>

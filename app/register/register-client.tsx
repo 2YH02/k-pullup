@@ -1,6 +1,7 @@
 "use client";
 
 import LoadingIcon from "@/components/icons/loading-icon";
+import useSheetHeightStore from "@/store/useSheetHeightStore";
 import { KakaoMarker } from "@/types/kakao-map.types";
 import setNewMarker, { SetMarkerRes } from "@api/marker/set-new-marker";
 import SideMain from "@common/side-main";
@@ -34,6 +35,7 @@ const RegisterClient = () => {
 
   const isMounted = useIsMounted();
   const { user, setUser } = useUserStore();
+  const { setSheetHeight } = useSheetHeightStore();
 
   const { setMarker: setMarkerToStore } = useMarkerStore();
 
@@ -143,6 +145,10 @@ const RegisterClient = () => {
       marker.setMap(null);
     };
   }, [map]);
+
+  useEffect(() => {
+    setSheetHeight(85);
+  }, [setSheetHeight]);
 
   const handleLocationChange = ({
     latitude,
