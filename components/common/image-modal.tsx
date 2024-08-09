@@ -12,6 +12,7 @@ import {
 } from "./carousel";
 import Dimmed from "./dimmed";
 import ImageWrap from "./Image-wrap";
+// TODO: 사진 업로드 날짜 표시
 
 interface Props {
   open?: boolean;

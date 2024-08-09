@@ -1,10 +1,12 @@
 "use client";
 
 import signin from "@api/auth/signin";
+import myInfo from "@api/user/myInfo";
 import Button from "@common/button";
 import InputField from "@common/input-field";
 import Text from "@common/text";
 import useInput from "@hooks/useInput";
+import { useToast } from "@hooks/useToast";
 import LoadingIcon from "@icons/loading-icon";
 import { validateSigin } from "@lib/validate";
 import useUserStore from "@store/useUserStore";
@@ -25,6 +27,7 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
   const router = useRouter();
 
   const { setUser } = useUserStore();
+  const { toast } = useToast();
 
   const emailValue = useInput("");
   const passwordValue = useInput("");
@@ -61,7 +64,15 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
         return;
       }
 
-      setUser(response.user);
+      const user = await myInfo();
+
+      if (user.error || !user.userId || !user) {
+        router.refresh();
+        toast({ description: "잠시 후 다시 시도해주세요," });
+        setLoading(false);
+      }
+
+      setUser(user);
       setLoading(false);
       if (returnUrl) {
         router.replace(returnUrl);
@@ -109,7 +120,15 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
       return;
     }
 
-    setUser(response.user);
+    const user = await myInfo();
+
+    if (user.error || !user.userId || !user) {
+      router.refresh();
+      toast({ description: "잠시 후 다시 시도해주세요," });
+      setLoading(false);
+    }
+
+    setUser(user);
     setLoading(false);
     if (returnUrl) {
       router.replace(returnUrl);

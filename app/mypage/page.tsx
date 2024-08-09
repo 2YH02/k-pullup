@@ -8,7 +8,7 @@ import ArrowRightIcon from "@icons/arrow-right-icon";
 import LinkList from "@pages/mypage/link-list";
 import { cookies } from "next/headers";
 import Link from "next/link";
-// TODO: 유저 provider 확인 후 정보 관리 페이지 변경 필요
+// TODO: 마커 등록 갯수, 수정 제안 횟수에 따른 UI 차별
 
 const Mypage = async () => {
   const cookieStore = cookies();
@@ -42,6 +42,23 @@ const Mypage = async () => {
               <Text>님</Text>
             </div>
             <Text typography="t6">안녕하세요.</Text>
+            {(user.reportCount || user.markerCount) && (
+              <div className="mt-3">
+                {user.reportCount && (
+                  <Text typography="t7" display="block">
+                    정보 수정 제안 총{" "}
+                    <span className="font-bold">{user.reportCount}</span>회
+                  </Text>
+                )}
+
+                {user.markerCount && (
+                  <Text typography="t7" display="block">
+                    등록한 철봉 총{" "}
+                    <span className="font-bold">{user.markerCount}</span>개
+                  </Text>
+                )}
+              </div>
+            )}
           </>
         )}
       </Section>

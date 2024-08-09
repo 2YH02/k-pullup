@@ -1,3 +1,5 @@
+"use client";
+
 import type { User } from "@/types/user";
 import updateUserName from "@api/user/update-username";
 import Button from "@common/button";
@@ -13,11 +15,12 @@ import { useState } from "react";
 
 interface UsernameCardProps {
   user: User;
-  setUser: (name: string) => void;
 }
 
-const UsernameCard = ({ user, setUser }: UsernameCardProps) => {
+const UsernameCard = ({ user }: UsernameCardProps) => {
   const router = useRouter();
+
+  const [usernameValue, setUsernameValue] = useState(user.username);
 
   const username = useInput(user.username);
   const [edit, setEdit] = useState(false);
@@ -39,7 +42,7 @@ const UsernameCard = ({ user, setUser }: UsernameCardProps) => {
       return;
     }
 
-    setUser(username.value);
+    setUsernameValue(username.value);
     setLoading(false);
     setEdit(false);
     router.refresh();
@@ -88,10 +91,12 @@ const UsernameCard = ({ user, setUser }: UsernameCardProps) => {
             </div>
           ) : (
             <>
-              <Text className="mr-3">{user.username}</Text>
-              <button onClick={() => setEdit(true)}>
-                <EditIcon size={17} color="black" />
-              </button>
+              <Text className="mr-3">{usernameValue}</Text>
+              {user.provider === "website" && (
+                <button onClick={() => setEdit(true)}>
+                  <EditIcon size={17} color="black" />
+                </button>
+              )}
             </>
           )}
         </div>

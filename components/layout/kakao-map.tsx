@@ -8,6 +8,7 @@ import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
 import Script from "next/script";
 import { useEffect } from "react";
+// TODO: 지도 우클릭 기능 추가 (리스트 메뉴 형식, ex-로드뷰)
 
 const KakaoMap = () => {
   const isMounted = useIsMounted();
