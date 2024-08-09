@@ -57,6 +57,7 @@ const Roadview = () => {
     roadviewClient.getNearestPanoId(position, 50, (panoId: number) => {
       if (panoId === null) {
         toast({ description: "로드뷰를 지원하지 않는 주소입니다." });
+        closeModal();
       } else {
         roadview.setPanoId(panoId, position);
       }
