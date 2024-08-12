@@ -34,7 +34,7 @@ const ArticleCarousel = () => {
       url: "/article/2",
     },
     {
-      title: "핫한 지역",
+      title: "인기 지역",
       icon: <PullupRankingIcon />,
       color: "bg-[#6DC5D1] dark:bg-[#59a2ac]",
       url: "/ranking",
