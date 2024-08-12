@@ -1,4 +1,3 @@
-import EditIcon from "@/components/icons/edit-icon";
 import Badge from "@common/badge";
 import Divider from "@common/divider";
 import Section from "@common/section";
@@ -9,6 +8,7 @@ import getWeather from "@lib/api/marker/get-weather";
 import markerDetail from "@lib/api/marker/marker-detail";
 import ButtonList from "@pages/pullup/button-list";
 import Comments from "@pages/pullup/comments";
+import Description from "@pages/pullup/description";
 import ImageCarousel from "@pages/pullup/image-carousel";
 import ImageList from "@pages/pullup/image-list";
 import MoveMap from "@pages/pullup/move-map";
@@ -85,15 +85,11 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
         <Text typography="t4" className="w-full break-words mt-3">
           {marker.address}
         </Text>
-        <div className="">
-          <Text typography="t6" className="break-words">
-            {marker.description || "작성된 설명이 없습니다."}
-          </Text>
-          <EditIcon
-            size={14}
-            className="stroke-grey-dark dark:stroke-grey-light shrink-0"
-          />
-        </div>
+        <Description
+          description={marker.description}
+          markerId={marker.markerId}
+          isAdmin={marker.isChulbong || false}
+        />
         <div className="flex items-center justify-between mt-4">
           <Link href={`/pullup/${id}/report`}>
             <Text typography="t7" className="underline">
