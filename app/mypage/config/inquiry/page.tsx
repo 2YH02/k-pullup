@@ -45,8 +45,25 @@ const InquiryPage = () => {
             </a>
             에 연락해 주세요.
           </Text>
-          <div className="w-full h-[416px]">
-            <ImageWrap src="/hand.gif" alt="운동" h={1000} w={300} />
+
+          <div>
+            <div className="w-full h-[416px]">
+              <ImageWrap
+                src="/hand.gif"
+                alt="운동"
+                h={1000}
+                w={300}
+                className="m-0"
+              />
+            </div>
+            <Text
+              typography="t7"
+              fontWeight="bold"
+              display="block"
+              textAlign="center"
+            >
+              제작자 입니다
+            </Text>
           </div>
         </ShadowBox>
       </Section>
