@@ -23,7 +23,7 @@ const SearchClient = () => {
 
   const searchValue = useInput("");
 
-  const { searches } = useSearchStore();
+  const { searches, clearSearches } = useSearchStore();
 
   const [result, setResult] = useState<SearchData[]>([]);
 
@@ -64,7 +64,14 @@ const SearchClient = () => {
         <>
           {searches.length > 0 && (
             <Section className="mt-3">
-              <SectionTitle title="최근 검색" />
+              <div className="flex justify-between items-center">
+                <SectionTitle title="최근 검색" />
+                <button onClick={() => clearSearches()}>
+                  <Text typography="t6" className="text-grey dark:text-grey">
+                    목록 삭제
+                  </Text>
+                </button>
+              </div>
               <ul>
                 {searches.map((search, index) => {
                   return (
