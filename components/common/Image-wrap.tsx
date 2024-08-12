@@ -1,3 +1,5 @@
+"use client";
+
 import cn from "@lib/cn";
 import Image from "next/image";
 import { useState } from "react";
@@ -26,7 +28,7 @@ const ImageWrap = ({
       {!isLoaded && (
         <>
           {loading === "skeleton" ? (
-            <Skeleton className="w-full h-[140px] mx-auto rounded-md" />
+            <Skeleton className="w-full h-full mx-auto rounded-md" />
           ) : (
             <LoadingIcon className="text-white flex absolute top-1/2 left-1/2" />
           )}
