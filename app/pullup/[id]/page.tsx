@@ -4,7 +4,6 @@ import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import getFacilities from "@lib/api/marker/get-facilities";
-import getWeather from "@lib/api/marker/get-weather";
 import markerDetail from "@lib/api/marker/marker-detail";
 import ButtonList from "@pages/pullup/button-list";
 import Comments from "@pages/pullup/comments";
@@ -14,6 +13,7 @@ import ImageList from "@pages/pullup/image-list";
 import MoveMap from "@pages/pullup/move-map";
 import NotFoud from "@pages/pullup/not-foud";
 import Tabs from "@pages/pullup/tabs";
+import WeatherBadge from "@pages/pullup/weather-badge";
 import { cookies } from "next/headers";
 import Link from "next/link";
 
@@ -29,8 +29,6 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
   if (marker.error === "Marker not found") {
     return <NotFoud />;
   }
-
-  const weather = await getWeather(marker.latitude, marker.longitude);
 
   const 철봉 = facilities.find((item) => item.facilityId === 1);
   const 평행봉 = facilities.find((item) => item.facilityId === 2);
@@ -76,14 +74,7 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
               textStyle="leading-3"
             />
           )}
-          {weather && (
-            <Badge
-              icon={<img src={weather.iconImage} className="w-6" />}
-              text={`${weather.temperature} °C`}
-              className="flex items-center justify-center h-8"
-              textStyle="leading-3"
-            />
-          )}
+          <WeatherBadge lat={marker.latitude} lng={marker.longitude} />
         </div>
 
         <Text typography="t4" className="w-full break-words mt-3">
@@ -101,14 +92,16 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
             </Text>
           </Link>
 
-          <div className="flex items-center">
-            <span className="mr-1 mb-[3px]">
-              <StarIcon />
-            </span>
-            <Text typography="t7" className="">
-              정보 제공자: {marker.username}
-            </Text>
-          </div>
+          {marker.username && (
+            <div className="flex items-center">
+              <span className="mr-1 mb-[3px]">
+                <StarIcon />
+              </span>
+              <Text typography="t7" className="">
+                정보 제공자: {marker.username}
+              </Text>
+            </div>
+          )}
         </div>
       </Section>
 
