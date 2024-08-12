@@ -2,12 +2,14 @@
 
 import getSearchLoation from "@api/common/get-search-location";
 import search from "@api/search/search";
-import Section from "@common/section";
+import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import useInput from "@hooks/useInput";
 import SearchHeader from "@pages/search/search-header";
 import SearchList from "@pages/search/search-list";
+import useSearchStore from "@store/useSearchStore";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export interface SearchData {
@@ -17,7 +19,12 @@ export interface SearchData {
 }
 
 const SearchClient = () => {
+  const router = useRouter();
+
   const searchValue = useInput("");
+
+  const { searches } = useSearchStore();
+
   const [result, setResult] = useState<SearchData[]>([]);
 
   useEffect(() => {
@@ -54,20 +61,47 @@ const SearchClient = () => {
       {result && result.length > 0 && searchValue.value.length > 0 ? (
         <SearchList result={result} value={searchValue.value} />
       ) : (
-        <Section className="mt-3">
-          <Text
-            className="mb-2"
-            typography="t5"
-            display="block"
-            fontWeight="bold"
-          >
-            원하는 주소에 철봉이 있는지 확인해 보세요.
-          </Text>
-          <Text typography="t6" display="block">
-            철봉이 없을 경우, 주변 지역을 검색하여 철봉 위치를 확인할 수
-            있습니다.
-          </Text>
-        </Section>
+        <>
+          {searches.length > 0 && (
+            <Section className="mt-3">
+              <SectionTitle title="최근 검색" />
+              <ul>
+                {searches.map((search, index) => {
+                  return (
+                    <li
+                      key={`${search}-${index}`}
+                      onClick={() => {
+                        const url = !!search.d
+                          ? `/pullup/${search.d}`
+                          : `/search?addr=${search.addr}&lat=${search.lat}&lng=${search.lng}`;
+                        router.push(url);
+                      }}
+                      className="border-b border-solid dark:border-grey-dark"
+                    >
+                      <button className="flex items-center p-3 text-left w-full h-full">
+                        <Text>{search.addr}</Text>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </Section>
+          )}
+          <Section>
+            <Text
+              className="mb-2"
+              typography="t5"
+              display="block"
+              fontWeight="bold"
+            >
+              원하는 주소에 철봉이 있는지 확인해 보세요.
+            </Text>
+            <Text typography="t6" display="block">
+              철봉이 없을 경우, 주변 지역을 검색하여 철봉 위치를 확인할 수
+              있습니다.
+            </Text>
+          </Section>
+        </>
       )}
     </SideMain>
   );

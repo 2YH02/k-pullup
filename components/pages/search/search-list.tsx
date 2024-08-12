@@ -3,6 +3,7 @@
 import { type SearchData } from "@/app/search/search-client";
 import Text from "@common/text";
 import SearchIcon from "@icons/search-icon";
+import useSearchStore from "@store/useSearchStore";
 import { useRouter } from "next/navigation";
 
 interface SearchResultProps {
@@ -12,6 +13,7 @@ interface SearchResultProps {
 
 const SearchList = ({ result, value }: SearchResultProps) => {
   const router = useRouter();
+  const { addSearch } = useSearchStore();
 
   return (
     <ul>
@@ -27,8 +29,14 @@ const SearchList = ({ result, value }: SearchResultProps) => {
             <button
               className="flex items-center p-3 text-left w-full h-full"
               onClick={() => {
+                addSearch({
+                  addr: item.address,
+                  d: item.markerId || null,
+                  lat: item.position?.lat || null,
+                  lng: item.position?.lng || null,
+                });
                 const url = !!item.markerId
-                  ? `/search?addr=${item.address}&d=${item.markerId}`
+                  ? `/pullup/${item.markerId}`
                   : `/search?addr=${item.address}&lat=${item.position?.lat}&lng=${item.position?.lng}`;
                 router.push(url);
               }}

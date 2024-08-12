@@ -96,7 +96,7 @@ const Description = ({ description, markerId, isAdmin }: DescriptionProps) => {
         <button onClick={() => setEdit(true)} className="block">
           <EditIcon
             size={14}
-            className="stroke-grey-dark dark:stroke-grey-light"
+            className="stroke-grey-dark dark:stroke-grey-light dark:fill-black"
           />
         </button>
       )}
