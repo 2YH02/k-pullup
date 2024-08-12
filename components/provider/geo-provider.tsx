@@ -7,6 +7,7 @@ import useGeolocationStore from "@store/useGeolocationStore";
 import useMapStore from "@store/useMapStore";
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+// TODO: 위치 추적 지도 이동 오류 배포 후 확인 필요
 
 interface GeoProviderProps {
   children: React.ReactNode;
@@ -33,10 +34,6 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       });
-      setCurLocation({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      });
     };
 
     if (navigator.geolocation) {
@@ -56,7 +53,20 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
     } else {
       setGeoLocationError("위치 정보 제공 안됨");
     }
-  }, [setMyLocation, setCurLocation, setGeoLocationError]);
+  }, [setMyLocation, setGeoLocationError]);
+
+  useEffect(() => {
+    if (
+      myLocation &&
+      curLocation.lat === 37.566535 &&
+      curLocation.lng === 126.9779692
+    ) {
+      setCurLocation({
+        lat: myLocation.lat,
+        lng: myLocation.lng,
+      });
+    }
+  }, [myLocation]);
 
   useEffect(() => {
     if (!map || !myLocation) return;
@@ -82,8 +92,6 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
 
     customOverlay.setMap(map);
     setMyLocateOverlay(customOverlay);
-
-    map.setCenter(moveLatLon);
   }, [map, myLocation]);
 
   useEffect(() => {

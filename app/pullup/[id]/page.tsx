@@ -1,3 +1,4 @@
+import EditIcon from "@/components/icons/edit-icon";
 import Badge from "@common/badge";
 import Divider from "@common/divider";
 import Section from "@common/section";
@@ -84,9 +85,15 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
         <Text typography="t4" className="w-full break-words mt-3">
           {marker.address}
         </Text>
-        <Text typography="t6" className="w-full break-words">
-          {marker.description || "작성된 설명이 없습니다."}
-        </Text>
+        <div className="">
+          <Text typography="t6" className="break-words">
+            {marker.description || "작성된 설명이 없습니다."}
+          </Text>
+          <EditIcon
+            size={14}
+            className="stroke-grey-dark dark:stroke-grey-light shrink-0"
+          />
+        </div>
         <div className="flex items-center justify-between mt-4">
           <Link href={`/pullup/${id}/report`}>
             <Text typography="t7" className="underline">
@@ -98,7 +105,9 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
             <span className="mr-1 mb-[3px]">
               <StarIcon />
             </span>
-            <Text typography="t7" className="">정보 제공자: {marker.username}</Text>
+            <Text typography="t7" className="">
+              정보 제공자: {marker.username}
+            </Text>
           </div>
         </div>
       </Section>
@@ -107,7 +116,7 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
         <ButtonList marker={marker} />
       </Section>
 
-      <Divider className="h-3" />
+      <Divider className="h-2" />
 
       <Tabs tabs={tabData} />
     </SideMain>
