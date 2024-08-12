@@ -45,6 +45,12 @@ const BookmarkButton = ({
           },
           cancel: true,
         });
+      } else if (response.status === 403) {
+        openAlert({
+          title: "개수 초과",
+          description: "북마크는 최대 10개까지 가능합니다.",
+          onClick: () => {},
+        });
       } else {
         toast({
           description: "잠시 후 다시 시도해주세요.",
