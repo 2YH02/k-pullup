@@ -33,7 +33,7 @@ const IconLinkList = () => {
       <div className="flex gap-2">
         <IconButton
           icon={<ChatBubbleIcon size={34} link />}
-          text="채팅"
+          text="지역 채팅"
           onClick={() => router.push("/chat")}
         />
         <IconButton

@@ -54,10 +54,9 @@ const KakaoMap = () => {
   const handleGps = () => {
     if (!map || !myLocation) return;
 
-    const latLng = new window.kakao.maps.LatLng(
-      myLocation?.lat,
-      myLocation?.lng
-    );
+    const latLng = new window.kakao.maps.LatLng(myLocation.lat, myLocation.lng);
+
+    setCurLocation({ lat: myLocation.lat, lng: myLocation.lng });
 
     map.setCenter(latLng);
   };
