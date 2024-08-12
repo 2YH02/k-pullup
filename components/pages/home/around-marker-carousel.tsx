@@ -132,7 +132,7 @@ const AroundMarkerCarousel = () => {
                     </div>
                     <div className="flex items-center w-[120px] overflow-hidden whitespace-nowrap">
                       <Text className="truncate" typography="t6">
-                        {marker.address}
+                        {splitAddress(marker.address)}
                       </Text>
                     </div>
                   </button>
@@ -144,6 +144,18 @@ const AroundMarkerCarousel = () => {
       </Carousel>
     </Section>
   );
+};
+
+const splitAddress = (address?: string) => {
+  if (!address) return "주소 정보 제공 안됨";
+  const addressArr = address.split(" ");
+  const newArr = addressArr.filter((_, index) => {
+    return index !== 0 && index !== 1;
+  });
+
+  const newAddress = newArr.join(" ");
+
+  return newAddress;
 };
 
 export default AroundMarkerCarousel;
