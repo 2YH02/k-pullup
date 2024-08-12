@@ -26,6 +26,7 @@ const LocationBadge = () => {
     <Badge
       text={title as string}
       icon={<LocationIcon size={20} className="fill-primary-dark" />}
+      className="pl-[5px]"
     />
   );
 };
