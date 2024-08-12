@@ -29,6 +29,7 @@ const Description = ({ description, markerId, isAdmin }: DescriptionProps) => {
 
   const handleClick = async () => {
     if (description === descriptionInput.value) return;
+    
     setLoading(true);
     const data = await updateDescription(descriptionInput.value, markerId);
     if (data.error || data.message) {
@@ -52,6 +53,7 @@ const Description = ({ description, markerId, isAdmin }: DescriptionProps) => {
         <Input
           isInvalid={false}
           className="rounded-md h-8"
+          maxLength={40}
           value={descriptionInput.value}
           onChange={descriptionInput.onChange}
         />
