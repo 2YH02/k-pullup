@@ -56,17 +56,25 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
   }, [setMyLocation, setGeoLocationError]);
 
   useEffect(() => {
+    if (!map) return;
     if (
       myLocation &&
       curLocation.lat === 37.566535 &&
       curLocation.lng === 126.9779692
     ) {
+      const moveLatLon = new window.kakao.maps.LatLng(
+        myLocation.lat,
+        myLocation.lng
+      );
+
       setCurLocation({
         lat: myLocation.lat,
         lng: myLocation.lng,
       });
+
+      map.setCenter(moveLatLon);
     }
-  }, [myLocation]);
+  }, [myLocation, map]);
 
   useEffect(() => {
     if (!map || !myLocation) return;
