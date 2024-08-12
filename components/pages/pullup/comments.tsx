@@ -149,21 +149,24 @@ const Comments = ({ markerId }: CommentsProps) => {
 
   return (
     <div>
-      <div className="mb-3">
+      <div className="mb-3 border border-solid border-primary rounded-md p-1">
         <Textarea
-          placeholder="댓글을 입력해주세요"
+          placeholder="다른 사람에게 불쾌감을 주는 욕설, 혐오, 비하의 표현은 주의해주세요."
           rows={2}
           value={commentValue.value}
           onChange={commentValue.onChange}
+          className="placeholder:text-xs border-none focus:border-none"
         />
-        <Button
-          onClick={handleCreate}
-          className="mt-1"
-          size="sm"
-          disabled={createLoading}
-        >
-          등록
-        </Button>
+        <div className="flex items-center justify-between border-t border-solid p-1 pb-0">
+          <span>
+            <Text typography="t6">{commentValue.value.length}</Text>
+            <Text typography="t6">/</Text>
+            <Text typography="t6">40</Text>
+          </span>
+          <Button onClick={handleCreate} size="sm" disabled={createLoading}>
+            등록
+          </Button>
+        </div>
       </div>
 
       {comments.length <= 0 && !commentsLoading && (
