@@ -52,7 +52,7 @@ const KakaoMap = () => {
 
   if (!isMounted) {
     return (
-      <div className="relative w-dvw h-dvh bg-white dark:bg-black">
+      <div className="relative w-dvw h-dvh bg-white dark:bg-black-light">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <LoadingIcon className="m-0" />
         </div>

@@ -38,7 +38,7 @@ const SigninPage = ({ searchParams }: PageProps) => {
           <div className="flex items-center justify-center w-12 h-12 shrink-0">
             <img src="/kakao-logo.svg" alt="카카오 로고" className="" />
           </div>
-          <div className="w-32">카카오 로그인</div>
+          <div className="w-32 text-[#3D1200]">카카오 로그인</div>
         </Link>
 
         <Link
@@ -49,7 +49,7 @@ const SigninPage = ({ searchParams }: PageProps) => {
           <div className="flex items-center justify-center w-12 h-12 shrink-0">
             <img src="/naver-logo.svg" alt="네이버 로고" className="" />
           </div>
-          <div className="w-32">네이버 로그인</div>
+          <div className="w-32 text-white">네이버 로그인</div>
         </Link>
 
         <Link
@@ -61,7 +61,7 @@ const SigninPage = ({ searchParams }: PageProps) => {
           <div className="flex items-center justify-center w-12 h-12 shrink-0">
             <img src="/google-logo.svg" alt="구글 로고" className="" />
           </div>
-          <div className="w-32">구글 로그인</div>
+          <div className="w-32 text-black">구글 로그인</div>
         </Link>
 
         <Link
