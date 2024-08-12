@@ -48,6 +48,8 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
 
   const [isChatError, setIsChatError] = useState(false);
 
+  const [subTitle, setSubTitle] = useState("");
+
   useEffect(() => {
     if (!inputRef.current) return;
     inputRef.current.focus();
@@ -73,7 +75,7 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
       if (data.userNickname === "chulbong-kr") {
         const titleArr = data.message.split(" ");
 
-        console.log(titleArr);
+        setSubTitle(`${titleArr[1]} ${titleArr[2]} ${titleArr[3]}`);
       }
 
       setMessages((prevMessages) => [
@@ -148,7 +150,11 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
   }
 
   return (
-    <SideMain headerTitle={headerTitle as string} fullHeight hasBackButton>
+    <SideMain
+      headerTitle={`${headerTitle as string} ${subTitle}`}
+      fullHeight
+      hasBackButton
+    >
       <Section className="flex flex-col pb-0 h-full">
         <Text
           typography="t7"

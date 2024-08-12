@@ -47,6 +47,8 @@ const PullupChatClient = ({ markerId }: PullupChatClientProps) => {
 
   const [isChatError, setIsChatError] = useState(false);
 
+  const [subTitle, setSubTitle] = useState("");
+
   useEffect(() => {
     if (!inputRef.current) return;
     inputRef.current.focus();
@@ -72,7 +74,7 @@ const PullupChatClient = ({ markerId }: PullupChatClientProps) => {
       if (data.userNickname === "chulbong-kr") {
         const titleArr = data.message.split(" ");
 
-        console.log(titleArr);
+        setSubTitle(`${titleArr[1]} ${titleArr[2]} ${titleArr[3]}`);
       }
 
       setMessages((prevMessages) => [
@@ -138,7 +140,7 @@ const PullupChatClient = ({ markerId }: PullupChatClientProps) => {
 
   if (!connection && !isChatError) {
     return (
-      <SideMain headerTitle="철봉 채팅" fullHeight hasBackButton>
+      <SideMain headerTitle={`철봉 채팅`} fullHeight hasBackButton>
         <Section className="flex items-center justify-center h-full">
           <LoadingIcon size="lg" />
         </Section>
@@ -147,7 +149,7 @@ const PullupChatClient = ({ markerId }: PullupChatClientProps) => {
   }
 
   return (
-    <SideMain headerTitle="철봉 채팅" fullHeight hasBackButton>
+    <SideMain headerTitle={`철봉 채팅 ${subTitle}`} fullHeight hasBackButton>
       <Section className="flex flex-col pb-0 h-full">
         <Text
           typography="t7"
