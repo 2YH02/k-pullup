@@ -79,11 +79,11 @@ const KakaoMap = () => {
       />
       <div id="map" className="relative w-full h-dvh">
         <button
-          className="absolute top-5 right-5 p-1 rounded-md z-[2] mo:top-16
+          className="absolute top-16 right-5 p-1 rounded-md z-[2] mo:top-16
           bg-white shadow-simple dark:bg-black hover:bg-grey-light hover:dark:bg-grey-dark"
           onClick={handleGps}
         >
-          <LocateFixedIcon className="dark:stroke-white" />
+          <LocateFixedIcon className="dark:stroke-white stroke-black" />
         </button>
       </div>
     </>
