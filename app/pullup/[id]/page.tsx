@@ -59,18 +59,21 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
               <Badge
                 text={`기구 개수 정보 없음`}
                 className="flex items-center justify-center mr-2 h-8"
+                textStyle="leading-3"
               />
             ))}
           {철봉 && 철봉.quantity > 0 && (
             <Badge
               text={`철봉 ${철봉?.quantity}개`}
               className="flex items-center justify-center mr-2 h-8"
+              textStyle="leading-3"
             />
           )}
           {평행봉 && 평행봉.quantity > 0 && (
             <Badge
               text={`평행봉 ${평행봉?.quantity}개`}
               className="flex items-center justify-center mr-2 h-8"
+              textStyle="leading-3"
             />
           )}
           {weather && (
@@ -78,6 +81,7 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
               icon={<img src={weather.iconImage} className="w-6" />}
               text={`${weather.temperature} °C`}
               className="flex items-center justify-center h-8"
+              textStyle="leading-3"
             />
           )}
         </div>
