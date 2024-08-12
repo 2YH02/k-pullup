@@ -10,6 +10,7 @@ import { useToast } from "@hooks/useToast";
 import createComment from "@lib/api/comment/create-comment";
 import deleteComment from "@lib/api/comment/delete-comment";
 import getComments, { type Comment } from "@lib/api/comment/get-comments";
+import { formatDate } from "@lib/format-date";
 import useUserStore from "@store/useUserStore";
 import { Trash2Icon } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -174,6 +175,7 @@ const Comments = ({ markerId }: CommentsProps) => {
       )}
 
       {comments.map((comment) => {
+        console.log(comment.postedAt);
         return (
           <ListItem
             key={comment.commentId}
@@ -194,7 +196,7 @@ const Comments = ({ markerId }: CommentsProps) => {
           >
             <ListContents
               title={comment.commentText}
-              subTitle={`${comment.postedAt}`}
+              subTitle={formatDate(comment.postedAt)}
             />
 
             <ListRight>{comment.username}</ListRight>

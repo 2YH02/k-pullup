@@ -3,8 +3,8 @@ export interface Comment {
   markerId: number;
   userId: number;
   commentText: string;
-  postedAt: Date;
-  updatedAt: Date;
+  postedAt: string;
+  updatedAt: string;
   username: string;
 }
 
