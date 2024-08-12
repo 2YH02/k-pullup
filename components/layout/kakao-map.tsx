@@ -6,6 +6,7 @@ import LoadingIcon from "@icons/loading-icon";
 import useGeolocationStore from "@store/useGeolocationStore";
 import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
+import { LocateFixedIcon } from "lucide-react";
 import Script from "next/script";
 import { useEffect } from "react";
 // TODO: 지도 우클릭 기능 추가 (리스트 메뉴 형식, ex-로드뷰)
@@ -13,8 +14,8 @@ import { useEffect } from "react";
 const KakaoMap = () => {
   const isMounted = useIsMounted();
 
-  const { setCurLocation } = useGeolocationStore();
-  const { setMap } = useMapStore();
+  const { setCurLocation, myLocation } = useGeolocationStore();
+  const { map, setMap } = useMapStore();
   const { setMarker } = useMarkerStore();
 
   useEffect(() => {
@@ -50,6 +51,17 @@ const KakaoMap = () => {
     });
   };
 
+  const handleGps = () => {
+    if (!map || !myLocation) return;
+
+    const latLng = new window.kakao.maps.LatLng(
+      myLocation?.lat,
+      myLocation?.lng
+    );
+
+    map.setCenter(latLng);
+  };
+
   if (!isMounted) {
     return (
       <div className="relative w-dvw h-dvh bg-white dark:bg-black-light">
@@ -66,7 +78,15 @@ const KakaoMap = () => {
         src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_APP_KEY}&libraries=clusterer,services&autoload=false`}
         onLoad={handleLoadMap}
       />
-      <div id="map" className="relative w-full h-dvh" />
+      <div id="map" className="relative w-full h-dvh">
+        <button
+          className="absolute top-5 right-5 p-1 rounded-md z-[2] mo:top-16
+          bg-white shadow-simple dark:bg-black hover:bg-grey-light hover:dark:bg-grey-dark"
+          onClick={handleGps}
+        >
+          <LocateFixedIcon className="dark:stroke-white" />
+        </button>
+      </div>
     </>
   );
 };
