@@ -1,12 +1,13 @@
 "use client";
 
-import useChatIdStore from "@/store/useChatIdStore";
 import Input from "@common/input";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import useInput from "@hooks/useInput";
 import LoadingIcon from "@icons/loading-icon";
+import useChatIdStore from "@store/useChatIdStore";
+import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
 
 export interface ChatMessage {
@@ -33,6 +34,8 @@ interface ChatDetailClientProps {
 }
 
 const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
+  const router = useRouter();
+
   const cidState = useChatIdStore();
 
   const chatValue = useInput("");
@@ -141,7 +144,12 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
 
   if (!connection && !isChatError) {
     return (
-      <SideMain headerTitle={headerTitle as string} fullHeight hasBackButton>
+      <SideMain
+        headerTitle={headerTitle as string}
+        fullHeight
+        hasBackButton
+        prevClick={() => router.replace("/chat")}
+      >
         <Section className="flex items-center justify-center h-full">
           <LoadingIcon size="lg" />
         </Section>
@@ -154,6 +162,7 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
       headerTitle={`${headerTitle as string} ${subTitle}`}
       fullHeight
       hasBackButton
+      prevClick={() => router.replace("/chat")}
     >
       <Section className="flex flex-col pb-0 h-full">
         <Text

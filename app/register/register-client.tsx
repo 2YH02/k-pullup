@@ -1,11 +1,10 @@
 "use client";
 
-import LoadingIcon from "@/components/icons/loading-icon";
-import useSheetHeightStore from "@/store/useSheetHeightStore";
 import { KakaoMarker } from "@/types/kakao-map.types";
 import setNewMarker, { SetMarkerRes } from "@api/marker/set-new-marker";
 import SideMain from "@common/side-main";
 import useIsMounted from "@hooks/useIsMounted";
+import LoadingIcon from "@icons/loading-icon";
 import AuthError from "@layout/auth-error";
 import FacilitiesComplete from "@pages/register/facilities-complete";
 import SelectLocation from "@pages/register/select-location";
@@ -16,6 +15,7 @@ import UploadImage from "@pages/register/upload-image";
 import useAlertStore from "@store/useAlertStore";
 import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
+import useSheetHeightStore from "@store/useSheetHeightStore";
 import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -30,7 +30,7 @@ interface RegisterValue {
   step: number;
 }
 
-const RegisterClient = () => {
+const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
   const router = useRouter();
 
   const isMounted = useIsMounted();
@@ -197,7 +197,11 @@ const RegisterClient = () => {
           ? "개수 등록을 취소 하시겠습니까?"
           : "위치 등록을 취소 하시겠습니까?",
       onClick: () => {
-        router.back();
+        if (referrer) {
+          router.back();
+        } else {
+          router.push("/");
+        }
       },
       cancel: true,
     });

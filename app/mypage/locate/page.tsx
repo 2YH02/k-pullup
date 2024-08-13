@@ -5,11 +5,14 @@ import Text from "@common/text";
 import AuthError from "@layout/auth-error";
 import NotFound from "@pages/mypage/locate/not-found";
 import RegisteredLocateList from "@pages/mypage/locate/registered-locate-list";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 const RankingPage = async () => {
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
+
+  const headersList = headers();
+  const referrer = headersList.get("referer");
 
   const markers = await myRegisteredLocation({
     pageParam: 1,
@@ -32,7 +35,11 @@ const RankingPage = async () => {
   }
 
   return (
-    <SideMain headerTitle="내가 등록한 위치" hasBackButton>
+    <SideMain
+      headerTitle="내가 등록한 위치"
+      hasBackButton
+      referrer={!!referrer}
+    >
       <Section>
         <Text
           display="block"

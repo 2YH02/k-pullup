@@ -3,11 +3,14 @@ import AuthError from "@/components/layout/auth-error";
 import UserinfoCard from "@/components/pages/mypage/user/userinfo-card";
 import UsernameCard from "@/components/pages/mypage/user/username-card";
 import myInfo from "@api/user/myInfo";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 const UserPage = async () => {
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
+
+  const headersList = headers();
+  const referrer = headersList.get("referer");
 
   const user = await myInfo(decodeCookie);
 
@@ -26,7 +29,12 @@ const UserPage = async () => {
   }
 
   return (
-    <SideMain headerTitle="내 정보 관리" fullHeight hasBackButton>
+    <SideMain
+      headerTitle="내 정보 관리"
+      fullHeight
+      hasBackButton
+      referrer={!!referrer}
+    >
       <UsernameCard user={user} />
       <UserinfoCard user={user} />
     </SideMain>

@@ -14,11 +14,13 @@ import MoveMap from "@pages/pullup/move-map";
 import NotFoud from "@pages/pullup/not-foud";
 import Tabs from "@pages/pullup/tabs";
 import WeatherBadge from "@pages/pullup/weather-badge";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import Link from "next/link";
 
 const PullupPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
+  const headersList = headers();
+  const referrer = headersList.get("referer");
 
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
@@ -39,7 +41,12 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
   ];
 
   return (
-    <SideMain headerTitle="위치 상세" hasBackButton withNav>
+    <SideMain
+      headerTitle="위치 상세"
+      hasBackButton
+      withNav
+      referrer={!!referrer}
+    >
       <MoveMap
         lat={marker.latitude}
         lng={marker.longitude}

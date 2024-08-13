@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import SearchClient from "./search-client";
 import SearchResult from "./search-result";
 
@@ -13,6 +14,9 @@ interface PageProps {
 const SearchPage = ({ searchParams }: PageProps) => {
   const { addr, d, lat, lng } = searchParams;
 
+  const headersList = headers();
+  const referrer = headersList.get("referer");
+
   if (addr || d) {
     if (d) {
       return <SearchResult address={addr} markerId={d} />;
@@ -27,7 +31,7 @@ const SearchPage = ({ searchParams }: PageProps) => {
 
   return (
     <>
-      <SearchClient />
+      <SearchClient referrer={!!referrer} />
     </>
   );
 };

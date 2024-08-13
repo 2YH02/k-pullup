@@ -18,7 +18,7 @@ export interface SearchData {
   position?: { lat: string; lng: string };
 }
 
-const SearchClient = () => {
+const SearchClient = ({ referrer }: { referrer?: boolean }) => {
   const router = useRouter();
 
   const searchValue = useInput("");
@@ -56,7 +56,11 @@ const SearchClient = () => {
 
   return (
     <SideMain fullHeight>
-      <SearchHeader value={searchValue.value} onChange={searchValue.onChange} />
+      <SearchHeader
+        value={searchValue.value}
+        onChange={searchValue.onChange}
+        referrer={!!referrer}
+      />
 
       {result && result.length > 0 && searchValue.value.length > 0 ? (
         <SearchList result={result} value={searchValue.value} />

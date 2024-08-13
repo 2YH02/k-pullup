@@ -14,9 +14,10 @@ import { useEffect, useMemo, useState } from "react";
 
 interface SignupClientProps {
   returnUrl?: string;
+  referrer: boolean;
 }
 
-const SignupClient = ({ returnUrl }: SignupClientProps) => {
+const SignupClient = ({ returnUrl, referrer }: SignupClientProps) => {
   const router = useRouter();
 
   const { openAlert } = useAlertStore();
@@ -70,7 +71,11 @@ const SignupClient = ({ returnUrl }: SignupClientProps) => {
       title: "회원가입 취소",
       description: "정말 회원가입을 취소 하시겠습니까?",
       onClick: () => {
-        router.push("/signin");
+        if (returnUrl) {
+          router.replace(returnUrl);
+        } else {
+          router.back();
+        }
       },
       cancel: true,
     });
@@ -106,6 +111,7 @@ const SignupClient = ({ returnUrl }: SignupClientProps) => {
       prevClick={handlePrev}
       fullHeight
       hasBackButton={signupValue.step === 3 ? false : true}
+      referrer={!!referrer}
     >
       {signupValue.step === 0 && <VerifyEmail next={handleEmailChange} />}
       {signupValue.step === 1 && <EnterUsername next={handleUserNameChange} />}

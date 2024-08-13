@@ -40,7 +40,6 @@ const ImageModal = ({ open, curIndex, imageUrl }: Props) => {
   };
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    console.log(1);
     if (e.deltaY < 0) {
       zoomIn();
     } else {

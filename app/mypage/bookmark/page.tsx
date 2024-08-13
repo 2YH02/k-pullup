@@ -5,11 +5,14 @@ import Text from "@common/text";
 import AuthError from "@layout/auth-error";
 import NotFound from "@layout/not-found";
 import BookmarkList from "@pages/mypage/bookmark/bookmark-list";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 const RankingPage = async () => {
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
+
+  const headersList = headers();
+  const referrer = headersList.get("referer");
 
   const markers = await favorites(decodeCookie);
 
@@ -35,7 +38,7 @@ const RankingPage = async () => {
   }
 
   return (
-    <SideMain headerTitle="저장한 장소" hasBackButton>
+    <SideMain headerTitle="저장한 장소" hasBackButton referrer={!!referrer}>
       <Section>
         <Text
           display="block"

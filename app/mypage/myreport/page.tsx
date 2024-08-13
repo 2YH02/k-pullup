@@ -1,12 +1,15 @@
 import reportForMymarker from "@api/report/report-for-mymarker";
 import AuthError from "@layout/auth-error";
 import NotFound from "@layout/not-found";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import MyreportClient from "./myreport-client";
 
 const MyreportPage = async () => {
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
+
+  const headersList = headers();
+  const referrer = headersList.get("referer");
 
   const reports = await reportForMymarker(decodeCookie);
 
@@ -35,7 +38,7 @@ const MyreportPage = async () => {
 
   return (
     <>
-      <MyreportClient data={reports} />
+      <MyreportClient data={reports} referrer={!!referrer} />
     </>
   );
 };

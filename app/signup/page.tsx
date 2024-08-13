@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import SignupClient from "./signup-client";
 
 interface PageProps {
@@ -9,9 +10,12 @@ interface PageProps {
 const SignupPage = ({ searchParams }: PageProps) => {
   const { returnUrl } = searchParams;
 
+  const headersList = headers();
+  const referrer = headersList.get("referer");
+
   return (
     <>
-      <SignupClient returnUrl={returnUrl} />
+      <SignupClient returnUrl={returnUrl} referrer={!!referrer} />
     </>
   );
 };

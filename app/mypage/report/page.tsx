@@ -1,12 +1,15 @@
 import mySuggested, { type ReportsRes } from "@api/report/my-suggested";
 import AuthError from "@layout/auth-error";
 import NotFound from "@layout/not-found";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import ReportClient from "./report-client";
 
 const ReportPage = async () => {
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
+
+  const headersList = headers();
+  const referrer = headersList.get("referer");
 
   const reports = await mySuggested(decodeCookie);
 
@@ -34,7 +37,7 @@ const ReportPage = async () => {
 
   return (
     <>
-      <ReportClient data={reports.data as ReportsRes[]} />
+      <ReportClient data={reports.data as ReportsRes[]} referrer={!!referrer} />
     </>
   );
 };

@@ -25,6 +25,7 @@ interface SideMainProps {
   headerPosition?: "sticky" | "fixed";
   background?: "white" | "grey";
   dragable?: boolean;
+  referrer?: boolean;
   headerIconClick?: VoidFunction;
   prevClick?: VoidFunction;
 }
@@ -69,6 +70,7 @@ const SideMain = ({
   headerIconClick,
   prevClick,
   children,
+  referrer,
 }: SideMainProps) => {
   const { sheetHeight, setSheetHeight } = useSheetHeightStore();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -189,6 +191,7 @@ const SideMain = ({
           headerPosition={headerPosition}
           iconClick={headerIconClick}
           prevClick={prevClick}
+          referrer={referrer}
         />
       )}
 
@@ -226,6 +229,7 @@ interface MainHeaderProps {
   headerIcon?: React.ReactNode;
   hasBackButton?: boolean;
   headerPosition?: "sticky" | "fixed";
+  referrer?: boolean;
   iconClick?: VoidFunction;
   prevClick?: VoidFunction;
 }
@@ -235,6 +239,7 @@ const MainHeader = ({
   hasBackButton = false,
   headerIcon,
   headerPosition,
+  referrer,
   iconClick,
   prevClick,
 }: MainHeaderProps) => {
@@ -262,7 +267,9 @@ const MainHeader = ({
             hasBackButton
               ? prevClick
                 ? prevClick
-                : () => router.back()
+                : referrer
+                ? () => router.back()
+                : () => router.push("/")
               : undefined
           }
         >

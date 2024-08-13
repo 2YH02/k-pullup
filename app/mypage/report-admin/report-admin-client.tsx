@@ -19,9 +19,10 @@ import { useMemo, useState } from "react";
 
 interface MyreportClientProps {
   data: AllReportRes;
+  referrer: boolean;
 }
 
-const MyreportClient = ({ data }: MyreportClientProps) => {
+const MyreportClient = ({ data, referrer }: MyreportClientProps) => {
   const router = useRouter();
 
   const { openAlert, closeAlert } = useAlertStore();
@@ -173,6 +174,7 @@ const MyreportClient = ({ data }: MyreportClientProps) => {
           setMarkerId(null);
           setCurData(null);
         }}
+        referrer={referrer}
       >
         <Section className="relative p-4 pt-6 mb-4 mt-5">
           <div className="absolute right-3 top-3">

@@ -175,7 +175,6 @@ const Comments = ({ markerId }: CommentsProps) => {
       )}
 
       {comments.map((comment) => {
-        console.log(comment.postedAt);
         return (
           <ListItem
             key={comment.commentId}

@@ -1,6 +1,7 @@
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
+import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,8 +14,16 @@ interface PageProps {
 const SigninPage = ({ searchParams }: PageProps) => {
   const { returnUrl } = searchParams;
 
+  const headersList = headers();
+  const referrer = headersList.get("referer");
+
   return (
-    <SideMain headerTitle="로그인" fullHeight hasBackButton>
+    <SideMain
+      headerTitle="로그인"
+      fullHeight
+      hasBackButton
+      referrer={!!referrer}
+    >
       <Section className="flex flex-col items-center justify-start pb-0">
         <div className="w-36 h-36 rounded-3xl overflow-hidden">
           <Image

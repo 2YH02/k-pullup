@@ -177,7 +177,10 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
           <Text typography="t6" className="mr-1">
             계정이 없으신가요?
           </Text>
-          <Link href={returnUrl ? `/signup?returnUrl=${returnUrl}` : "/signup"}>
+          <Link
+            href={returnUrl ? `/signup?returnUrl=${returnUrl}` : "/signup"}
+            replace={true}
+          >
             <Text typography="t6" className="text-grey-dark hover:underline">
               이메일로 회원가입 하기
             </Text>

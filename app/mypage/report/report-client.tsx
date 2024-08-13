@@ -10,10 +10,10 @@ import { useState } from "react";
 
 interface ReportClientProps {
   data: ReportsRes[];
+  referrer: boolean;
 }
 
-const ReportClient = ({ data }: ReportClientProps) => {
-
+const ReportClient = ({ data, referrer }: ReportClientProps) => {
   const [reports, setReports] = useState<ReportsRes[]>(data);
 
   const handleDelete = async (markerId: number, reportId: number) => {
@@ -36,7 +36,12 @@ const ReportClient = ({ data }: ReportClientProps) => {
   }
 
   return (
-    <SideMain headerTitle="내가 요청한 수정 목록" fullHeight hasBackButton>
+    <SideMain
+      headerTitle="내가 요청한 수정 목록"
+      fullHeight
+      hasBackButton
+      referrer={referrer}
+    >
       <Section>
         {reports.map((report) => {
           return (
