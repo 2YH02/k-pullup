@@ -11,8 +11,10 @@ import createComment from "@lib/api/comment/create-comment";
 import deleteComment from "@lib/api/comment/delete-comment";
 import getComments, { type Comment } from "@lib/api/comment/get-comments";
 import { formatDate } from "@lib/format-date";
+import useAlertStore from "@store/useAlertStore";
 import useUserStore from "@store/useUserStore";
 import { Trash2Icon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface CommentsProps {
@@ -20,8 +22,11 @@ interface CommentsProps {
 }
 
 const Comments = ({ markerId }: CommentsProps) => {
+  const router = useRouter();
+
   const { toast } = useToast();
   const { user } = useUserStore();
+  const { openAlert } = useAlertStore();
 
   const commentValue = useInput("");
 
@@ -101,6 +106,7 @@ const Comments = ({ markerId }: CommentsProps) => {
       return;
     }
     setCreateLoading(true);
+    // TODO: 응답 유저 이름 확인 필요
     const response = await createComment({
       markerId: markerId,
       commentText: commentValue.value,
@@ -113,9 +119,19 @@ const Comments = ({ markerId }: CommentsProps) => {
         toast({ description: "댓글에 비속어를 포함할 수 없습니다." });
         setCreateLoading(false);
         return;
-      }
-      if (response.status === 400) {
+      } else if (response.status === 400) {
         toast({ description: "이미 3개의 댓들을 작성하였습니다." });
+        setCreateLoading(false);
+        return;
+      } else if (response.status === 401) {
+        openAlert({
+          title: "로그인이 필요합니다.",
+          description: "로그인 페이지로 이동하시겠습니까?",
+          onClick: () => {
+            router.push(`/signin?returnUrl=/pullup/${markerId}`);
+          },
+          cancel: true,
+        });
         setCreateLoading(false);
         return;
       }
