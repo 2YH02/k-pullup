@@ -5,6 +5,7 @@ import SideMain from "@common/side-main";
 import Text from "@common/text";
 import AroundSearch from "@pages/search/around-search";
 import MarkerSearchResult from "@pages/search/marker-search-result";
+import { useRouter } from "next/navigation";
 
 interface SearchResultProps {
   address: string;
@@ -14,6 +15,8 @@ interface SearchResultProps {
 }
 
 const SearchResult = ({ address, lat, lng, markerId }: SearchResultProps) => {
+  const router = useRouter();
+
   if (markerId) {
     return <MarkerSearchResult address={address} markerId={Number(markerId)} />;
   }
@@ -33,7 +36,12 @@ const SearchResult = ({ address, lat, lng, markerId }: SearchResultProps) => {
   }
 
   return (
-    <SideMain headerTitle={address} hasBackButton fullHeight>
+    <SideMain
+      headerTitle={address}
+      hasBackButton
+      fullHeight
+      prevClick={() => router.push("/search")}
+    >
       <Section>
         <Text typography="t6" display="block" textAlign="center">
           해당 위치에 철봉이 없습니다.
