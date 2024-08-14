@@ -106,7 +106,6 @@ const Comments = ({ markerId }: CommentsProps) => {
       return;
     }
     setCreateLoading(true);
-    // TODO: 응답 유저 이름 확인 필요
     const response = await createComment({
       markerId: markerId,
       commentText: commentValue.value,
