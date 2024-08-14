@@ -56,3 +56,5 @@ export const REGION_CHAT = [
   { title: "강원 채팅방", code: "gw" },
   { title: "울산 채팅방", code: "us" },
 ];
+
+export const BASE_URL = "https://www.k-pullup.com";
