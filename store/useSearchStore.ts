@@ -19,7 +19,19 @@ const useSearchStore = create<SearchState>()(
     (set) => ({
       searches: [],
       addSearch: (data: SearchData) =>
-        set((state) => ({ searches: [data, ...state.searches] })),
+        set((state) => {
+          const item = state.searches.findIndex((search) => {
+            return search.addr === data.addr;
+          });
+
+          if (item !== -1) {
+            const newSearch = [...state.searches].filter((search) => {
+              return search.addr !== data.addr;
+            });
+            return { searches: [data, ...newSearch] };
+          }
+          return { searches: [data, ...state.searches] };
+        }),
       clearSearches: () => set({ searches: [] }),
     }),
     {

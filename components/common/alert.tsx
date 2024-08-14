@@ -61,7 +61,7 @@ const Alert = ({
           {title}
         </Text>
 
-        {description && <Text typography="t7">{description}</Text>}
+        {description && <Text typography="t6">{description}</Text>}
 
         {(onClick || cancel) && (
           <div className="flex justify-end mt-3">
