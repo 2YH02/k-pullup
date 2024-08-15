@@ -7,6 +7,7 @@ const ChatIdProvider = ({ children }: { children: React.ReactNode }) => {
   const cidState = useChatIdStore();
 
   useEffect(() => {
+    if (cidState.cid !== "") return;
     const setId = (e?: StorageEvent) => {
       if (e) {
         if (e.key === "cid") {
@@ -25,7 +26,8 @@ const ChatIdProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       window.removeEventListener("storage", setId);
     };
-  }, []);
+  }, [cidState.cid]);
+
   return <>{children}</>;
 };
 
