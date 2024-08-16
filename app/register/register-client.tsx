@@ -83,7 +83,7 @@ const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
         } else if (response.status === 401) {
           setErrorMessage("로그인 후 이용 가능합니다.");
         } else if (response.status === 403) {
-          setErrorMessage("위치는 한국에만 등록 가능합니다.");
+          setErrorMessage("위치는 대한민국에만 등록 가능합니다.");
         }
         setUploadStatus("error");
         return;
