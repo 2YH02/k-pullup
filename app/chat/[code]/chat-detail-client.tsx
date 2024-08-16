@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@common/button";
 import Input from "@common/input";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
@@ -108,7 +109,11 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
     };
 
     ws.current.onclose = () => {
+      setConnectionMsg(
+        "채팅방에 참여 중 에러가 발생하였습니다. 잠시 후 다시 시도해 주세요!"
+      );
       console.log("연결 종료");
+      setIsChatError(true);
     };
 
     return () => {
@@ -179,7 +184,7 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
         >
           {connectionMsg}
         </Text>
-        {!isChatError && (
+        {!isChatError ? (
           <>
             <div className="flex flex-col justify-end grow">
               {messages.map((message) => {
@@ -257,6 +262,10 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
               />
             </div>
           </>
+        ) : (
+          <div className="mt-5 mx-auto">
+            <Button onClick={() => router.refresh()}>새로고침</Button>
+          </div>
         )}
       </Section>
     </SideMain>

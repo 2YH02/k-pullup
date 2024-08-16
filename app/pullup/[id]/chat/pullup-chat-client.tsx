@@ -1,11 +1,13 @@
 "use client";
 
+import Button from "@common/button";
 import Input from "@common/input";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import useInput from "@hooks/useInput";
 import LoadingIcon from "@icons/loading-icon";
+import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
 
 export interface ChatMessage {
@@ -31,7 +33,7 @@ interface PullupChatClientProps {
 }
 
 const PullupChatClient = ({ markerId }: PullupChatClientProps) => {
-  // const cidState = useChatIdStore();
+  const router = useRouter();
 
   const chatValue = useInput("");
 
@@ -106,7 +108,11 @@ const PullupChatClient = ({ markerId }: PullupChatClientProps) => {
     };
 
     ws.current.onclose = () => {
+      setConnectionMsg(
+        "채팅방에 참여 중 에러가 발생하였습니다. 잠시 후 다시 시도해 주세요!"
+      );
       console.log("연결 종료");
+      setIsChatError(true);
     };
 
     return () => {
@@ -167,7 +173,7 @@ const PullupChatClient = ({ markerId }: PullupChatClientProps) => {
         >
           {connectionMsg}
         </Text>
-        {!isChatError && (
+        {!isChatError ? (
           <>
             <div className="flex flex-col justify-end grow">
               {messages.map((message) => {
@@ -250,6 +256,10 @@ const PullupChatClient = ({ markerId }: PullupChatClientProps) => {
               />
             </div>
           </>
+        ) : (
+          <div className="mt-5 mx-auto">
+            <Button onClick={() => router.refresh()}>새로고침</Button>
+          </div>
         )}
       </Section>
     </SideMain>
