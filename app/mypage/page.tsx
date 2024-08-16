@@ -46,14 +46,14 @@ const Mypage = async () => {
               <div className="mt-3">
                 {user.reportCount && (
                   <Text typography="t7" display="block">
-                    정보 수정 제안 총{" "}
+                    정보 수정 제안{" "}
                     <span className="font-bold">{user.reportCount}</span>회
                   </Text>
                 )}
 
                 {user.markerCount && (
                   <Text typography="t7" display="block">
-                    등록한 철봉 총{" "}
+                    등록한 철봉{" "}
                     <span className="font-bold">{user.markerCount}</span>개
                   </Text>
                 )}
