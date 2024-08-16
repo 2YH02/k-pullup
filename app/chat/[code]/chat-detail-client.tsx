@@ -9,6 +9,7 @@ import useInput from "@hooks/useInput";
 import LoadingIcon from "@icons/loading-icon";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
+import { v4 } from "uuid";
 
 export interface ChatMessage {
   uid: string;
@@ -264,7 +265,14 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
           </>
         ) : (
           <div className="mt-5 mx-auto">
-            <Button onClick={() => router.refresh()}>새로고침</Button>
+            <Button
+              onClick={() => {
+                localStorage.setItem("cid", JSON.stringify({ cid: v4() }));
+                router.refresh();
+              }}
+            >
+              새로고침
+            </Button>
           </div>
         )}
       </Section>
