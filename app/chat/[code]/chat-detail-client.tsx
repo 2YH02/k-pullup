@@ -6,7 +6,6 @@ import SideMain from "@common/side-main";
 import Text from "@common/text";
 import useInput from "@hooks/useInput";
 import LoadingIcon from "@icons/loading-icon";
-import useChatIdStore from "@store/useChatIdStore";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
 
@@ -36,8 +35,6 @@ interface ChatDetailClientProps {
 const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
   const router = useRouter();
 
-  const cidState = useChatIdStore();
-
   const chatValue = useInput("");
 
   const ws = useRef<WebSocket | null>(null);
@@ -53,16 +50,25 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
 
   const [subTitle, setSubTitle] = useState("");
 
+  const [cid, setCid] = useState<null | string>(null);
+
   useEffect(() => {
     if (!inputRef.current) return;
     inputRef.current.focus();
   }, [inputRef]);
 
   useEffect(() => {
+    const cid = localStorage.getItem("cid");
+    setCid(cid);
+  }, []);
+
+  useEffect(() => {
     ws.current?.close();
 
+    if (!cid) return;
+
     ws.current = new WebSocket(
-      `wss://api.k-pullup.com/ws/${code}?request-id=${cidState.cid}`
+      `wss://api.k-pullup.com/ws/${code}?request-id=${cid}`
     );
 
     ws.current.onopen = () => {
@@ -108,7 +114,7 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
     return () => {
       ws.current?.close();
     };
-  }, [cidState.cid, code]);
+  }, [cid, code]);
 
   useEffect(() => {
     if (!ws) return;
@@ -210,9 +216,9 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
                 }
                 return (
                   <Fragment key={message.mid}>
-                    {message.userid === cidState.cid ? (
+                    {message.userid === cid ? (
                       <div className="flex flex-col items-end w-full py-2">
-                        <div className="max-w-1/2 p-1 rounded-lg bg-slate-700 shadow-sm">
+                        <div className="max-w-[170px] px-5 py-1 flex items-center justify-start rounded-3xl bg-primary-dark dark:bg-slate-700 shadow-sm">
                           <Text className="text-white">{message.msg}</Text>
                         </div>
                         <div className="text-xs text-grey-dark">
@@ -223,7 +229,7 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
                       </div>
                     ) : (
                       <div className="flex flex-col items-start w-full py-2">
-                        <div className="max-w-1/2 p-1 rounded-lg bg-slate-600 shadow-sm">
+                        <div className="max-w-[170px] px-5 py-1 flex items-center justify-start rounded-3xl bg-primary dark:bg-slate-600 shadow-sm">
                           <Text className="text-white">{message.msg}</Text>
                         </div>
                         <div className="text-xs text-grey-dark">
@@ -247,6 +253,7 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
                 value={chatValue.value}
                 onChange={chatValue.onChange}
                 onKeyDown={handleKeyPress}
+                onIconClick={handleChat}
               />
             </div>
           </>
