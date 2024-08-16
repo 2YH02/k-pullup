@@ -1,32 +1,36 @@
 "use client";
 
-import useChatIdStore from "@store/useChatIdStore";
 import { useEffect } from "react";
+import { v4 } from "uuid";
 
 const ChatIdProvider = ({ children }: { children: React.ReactNode }) => {
-  const cidState = useChatIdStore();
 
   useEffect(() => {
-    if (cidState.cid !== "") return;
-    const setId = (e?: StorageEvent) => {
+    const setCid = () => {
+      localStorage.setItem("cid", JSON.stringify({ cid: v4() }));
+    };
+
+
+    const handleStorage = (e?: StorageEvent) => {
       if (e) {
         if (e.key === "cid") {
-          cidState.setId();
+          const cid = localStorage.getItem("cid");
+          if(!cid) {
+            setCid()
+          }
+          console.log(cid);
         }
-      } else {
-        if (cidState.cid) return;
-        cidState.setId();
       }
     };
 
-    setId();
+    setCid();
 
-    window.addEventListener("storage", setId);
+    window.addEventListener("storage", handleStorage);
 
     return () => {
-      window.removeEventListener("storage", setId);
+      window.removeEventListener("storage", handleStorage);
     };
-  }, [cidState.cid]);
+  }, []);
 
   return <>{children}</>;
 };
