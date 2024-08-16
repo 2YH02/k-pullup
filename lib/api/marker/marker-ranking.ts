@@ -7,7 +7,10 @@ export interface RankingInfo {
 
 const markerRanking = async (): Promise<RankingInfo[]> => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/markers/ranking`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/markers/ranking`,
+    {
+      cache: "no-store",
+    }
   );
 
   const data = response.json();
