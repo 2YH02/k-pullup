@@ -81,7 +81,9 @@ const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
         if (response.status === 409) {
           setErrorMessage("주변에 이미 철봉이 있습니다.");
         } else if (response.status === 401) {
-          setUser(null);
+          setErrorMessage("로그인 후 이용 가능합니다.");
+        } else if (response.status === 403) {
+          setErrorMessage("위치는 한국에만 등록 가능합니다.");
         }
         setUploadStatus("error");
         return;
@@ -139,6 +141,8 @@ const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
     });
 
     marker.setMap(map);
+    marker.setVisible(false);
+
     setMarker(marker);
 
     return () => {

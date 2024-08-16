@@ -33,7 +33,13 @@ const UploadComplete = ({
     <Section className="w-full h-full flex flex-col items-center justify-center">
       <div className="w-[140px]">
         <Image
-          src={status === "complete" ? "/congratulations.gif" : "/upload.gif"}
+          src={
+            status === "complete"
+              ? "/congratulations.gif"
+              : status === "error"
+              ? "/error.gif"
+              : "/upload.gif"
+          }
           alt="회원가입 로딩"
           width={0}
           height={0}

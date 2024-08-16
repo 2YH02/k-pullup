@@ -43,6 +43,7 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
     const handleMapClick = (e: KaKaoMapMouseEvent) => {
       const latlng = e.latLng;
 
+      marker.setVisible(true);
       marker.setPosition(latlng);
 
       setLocation({ latitude: latlng.getLat(), longitude: latlng.getLng() });

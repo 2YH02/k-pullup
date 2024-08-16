@@ -31,6 +31,7 @@ export interface KakaoMarker {
   setImage: (img: any) => void;
   setMap: (data: KakaoMap | null | number) => void;
   getTitle: () => string;
+  setVisible: (visible: boolean) => void;
   Gb: string;
 }
 
