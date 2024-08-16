@@ -5,6 +5,7 @@ import SideMain from "@common/side-main";
 import Text from "@common/text";
 import getFacilities from "@lib/api/marker/get-facilities";
 import markerDetail from "@lib/api/marker/marker-detail";
+import AddressButton from "@pages/pullup/address-button";
 import ButtonList from "@pages/pullup/button-list";
 import Comments from "@pages/pullup/comments";
 import Description from "@pages/pullup/description";
@@ -84,9 +85,11 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
           <WeatherBadge lat={marker.latitude} lng={marker.longitude} />
         </div>
 
-        <Text typography="t4" className="w-full break-words mt-3">
-          {marker.address}
-        </Text>
+        <AddressButton
+          address={marker.address || "정보가 제공되지 않는 주소입니다."}
+          lat={marker.latitude}
+          lng={marker.longitude}
+        />
         <Description
           description={marker.description}
           markerId={marker.markerId}
