@@ -63,7 +63,7 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
         {location.latitude && location.longitude ? (
           <div className="w-[130px] h-[130px] translate-y-5 select-none">
             <Image
-              src="/next.gif"
+              src="/gopher.gif"
               alt="다음"
               width={0}
               height={0}
@@ -80,7 +80,7 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
             ? "다음을 클릭해주세요"
             : "먼저 지도를 클릭해 위치를 선택해주세요."}
         </Text>
-        <Button onClick={handleClick} className="mt-5" variant="contrast">
+        <Button onClick={handleClick} className="mt-5 web:hidden" variant="contrast">
           {location.latitude && location.longitude
             ? "다시 선택하기"
             : "위치 선택하기"}
