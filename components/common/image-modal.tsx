@@ -2,6 +2,7 @@
 
 import CloseIcon from "@icons/close-icon";
 import useImageModalStore from "@store/useImageModalStore";
+import Image from "next/image";
 import { useState } from "react";
 import {
   Carousel,
@@ -11,7 +12,6 @@ import {
   CarouselPrevious,
 } from "./carousel";
 import Dimmed from "./dimmed";
-import ImageWrap from "./Image-wrap";
 // TODO: 사진 업로드 날짜 표시
 
 interface Props {
@@ -64,13 +64,12 @@ const ImageModal = ({ open, curIndex, imageUrl }: Props) => {
               key={image}
               className="flex items-center justify-center"
             >
-              <ImageWrap
+              <Image
                 key={image}
                 src={image}
                 alt="상세"
-                w={imageSize}
-                h={imageSize}
-                loading="icon"
+                width={imageSize}
+                height={imageSize}
               />
             </CarouselItem>
           ))}
