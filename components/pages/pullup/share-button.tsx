@@ -47,7 +47,7 @@ const ShareButton = ({ markerId, lat, lng }: ShareButtonProps) => {
   const copyTextToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(
-        `https://local.k-pullup.com:5173/pullup/${markerId}`
+        `https://www.k-pullup.com/pullup/${markerId}`
       );
       toast({
         description: "링크 복사 완료",
