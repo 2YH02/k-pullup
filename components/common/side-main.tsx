@@ -70,7 +70,7 @@ const SideMain = ({
   headerIconClick,
   prevClick,
   children,
-  referrer,
+  referrer = true,
 }: SideMainProps) => {
   const { sheetHeight, setSheetHeight } = useSheetHeightStore();
   const containerRef = useRef<HTMLDivElement>(null);
