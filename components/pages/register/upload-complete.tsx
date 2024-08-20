@@ -7,6 +7,7 @@ import Text from "@common/text";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
+import { registerError } from "@/app/register/register-client";
 
 interface UploadCompleteProps {
   returnUrl: string;
@@ -14,6 +15,7 @@ interface UploadCompleteProps {
   errorMessage: string;
   next: VoidFunction;
   resetStep: VoidFunction;
+  setStep: (step: number) => void;
 }
 
 const UploadComplete = ({
@@ -22,6 +24,7 @@ const UploadComplete = ({
   errorMessage,
   next,
   resetStep,
+  setStep,
 }: UploadCompleteProps) => {
   const router = useRouter();
 
@@ -73,7 +76,11 @@ const UploadComplete = ({
       {status === "error" && (
         <Button
           onClick={() => {
-            resetStep();
+            if (errorMessage === registerError[400]) {
+              setStep(2);
+            } else {
+              resetStep();
+            }
           }}
           full
           className="mt-10"

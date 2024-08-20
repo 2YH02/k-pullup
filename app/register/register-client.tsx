@@ -20,6 +20,14 @@ import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
+export const registerError = {
+  400: "설명에 비속어가 포함되어 있습니다.",
+  401: "로그인 후 이용 가능합니다.",
+  403: "위치는 대한민국에만 등록 가능합니다.",
+  409: "주변에 이미 철봉이 있습니다.",
+  422: "위치 등록이 제한된 구역입니다.",
+};
+
 export type UploadStatus = "image" | "location" | "error" | "complete";
 
 interface RegisterValue {
@@ -79,11 +87,16 @@ const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
 
       if (!response.ok) {
         if (response.status === 409) {
-          setErrorMessage("주변에 이미 철봉이 있습니다.");
+          setErrorMessage(registerError[409]);
         } else if (response.status === 401) {
-          setErrorMessage("로그인 후 이용 가능합니다.");
+          setErrorMessage(registerError[401]);
         } else if (response.status === 403) {
-          setErrorMessage("위치는 대한민국에만 등록 가능합니다.");
+          setErrorMessage(registerError[403]);
+        } else if (response.status === 400) {
+          setErrorMessage(registerError[400]);
+        } else if (response.status === 422) {
+          setErrorMessage(registerError[422]);
+        } else {
         }
         setUploadStatus("error");
         return;
@@ -216,6 +229,14 @@ const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
       ...prev,
       step: 0,
     }));
+    setUploadStatus("location");
+  };
+  const setStep = (step: number) => {
+    setRegisterValue((prev) => ({
+      ...prev,
+      step: step,
+    }));
+    setUploadStatus("location");
   };
 
   if (!isMounted || !user) {
@@ -273,6 +294,7 @@ const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
           errorMessage={errorMessage}
           next={handleNext}
           resetStep={resetStep}
+          setStep={setStep}
         />
       )}
       {registerValue.step === 4 && (
