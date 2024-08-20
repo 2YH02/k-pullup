@@ -4,19 +4,23 @@ import type { Photo } from "@/types/marker.types";
 import ImageWrap from "@common/Image-wrap";
 import Text from "@common/text";
 import useImageModalStore from "@store/useImageModalStore";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 type Props = {
   photos?: Photo[];
 };
 
 const ImageList = ({ photos }: Props) => {
-  const { openModal } = useImageModalStore();
+  const { openModal, closeModal } = useImageModalStore();
 
   const images = useMemo(() => {
     if (!photos) return null;
     return photos.map((photo) => photo.photoUrl);
   }, [photos]);
+
+  useEffect(() => {
+    return () => closeModal();
+  }, []);
 
   return (
     <div className="flex">
