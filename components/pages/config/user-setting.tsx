@@ -13,6 +13,8 @@ const UserSetting = () => {
   const { user, setUser } = useUserStore();
   const { openAlert } = useAlertStore();
 
+  console.log(user);
+
   const handleSignout = async () => {
     await signout();
     router.replace("/mypage");
@@ -68,7 +70,9 @@ const UserSetting = () => {
   return (
     <List title="사용자 설정">
       <ListItem title="로그아웃" onClick={handleSignout} />
-      <ListItem title="비밀번호 초기화" url="/reset-password" link />
+      {user.provider === "website" && (
+        <ListItem title="비밀번호 초기화" url="/reset-password" link />
+      )}
       <ListItem title="회원 탈퇴" onClick={handleResign} />
     </List>
   );
