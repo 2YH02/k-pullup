@@ -93,7 +93,7 @@ const ShareButton = ({ markerId, lat, lng }: ShareButtonProps) => {
       />
       {viewModal && (
         <div
-          className="shadow-simple absolute top-full -left-4 p-3 bg-white w-[230px]
+          className="shadow-simple absolute top-full -left-4 p-3 bg-white w-[230px] dark:bg-black-light
           rounded-lg border border-solid border-grey-light dark:border-none z-50"
           ref={modalRef}
         >
