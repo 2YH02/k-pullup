@@ -213,7 +213,9 @@ const Comments = ({ markerId }: CommentsProps) => {
               subTitle={formatDate(comment.postedAt)}
             />
 
-            <ListRight>{comment.username}</ListRight>
+            <ListRight>
+              <Text>{comment.username}</Text>
+            </ListRight>
           </ListItem>
         );
       })}
