@@ -186,7 +186,14 @@ const Comments = ({ markerId }: CommentsProps) => {
       </div>
 
       {comments.length <= 0 && !commentsLoading && (
-        <Text>등록된 댓글이 없습니다.</Text>
+        <div className="flex flex-col items-center justify-center mt-2 mb-4">
+          <div className="mb-4">
+            <CommentIcon />
+          </div>
+          <Text typography="t6">
+            아직 작성된 댓글이 없습니다. 첫 댓글을 작성해보세요!
+          </Text>
+        </div>
       )}
 
       {comments.map((comment) => {
@@ -225,6 +232,72 @@ const Comments = ({ markerId }: CommentsProps) => {
         <div ref={loadMoreRef} className="w-full h-20" />
       )}
     </div>
+  );
+};
+
+const CommentIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 512 512"
+      width={60}
+      height={60}
+    >
+      <circle cx="255.4" cy="256" r="215.6" className="fill-[#EEEDF2]" />
+
+      <g className="stroke-[#1E247E] stroke-[6] stroke-linecap-round">
+        <line x1="455.1" x2="471" y1="471.6" y2="471.6" />
+        <line x1="77.2" x2="438.7" y1="471.6" y2="471.6" />
+        <line x1="39.8" x2="60.7" y1="471.6" y2="471.6" />
+      </g>
+
+      <path
+        d="M406.9,292.5v152.6c0,14.1-11.4,25.5-25.5,25.5h-252c-14.1,0-25.5-11.4-25.5-25.5V292.5c0-2.7,0.5-5.4,1.6-7.9c1.1-2.7,2.7-5.2,4.9-7.2l122.5-116.9c12.6-12,32.4-12,45.1,0l122.5,116.9c2.2,2.1,3.8,4.5,4.9,7.2C406.3,287.1,406.9,289.8,406.9,292.5z"
+        className="fill-none stroke-[#1E247E] stroke-[6] stroke-linecap-round"
+      />
+
+      <line
+        x1="202.3"
+        x2="308.5"
+        y1="300.9"
+        y2="300.9"
+        className="stroke-[#1E247E] stroke-[6] stroke-linecap-round"
+      />
+      <line
+        x1="202.3"
+        x2="308.5"
+        y1="315.7"
+        y2="315.7"
+        className="stroke-[#1E247E] stroke-[6] stroke-linecap-round"
+      />
+      <line
+        x1="202.3"
+        x2="308.5"
+        y1="330.4"
+        y2="330.4"
+        className="stroke-[#1E247E] stroke-[6] stroke-linecap-round"
+      />
+
+      {/* Notification Circles */}
+      <circle
+        cx="361.7"
+        cy="205.5"
+        r="35"
+        className="fill-[#DA867D] stroke-[#1E247E] stroke-[6]"
+      />
+      <circle
+        cx="317.1"
+        cy="117.2"
+        r="35"
+        className="fill-[#79CAA1] stroke-[#1E247E] stroke-[6]"
+      />
+      <circle
+        cx="220.4"
+        cy="98.3"
+        r="35"
+        className="fill-[#F0C330] stroke-[#1E247E] stroke-[6]"
+      />
+    </svg>
   );
 };
 
