@@ -214,7 +214,7 @@ const Comments = ({ markerId }: CommentsProps) => {
             />
 
             <ListRight>
-              <Text>{comment.username}</Text>
+              <Text typography="t7">{comment.username}</Text>
             </ListRight>
           </ListItem>
         );

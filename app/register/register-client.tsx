@@ -19,6 +19,7 @@ import useSheetHeightStore from "@store/useSheetHeightStore";
 import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+// TODO: 등록된 위치에 철봉이 실제로 존재하지 않거나 부정확한 정보일 경우, 사전 안내 없이 삭제될 수 있습니다. (문구 추가)
 
 export const registerError = {
   400: "설명에 비속어가 포함되어 있습니다.",
