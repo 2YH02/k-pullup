@@ -1,27 +1,30 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
-const useDeviceType = () => {
-  const [deviceType, setDeviceType] = useState("");
+type DeviceType =
+  | "android-mobile-app"
+  | "ios-mobile-app"
+  | "android-mobile-web"
+  | "ios-mobile-web"
+  | "desktop";
+
+const useDeviceType = (): DeviceType => {
+  const [deviceType, setDeviceType] = useState<DeviceType>("desktop");
 
   useEffect(() => {
     const userAgent = navigator.userAgent.toLowerCase();
 
-    if (/android/i.test(userAgent)) {
-      if (/reactnative/i.test(userAgent)) {
-        setDeviceType("react-native-android");
-      } else {
-        setDeviceType("mobile-web-android");
-      }
+    if (userAgent.includes("android-mobile-app")) {
+      setDeviceType("android-mobile-app");
+    } else if (userAgent.includes("ios-mobile-app")) {
+      setDeviceType("ios-mobile-app");
+    } else if (/android/i.test(userAgent)) {
+      setDeviceType("android-mobile-web");
     } else if (/iphone|ipad|ipod/i.test(userAgent)) {
-      if (/reactnative/i.test(userAgent)) {
-        setDeviceType("react-native-ios");
-      } else {
-        setDeviceType("mobile-web-ios");
-      }
-    } else if (/windows|mac|linux/i.test(userAgent)) {
-      setDeviceType("desktop-web");
+      setDeviceType("ios-mobile-web");
     } else {
-      setDeviceType("unknown");
+      setDeviceType("desktop");
     }
   }, []);
 
