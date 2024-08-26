@@ -154,7 +154,7 @@ const SideMain = ({
   return (
     <main
       className={cn(
-        `flex flex-col fixed mo:bottom-0 web:top-1/2 web:-translate-y-1/2 web:h-[90%] web:left-6 web:max-w-96 w-full web:rounded-lg z-10 border border-solid border-green
+        `flex flex-col fixed mo:bottom-0 web:top-1/2 web:-translate-y-1/2 web:h-[90%] web:left-6 web:max-w-96 w-full web:rounded-lg z-10
         shadow-dark max-h-[740px] ${fullHeight ? "" : "mo:rounded-t-2xl"}
         mo:bottom-0 mo:no-touch ${fullHeight ? "mo:h-full" : "mo:h-[85%]"}`,
         background === "white"
@@ -198,7 +198,7 @@ const SideMain = ({
       <div
         ref={containerRef}
         className={cn(
-          "grow pb-12 overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden border border-solid border-blue",
+          "grow pb-12 h-dvh overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
           headerTitle && fullHeight
             ? deviceType === "ios-mobile-app"
               ? "mo:pt-24"
@@ -251,7 +251,7 @@ const MainHeader = ({
     <div
       className={cn(
         `shrink-0 web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 shadow-sm z-20 bg-white 
-        dark:bg-black dark:border-b dark:border-solid dark:border-grey-dark web:rounded-t-lg border border-solid border-red`,
+        dark:bg-black dark:border-b dark:border-solid dark:border-grey-dark web:rounded-t-lg`,
         getHeaderPosition(),
         style
       )}
