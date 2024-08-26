@@ -156,7 +156,13 @@ const SideMain = ({
       className={cn(
         `flex flex-col fixed mo:bottom-0 web:top-1/2 web:-translate-y-1/2 web:h-[90%] web:left-6 web:max-w-96 w-full web:rounded-lg z-10
         shadow-dark web:max-h-[740px] ${fullHeight ? "" : "mo:rounded-t-2xl"}
-        mo:bottom-0 mo:no-touch ${fullHeight ? "mo:h-full" : "mo:h-[85%]"}`,
+        mo:bottom-0 mo:no-touch ${
+          fullHeight
+            ? "mo:h-full"
+            : deviceType === "ios-mobile-app"
+            ? "mo:h-[80%]"
+            : "mo:h-[85%]"
+        }`,
         background === "white"
           ? "bg-white dark:bg-black"
           : "bg-grey-light dark:bg-black",

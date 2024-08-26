@@ -249,7 +249,7 @@ const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
 
   if (!isMounted || !user) {
     return (
-      <SideMain headerTitle=" " prevClick={() => {}} hasBackButton>
+      <SideMain headerTitle=" " prevClick={() => {}} hasBackButton withNav>
         <div className="relative w-full h-full">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <LoadingIcon className="m-0" />
