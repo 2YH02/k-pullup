@@ -13,8 +13,6 @@ const UserSetting = () => {
   const { user, setUser } = useUserStore();
   const { openAlert } = useAlertStore();
 
-  console.log(user);
-
   const handleSignout = async () => {
     await signout();
     router.replace("/mypage");

@@ -64,7 +64,7 @@ const KakaoMap = () => {
     map.setCenter(latLng);
   };
 
-  const style = deviceType === "ios-mobile-app" ? "mo:top-24" : "";
+  const style = deviceType === "ios-mobile-app" ? "mo:top-28" : "";
 
   if (!isMounted) {
     return (

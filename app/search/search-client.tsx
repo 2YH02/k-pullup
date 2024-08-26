@@ -5,6 +5,7 @@ import search from "@api/search/search";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
+import useDeviceType from "@hooks/useDeviceType";
 import useInput from "@hooks/useInput";
 import SearchHeader from "@pages/search/search-header";
 import SearchList from "@pages/search/search-list";
@@ -21,6 +22,7 @@ export interface SearchData {
 const SearchClient = ({ referrer }: { referrer?: boolean }) => {
   const router = useRouter();
 
+  const deviceType = useDeviceType();
   const searchValue = useInput("");
 
   const { searches, clearSearches } = useSearchStore();
@@ -55,7 +57,10 @@ const SearchClient = ({ referrer }: { referrer?: boolean }) => {
   }, [searchValue.value]);
 
   return (
-    <SideMain fullHeight>
+    <SideMain
+      fullHeight
+      className={deviceType === "ios-mobile-app" ? "pt-12" : ""}
+    >
       <SearchHeader
         value={searchValue.value}
         onChange={searchValue.onChange}

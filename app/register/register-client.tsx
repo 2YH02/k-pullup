@@ -3,6 +3,7 @@
 import { KakaoMarker } from "@/types/kakao-map.types";
 import setNewMarker, { SetMarkerRes } from "@api/marker/set-new-marker";
 import SideMain from "@common/side-main";
+import useDeviceType from "@hooks/useDeviceType";
 import useIsMounted from "@hooks/useIsMounted";
 import LoadingIcon from "@icons/loading-icon";
 import AuthError from "@layout/auth-error";
@@ -43,6 +44,8 @@ const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
   const router = useRouter();
 
   const isMounted = useIsMounted();
+  const deviceType = useDeviceType();
+
   const { user, setUser } = useUserStore();
   const { setSheetHeight } = useSheetHeightStore();
 
@@ -165,7 +168,11 @@ const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
   }, [map]);
 
   useEffect(() => {
-    setSheetHeight(85);
+    if (deviceType === "ios-mobile-app") {
+      setSheetHeight(80);
+    } else {
+      setSheetHeight(85);
+    }
   }, [setSheetHeight]);
 
   const handleLocationChange = ({
