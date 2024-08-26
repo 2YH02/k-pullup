@@ -129,7 +129,10 @@ const SideMain = ({
 
       if (newHeight < 35) setSheetHeight(20);
       else if (newHeight < 67) setSheetHeight(50);
-      else deviceType === "ios-mobile-app" ? setSheetHeight(80) : setSheetHeight(85);
+      else
+        deviceType === "ios-mobile-app"
+          ? setSheetHeight(80)
+          : setSheetHeight(85);
     };
 
     document.onpointermove = dragMove;
@@ -196,7 +199,11 @@ const SideMain = ({
         ref={containerRef}
         className={cn(
           "grow pb-12 mo:h-[calc(100%-86px)] overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
-          headerTitle ? "mo:pt-10" : ""
+          headerTitle && fullHeight
+            ? deviceType === "ios-mobile-app"
+              ? "mo:pt-24"
+              : "mo:pt-10"
+            : ""
         )}
       >
         {children}
@@ -231,6 +238,9 @@ const MainHeader = ({
   prevClick,
 }: MainHeaderProps) => {
   const router = useRouter();
+  const deviceType = useDeviceType();
+
+  const style = deviceType === "ios-mobile-app" ? "pt-12 h-24" : "";
 
   const getHeaderPosition = () => {
     if (headerPosition === "sticky") return "web:sticky mo:sticky";
@@ -242,7 +252,8 @@ const MainHeader = ({
       className={cn(
         `shrink-0 web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 shadow-sm z-20 bg-white 
         dark:bg-black dark:border-b dark:border-solid dark:border-grey-dark web:rounded-t-lg`,
-        getHeaderPosition()
+        getHeaderPosition(),
+        style
       )}
     >
       {hasBackButton ? (
