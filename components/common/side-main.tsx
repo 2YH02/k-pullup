@@ -155,7 +155,7 @@ const SideMain = ({
     <main
       className={cn(
         `flex flex-col fixed mo:bottom-0 web:top-1/2 web:-translate-y-1/2 web:h-[90%] web:left-6 web:max-w-96 w-full web:rounded-lg z-10
-        shadow-dark max-h-[740px] ${fullHeight ? "" : "mo:rounded-t-2xl"}
+        shadow-dark web:max-h-[740px] ${fullHeight ? "" : "mo:rounded-t-2xl"}
         mo:bottom-0 mo:no-touch ${fullHeight ? "mo:h-full" : "mo:h-[85%]"}`,
         background === "white"
           ? "bg-white dark:bg-black"
@@ -198,7 +198,7 @@ const SideMain = ({
       <div
         ref={containerRef}
         className={cn(
-          "sticky top-0 left-0 w-full h-full grow pb-12 overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
+          "grow pb-12 overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
           headerTitle && fullHeight
             ? deviceType === "ios-mobile-app"
               ? "mo:pt-24"
