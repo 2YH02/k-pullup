@@ -198,7 +198,7 @@ const SideMain = ({
       <div
         ref={containerRef}
         className={cn(
-          "grow pb-12 mo:h-[calc(100%-86px)] overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
+          "grow pb-12 mo:h-full overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
           headerTitle && fullHeight
             ? deviceType === "ios-mobile-app"
               ? "mo:pt-24"
