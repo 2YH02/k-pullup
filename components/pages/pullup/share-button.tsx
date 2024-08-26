@@ -78,8 +78,11 @@ const ShareButton = ({ markerId, lat, lng }: ShareButtonProps) => {
 
     a.href = url;
     a.download = `${markerId}.pdf`;
-    a.click();
+
     setDownLoading(false);
+
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
