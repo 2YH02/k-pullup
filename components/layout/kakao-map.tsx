@@ -1,8 +1,10 @@
 "use client";
 
 import getAllMarker from "@api/marker/get-all-marker";
+import useDeviceType from "@hooks/useDeviceType";
 import useIsMounted from "@hooks/useIsMounted";
 import LoadingIcon from "@icons/loading-icon";
+import cn from "@lib/cn";
 import useGeolocationStore from "@store/useGeolocationStore";
 import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
@@ -13,6 +15,7 @@ import { useEffect } from "react";
 
 const KakaoMap = () => {
   const isMounted = useIsMounted();
+  const deviceType = useDeviceType();
 
   const { setCurLocation, myLocation } = useGeolocationStore();
   const { map, setMap } = useMapStore();
@@ -61,6 +64,8 @@ const KakaoMap = () => {
     map.setCenter(latLng);
   };
 
+  const style = deviceType === "ios-mobile-app" ? "mo:top-24" : "";
+
   if (!isMounted) {
     return (
       <div className="relative w-dvw h-dvh bg-white dark:bg-black-light">
@@ -79,8 +84,10 @@ const KakaoMap = () => {
       />
       <div id="map" className="relative w-full h-dvh">
         <button
-          className="absolute top-16 right-5 p-1 rounded-md z-[2] mo:top-16
-          bg-white shadow-simple dark:bg-black hover:bg-grey-light hover:dark:bg-grey-dark"
+          className={cn(
+            "absolute top-16 right-5 p-1 rounded-md z-[2] mo:top-16 bg-white shadow-simple dark:bg-black hover:bg-grey-light hover:dark:bg-grey-dark",
+            style
+          )}
           onClick={handleGps}
         >
           <LocateFixedIcon className="dark:stroke-white stroke-black" />

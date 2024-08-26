@@ -13,6 +13,7 @@ import useSheetHeightStore from "@store/useSheetHeightStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Text from "./text";
+import useDeviceType from "@/hooks/useDeviceType";
 
 interface SideMainProps {
   withNav?: boolean;
@@ -73,11 +74,19 @@ const SideMain = ({
   referrer = true,
 }: SideMainProps) => {
   const { sheetHeight, setSheetHeight } = useSheetHeightStore();
-  const containerRef = useRef<HTMLDivElement>(null);
   const { setContainerRef } = useScrollRefStore();
 
+  const deviceType = useDeviceType();
+
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isMoblie, setIsMobile] = useState(false);
   const [hide, setHide] = useState(false);
+
+  useEffect(() => {
+    if (deviceType === "ios-mobile-app") {
+      setSheetHeight(80);
+    }
+  }, [deviceType, setSheetHeight]);
 
   useEffect(() => {
     setContainerRef(containerRef);
@@ -106,7 +115,9 @@ const SideMain = ({
       const delta = startY - e.clientY;
       newHeight = sheetHeight + (delta / window.innerHeight) * 100;
 
-      if (newHeight >= 85) return;
+      const maxHeight = deviceType === "ios-mobile-app" ? 80 : 85;
+
+      if (newHeight >= maxHeight) return;
       if (newHeight <= 20) return;
 
       setSheetHeight(newHeight);
@@ -118,35 +129,11 @@ const SideMain = ({
 
       if (newHeight < 35) setSheetHeight(20);
       else if (newHeight < 67) setSheetHeight(50);
-      else setSheetHeight(85);
+      else deviceType === "ios-mobile-app" ? setSheetHeight(80) : setSheetHeight(85);
     };
 
     document.onpointermove = dragMove;
     document.onpointerup = dragEnd;
-  };
-
-  const getBodyHeight = () => {
-    if (fullHeight) {
-      if (headerTitle) {
-        return withNav
-          ? "h-[calc(100%-96px)] mo:h-[calc(100%-97px)] mo:mt-10"
-          : `h-[calc(100%-40px)] mo:h-[calc(100%-40px)] ${
-              headerPosition === "sticky" ? "" : "mo:mt-10"
-            }`;
-      } else {
-        return withNav ? "mo:h-[calc(100%-55px)]" : "h-full mo:h-full";
-      }
-    } else {
-      if (headerTitle) {
-        return withNav
-          ? "h-[calc(100%-96px)] mo:h-[calc(100%-85px)]"
-          : "h-[calc(100%-40px)] mo:h-[calc(100%-28px)]";
-      } else {
-        return withNav
-          ? "h-[calc(100%-56px)] mo:h-[calc(100%-85px)]"
-          : "h-full mo:h-[calc(100%-28px)]";
-      }
-    }
   };
 
   if (hide) {
@@ -164,7 +151,7 @@ const SideMain = ({
   return (
     <main
       className={cn(
-        `fixed mo:bottom-0 web:top-1/2 web:-translate-y-1/2 web:h-[90%] web:left-6 web:max-w-96 w-full web:rounded-lg z-10
+        `flex flex-col fixed mo:bottom-0 web:top-1/2 web:-translate-y-1/2 web:h-[90%] web:left-6 web:max-w-96 w-full web:rounded-lg z-10
         shadow-dark max-h-[740px] ${fullHeight ? "" : "mo:rounded-t-2xl"}
         mo:bottom-0 mo:no-touch ${fullHeight ? "mo:h-full" : "mo:h-[85%]"}`,
         background === "white"
@@ -208,15 +195,15 @@ const SideMain = ({
       <div
         ref={containerRef}
         className={cn(
-          "mo:h-[calc(100%-86px)] overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
-          getBodyHeight()
+          "grow pb-12 mo:h-[calc(100%-86px)] overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
+          headerTitle ? "mo:pt-10" : ""
         )}
       >
         {children}
       </div>
 
       {withNav && (
-        <div className="overflow-hidden web:rounded-lg border-t border-solid dark:border-grey-dark">
+        <div className="shrink-0 overflow-hidden web:rounded-lg border-t border-solid dark:border-grey-dark">
           <BottomNav menus={menus} width={"full"} />
         </div>
       )}
@@ -253,7 +240,7 @@ const MainHeader = ({
   return (
     <div
       className={cn(
-        `web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 shadow-sm z-20 bg-white 
+        `shrink-0 web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 shadow-sm z-20 bg-white 
         dark:bg-black dark:border-b dark:border-solid dark:border-grey-dark web:rounded-t-lg`,
         getHeaderPosition()
       )}

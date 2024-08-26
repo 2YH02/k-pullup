@@ -1,10 +1,11 @@
 "use client";
 
 import Text from "@common/text";
+import useDeviceType from "@hooks/useDeviceType";
 import cn from "@lib/cn";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 
 export interface Menu {
   name: string;
@@ -30,6 +31,7 @@ interface BottomNavProps {
 
 const BottomNav = ({ menus, width = "full", className }: BottomNavProps) => {
   const pathname = usePathname();
+  const deviceType = useDeviceType();
 
   const navWidth = useMemo(() => {
     if (width === "full") return "w-full";
@@ -37,12 +39,15 @@ const BottomNav = ({ menus, width = "full", className }: BottomNavProps) => {
     return `w-[${width}px]`;
   }, [width]);
 
+  const navStyle = deviceType === "ios-mobile-app" ? "h-20 pb-4" : "";
+
   return (
     <nav
       className={cn(
         "sticky bottom-0 h-14 shadow-dark bg-white dark:bg-black dark:border-t dark:border-grey-dark dark:border-solid",
         navWidth,
-        className
+        className,
+        navStyle
       )}
     >
       <ul className="relative flex justify-around items-center h-full">

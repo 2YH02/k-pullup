@@ -1,15 +1,14 @@
 import newPictures from "@api/marker/new-pictures";
 import Divider from "@common/divider";
-import Input from "@common/input";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
-import SearchIcon from "@icons/search-icon";
 import ImageCarousel from "@layout/image-carousel";
 import AroundMarkerCarousel from "@pages/home/around-marker-carousel";
 import ArticleCarousel from "@pages/home/article-carousel";
 import IconLinkList from "@pages/home/icon-link-list";
 import LocationBadge from "@pages/home/location-badge";
 import Players from "@pages/home/players";
+import SearchInput from "@pages/home/search-input";
 
 const Home = async () => {
   const images = await newPictures();
@@ -20,15 +19,7 @@ const Home = async () => {
         <LocationBadge />
       </Section>
 
-      <Section className="mo:bg-transparent mo:dark:bg-transparent mo:fixed mo:w-full mo:top-4 mo:left-1/2 mo:-translate-x-1/2 mo:py-0">
-        <Input
-          isInvalid={false}
-          placeholder="검색"
-          icon={<SearchIcon />}
-          isSearchButton
-          className="shadow"
-        />
-      </Section>
+      <SearchInput />
 
       <Section>
         <ArticleCarousel />
