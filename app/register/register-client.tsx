@@ -3,7 +3,6 @@
 import { KakaoMarker } from "@/types/kakao-map.types";
 import setNewMarker, { SetMarkerRes } from "@api/marker/set-new-marker";
 import SideMain from "@common/side-main";
-import useDeviceType from "@hooks/useDeviceType";
 import useIsMounted from "@hooks/useIsMounted";
 import LoadingIcon from "@icons/loading-icon";
 import AuthError from "@layout/auth-error";
@@ -16,7 +15,6 @@ import UploadImage from "@pages/register/upload-image";
 import useAlertStore from "@store/useAlertStore";
 import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
-import useSheetHeightStore from "@store/useSheetHeightStore";
 import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -44,10 +42,8 @@ const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
   const router = useRouter();
 
   const isMounted = useIsMounted();
-  const deviceType = useDeviceType();
 
   const { user, setUser } = useUserStore();
-  const { setSheetHeight } = useSheetHeightStore();
 
   const { setMarker: setMarkerToStore } = useMarkerStore();
 
@@ -166,14 +162,6 @@ const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
       marker.setMap(null);
     };
   }, [map]);
-
-  useEffect(() => {
-    if (deviceType === "ios-mobile-app") {
-      setSheetHeight(80);
-    } else {
-      setSheetHeight(85);
-    }
-  }, [setSheetHeight]);
 
   const handleLocationChange = ({
     latitude,

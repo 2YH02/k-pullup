@@ -1,5 +1,4 @@
 import type { KaKaoMapMouseEvent, KakaoMarker } from "@/types/kakao-map.types";
-import BottomFixedButton from "@common/bottom-fixed-button";
 import Button from "@common/button";
 import GrowBox from "@common/grow-box";
 import Section from "@common/section";
@@ -23,19 +22,12 @@ interface SelectLocationProps {
 
 const SelectLocation = ({ next, marker }: SelectLocationProps) => {
   const { map } = useMapStore();
-  const { setSheetHeight } = useSheetHeightStore();
+  const { sheetHeight, setCurHeight } = useSheetHeightStore();
 
   const [location, setLocation] = useState<{
     latitude: number | null;
     longitude: number | null;
   }>({ latitude: null, longitude: null });
-
-  const handleClick = () => {
-    if (location.latitude && location.longitude) {
-      setLocation({ latitude: null, longitude: null });
-    }
-    setSheetHeight(20);
-  };
 
   useEffect(() => {
     if (!map || !marker) return;
@@ -47,7 +39,7 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
       marker.setPosition(latlng);
 
       setLocation({ latitude: latlng.getLat(), longitude: latlng.getLng() });
-      setSheetHeight(80);
+      setCurHeight(sheetHeight.STEP_3.height);
     };
 
     window.kakao.maps.event.addListener(map, "click", handleMapClick);
@@ -56,6 +48,13 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
       window.kakao.maps.event.removeListener(map, "click", handleMapClick);
     };
   }, [map, marker]);
+
+  const handleClick = () => {
+    if (location.latitude && location.longitude) {
+      setLocation({ latitude: null, longitude: null });
+    }
+    setCurHeight(sheetHeight.STEP_1.height);
+  };
 
   return (
     <Section className="h-full pb-0 flex flex-col">
@@ -80,7 +79,11 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
             ? "다음을 클릭해주세요"
             : "먼저 지도를 클릭해 위치를 선택해주세요."}
         </Text>
-        <Button onClick={handleClick} className="mt-5 web:hidden" variant="contrast">
+        <Button
+          onClick={handleClick}
+          className="mt-5 web:hidden"
+          variant="contrast"
+        >
           {location.latitude && location.longitude
             ? "다시 선택하기"
             : "위치 선택하기"}
@@ -89,7 +92,7 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
 
       <GrowBox />
 
-      <BottomFixedButton
+      <Button
         onClick={() => {
           next({
             latitude: location.latitude as number,
@@ -97,10 +100,10 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
           });
         }}
         disabled={!location.latitude || !location.longitude}
-        containerStyle="px-0"
+        full
       >
         다음
-      </BottomFixedButton>
+      </Button>
     </Section>
   );
 };

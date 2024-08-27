@@ -1,5 +1,6 @@
 "use client";
 
+import useDeviceType from "@hooks/useDeviceType";
 import ArrowLeftIcon from "@icons/arrow-left-icon";
 import ArrowRightIcon from "@icons/arrow-right-icon";
 import ChatBubbleIcon from "@icons/chat-bubble-icon";
@@ -12,8 +13,8 @@ import useScrollRefStore from "@store/useScrollRefStore";
 import useSheetHeightStore from "@store/useSheetHeightStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import SheetHeightProvider from "../provider/sheet-height-provider";
 import Text from "./text";
-import useDeviceType from "@/hooks/useDeviceType";
 
 interface SideMainProps {
   withNav?: boolean;
@@ -73,7 +74,8 @@ const SideMain = ({
   children,
   referrer = true,
 }: SideMainProps) => {
-  const { sheetHeight, setSheetHeight } = useSheetHeightStore();
+  const { sheetHeight, curHeight, curStyle, setCurHeight } =
+    useSheetHeightStore();
   const { setContainerRef } = useScrollRefStore();
 
   const deviceType = useDeviceType();
@@ -81,12 +83,6 @@ const SideMain = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMoblie, setIsMobile] = useState(false);
   const [hide, setHide] = useState(false);
-
-  useEffect(() => {
-    if (deviceType === "ios-mobile-app") {
-      setSheetHeight(80);
-    }
-  }, [deviceType, setSheetHeight]);
 
   useEffect(() => {
     setContainerRef(containerRef);
@@ -113,26 +109,23 @@ const SideMain = ({
 
     const dragMove = (e: PointerEvent) => {
       const delta = startY - e.clientY;
-      newHeight = sheetHeight + (delta / window.innerHeight) * 100;
+      newHeight = curHeight + (delta / window.innerHeight) * 100;
 
-      const maxHeight = deviceType === "ios-mobile-app" ? 80 : 85;
+      if (newHeight >= sheetHeight.STEP_3.height) return;
+      if (newHeight <= sheetHeight.STEP_1.height) return;
 
-      if (newHeight >= maxHeight) return;
-      if (newHeight <= 20) return;
-
-      setSheetHeight(newHeight);
+      setCurHeight(newHeight);
     };
 
     const dragEnd = () => {
       document.onpointermove = null;
       document.onpointerup = null;
 
-      if (newHeight < 35) setSheetHeight(20);
-      else if (newHeight < 67) setSheetHeight(50);
-      else
-        deviceType === "ios-mobile-app"
-          ? setSheetHeight(80)
-          : setSheetHeight(85);
+      if (newHeight < sheetHeight.STEP_1.max)
+        setCurHeight(sheetHeight.STEP_1.height);
+      else if (newHeight < sheetHeight.STEP_2.max)
+        setCurHeight(sheetHeight.STEP_2.height);
+      else setCurHeight(sheetHeight.STEP_3.height);
     };
 
     document.onpointermove = dragMove;
@@ -152,75 +145,72 @@ const SideMain = ({
   }
 
   return (
-    <main
-      className={cn(
-        `flex flex-col fixed mo:bottom-0 web:top-1/2 web:-translate-y-1/2 web:h-[90%] web:left-6 web:max-w-96 w-full web:rounded-lg z-10
-        shadow-dark web:max-h-[740px] ${fullHeight ? "" : "mo:rounded-t-2xl"}
-        mo:bottom-0 mo:no-touch ${
-          fullHeight
-            ? "mo:h-full"
-            : deviceType === "ios-mobile-app"
-            ? "mo:h-[80%]"
-            : "mo:h-[85%]"
-        }`,
-        background === "white"
-          ? "bg-white dark:bg-black"
-          : "bg-grey-light dark:bg-black",
-        className
-      )}
-      style={{ height: isMoblie && !fullHeight ? `${sheetHeight}%` : "" }}
-      onPointerDown={dragStart}
-    >
-      <button
-        className="absolute top-3 -right-12 flex items-center justify-center 
-        rounded-r-2xl shadow-simple w-12 h-10 bg-white dark:bg-black z-50 mo:hidden"
-        onClick={() => setHide(true)}
-      >
-        <ArrowLeftIcon size={24} />
-      </button>
-
-      {headerTitle && (
-        <MainHeader
-          titile={headerTitle}
-          headerIcon={headerIcon}
-          hasBackButton={hasBackButton}
-          headerPosition={headerPosition}
-          iconClick={headerIconClick}
-          prevClick={prevClick}
-          referrer={referrer}
-        />
-      )}
-
-      {!fullHeight && (
-        <div className="sticky top-0 py-3 bg-white dark:bg-black z-20 rounded-t-3xl web:hidden">
-          <div
-            className={`w-1/6 h-1 mx-auto rounded-lg ${
-              !dragable ? "bg-white dark:bg-black" : "bg-grey"
-            }`}
-          />
-        </div>
-      )}
-
-      <div
-        ref={containerRef}
+    <SheetHeightProvider>
+      <main
         className={cn(
-          "grow pb-12 overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
-          headerTitle && fullHeight
-            ? deviceType === "ios-mobile-app"
-              ? "mo:pt-24"
-              : "mo:pt-10"
-            : ""
+          `flex flex-col fixed mo:bottom-0 web:top-1/2 web:-translate-y-1/2 web:h-[90%] web:left-6 web:max-w-96 w-full web:rounded-lg z-10
+        shadow-dark web:max-h-[740px] ${fullHeight ? "" : "mo:rounded-t-2xl"}
+        mo:bottom-0 mo:no-touch ${fullHeight ? "mo:h-full" : curStyle}`,
+          background === "white"
+            ? "bg-white dark:bg-black"
+            : "bg-grey-light dark:bg-black",
+          className
         )}
+        style={{ height: isMoblie && !fullHeight ? `${curHeight}%` : "" }}
+        onPointerDown={dragStart}
       >
-        {children}
-      </div>
+        <button
+          className="absolute top-3 -right-12 flex items-center justify-center 
+        rounded-r-2xl shadow-simple w-12 h-10 bg-white dark:bg-black z-50 mo:hidden"
+          onClick={() => setHide(true)}
+        >
+          <ArrowLeftIcon size={24} />
+        </button>
 
-      {withNav && (
-        <div className="shrink-0 overflow-hidden web:rounded-lg border-t border-solid dark:border-grey-dark">
-          <BottomNav menus={menus} width={"full"} />
+        {headerTitle && (
+          <MainHeader
+            titile={headerTitle}
+            headerIcon={headerIcon}
+            hasBackButton={hasBackButton}
+            headerPosition={headerPosition}
+            iconClick={headerIconClick}
+            prevClick={prevClick}
+            referrer={referrer}
+          />
+        )}
+
+        {!fullHeight && (
+          <div className="sticky top-0 py-3 bg-white dark:bg-black z-20 rounded-t-3xl web:hidden">
+            <div
+              className={`w-1/6 h-1 mx-auto rounded-lg ${
+                !dragable ? "bg-white dark:bg-black" : "bg-grey"
+              }`}
+            />
+          </div>
+        )}
+
+        <div
+          ref={containerRef}
+          className={cn(
+            "grow pb-12 overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
+            headerTitle && fullHeight
+              ? deviceType === "ios-mobile-app"
+                ? "mo:pt-24"
+                : "mo:pt-10"
+              : "",
+            deviceType === "ios-mobile-app" ? "pb-32" : ""
+          )}
+        >
+          {children}
         </div>
-      )}
-    </main>
+
+        {withNav && (
+          <div className="shrink-0 overflow-hidden web:rounded-lg border-t border-solid dark:border-grey-dark">
+            <BottomNav menus={menus} width={"full"} />
+          </div>
+        )}
+      </main>
+    </SheetHeightProvider>
   );
 };
 
