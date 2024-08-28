@@ -208,7 +208,7 @@ const ChatDetailClient = ({
                   return (
                     <div
                       key={message.mid}
-                      className="truncate px-5 py-2 text-center text-sm text-grey-dark"
+                      className="shrink-0 truncate px-5 py-2 text-center text-sm text-grey-dark"
                     >
                       <Text
                         typography="t7"
@@ -223,7 +223,7 @@ const ChatDetailClient = ({
                   return (
                     <div
                       key={message.mid}
-                      className="truncate px-5 py-2 text-center text-sm text-grey-dark"
+                      className="shrink-0 truncate px-5 py-2 text-center text-sm text-grey-dark"
                     >
                       <Text
                         typography="t7"
