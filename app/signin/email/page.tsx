@@ -1,5 +1,7 @@
+import { type Device } from "@/app/mypage/page";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
+import getDeviceType from "@lib/get-device-type";
 import SigninForm from "@pages/signin/signin-form";
 import { headers } from "next/headers";
 
@@ -14,6 +16,9 @@ const EmailSigninPage = ({ searchParams }: EmailPageProps) => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
 
   return (
     <SideMain
@@ -21,6 +26,7 @@ const EmailSigninPage = ({ searchParams }: EmailPageProps) => {
       fullHeight
       hasBackButton
       referrer={!!referrer}
+      deviceType={deviceType}
     >
       <div className="w-full h-full flex flex-col pt-10">
         <Section className="px-9">

@@ -1,4 +1,6 @@
+import getDeviceType from "@lib/get-device-type";
 import { headers } from "next/headers";
+import { type Device } from "../mypage/page";
 import SearchClient from "./search-client";
 import SearchResult from "./search-result";
 
@@ -16,22 +18,34 @@ const SearchPage = ({ searchParams }: PageProps) => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
 
   if (addr || d) {
     if (d) {
-      return <SearchResult address={addr} markerId={d} />;
+      return (
+        <SearchResult address={addr} markerId={d} deviceType={deviceType} />
+      );
     } else {
       if (!lat || !lng) {
-        return <SearchResult address={addr} />;
+        return <SearchResult address={addr} deviceType={deviceType} />;
       } else {
-        return <SearchResult address={addr} lat={lat} lng={lng} />;
+        return (
+          <SearchResult
+            address={addr}
+            lat={lat}
+            lng={lng}
+            deviceType={deviceType}
+          />
+        );
       }
     }
   }
 
   return (
     <>
-      <SearchClient referrer={!!referrer} />
+      <SearchClient referrer={!!referrer} deviceType={deviceType}/>
     </>
   );
 };

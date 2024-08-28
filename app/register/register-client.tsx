@@ -18,6 +18,7 @@ import useMarkerStore from "@store/useMarkerStore";
 import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { type Device } from "../mypage/page";
 // TODO: 등록된 위치에 철봉이 실제로 존재하지 않거나 부정확한 정보일 경우, 사전 안내 없이 삭제될 수 있습니다. (문구 추가)
 
 export const registerError = {
@@ -38,7 +39,13 @@ interface RegisterValue {
   step: number;
 }
 
-const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
+const RegisterClient = ({
+  referrer = true,
+  deviceType = "desktop",
+}: {
+  referrer?: boolean;
+  deviceType?: Device;
+}) => {
   const router = useRouter();
 
   const isMounted = useIsMounted();
@@ -237,7 +244,13 @@ const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
 
   if (!isMounted || !user) {
     return (
-      <SideMain headerTitle=" " prevClick={() => {}} hasBackButton withNav>
+      <SideMain
+        headerTitle=" "
+        prevClick={() => {}}
+        hasBackButton
+        withNav
+        deviceType={deviceType}
+      >
         <div className="relative w-full h-full">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <LoadingIcon className="m-0" />
@@ -254,6 +267,7 @@ const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
         errorTitle="로그인 후 철봉 위치를 등록해보세요."
         prevUrl="/"
         returnUrl="/register"
+        deviceType={deviceType}
       />
     );
   }
@@ -266,6 +280,7 @@ const RegisterClient = ({ referrer = true }: { referrer?: boolean }) => {
       withNav={registerValue.step === 3 ? false : true}
       className={registerValue.step === 0 ? "duration-300" : ""}
       dragable={false}
+      deviceType={deviceType}
     >
       {registerValue.step === 0 && (
         <SelectLocation

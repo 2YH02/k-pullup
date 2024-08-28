@@ -1,6 +1,6 @@
 "use client";
 
-import useDeviceType from "@hooks/useDeviceType";
+import { type Device } from "@/app/mypage/page";
 import ArrowLeftIcon from "@icons/arrow-left-icon";
 import ArrowRightIcon from "@icons/arrow-right-icon";
 import ChatBubbleIcon from "@icons/chat-bubble-icon";
@@ -28,6 +28,7 @@ interface SideMainProps {
   background?: "white" | "grey";
   dragable?: boolean;
   referrer?: boolean;
+  deviceType?: Device;
   headerIconClick?: VoidFunction;
   prevClick?: VoidFunction;
 }
@@ -72,13 +73,12 @@ const SideMain = ({
   headerIconClick,
   prevClick,
   children,
+  deviceType,
   referrer = true,
 }: SideMainProps) => {
   const { sheetHeight, curHeight, curStyle, setCurHeight } =
     useSheetHeightStore();
   const { setContainerRef } = useScrollRefStore();
-
-  const deviceType = useDeviceType();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMoblie, setIsMobile] = useState(false);
@@ -145,12 +145,18 @@ const SideMain = ({
   }
 
   return (
-    <SheetHeightProvider>
+    <SheetHeightProvider deviceType={deviceType as Device}>
       <main
         className={cn(
           `flex flex-col fixed mo:bottom-0 web:top-1/2 web:-translate-y-1/2 web:h-[90%] web:left-6 web:max-w-96 w-full web:rounded-lg z-10
         shadow-dark web:max-h-[740px] ${fullHeight ? "" : "mo:rounded-t-2xl"}
-        mo:bottom-0 mo:no-touch ${fullHeight ? "mo:h-full" : curStyle}`,
+        mo:bottom-0 mo:no-touch ${
+          fullHeight
+            ? "mo:h-full"
+            : deviceType === "ios-mobile-app"
+            ? "mo:h-[80%]"
+            : "mo:h-[85%]"
+        }`,
           background === "white"
             ? "bg-white dark:bg-black"
             : "bg-grey-light dark:bg-black",
@@ -176,6 +182,7 @@ const SideMain = ({
             iconClick={headerIconClick}
             prevClick={prevClick}
             referrer={referrer}
+            deviceType={deviceType}
           />
         )}
 
@@ -206,7 +213,7 @@ const SideMain = ({
 
         {withNav && (
           <div className="shrink-0 overflow-hidden web:rounded-lg border-t border-solid dark:border-grey-dark">
-            <BottomNav menus={menus} width={"full"} />
+            <BottomNav menus={menus} width={"full"} deviceType={deviceType} />
           </div>
         )}
       </main>
@@ -220,6 +227,7 @@ interface MainHeaderProps {
   hasBackButton?: boolean;
   headerPosition?: "sticky" | "fixed";
   referrer?: boolean;
+  deviceType?: Device;
   iconClick?: VoidFunction;
   prevClick?: VoidFunction;
 }
@@ -230,11 +238,11 @@ const MainHeader = ({
   headerIcon,
   headerPosition,
   referrer,
+  deviceType,
   iconClick,
   prevClick,
 }: MainHeaderProps) => {
   const router = useRouter();
-  const deviceType = useDeviceType();
 
   const style = deviceType === "ios-mobile-app" ? "pt-12 h-24" : "";
 

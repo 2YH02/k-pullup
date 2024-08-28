@@ -11,6 +11,9 @@ import UserProvider from "@provider/user-provider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import getDeviceType from "@/lib/get-device-type";
+import { Device } from "./mypage/page";
+import { headers } from "next/headers";
 
 declare global {
   interface Window {
@@ -59,6 +62,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = headers();
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className={pretendard.className}>
@@ -79,7 +86,7 @@ export default function RootLayout({
                 </UserProvider>
               </ImageModalProvider>
             </AlertProvider>
-            <KakaoMap />
+            <KakaoMap deviceType={deviceType} />
           </ChatIdProvider>
         </ThemeProvider>
         <div id="portal"></div>

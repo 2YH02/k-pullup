@@ -1,12 +1,19 @@
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
+import getDeviceType from "@lib/get-device-type";
 import ChatroomList from "@pages/chat/chatroom-list";
-// TODO: 지역 채팅 마지막 서비스 배포 후 확인 필요
+import { headers } from "next/headers";
+import { type Device } from "../mypage/page";
 
 const Chat = () => {
+  const headersList = headers();
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
+
   return (
-    <SideMain headerTitle="채팅" withNav fullHeight>
+    <SideMain headerTitle="채팅" withNav fullHeight deviceType={deviceType}>
       <Section>
         <div>
           <Text typography="t6" textAlign="center" display="block">

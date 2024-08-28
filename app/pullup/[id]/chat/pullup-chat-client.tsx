@@ -1,5 +1,6 @@
 "use client";
 
+import { type Device } from "@/app/mypage/page";
 import Button from "@common/button";
 import Input from "@common/input";
 import Section from "@common/section";
@@ -31,9 +32,13 @@ export interface Chatdata {
 
 interface PullupChatClientProps {
   markerId: number;
+  deviceType?: Device;
 }
 
-const PullupChatClient = ({ markerId }: PullupChatClientProps) => {
+const PullupChatClient = ({
+  markerId,
+  deviceType = "desktop",
+}: PullupChatClientProps) => {
   const router = useRouter();
 
   const chatValue = useInput("");
@@ -155,7 +160,12 @@ const PullupChatClient = ({ markerId }: PullupChatClientProps) => {
 
   if (!connection && !isChatError) {
     return (
-      <SideMain headerTitle={`철봉 채팅`} fullHeight hasBackButton>
+      <SideMain
+        headerTitle={`철봉 채팅`}
+        fullHeight
+        hasBackButton
+        deviceType={deviceType}
+      >
         <Section className="flex items-center justify-center h-full">
           <LoadingIcon size="lg" />
         </Section>
@@ -164,7 +174,12 @@ const PullupChatClient = ({ markerId }: PullupChatClientProps) => {
   }
 
   return (
-    <SideMain headerTitle={`철봉 채팅 ${subTitle}`} fullHeight hasBackButton>
+    <SideMain
+      headerTitle={`철봉 채팅 ${subTitle}`}
+      fullHeight
+      hasBackButton
+      deviceType={deviceType}
+    >
       <Section className="flex flex-col pb-0 h-full">
         <Text
           typography="t7"

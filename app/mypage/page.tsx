@@ -5,22 +5,35 @@ import ShadowBox from "@common/shadow-box";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import ArrowRightIcon from "@icons/arrow-right-icon";
+import getDeviceType from "@lib/get-device-type";
 import LinkList from "@pages/mypage/link-list";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import Link from "next/link";
 import DeviceType from "./device-type";
 // TODO: 마커 등록 갯수, 수정 제안 횟수에 따른 UI 차별
 
+export type Device =
+  | "android-mobile-app"
+  | "ios-mobile-app"
+  | "android-mobile-web"
+  | "ios-mobile-web"
+  | "desktop";
+
 const Mypage = async () => {
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
+
+  const headersList = headers();
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
 
   const user = await myInfo(decodeCookie);
 
   const noUser = !user || user.error;
 
   return (
-    <SideMain headerTitle="내 정보" fullHeight withNav>
+    <SideMain headerTitle="내 정보" fullHeight withNav deviceType={deviceType}>
       <Section>
         {noUser ? (
           <>

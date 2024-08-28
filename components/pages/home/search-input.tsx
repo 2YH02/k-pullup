@@ -1,13 +1,12 @@
 "use client";
 
+import { type Device } from "@/app/mypage/page";
 import Input from "@common/input";
 import Section from "@common/section";
-import useDeviceType from "@hooks/useDeviceType";
 import SearchIcon from "@icons/search-icon";
 import cn from "@lib/cn";
 
-const SearchInput = () => {
-  const deviceType = useDeviceType();
+const SearchInput = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const style = deviceType === "ios-mobile-app" ? "mo:top-12" : "";
 
   return (

@@ -1,9 +1,11 @@
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
+import getDeviceType from "@lib/get-device-type";
 import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
+import { type Device } from "../mypage/page";
 
 interface PageProps {
   searchParams: {
@@ -16,6 +18,9 @@ const SigninPage = ({ searchParams }: PageProps) => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
 
   return (
     <SideMain
@@ -23,6 +28,7 @@ const SigninPage = ({ searchParams }: PageProps) => {
       fullHeight
       hasBackButton
       referrer={!!referrer}
+      deviceType={deviceType}
     >
       <Section className="flex flex-col items-center justify-start pb-0">
         <div className="w-36 h-36 rounded-3xl overflow-hidden">

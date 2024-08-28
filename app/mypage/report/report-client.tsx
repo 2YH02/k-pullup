@@ -7,13 +7,19 @@ import SideMain from "@common/side-main";
 import NotFound from "@layout/not-found";
 import ReportListItem from "@pages/mypage/report/report-list-item";
 import { useState } from "react";
+import { type Device } from "../page";
 
 interface ReportClientProps {
   data: ReportsRes[];
   referrer: boolean;
+  deviceType?: Device;
 }
 
-const ReportClient = ({ data, referrer }: ReportClientProps) => {
+const ReportClient = ({
+  data,
+  referrer,
+  deviceType = "desktop",
+}: ReportClientProps) => {
   const [reports, setReports] = useState<ReportsRes[]>(data);
 
   const handleDelete = async (markerId: number, reportId: number) => {
@@ -41,6 +47,7 @@ const ReportClient = ({ data, referrer }: ReportClientProps) => {
       fullHeight
       hasBackButton
       referrer={referrer}
+      deviceType={deviceType}
     >
       <Section>
         {reports.map((report) => {

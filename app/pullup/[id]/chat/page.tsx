@@ -1,12 +1,19 @@
+import { headers } from "next/headers";
 import PullupChatClient from "./pullup-chat-client";
-// TODO: 위치 채팅 마지막 서비스 배포 후 확인 필요
+import { Device } from "@/app/mypage/page";
+import getDeviceType from "@lib/get-device-type";
 
 const PullupChat = ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
+  const headersList = headers();
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
+
   return (
     <>
-      <PullupChatClient markerId={~~id} />
+      <PullupChatClient markerId={~~id} deviceType={deviceType} />
     </>
   );
 };

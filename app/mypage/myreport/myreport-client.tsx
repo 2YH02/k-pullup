@@ -19,13 +19,19 @@ import { StatusBadge } from "@pages/mypage/report/report-list-item";
 import useAlertStore from "@store/useAlertStore";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import { type Device } from "../page";
 
 interface MyreportClientProps {
   data: MyMarkerReportRes;
   referrer?: boolean;
+  deviceType?: Device;
 }
 
-const MyreportClient = ({ data, referrer }: MyreportClientProps) => {
+const MyreportClient = ({
+  data,
+  referrer,
+  deviceType = "desktop",
+}: MyreportClientProps) => {
   const router = useRouter();
 
   const { openAlert, closeAlert } = useAlertStore();
@@ -172,6 +178,7 @@ const MyreportClient = ({ data, referrer }: MyreportClientProps) => {
           setCurData(null);
         }}
         referrer={!!referrer}
+        deviceType={deviceType}
       >
         <Section className="relative p-4 pt-6 mb-4 mt-5">
           <div className="absolute right-3 top-3">

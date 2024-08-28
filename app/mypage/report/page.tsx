@@ -1,7 +1,9 @@
 import mySuggested, { type ReportsRes } from "@api/report/my-suggested";
 import AuthError from "@layout/auth-error";
 import NotFound from "@layout/not-found";
+import getDeviceType from "@lib/get-device-type";
 import { cookies, headers } from "next/headers";
+import { type Device } from "../page";
 import ReportClient from "./report-client";
 
 const ReportPage = async () => {
@@ -10,6 +12,9 @@ const ReportPage = async () => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
 
   const reports = await mySuggested(decodeCookie);
 
@@ -21,6 +26,7 @@ const ReportPage = async () => {
         returnUrl="/mypage/report"
         fullHeight
         hasBackButton
+        deviceType={deviceType}
       />
     );
   }
@@ -31,13 +37,18 @@ const ReportPage = async () => {
         errorTitle=" 요청한 장소가 없습니다."
         fullHeight
         hasBackButton
+        deviceType={deviceType}
       />
     );
   }
 
   return (
     <>
-      <ReportClient data={reports.data as ReportsRes[]} referrer={!!referrer} />
+      <ReportClient
+        data={reports.data as ReportsRes[]}
+        referrer={!!referrer}
+        deviceType={deviceType}
+      />
     </>
   );
 };

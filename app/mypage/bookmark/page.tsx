@@ -4,8 +4,10 @@ import SideMain from "@common/side-main";
 import Text from "@common/text";
 import AuthError from "@layout/auth-error";
 import NotFound from "@layout/not-found";
+import getDeviceType from "@lib/get-device-type";
 import BookmarkList from "@pages/mypage/bookmark/bookmark-list";
 import { cookies, headers } from "next/headers";
+import { type Device } from "../page";
 
 const RankingPage = async () => {
   const cookieStore = cookies();
@@ -13,6 +15,9 @@ const RankingPage = async () => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
 
   const markers = await favorites(decodeCookie);
 
@@ -38,7 +43,12 @@ const RankingPage = async () => {
   }
 
   return (
-    <SideMain headerTitle="저장한 장소" hasBackButton referrer={!!referrer}>
+    <SideMain
+      headerTitle="저장한 장소"
+      hasBackButton
+      referrer={!!referrer}
+      deviceType={deviceType}
+    >
       <Section>
         <Text
           display="block"

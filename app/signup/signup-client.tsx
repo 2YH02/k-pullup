@@ -11,13 +11,19 @@ import VerifyEmail from "@pages/signup/verify-email";
 import useAlertStore from "@store/useAlertStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { type Device } from "../mypage/page";
 
 interface SignupClientProps {
   returnUrl?: string;
   referrer: boolean;
+  deviceType?: Device;
 }
 
-const SignupClient = ({ returnUrl, referrer }: SignupClientProps) => {
+const SignupClient = ({
+  returnUrl,
+  referrer,
+  deviceType = "desktop",
+}: SignupClientProps) => {
   const router = useRouter();
 
   const { openAlert } = useAlertStore();
@@ -112,6 +118,7 @@ const SignupClient = ({ returnUrl, referrer }: SignupClientProps) => {
       fullHeight
       hasBackButton={signupValue.step === 3 ? false : true}
       referrer={!!referrer}
+      deviceType={deviceType}
     >
       {signupValue.step === 0 && <VerifyEmail next={handleEmailChange} />}
       {signupValue.step === 1 && <EnterUsername next={handleUserNameChange} />}

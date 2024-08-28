@@ -1,7 +1,7 @@
 "use client";
 
+import { type Device } from "@/app/mypage/page";
 import Text from "@common/text";
-import useDeviceType from "@hooks/useDeviceType";
 import cn from "@lib/cn";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -24,14 +24,22 @@ interface BottomNavProps {
    */
   width?: number | "full";
   /**
+   * 기기 타입
+   */
+  deviceType?: Device;
+  /**
    * tailwind 스타일 클래스
    */
   className?: React.ComponentProps<"nav">["className"];
 }
 
-const BottomNav = ({ menus, width = "full", className }: BottomNavProps) => {
+const BottomNav = ({
+  menus,
+  width = "full",
+  deviceType = "desktop",
+  className,
+}: BottomNavProps) => {
   const pathname = usePathname();
-  const deviceType = useDeviceType();
 
   const navWidth = useMemo(() => {
     if (width === "full") return "w-full";

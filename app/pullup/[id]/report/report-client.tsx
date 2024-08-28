@@ -1,5 +1,6 @@
 "use client";
 
+import { type Device } from "@/app/mypage/page";
 import { Marker } from "@/types/marker.types";
 import BottomFixedButton from "@common/bottom-fixed-button";
 import Section from "@common/section";
@@ -14,9 +15,13 @@ import { useState } from "react";
 
 interface ReportClientProps {
   marker: Marker;
+  deviceType: Device;
 }
 
-const ReportClient = ({ marker }: ReportClientProps) => {
+const ReportClient = ({
+  marker,
+  deviceType = "desktop",
+}: ReportClientProps) => {
   const { toast } = useToast();
 
   const [completed, setCompleted] = useState(false);
@@ -71,6 +76,7 @@ const ReportClient = ({ marker }: ReportClientProps) => {
       className="flex flex-col"
       fullHeight
       hasBackButton
+      deviceType={deviceType}
     >
       <Section className="pb-0 h-40">
         <Text className="mb-1" fontWeight="bold">

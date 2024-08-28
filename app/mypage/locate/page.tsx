@@ -3,9 +3,11 @@ import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import AuthError from "@layout/auth-error";
+import getDeviceType from "@lib/get-device-type";
 import NotFound from "@pages/mypage/locate/not-found";
 import RegisteredLocateList from "@pages/mypage/locate/registered-locate-list";
 import { cookies, headers } from "next/headers";
+import { type Device } from "../page";
 
 const RankingPage = async () => {
   const cookieStore = cookies();
@@ -13,6 +15,9 @@ const RankingPage = async () => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
 
   const markers = await myRegisteredLocation({
     pageParam: 1,
@@ -26,6 +31,7 @@ const RankingPage = async () => {
         hasBackButton
         errorTitle="로그인 후 철봉 위치를 등록해보세요."
         returnUrl="mypage/locate"
+        deviceType={deviceType}
       />
     );
   }
@@ -39,6 +45,7 @@ const RankingPage = async () => {
       headerTitle="내가 등록한 위치"
       hasBackButton
       referrer={!!referrer}
+      deviceType={deviceType}
     >
       <Section>
         <Text

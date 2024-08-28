@@ -1,12 +1,17 @@
 "use client";
 
-import useDeviceType from "@hooks/useDeviceType";
+import { type Device } from "@/app/mypage/page";
 import useSheetHeightStore from "@store/useSheetHeightStore";
 import { useEffect } from "react";
 
-const SheetHeightProvider = ({ children }: { children: React.ReactNode }) => {
+const SheetHeightProvider = ({
+  children,
+  deviceType,
+}: {
+  children: React.ReactNode;
+  deviceType: Device;
+}) => {
   const { setCurHeight, setCurStyle, setSheetHeight } = useSheetHeightStore();
-  const deviceType = useDeviceType();
 
   useEffect(() => {
     if (deviceType === "ios-mobile-app") {

@@ -1,9 +1,11 @@
-import SideMain from "@/components/common/side-main";
-import AuthError from "@/components/layout/auth-error";
-import UserinfoCard from "@/components/pages/mypage/user/userinfo-card";
-import UsernameCard from "@/components/pages/mypage/user/username-card";
 import myInfo from "@api/user/myInfo";
+import SideMain from "@common/side-main";
+import AuthError from "@layout/auth-error";
+import getDeviceType from "@lib/get-device-type";
+import UserinfoCard from "@pages/mypage/user/userinfo-card";
+import UsernameCard from "@pages/mypage/user/username-card";
 import { cookies, headers } from "next/headers";
+import { type Device } from "../page";
 
 const UserPage = async () => {
   const cookieStore = cookies();
@@ -11,6 +13,9 @@ const UserPage = async () => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
 
   const user = await myInfo(decodeCookie);
 
@@ -24,6 +29,7 @@ const UserPage = async () => {
         returnUrl="/mypage/user"
         fullHeight
         hasBackButton
+        deviceType={deviceType}
       />
     );
   }
@@ -34,6 +40,7 @@ const UserPage = async () => {
       fullHeight
       hasBackButton
       referrer={!!referrer}
+      deviceType={deviceType}
     >
       <UsernameCard user={user} />
       <UserinfoCard user={user} />

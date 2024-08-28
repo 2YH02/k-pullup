@@ -12,6 +12,7 @@ import SearchList from "@pages/search/search-list";
 import useSearchStore from "@store/useSearchStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { type Device } from "../mypage/page";
 
 export interface SearchData {
   address: string;
@@ -19,10 +20,15 @@ export interface SearchData {
   position?: { lat: string; lng: string };
 }
 
-const SearchClient = ({ referrer }: { referrer?: boolean }) => {
+const SearchClient = ({
+  referrer,
+  deviceType = "desktop",
+}: {
+  referrer?: boolean;
+  deviceType?: Device;
+}) => {
   const router = useRouter();
 
-  const deviceType = useDeviceType();
   const searchValue = useInput("");
 
   const { searches, clearSearches } = useSearchStore();

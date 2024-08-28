@@ -1,3 +1,4 @@
+import { type Device } from "@/app/mypage/page";
 import Badge from "@common/badge";
 import Divider from "@common/divider";
 import Section from "@common/section";
@@ -5,6 +6,7 @@ import SideMain from "@common/side-main";
 import Text from "@common/text";
 import getFacilities from "@lib/api/marker/get-facilities";
 import markerDetail from "@lib/api/marker/marker-detail";
+import getDeviceType from "@lib/get-device-type";
 import AddressButton from "@pages/pullup/address-button";
 import ButtonList from "@pages/pullup/button-list";
 import Comments from "@pages/pullup/comments";
@@ -22,6 +24,9 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
 
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
@@ -47,6 +52,7 @@ const PullupPage = async ({ params }: { params: { id: string } }) => {
       hasBackButton
       withNav
       referrer={!!referrer}
+      deviceType={deviceType}
     >
       <MoveMap
         lat={marker.latitude}

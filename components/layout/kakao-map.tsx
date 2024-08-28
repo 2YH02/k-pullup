@@ -1,7 +1,7 @@
 "use client";
 
+import { type Device } from "@/app/mypage/page";
 import getAllMarker from "@api/marker/get-all-marker";
-import useDeviceType from "@hooks/useDeviceType";
 import useIsMounted from "@hooks/useIsMounted";
 import LoadingIcon from "@icons/loading-icon";
 import cn from "@lib/cn";
@@ -13,9 +13,8 @@ import Script from "next/script";
 import { useEffect } from "react";
 // TODO: 지도 우클릭 기능 추가 (리스트 메뉴 형식, ex-로드뷰)
 
-const KakaoMap = () => {
+const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const isMounted = useIsMounted();
-  const deviceType = useDeviceType();
 
   const { setCurLocation, myLocation } = useGeolocationStore();
   const { map, setMap } = useMapStore();
@@ -64,7 +63,7 @@ const KakaoMap = () => {
     map.setCenter(latLng);
   };
 
-  const style = deviceType === "ios-mobile-app" ? "mo:top-28" : "";
+  const style = deviceType === "ios-mobile-app" ? "mo:top-24" : "";
 
   if (!isMounted) {
     return (

@@ -3,10 +3,22 @@ import Section from "@common/section";
 import ShadowBox from "@common/shadow-box";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
+import getDeviceType from "@lib/get-device-type";
+import { headers } from "next/headers";
+import { type Device } from "../../page";
 
 const InquiryPage = () => {
+  const headersList = headers();
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
   return (
-    <SideMain headerTitle="문의" fullHeight hasBackButton>
+    <SideMain
+      headerTitle="문의"
+      fullHeight
+      hasBackButton
+      deviceType={deviceType}
+    >
       <Section>
         <ShadowBox className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md space-y-4">
           <Text

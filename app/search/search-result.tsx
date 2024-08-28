@@ -6,15 +6,23 @@ import Text from "@common/text";
 import AroundSearch from "@pages/search/around-search";
 import MarkerSearchResult from "@pages/search/marker-search-result";
 import { useRouter } from "next/navigation";
+import { type Device } from "../mypage/page";
 
 interface SearchResultProps {
   address: string;
   markerId?: string;
   lat?: string;
   lng?: string;
+  deviceType?: Device;
 }
 
-const SearchResult = ({ address, lat, lng, markerId }: SearchResultProps) => {
+const SearchResult = ({
+  address,
+  lat,
+  lng,
+  markerId,
+  deviceType = "desktop",
+}: SearchResultProps) => {
   const router = useRouter();
 
   if (markerId) {
@@ -23,7 +31,12 @@ const SearchResult = ({ address, lat, lng, markerId }: SearchResultProps) => {
 
   if (!lat || !lng) {
     return (
-      <SideMain headerTitle={address} hasBackButton fullHeight>
+      <SideMain
+        headerTitle={address}
+        hasBackButton
+        fullHeight
+        deviceType={deviceType}
+      >
         <Text
           className="text-red dark:text-red mt-4"
           display="block"
@@ -41,6 +54,7 @@ const SearchResult = ({ address, lat, lng, markerId }: SearchResultProps) => {
       hasBackButton
       fullHeight
       prevClick={() => router.push("/search")}
+      deviceType={deviceType}
     >
       <Section>
         <Text typography="t6" display="block" textAlign="center">
