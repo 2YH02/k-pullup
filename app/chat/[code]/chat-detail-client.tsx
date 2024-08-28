@@ -2,6 +2,7 @@
 
 import { type Device } from "@/app/mypage/page";
 import Button from "@common/button";
+import GrowBox from "@common/grow-box";
 import Input from "@common/input";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
@@ -11,44 +12,6 @@ import LoadingIcon from "@icons/loading-icon";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { v4 } from "uuid";
-
-// const messagesEx = [
-//   {
-//     msg: "asdasda",
-//     name: "asd",
-//     isOwner: true,
-//     mid: "asddsa",
-//     userid: "asdasd",
-//   },
-//   {
-//     msg: "asdasda",
-//     name: "asd",
-//     isOwner: true,
-//     mid: "asddsa",
-//     userid: "asdasd",
-//   },
-//   {
-//     msg: "asdasda",
-//     name: "asd",
-//     isOwner: true,
-//     mid: "asddsa",
-//     userid: "asdasd",
-//   },
-//   {
-//     msg: "asdasda",
-//     name: "asd",
-//     isOwner: true,
-//     mid: "asddsa",
-//     userid: "asdasd",
-//   },
-//   {
-//     msg: "asdasda",
-//     name: "asd",
-//     isOwner: true,
-//     mid: "asddsa",
-//     userid: "asdasd",
-//   },
-// ];
 
 export interface ChatMessage {
   uid: string;
@@ -208,7 +171,7 @@ const ChatDetailClient = ({
         deviceType={deviceType}
       >
         <Section className="flex items-center justify-center h-full">
-          <LoadingIcon size="lg" />
+          <LoadingIcon size="lg" className="m-0" />
         </Section>
       </SideMain>
     );
@@ -234,7 +197,8 @@ const ChatDetailClient = ({
         </Text>
         {!isChatError ? (
           <>
-            <div className="h-full overflow-auto scrollbar-hidden">
+            <div className="flex flex-col h-full overflow-auto scrollbar-hidden">
+              <GrowBox />
               {messages.map((message) => {
                 if (message.name === "chulbong-kr") return;
                 if (message.msg?.includes("님이 입장하셨습니다.")) {
