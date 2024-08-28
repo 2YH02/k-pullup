@@ -1,21 +1,14 @@
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
-import Image from "next/image";
+import ImageWrap from "./image-wrap";
 
 const ArticleItemPage = () => {
   return (
     <SideMain headerTitle="철봉 장점 및 주의사항" hasBackButton fullHeight>
       <Section>
         <div className="relative mb-4">
-          <Image
-            src={"/pullup3.jpg"}
-            alt="상세"
-            width={0}
-            height={0}
-            sizes="100vw"
-            className="w-full h-auto"
-          />
+          <ImageWrap src={"/pullup3.jpg"} alt="상세" w={600} h={600} />
         </div>
         <div>
           <Text typography="t5">
@@ -108,14 +101,7 @@ const ArticleItemPage = () => {
         <div className="h-[2px] w-full bg-grey-light dark:bg-grey-dark my-2" />
 
         <div className="relative mb-4">
-          <Image
-            src={"/pullup1.jpg"}
-            width={0}
-            height={0}
-            sizes="100vw"
-            alt="상세"
-            className="w-full h-auto"
-          />
+          <ImageWrap src={"/pullup1.jpg"} w={600} h={600} alt="상세" />
         </div>
         <div>
           <Text
@@ -169,14 +155,7 @@ const ArticleItemPage = () => {
         </Text>
 
         <div className="relative mb-4">
-          <Image
-            src={"/pullup2.jpg"}
-            width={0}
-            height={0}
-            sizes="100vw"
-            alt="상세"
-            className="w-full h-auto"
-          />
+          <ImageWrap src={"/pullup2.jpg"} w={600} h={600} alt="상세" />
         </div>
       </Section>
     </SideMain>

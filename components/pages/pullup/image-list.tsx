@@ -1,7 +1,7 @@
 "use client";
 
+import ImageWrap from "@/app/article/2/image-wrap";
 import type { Photo } from "@/types/marker.types";
-import ImageWrap from "@common/Image-wrap";
 import Text from "@common/text";
 import useImageModalStore from "@store/useImageModalStore";
 import { useEffect, useMemo } from "react";

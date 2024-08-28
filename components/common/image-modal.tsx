@@ -1,5 +1,7 @@
 "use client";
 
+import { type Device } from "@/app/mypage/page";
+import cn from "@/lib/cn";
 import CloseIcon from "@icons/close-icon";
 import useImageModalStore from "@store/useImageModalStore";
 import Image from "next/image";
@@ -12,7 +14,7 @@ import {
   CarouselPrevious,
 } from "./carousel";
 import Dimmed from "./dimmed";
-import { type Device } from "@/app/mypage/page";
+import Skeleton from "./skeleton";
 // TODO: 사진 업로드 날짜 표시
 
 interface Props {
@@ -31,6 +33,7 @@ const ImageModal = ({
   const { closeModal } = useImageModalStore();
 
   const [imageSize, setImageSize] = useState(400);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const zoomIn = () => {
     if (
@@ -77,12 +80,21 @@ const ImageModal = ({
               key={image}
               className="flex items-center justify-center"
             >
+              {!isLoaded && (
+                <Skeleton className="absolute inset-0 w-full h-full mx-auto rounded-md" />
+              )}
               <Image
                 key={image}
                 src={image}
                 alt="상세"
                 width={imageSize}
                 height={imageSize}
+                className={cn(
+                  `mx-auto transition-opacity duration-500 ease-in-out`,
+                  isLoaded ? "opacity-100" : "opacity-0"
+                )}
+                onLoadingComplete={() => setIsLoaded(true)}
+                unoptimized
               />
             </CarouselItem>
           ))}
