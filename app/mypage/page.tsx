@@ -9,7 +9,6 @@ import getDeviceType from "@lib/get-device-type";
 import LinkList from "@pages/mypage/link-list";
 import { cookies, headers } from "next/headers";
 import Link from "next/link";
-import DeviceType from "./device-type";
 // TODO: 마커 등록 갯수, 수정 제안 횟수에 따른 UI 차별
 
 export type Device =
@@ -56,7 +55,6 @@ const Mypage = async () => {
               <Text>님</Text>
             </div>
             <Text typography="t6">안녕하세요.</Text>
-            <DeviceType />
             {(user.reportCount || user.markerCount) && (
               <div className="mt-3">
                 {user.reportCount && (
