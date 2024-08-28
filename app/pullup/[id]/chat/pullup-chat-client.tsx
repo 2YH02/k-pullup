@@ -47,7 +47,7 @@ const PullupChatClient = ({
   const chatBox = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [connection, setConnection] = useState(false);
+  const [connection, setConnection] = useState(true);
 
   const [messages, setMessages] = useState<Chatdata[]>([]);
   const [connectionMsg, setConnectionMsg] = useState("");
@@ -179,6 +179,7 @@ const PullupChatClient = ({
       fullHeight
       hasBackButton
       deviceType={deviceType}
+      bodyStyle="pb-0"
     >
       <Section className="flex flex-col pb-0 h-full">
         <Text
@@ -191,7 +192,7 @@ const PullupChatClient = ({
         </Text>
         {!isChatError ? (
           <>
-            <div className="flex flex-col justify-end grow">
+            <div className="h-full overflow-auto scrollbar-hidden">
               {messages.map((message) => {
                 if (message.name === "chulbong-kr") return;
                 if (message.msg?.includes("님이 입장하셨습니다.")) {
@@ -258,7 +259,9 @@ const PullupChatClient = ({
                 );
               })}
             </div>
-            <div className="py-4">
+            <div
+              className={deviceType === "ios-mobile-app" ? "pt-2 pb-8" : "py-2"}
+            >
               <Input
                 isInvalid={false}
                 icon={<SendIcon />}

@@ -1,5 +1,6 @@
 "use client";
 
+import { type Device } from "@/app/mypage/page";
 import Button from "@common/button";
 import Input from "@common/input";
 import Section from "@common/section";
@@ -10,6 +11,44 @@ import LoadingIcon from "@icons/loading-icon";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { v4 } from "uuid";
+
+// const messagesEx = [
+//   {
+//     msg: "asdasda",
+//     name: "asd",
+//     isOwner: true,
+//     mid: "asddsa",
+//     userid: "asdasd",
+//   },
+//   {
+//     msg: "asdasda",
+//     name: "asd",
+//     isOwner: true,
+//     mid: "asddsa",
+//     userid: "asdasd",
+//   },
+//   {
+//     msg: "asdasda",
+//     name: "asd",
+//     isOwner: true,
+//     mid: "asddsa",
+//     userid: "asdasd",
+//   },
+//   {
+//     msg: "asdasda",
+//     name: "asd",
+//     isOwner: true,
+//     mid: "asddsa",
+//     userid: "asdasd",
+//   },
+//   {
+//     msg: "asdasda",
+//     name: "asd",
+//     isOwner: true,
+//     mid: "asddsa",
+//     userid: "asdasd",
+//   },
+// ];
 
 export interface ChatMessage {
   uid: string;
@@ -32,9 +71,14 @@ export interface Chatdata {
 interface ChatDetailClientProps {
   code: string;
   headerTitle: string;
+  deviceType?: Device;
 }
 
-const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
+const ChatDetailClient = ({
+  code,
+  headerTitle,
+  deviceType = "desktop",
+}: ChatDetailClientProps) => {
   const router = useRouter();
 
   const chatValue = useInput("");
@@ -161,6 +205,7 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
         fullHeight
         hasBackButton
         prevClick={() => router.replace("/chat")}
+        deviceType={deviceType}
       >
         <Section className="flex items-center justify-center h-full">
           <LoadingIcon size="lg" />
@@ -175,6 +220,8 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
       fullHeight
       hasBackButton
       prevClick={() => router.replace("/chat")}
+      deviceType={deviceType}
+      bodyStyle="pb-0"
     >
       <Section className="flex flex-col pb-0 h-full">
         <Text
@@ -187,7 +234,7 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
         </Text>
         {!isChatError ? (
           <>
-            <div className="flex flex-col justify-end grow">
+            <div className="h-full overflow-auto scrollbar-hidden">
               {messages.map((message) => {
                 if (message.name === "chulbong-kr") return;
                 if (message.msg?.includes("님이 입장하셨습니다.")) {
@@ -249,7 +296,9 @@ const ChatDetailClient = ({ code, headerTitle }: ChatDetailClientProps) => {
                 );
               })}
             </div>
-            <div className="py-4">
+            <div
+              className={deviceType === "ios-mobile-app" ? "pt-2 pb-8" : "py-2"}
+            >
               <Input
                 isInvalid={false}
                 icon={<SendIcon />}
