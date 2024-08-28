@@ -63,7 +63,10 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
     map.setCenter(latLng);
   };
 
-  const style = deviceType === "ios-mobile-app" ? "mo:top-24" : "";
+  const isMobileApp =
+    deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
+    
+  const style = isMobileApp ? "mo:top-[100px]" : "";
 
   if (!isMounted) {
     return (

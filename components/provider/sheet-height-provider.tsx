@@ -14,7 +14,10 @@ const SheetHeightProvider = ({
   const { setCurHeight, setCurStyle, setSheetHeight } = useSheetHeightStore();
 
   useEffect(() => {
-    if (deviceType === "ios-mobile-app") {
+    if (
+      deviceType === "ios-mobile-app" ||
+      deviceType === "android-mobile-app"
+    ) {
       const sheetHeight = {
         STEP_1: { min: 0, max: 34, height: 27 },
         STEP_2: { min: 34, max: 62, height: 45 },

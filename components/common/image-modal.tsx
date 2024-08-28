@@ -12,15 +12,22 @@ import {
   CarouselPrevious,
 } from "./carousel";
 import Dimmed from "./dimmed";
+import { type Device } from "@/app/mypage/page";
 // TODO: 사진 업로드 날짜 표시
 
 interface Props {
   open?: boolean;
   imageUrl: string[];
   curIndex: number;
+  deviceType?: Device;
 }
 
-const ImageModal = ({ open, curIndex, imageUrl }: Props) => {
+const ImageModal = ({
+  open,
+  curIndex,
+  imageUrl,
+  deviceType = "desktop",
+}: Props) => {
   const { closeModal } = useImageModalStore();
 
   const [imageSize, setImageSize] = useState(400);
@@ -47,11 +54,17 @@ const ImageModal = ({ open, curIndex, imageUrl }: Props) => {
     }
   };
 
+  const isMobileApp =
+    deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
+
   if (!open) return null;
 
   return (
     <Dimmed onClose={() => closeModal()} onWheel={handleWheel}>
-      <button className="absolute top-3 right-3" onClick={() => closeModal()}>
+      <button
+        className={`absolute ${isMobileApp ? "top-14" : "top-3"} right-3`}
+        onClick={() => closeModal()}
+      >
         <CloseIcon color="white" />
       </button>
       <Carousel

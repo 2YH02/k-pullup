@@ -35,6 +35,9 @@ const SearchClient = ({
 
   const [result, setResult] = useState<SearchData[]>([]);
 
+  const isMobileApp =
+    deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
+
   useEffect(() => {
     if (searchValue.value === "") {
       setResult([]);
@@ -63,10 +66,7 @@ const SearchClient = ({
   }, [searchValue.value]);
 
   return (
-    <SideMain
-      fullHeight
-      className={deviceType === "ios-mobile-app" ? "pt-12" : ""}
-    >
+    <SideMain fullHeight className={isMobileApp ? "pt-12" : ""}>
       <SearchHeader
         value={searchValue.value}
         onChange={searchValue.onChange}

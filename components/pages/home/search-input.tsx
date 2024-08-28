@@ -7,7 +7,9 @@ import SearchIcon from "@icons/search-icon";
 import cn from "@lib/cn";
 
 const SearchInput = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
-  const style = deviceType === "ios-mobile-app" ? "mo:top-12" : "";
+  const isMobileApp =
+    deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
+  const style = isMobileApp ? "mo:top-12" : "";
 
   return (
     <Section

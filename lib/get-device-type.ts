@@ -20,7 +20,7 @@ const getDeviceType = (userAgent: string) => {
   // } else if (/iphone|ipad|ipod/i.test(userAgent)) {
   //   return "ios-mobile-web";
   // } else {
-  //   return "ios-mobile-app";
+  //   return "android-mobile-app";
   // }
 };
 

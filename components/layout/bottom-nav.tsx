@@ -47,13 +47,15 @@ const BottomNav = ({
     return `w-[${width}px]`;
   }, [width]);
 
-  const navStyle = deviceType === "ios-mobile-app" ? "fixed h-20 pb-4" : "h-14";
+  const isMobileApp = deviceType === "ios-mobile-app";
+
+  const navStyle = isMobileApp ? "fixed h-20 pb-4" : "h-14";
 
   return (
     <nav
       className={cn(
         `sticky bottom-0 ${
-          deviceType === "ios-mobile-app" ? "h-20 pb-4" : "h-14"
+          isMobileApp ? "h-20 pb-4" : "h-14"
         } shadow-dark bg-white dark:bg-black dark:border-t dark:border-grey-dark dark:border-solid`,
         navWidth,
         className,

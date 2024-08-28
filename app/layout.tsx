@@ -77,11 +77,11 @@ export default function RootLayout({
         >
           <ChatIdProvider>
             <AlertProvider>
-              <ImageModalProvider>
+              <ImageModalProvider deviceType={deviceType}>
                 <UserProvider>
                   <LoadMarker />
                   <GeoProvider>{children}</GeoProvider>
-                  <Roadview />
+                  <Roadview deviceType={deviceType} />
                   <Toaster />
                 </UserProvider>
               </ImageModalProvider>

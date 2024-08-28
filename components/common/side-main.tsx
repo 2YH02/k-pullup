@@ -78,8 +78,7 @@ const SideMain = ({
   bodyStyle,
   referrer = true,
 }: SideMainProps) => {
-  const { sheetHeight, curHeight, setCurHeight } =
-    useSheetHeightStore();
+  const { sheetHeight, curHeight, setCurHeight } = useSheetHeightStore();
   const { setContainerRef } = useScrollRefStore();
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -134,6 +133,9 @@ const SideMain = ({
     document.onpointerup = dragEnd;
   };
 
+  const isMobileApp =
+    deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
+
   if (hide) {
     return (
       <button
@@ -153,11 +155,7 @@ const SideMain = ({
           `flex flex-col fixed mo:bottom-0 web:top-1/2 web:-translate-y-1/2 web:h-[90%] web:left-6 web:max-w-96 w-full web:rounded-lg z-10
         shadow-dark web:max-h-[740px] ${fullHeight ? "" : "mo:rounded-t-2xl"}
         mo:bottom-0 mo:no-touch ${
-          fullHeight
-            ? "mo:h-full"
-            : deviceType === "ios-mobile-app"
-            ? "mo:h-[80%]"
-            : "mo:h-[85%]"
+          fullHeight ? "mo:h-full" : isMobileApp ? "mo:h-[80%]" : "mo:h-[85%]"
         }`,
           background === "white"
             ? "bg-white dark:bg-black"
@@ -203,7 +201,7 @@ const SideMain = ({
           className={cn(
             "grow pb-12 overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
             headerTitle && fullHeight
-              ? deviceType === "ios-mobile-app"
+              ? isMobileApp
                 ? "mo:pt-24"
                 : "mo:pt-10"
               : "",
@@ -247,7 +245,10 @@ const MainHeader = ({
 }: MainHeaderProps) => {
   const router = useRouter();
 
-  const style = deviceType === "ios-mobile-app" ? "pt-12 h-24" : "";
+  const style =
+    deviceType === "ios-mobile-app" || deviceType === "android-mobile-app"
+      ? "pt-12 h-24"
+      : "";
 
   const getHeaderPosition = () => {
     if (headerPosition === "sticky") return "web:sticky mo:sticky";

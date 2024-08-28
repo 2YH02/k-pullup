@@ -1,5 +1,6 @@
 "use client";
 
+import { type Device } from "@/app/mypage/page";
 import { KakaoMap } from "@/types/kakao-map.types";
 import Button from "@common/button";
 import { useToast } from "@hooks/useToast";
@@ -8,7 +9,7 @@ import useMapStore from "@store/useMapStore";
 import useRoadviewStore from "@store/useRoadviewStore";
 import { useEffect, useRef, useState } from "react";
 
-const Roadview = () => {
+const Roadview = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const { lat, lng, open, closeModal } = useRoadviewStore();
   const { map } = useMapStore();
   const { toast } = useToast();
@@ -114,6 +115,9 @@ const Roadview = () => {
     else mapData.addOverlayMapTypeId(window.kakao.maps.MapTypeId.ROADMAP);
   }, [mapHover]);
 
+  const isMobileApp =
+    deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
+
   if (!open) return null;
 
   return (
@@ -130,7 +134,12 @@ const Roadview = () => {
         onMouseLeave={() => setMapHover(false)}
       />
 
-      <Button onClick={closeModal} className="absolute top-2 right-2 z-[99]">
+      <Button
+        onClick={closeModal}
+        className={`absolute ${
+          isMobileApp ? "top-14" : "top-2"
+        } right-2 z-[99]`}
+      >
         닫기
       </Button>
     </div>
