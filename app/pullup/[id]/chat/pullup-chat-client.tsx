@@ -193,7 +193,10 @@ const PullupChatClient = ({
         </Text>
         {!isChatError ? (
           <>
-            <div className="flex flex-col h-full overflow-auto scrollbar-hidden">
+            <div
+              className="flex flex-col h-full overflow-auto scrollbar-hidden"
+              ref={chatBox}
+            >
               <GrowBox />
               {messages.map((message) => {
                 if (message.name === "chulbong-kr") return;
