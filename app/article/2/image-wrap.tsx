@@ -35,7 +35,7 @@ const ImageWrap = ({
           isLoaded ? "opacity-100" : "opacity-0",
           className
         )}
-        onLoadingComplete={() => setIsLoaded(true)}
+        onLoad={() => setIsLoaded(true)}
         unoptimized
       />
     </div>

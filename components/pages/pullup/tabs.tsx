@@ -23,7 +23,7 @@ const Tabs = ({ tabs }: TabsProps) => {
 
   return (
     <div>
-      <div className="bg-white dark:bg-black sticky top-0 flex">
+      <div className="bg-white dark:bg-black sticky top-0 flex z-40">
         {tabs.map((tab) => {
           return (
             <button

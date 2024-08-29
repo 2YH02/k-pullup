@@ -5,9 +5,9 @@ import getAddress from "@api/common/get-address";
 import MyLocateOverlay from "@layout/my-locate-overlay";
 import useGeolocationStore from "@store/useGeolocationStore";
 import useMapStore from "@store/useMapStore";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-// TODO: 위치 추적 지도 이동 오류 배포 후 확인 필요
 
 interface GeoProviderProps {
   children: React.ReactNode;
@@ -22,6 +22,8 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
     setCurLocation,
     setGeoLocationError,
   } = useGeolocationStore();
+  const pathname = usePathname();
+
   const { map } = useMapStore();
 
   const [myLocateOverlay, setMyLocateOverlay] = useState<CustomOverlay | null>(
@@ -72,7 +74,9 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
         lng: myLocation.lng,
       });
 
-      map.setCenter(moveLatLon);
+      if (!pathname.startsWith("/pullup")) {
+        map.setCenter(moveLatLon);
+      }
     }
   }, [myLocation, map]);
 
