@@ -69,6 +69,7 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
     let file: File = await resizeImage(e.target.files[0], {
       format: "webp",
       quality: 0.7,
+      width: 550,
     });
     let reader = new FileReader();
 
