@@ -12,7 +12,7 @@ import cn from "@lib/cn";
 import useScrollRefStore from "@store/useScrollRefStore";
 import useSheetHeightStore from "@store/useSheetHeightStore";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import SheetHeightProvider from "../provider/sheet-height-provider";
 import Text from "./text";
 
@@ -86,8 +86,6 @@ const SideMain = ({
   const [isMobile, setIsMobile] = useState(false);
   const [hide, setHide] = useState(false);
 
-  const [pointerEvent, setPointerEvent] = useState(true);
-
   useEffect(() => {
     setContainerRef(containerRef);
   }, [setContainerRef]);
@@ -106,98 +104,37 @@ const SideMain = ({
     };
   }, []);
 
-  // const dragStart: React.PointerEventHandler<HTMLDivElement> = (e) => {
-  //   if (!isMobile || fullHeight || !dragable) return;
-  //   e.preventDefault();
-  //   const startY = e.clientY;
-  //   console.log("start");
-  //   let newHeight: number;
-
-  //   const dragMove = (e: PointerEvent) => {
-  //     console.log("move");
-  //     const delta = startY - e.clientY;
-
-  //     newHeight = curHeight + (delta / window.innerHeight) * 100;
-
-  //     if (newHeight >= sheetHeight.STEP_3.height) return;
-  //     if (newHeight <= sheetHeight.STEP_1.height) return;
-  //     setCurHeight(newHeight);
-  //   };
-
-  //   const dragEnd = () => {
-  //     console.log("end");
-  //     document.onpointermove = null;
-  //     document.onpointerup = null;
-
-  //     if (newHeight < sheetHeight.STEP_1.max)
-  //       setCurHeight(sheetHeight.STEP_1.height);
-  //     else if (newHeight < sheetHeight.STEP_2.max)
-  //       setCurHeight(sheetHeight.STEP_2.height);
-  //     else setCurHeight(sheetHeight.STEP_3.height);
-  //   };
-
-  //   document.onpointermove = dragMove;
-  //   document.onpointerup = dragEnd;
-  // };
-
   const dragStart: React.PointerEventHandler<HTMLDivElement> = (e) => {
     if (!isMobile || fullHeight || !dragable) return;
 
-    setPointerEvent(true);
     const startY = e.clientY;
-    let newHeight: number = curHeight;
+
+    let newHeight: number;
+
     const dragMove = (e: PointerEvent) => {
-      if (!containerRef.current) return;
-
-      const target = e.target as HTMLElement;
       const delta = startY - e.clientY;
-
-      if (
-        curHeight >= sheetHeight.STEP_3.height - 1 &&
-        containerRef.current?.scrollTop === 0
-      ) {
-        if (delta < 0) {
-          setPointerEvent(false);
-        } else {
-          setPointerEvent(true);
-        }
-      } else if (
-        curHeight >= sheetHeight.STEP_3.height - 1 &&
-        containerRef.current?.scrollTop > 0
-      ) {
-        if (target.getAttribute("data-type") === "scoroll-status-bar") {
-          setPointerEvent(true);
-        } else {
-          return;
-        }
-      } else {
-        setPointerEvent(false);
-      }
 
       newHeight = curHeight + (delta / window.innerHeight) * 100;
 
-      if (newHeight > sheetHeight.STEP_3.height) {
+      if (newHeight >= sheetHeight.STEP_3.height) {
         newHeight = sheetHeight.STEP_3.height;
-      } else if (newHeight < sheetHeight.STEP_1.height) {
+      } else if (newHeight <= sheetHeight.STEP_1.height) {
         newHeight = sheetHeight.STEP_1.height;
       }
-
-      requestAnimationFrame(() => {
-        setCurHeight(newHeight);
-      });
+      setCurHeight(newHeight);
     };
 
     const dragEnd = () => {
-      document.onpointermove = null;
-      document.onpointerup = null;
-
-      if (newHeight < sheetHeight.STEP_1.max) {
+      if (newHeight <= sheetHeight.STEP_1.max) {
         setCurHeight(sheetHeight.STEP_1.height);
-      } else if (newHeight < sheetHeight.STEP_2.max) {
+      } else if (newHeight <= sheetHeight.STEP_2.max) {
         setCurHeight(sheetHeight.STEP_2.height);
       } else {
         setCurHeight(sheetHeight.STEP_3.height);
       }
+
+      document.onpointermove = null;
+      document.onpointerup = null;
     };
 
     document.onpointermove = dragMove;
@@ -281,9 +218,11 @@ const SideMain = ({
                 : "mo:pt-10"
               : "",
             deviceType === "ios-mobile-app" ? "pb-32" : "",
-            bodyStyle,
-            !pointerEvent ? "pointer-events-none" : ""
+            bodyStyle
           )}
+          onPointerDown={(e) => {
+            e.stopPropagation();
+          }}
         >
           {children}
         </div>
