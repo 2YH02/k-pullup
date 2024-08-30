@@ -65,7 +65,7 @@ const ImageModal = ({
   return (
     <Dimmed onClose={() => closeModal()} onWheel={handleWheel}>
       <button
-        className={`absolute ${isMobileApp ? "top-14" : "top-3"} right-3`}
+        className={`absolute ${isMobileApp ? "top-14" : "top-3"} right-3 z-40 bg-[rgba(0,0,0,0.7)] rounded-full p-2 `}
         onClick={() => closeModal()}
       >
         <CloseIcon color="white" />
