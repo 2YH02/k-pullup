@@ -4,6 +4,7 @@ import Roadview from "@layout/roadview";
 import AlertProvider from "@provider/alert-provider";
 import ChatIdProvider from "@provider/chat-Id-provider";
 import GeoProvider from "@provider/geo-provider";
+import GoogleAdsense from "@provider/google-adsense";
 import GoogleAnalytics from "@provider/google-analytics";
 import ImageModalProvider from "@provider/image-modal-provider";
 import LoadMarker from "@provider/load-marker";
@@ -96,6 +97,7 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
         ) : null}
+        <GoogleAdsense />
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
