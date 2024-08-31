@@ -82,7 +82,9 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
                 description:
                   '위치 서비스를 사용할 수 없습니다. "기기의 설정 > 개인 정보 보호" 에서 위치서비스를 켜주세요.',
                 onClick: () => {
-                  window.location.href = "myapp://open-settings";
+                  if (window.ReactNativeWebView) {
+                    window.ReactNativeWebView.postMessage("open-settings");
+                  }
                 },
                 cancel: true,
                 buttonLabel: "설정 가기",
