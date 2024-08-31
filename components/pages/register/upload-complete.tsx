@@ -69,9 +69,17 @@ const UploadComplete = ({
         </>
       )}
       {status == "error" && (
-        <Text typography="t4" fontWeight="bold" className="mt-10">
-          {errorMessage || "잠시 후 다시 시도해주세요"}
-        </Text>
+        <>
+          <Text typography="t4" fontWeight="bold" className="mt-10">
+            {errorMessage || "잠시 후 다시 시도해주세요"}
+          </Text>
+          <Text typography="t6">
+            오류 문의:{" "}
+            <a href="mailto:chulbong.kr@gmail.com" className="hover:underline">
+              chulbong.kr@gmail.com
+            </a>
+          </Text>
+        </>
       )}
       {status === "error" && (
         <Button

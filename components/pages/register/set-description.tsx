@@ -36,6 +36,7 @@ const SetDescription = ({ next }: SetDescriptionProps) => {
         onClick={() => {
           next(description.value === "" ? null : description.value);
         }}
+        className="flex items-center justify-center h-12"
         containerStyle="px-0"
       >
         {description.value === "" ? "설명 없이 위치 생성하기" : "위치 생성하기"}

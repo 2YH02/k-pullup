@@ -8,6 +8,7 @@ import useSheetHeightStore from "@store/useSheetHeightStore";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Proposal } from "../mypage/link-list";
+import BottomFixedButton from "@/components/common/bottom-fixed-button";
 
 interface SelectLocationProps {
   next: ({
@@ -24,6 +25,8 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
   const { map } = useMapStore();
   const { sheetHeight, setCurHeight } = useSheetHeightStore();
 
+  const [viewButton, setViewButton] = useState(true);
+
   const [location, setLocation] = useState<{
     latitude: number | null;
     longitude: number | null;
@@ -37,6 +40,8 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
 
       marker.setVisible(true);
       marker.setPosition(latlng);
+
+      setViewButton(true);
 
       setLocation({ latitude: latlng.getLat(), longitude: latlng.getLng() });
       setCurHeight(sheetHeight.STEP_3.height);
@@ -53,6 +58,7 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
     if (location.latitude && location.longitude) {
       setLocation({ latitude: null, longitude: null });
     }
+    setViewButton(false);
     setCurHeight(sheetHeight.STEP_1.height);
   };
 
@@ -92,18 +98,21 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
 
       <GrowBox />
 
-      <Button
-        onClick={() => {
-          next({
-            latitude: location.latitude as number,
-            longitude: location.longitude as number,
-          });
-        }}
-        disabled={!location.latitude || !location.longitude}
-        full
-      >
-        다음
-      </Button>
+      {viewButton && (
+        <BottomFixedButton
+          onClick={() => {
+            next({
+              latitude: location.latitude as number,
+              longitude: location.longitude as number,
+            });
+          }}
+          disabled={!location.latitude || !location.longitude}
+          className="flex items-center justify-center h-12 animate-transparent opacity-0"
+          containerStyle="px-0"
+        >
+          다음
+        </BottomFixedButton>
+      )}
     </Section>
   );
 };

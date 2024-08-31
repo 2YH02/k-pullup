@@ -51,10 +51,15 @@ const config: Config = {
           "0%": { width: "0", height: "0", opacity: "0.8" },
           "100%": { width: "100px", height: "100px", opacity: "0" },
         },
+        transparent: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
       },
       animation: {
         grow: "grow 0.1s ease-in-out forwards",
         ripple: "ripple 1.5s infinite",
+        transparent: "transparent .8s ease-in-out forwards",
       },
     },
   },

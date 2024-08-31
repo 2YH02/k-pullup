@@ -104,6 +104,7 @@ const RegisterClient = ({
         } else if (response.status === 422) {
           setErrorMessage(registerError[422]);
         } else {
+          setErrorMessage("잠시 후 다시 시도해주세요");
         }
         setUploadStatus("error");
         return;
