@@ -73,11 +73,28 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
           },
           (err) => {
             console.error(err);
-            openAlert({
-              title: "위치 정보 제공 안됨",
-              description: "위치 접근을 허용해 주세요.",
-              onClick: () => {},
-            });
+            if (
+              deviceType === "ios-mobile-app" ||
+              deviceType === "android-mobile-app"
+            ) {
+              openAlert({
+                title: "위치 서비스 사용",
+                description:
+                  '위치 서비스를 사용할 수 없습니다. "기기의 설정 > 개인 정보 보호" 에서 위치서비스를 켜주세요.',
+                onClick: () => {
+                  window.location.href = "myapp://open-settings";
+                },
+                cancel: true,
+                buttonLabel: "설정 가기",
+              });
+            } else {
+              openAlert({
+                title: "위치 서비스 사용",
+                description:
+                  "위치 서비스를 사용할 수 없습니다. 브라우저 설정에서 위치서비스를 켜주세요.",
+                onClick: () => {},
+              });
+            }
             setGeoLocationError("위치 정보 제공 안됨");
           }
         );
