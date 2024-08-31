@@ -20,7 +20,42 @@ import WeatherBadge from "@pages/pullup/weather-badge";
 import { cookies, headers } from "next/headers";
 import Link from "next/link";
 
-const PullupPage = async ({ params }: { params: { id: string } }) => {
+type Params = {
+  id: string;
+};
+
+export const generateMetadata = async ({ params }: { params: Params }) => {
+  const { id } = params;
+
+  const cookieStore = cookies();
+  const decodeCookie = decodeURIComponent(cookieStore.toString());
+
+  const { address, description, favCount, photos } = await markerDetail({
+    id: ~~id,
+    cookie: decodeCookie,
+  });
+
+  return {
+    title: `${address} | 철봉`,
+    description: `즐거운 맨몸운동 생활 - ${description} - ${address} - 좋아요 : ${favCount}`,
+    keywords: `철봉, ${address}`,
+    openGraph: {
+      type: "website",
+      url: `https://www.k-pullup.com/pullup/${id}`,
+      title: `${address} | 철봉`,
+      description: `즐거운 맨몸운동 생활 - ${description} - ${address} - 좋아요 : ${favCount}`,
+      images: photos ? photos[0].photoUrl : "/metaimg.webp",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${address} | 철봉`,
+      description: `즐거운 맨몸운동 생활 - ${description} - ${address} - 좋아요 : ${favCount}`,
+      images: photos ? photos[0].photoUrl : "/metaimg.webp",
+    },
+  };
+};
+
+const PullupPage = async ({ params }: { params: Params }) => {
   const { id } = params;
   const headersList = headers();
   const referrer = headersList.get("referer");
