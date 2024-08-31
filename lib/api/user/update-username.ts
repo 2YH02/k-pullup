@@ -1,5 +1,7 @@
+import fetchData from "@lib/fetchData";
+
 const updateUserName = async (name: string) => {
-  const response = await fetch(`/api/v1/users/me`, {
+  const response = await fetchData(`/api/v1/users/me`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

@@ -1,3 +1,5 @@
+import fetchData from "@lib/fetchData";
+
 export interface AllReport {
   reportId: number;
   markerId: number;
@@ -33,7 +35,7 @@ const getAllReports = async (cookie?: string) => {
 
   const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
 
-  const response = await fetch(`${url}/reports/all`, {
+  const response = await fetchData(`${url}/reports/all`, {
     headers: {
       Cookie: cookie || "",
     },

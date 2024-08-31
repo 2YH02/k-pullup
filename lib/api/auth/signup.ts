@@ -1,4 +1,5 @@
 import type { User } from "@/types/user";
+import fetchData from "@lib/fetchData";
 
 export interface SigninReq {
   username: string;
@@ -11,7 +12,7 @@ export interface SigninRes extends Omit<User, "username"> {
 }
 
 const signup = async (body: SigninReq) => {
-  const response = await fetch(`/api/v1/auth/signup`, {
+  const response = await fetchData(`/api/v1/auth/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

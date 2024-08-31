@@ -1,3 +1,5 @@
+import fetchData from "@lib/fetchData";
+
 export type ReportStatus = "APPROVED" | "DENIED" | "PENDING";
 
 export interface ReportsRes {
@@ -26,7 +28,7 @@ const mySuggested = async (cookie?: string) => {
 
   const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
 
-  const response = await fetch(`${url}/users/reports`, {
+  const response = await fetchData(`${url}/users/reports`, {
     headers: {
       Cookie: cookie || "",
     },

@@ -1,5 +1,7 @@
+import fetchData from "@lib/fetchData";
+
 const deleteReport = async (markerId: number, reportId: number) => {
-  const response = await fetch(
+  const response = await fetchData(
     `/api/v1/reports?markerID=${markerId}&reportID=${reportId}`,
     {
       method: "DELETE",

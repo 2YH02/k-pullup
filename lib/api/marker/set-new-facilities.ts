@@ -1,3 +1,5 @@
+import fetchData from "@lib/fetchData";
+
 export interface Facilities {
   facilityId: number;
   quantity: number;
@@ -7,7 +9,7 @@ const setNewFacilities = async (body: {
   markerId: number;
   facilities: Facilities[];
 }) => {
-  const response = await fetch(`/api/v1/markers/facilities`, {
+  const response = await fetchData(`/api/v1/markers/facilities`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

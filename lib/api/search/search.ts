@@ -1,3 +1,5 @@
+import fetchData from "@lib/fetchData";
+
 export interface SearchMarkers {
   address: string;
   markerId: number;
@@ -11,7 +13,7 @@ export interface SearchRes {
 }
 
 const search = async (query: string): Promise<SearchRes> => {
-  const response = await fetch(`/api/v1/search/marker?term=${query}`);
+  const response = await fetchData(`/api/v1/search/marker?term=${query}`);
 
   const data = await response.json();
 

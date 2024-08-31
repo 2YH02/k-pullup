@@ -1,3 +1,4 @@
+import fetchData from "@lib/fetchData";
 import type { Marker } from "@/types/marker.types";
 
 export interface SetMarkerReq {
@@ -23,7 +24,7 @@ const setNewMarker = async (multipart: SetMarkerReq) => {
   formData.append("longitude", multipart.longitude.toString());
   formData.append("description", multipart.description);
 
-  const response = await fetch(`/api/v1/markers/new`, {
+  const response = await fetchData(`/api/v1/markers/new`, {
     method: "POST",
     body: formData,
     credentials: "include",

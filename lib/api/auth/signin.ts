@@ -1,4 +1,5 @@
 import { User } from "@/types/user";
+import fetchData from "@lib/fetchData";
 
 export interface LoginReq {
   email: string;
@@ -12,7 +13,7 @@ export interface LoginRes {
 }
 
 const signin = async (body: LoginReq): Promise<LoginRes> => {
-  const response = await fetch("/api/v1/auth/login", {
+  const response = await fetchData("/api/v1/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -1,3 +1,5 @@
+import fetchData from "@lib/fetchData";
+
 export interface MyInfo {
   userId: number;
   username: string;
@@ -14,7 +16,7 @@ const myInfo = async (cookie?: string): Promise<MyInfo> => {
 
   const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
 
-  const response = await fetch(`${url}/users/me`, {
+  const response = await fetchData(`${url}/users/me`, {
     headers: {
       Cookie: cookie || "",
     },

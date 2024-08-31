@@ -1,3 +1,5 @@
+import fetchData from "@lib/fetchData";
+
 export interface RegisteredMarker {
   latitude: number;
   longitude: number;
@@ -27,7 +29,7 @@ const myRegisteredLocation = async ({
   const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
   const page = pageParam || 1;
 
-  const response = await fetch(`${url}/markers/my?page=${page}&pageSize=7`, {
+  const response = await fetchData(`${url}/markers/my?page=${page}&pageSize=7`, {
     headers: {
       Cookie: cookie || "",
     },

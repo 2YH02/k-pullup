@@ -1,3 +1,5 @@
+import fetchData from "@lib/fetchData";
+
 export interface ReportValue {
   markerId: number;
   latitude: number;
@@ -26,7 +28,7 @@ const reportMarker = async (multipart: ReportValue) => {
 
   formData.append("description", multipart.description);
 
-  const response = await fetch(`/api/v1/reports`, {
+  const response = await fetchData(`/api/v1/reports`, {
     method: "POST",
     body: formData,
     credentials: "include",

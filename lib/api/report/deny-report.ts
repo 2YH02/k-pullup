@@ -1,5 +1,7 @@
+import fetchData from "@lib/fetchData";
+
 const denyReport = async (reportId: number) => {
-  const response = await fetch(`/api/v1/reports/deny/${reportId}`, {
+  const response = await fetchData(`/api/v1/reports/deny/${reportId}`, {
     method: "POST",
     cache: "no-store",
     credentials: "include",

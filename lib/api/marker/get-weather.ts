@@ -1,3 +1,5 @@
+import fetchData from "@lib/fetchData";
+
 export interface WeatherRes {
   temperature: string;
   desc: string;
@@ -12,7 +14,7 @@ const getWeather = async (lat: number, lng: number): Promise<WeatherRes> => {
 
   const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
 
-  const response = await fetch(
+  const response = await fetchData(
     `${url}/markers/weather?latitude=${lat}&longitude=${lng}`
   );
 

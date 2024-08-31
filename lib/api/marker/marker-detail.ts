@@ -1,4 +1,5 @@
 import type { Marker } from "@/types/marker.types";
+import fetchData from "@lib/fetchData";
 
 const markerDetail = async ({
   id,
@@ -11,7 +12,7 @@ const markerDetail = async ({
 
   const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
 
-  const response = await fetch(`${url}/markers/${id}/details`, {
+  const response = await fetchData(`${url}/markers/${id}/details`, {
     headers: {
       Cookie: cookie || "",
     },

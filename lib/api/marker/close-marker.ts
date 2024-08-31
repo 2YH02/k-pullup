@@ -1,3 +1,5 @@
+import fetchData from "@lib/fetchData";
+
 interface Props {
   lat: number;
   lng: number;
@@ -31,7 +33,7 @@ const closeMarker = async ({
   pageSize = 10,
   pageParam,
 }: Props): Promise<CloseMarkerRes> => {
-  const response = await fetch(
+  const response = await fetchData(
     `/api/v1/markers/close?latitude=${lat}&longitude=${lng}&distance=${distance}&n=${pageSize}&page=${pageParam}&pageSize=10`
   );
 

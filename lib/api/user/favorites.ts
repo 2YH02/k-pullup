@@ -1,3 +1,5 @@
+import fetchData from "@lib/fetchData";
+
 export interface Favorite {
   latitude: number;
   longitude: number;
@@ -13,7 +15,7 @@ interface Response {
 }
 
 const favorites = async (cookie?: string) => {
-  const response = await fetch(
+  const response = await fetchData(
     `${process.env.NEXT_PUBLIC_BASE_URL}/users/favorites`,
     {
       headers: {

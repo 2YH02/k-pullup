@@ -1,3 +1,5 @@
+import fetchData from "@lib/fetchData";
+
 export interface Comment {
   commentId: number;
   markerId: number;
@@ -22,7 +24,7 @@ export interface CommentsRes {
 }
 
 const getComments = async ({ id, pageParam }: Props): Promise<CommentsRes> => {
-  const response = await fetch(
+  const response = await fetchData(
     `/api/v1/comments/${id}/comments?page=${pageParam}&pageSize=10`
   );
 

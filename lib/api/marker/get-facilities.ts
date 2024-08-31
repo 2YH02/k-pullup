@@ -1,3 +1,4 @@
+import fetchData from "@lib/fetchData";
 import type { Facilities } from "./set-new-facilities";
 
 export interface FacilitiesRes extends Facilities {
@@ -9,7 +10,7 @@ const getFacilities = async (markerId: number): Promise<FacilitiesRes[]> => {
 
   const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
 
-  const response = await fetch(`${url}/markers/${markerId}/facilities`, {
+  const response = await fetchData(`${url}/markers/${markerId}/facilities`, {
     credentials: "include",
   });
 

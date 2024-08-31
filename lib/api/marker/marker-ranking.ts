@@ -1,3 +1,5 @@
+import fetchData from "@lib/fetchData";
+
 export interface RankingInfo {
   address: string;
   latitude: number;
@@ -6,7 +8,7 @@ export interface RankingInfo {
 }
 
 const markerRanking = async (): Promise<RankingInfo[]> => {
-  const response = await fetch(
+  const response = await fetchData(
     `${process.env.NEXT_PUBLIC_BASE_URL}/markers/ranking`,
     {
       cache: "no-store",

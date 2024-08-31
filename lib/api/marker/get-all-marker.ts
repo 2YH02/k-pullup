@@ -1,4 +1,5 @@
 import { Marker } from "@/types/marker.types";
+import fetchData from "@lib/fetchData";
 
 export type MarkerRes = Pick<
   Marker,
@@ -6,7 +7,7 @@ export type MarkerRes = Pick<
 >;
 
 const getAllMarker = async (): Promise<MarkerRes[]> => {
-  const response = await fetch(`/api/v1/markers`);
+  const response = await fetchData(`/api/v1/markers`);
 
   if (!response.ok) {
     return [];

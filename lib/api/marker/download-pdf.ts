@@ -1,5 +1,7 @@
+import fetchData from "@lib/fetchData";
+
 const downloadPdf = async ({ lat, lng }: { lat: number; lng: number }) => {
-  const response = await fetch(
+  const response = await fetchData(
     `/api/v1/markers/save-offline?latitude=${lat}&longitude=${lng}`
   );
 
