@@ -1,4 +1,5 @@
 import type { KaKaoMapMouseEvent, KakaoMarker } from "@/types/kakao-map.types";
+import BottomFixedButton from "@common/bottom-fixed-button";
 import Button from "@common/button";
 import GrowBox from "@common/grow-box";
 import Section from "@common/section";
@@ -8,7 +9,6 @@ import useSheetHeightStore from "@store/useSheetHeightStore";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Proposal } from "../mypage/link-list";
-import BottomFixedButton from "@/components/common/bottom-fixed-button";
 
 interface SelectLocationProps {
   next: ({

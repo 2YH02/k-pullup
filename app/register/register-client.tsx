@@ -81,6 +81,21 @@ const RegisterClient = ({
   }, [registerValue.step]);
 
   useEffect(() => {
+    const images = [
+      "/congratulations.gif",
+      "/error.gif",
+      "/upload.gif",
+      "/gopher.gif",
+      "/signup-loading.gif",
+    ];
+
+    images.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
+  useEffect(() => {
     if (!map) return;
     const fetch = async () => {
       if (!registerValue.latitude || !registerValue.longitude) return;
