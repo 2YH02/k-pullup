@@ -44,6 +44,15 @@ const SignupClient = ({
   }, [signupValue.step]);
 
   useEffect(() => {
+    const images = ["/signup-loading.gif"];
+
+    images.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
+  useEffect(() => {
     const fetchSignup = async () => {
       const response = await signup({
         email: signupValue.email,
