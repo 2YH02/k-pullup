@@ -1,11 +1,24 @@
+import { type Device } from "@/app/mypage/page";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import YoutubePlayer from "@common/youtube-player";
+import getDeviceType from "@lib/get-device-type";
+import { headers } from "next/headers";
 
 const ArticleItemPage = () => {
+  const headersList = headers();
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
+
   return (
-    <SideMain headerTitle="철봉 가이드" hasBackButton fullHeight>
+    <SideMain
+      headerTitle="철봉 가이드"
+      hasBackButton
+      fullHeight
+      deviceType={deviceType}
+    >
       <Section>
         <div className="mb-4">
           <YoutubePlayer url="https://www.youtube.com/watch?v=eGo4IYlbE5g" />

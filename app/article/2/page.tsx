@@ -1,11 +1,24 @@
+import { type Device } from "@/app/mypage/page";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
+import getDeviceType from "@lib/get-device-type";
+import { headers } from "next/headers";
 import ImageWrap from "./image-wrap";
 
 const ArticleItemPage = () => {
+  const headersList = headers();
+  const userAgent = headersList.get("user-agent");
+
+  const deviceType: Device = getDeviceType(userAgent as string);
+
   return (
-    <SideMain headerTitle="철봉 장점 및 주의사항" hasBackButton fullHeight>
+    <SideMain
+      headerTitle="철봉 장점 및 주의사항"
+      hasBackButton
+      fullHeight
+      deviceType={deviceType}
+    >
       <Section>
         <div className="relative mb-4">
           <ImageWrap src={"/pullup3.jpg"} alt="상세" w={600} h={600} />
