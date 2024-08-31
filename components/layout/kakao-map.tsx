@@ -5,6 +5,7 @@ import getAllMarker from "@api/marker/get-all-marker";
 import useIsMounted from "@hooks/useIsMounted";
 import LoadingIcon from "@icons/loading-icon";
 import cn from "@lib/cn";
+import useAlertStore from "@store/useAlertStore";
 import useGeolocationStore from "@store/useGeolocationStore";
 import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
@@ -16,9 +17,12 @@ import { useEffect } from "react";
 const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const isMounted = useIsMounted();
 
-  const { setCurLocation, myLocation } = useGeolocationStore();
+  const { myLocation, setCurLocation, setGeoLocationError, setMyLocation } =
+    useGeolocationStore();
   const { map, setMap } = useMapStore();
   const { setMarker } = useMarkerStore();
+
+  const { openAlert } = useAlertStore();
 
   useEffect(() => {
     const fetch = async () => {
@@ -54,7 +58,38 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   };
 
   const handleGps = () => {
-    if (!map || !myLocation) return;
+    if (!map || !myLocation) {
+      const setPosition = (position: GeolocationPosition) => {
+        setMyLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      };
+
+      if (navigator.geolocation) {
+        const watchId = navigator.geolocation.watchPosition(
+          (position) => {
+            setPosition(position);
+          },
+          (err) => {
+            console.error(err);
+            openAlert({
+              title: "위치 정보 제공 안됨",
+              description: "위치 접근을 허용해 주세요.",
+              onClick: () => {},
+            });
+            setGeoLocationError("위치 정보 제공 안됨");
+          }
+        );
+
+        return () => {
+          navigator.geolocation.clearWatch(watchId);
+        };
+      } else {
+        setGeoLocationError("위치 정보 제공 안됨");
+      }
+      return;
+    }
 
     const latLng = new window.kakao.maps.LatLng(myLocation.lat, myLocation.lng);
 
