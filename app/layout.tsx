@@ -56,8 +56,28 @@ const pretendard = localFont({
 
 export const metadata: Metadata = {
   title: "대한민국 철봉 지도",
+  keywords: "철봉지도,위치등록,철봉정보,채팅,위치검색,관리,철봉찾기",
   description:
     "대한민국 철봉 지도에서 전국 공원의 철봉 위치를 직접 등록하고 조회하세요.",
+  openGraph: {
+    type: "website",
+    url: "https://www.k-pullup.com",
+    title: "대한민국 철봉 지도",
+    description:
+      "대한민국 철봉 지도에서 전국 공원의 철봉 위치를 직접 등록하고 조회하세요.",
+    images: "/metaimg.webp",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "대한민국 철봉 지도",
+    description:
+      "대한민국 철봉 지도에서 전국 공원의 철봉 위치를 직접 등록하고 조회하세요.",
+    images: "/metaimg.webp",
+  },
+  verification: {
+    google: "xsTAtA1ny-_9QoSKUsxC7zk_LljW5KBbcWULaNl2gt8",
+    other: { naver: "d1ba940a668490789711101918c8b1f7e221a178" },
+  },
 };
 
 export default function RootLayout({
