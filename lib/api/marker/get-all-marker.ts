@@ -2,7 +2,7 @@ import { Marker } from "@/types/marker.types";
 
 export type MarkerRes = Pick<
   Marker,
-  "markerId" | "latitude" | "longitude" | "address"
+  "markerId" | "latitude" | "longitude" | "address" | "hasPhoto"
 >;
 
 const getAllMarker = async (): Promise<MarkerRes[]> => {

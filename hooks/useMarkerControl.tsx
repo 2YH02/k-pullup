@@ -12,6 +12,7 @@ interface CreateMarkerOption {
   image?: "pending" | "active" | "selected";
   position?: any;
   markerId?: string | number;
+  hasPhoto?: boolean;
 }
 
 interface CreateOverlayOption {
@@ -53,12 +54,13 @@ const useMarkerControl = () => {
     const imageSize = new window.kakao.maps.Size(44, 49);
     const imageOption = { offset: new window.kakao.maps.Point(21, 39) };
 
-    const imageUrl =
-      options.image === "pending"
-        ? "/pin-active.svg"
-        : options.image === "selected"
-        ? "/pin-selected.svg"
-        : "/pin-active.svg";
+    const imageUrl = options.hasPhoto
+      ? "/pin-active-with-photo.svg"
+      : options.image === "pending"
+      ? "/pin-active.svg"
+      : options.image === "selected"
+      ? "/pin-selected.svg"
+      : "/pin-active.svg";
 
     const pin = new window.kakao.maps.MarkerImage(
       imageUrl,
@@ -146,6 +148,7 @@ const useMarkerControl = () => {
                 nearbyMarker[i].latitude,
                 nearbyMarker[i].longitude
               ),
+              hasPhoto: nearbyMarker[i].hasPhoto,
             },
           });
         } else {
@@ -158,6 +161,7 @@ const useMarkerControl = () => {
                 nearbyMarker[i].latitude,
                 nearbyMarker[i].longitude
               ),
+              hasPhoto: nearbyMarker[i].hasPhoto,
             },
           });
         }

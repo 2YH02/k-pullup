@@ -65,7 +65,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
 
   const isMobileApp =
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
-    
+
   const style = isMobileApp ? "mo:top-[100px]" : "";
 
   if (!isMounted) {

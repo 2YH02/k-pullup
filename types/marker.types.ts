@@ -22,5 +22,6 @@ export interface Marker {
   favorited?: boolean;
   address?: string;
   favCount?: number;
+  hasPhoto?: boolean;
   error?: string;
 }
