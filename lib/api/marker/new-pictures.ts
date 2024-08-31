@@ -5,7 +5,12 @@ export interface newPicturesRes {
 
 const newPictures = async (): Promise<newPicturesRes[]> => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/markers/new-pictures`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/markers/new-pictures`,
+    {
+      next: {
+        revalidate: 3600,
+      },
+    }
   );
 
   const data = await response.json();
