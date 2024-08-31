@@ -6,6 +6,7 @@ import Section from "@common/section";
 import Text from "@common/text";
 import useMapStore from "@store/useMapStore";
 import useSheetHeightStore from "@store/useSheetHeightStore";
+import { AlertTriangleIcon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Proposal } from "../mypage/link-list";
@@ -94,6 +95,15 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
             ? "다시 선택하기"
             : "위치 선택하기"}
         </Button>
+        <div className="w-full flex items-start mt-3">
+          <div className="mr-2 mt-[2px]">
+            <AlertTriangleIcon size={14} color="#ffc65c" />
+          </div>
+          <Text typography="t7" className="text-[#ffc65c]">
+            등록된 위치에 철봉이 실제로 존재하지 않거나 부정확한 정보일 경우,
+            사전 안내 없이 삭제될 수 있습니다.
+          </Text>
+        </div>
       </div>
 
       <GrowBox />
