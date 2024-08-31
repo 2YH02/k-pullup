@@ -5,6 +5,12 @@ import { headers } from "next/headers";
 import { type Device } from "../mypage/page";
 import RankingClient from "./ranking-client";
 
+export const generateMetadata = () => {
+  return {
+    title: "많이 찾는 위치 - 대한민국 철봉 지도",
+  };
+};
+
 const RankingPage = async () => {
   const rankingData = await markerRanking();
   const headersList = headers();

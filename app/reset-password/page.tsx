@@ -13,6 +13,12 @@ interface PageProps {
   };
 }
 
+export const generateMetadata = () => {
+  return {
+    title: "비밀번호 변경 - 대한민국 철봉 지도",
+  };
+};
+
 const ResetPasswordPage = ({ searchParams }: PageProps) => {
   const { token, email } = searchParams;
 

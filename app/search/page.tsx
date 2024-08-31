@@ -13,6 +13,13 @@ interface PageProps {
   };
 }
 
+export const generateMetadata = () => {
+  return {
+    title: "검색 - 대한민국 철봉 지도",
+    description: "원하는 위치를 검색하고, 주변에 철봉이 있는지 확인해보세요!",
+  };
+};
+
 const SearchPage = ({ searchParams }: PageProps) => {
   const { addr, d, lat, lng } = searchParams;
 
@@ -45,7 +52,7 @@ const SearchPage = ({ searchParams }: PageProps) => {
 
   return (
     <>
-      <SearchClient referrer={!!referrer} deviceType={deviceType}/>
+      <SearchClient referrer={!!referrer} deviceType={deviceType} />
     </>
   );
 };

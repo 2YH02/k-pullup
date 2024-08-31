@@ -36,7 +36,7 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
   });
 
   return {
-    title: `${address} | 철봉`,
+    title: `${address} - 대한민국 철봉 지도`,
     description: `즐거운 맨몸운동 생활 - ${description} - ${address} - 좋아요 : ${favCount}`,
     keywords: `철봉, ${address}`,
     openGraph: {

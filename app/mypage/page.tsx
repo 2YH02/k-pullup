@@ -18,6 +18,12 @@ export type Device =
   | "ios-mobile-web"
   | "desktop";
 
+export const generateMetadata = () => {
+  return {
+    title: `대한민국 철봉 지도 | 마이 페이지`,
+  };
+};
+
 const Mypage = async () => {
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());

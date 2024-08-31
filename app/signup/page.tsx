@@ -9,6 +9,13 @@ interface PageProps {
   };
 }
 
+export const generateMetadata = () => {
+  return {
+    title: "회원가입 - 대한민국 철봉 지도",
+    description: "회원가입 후 철봉 위치를 확인하고, 등록해보세요!",
+  };
+};
+
 const SignupPage = ({ searchParams }: PageProps) => {
   const { returnUrl } = searchParams;
 

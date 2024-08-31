@@ -6,6 +6,13 @@ import ChatroomList from "@pages/chat/chatroom-list";
 import { headers } from "next/headers";
 import { type Device } from "../mypage/page";
 
+export const generateMetadata = () => {
+  return {
+    title: "지역 채팅 - 대한민국 철봉 지도",
+    description: "지역별 채팅에 참여하세요!",
+  };
+};
+
 const Chat = () => {
   const headersList = headers();
   const userAgent = headersList.get("user-agent");

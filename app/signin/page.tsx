@@ -13,6 +13,12 @@ interface PageProps {
   };
 }
 
+export const generateMetadata = () => {
+  return {
+    title: "로그인 - 대한민국 철봉 지도",
+  };
+};
+
 const SigninPage = ({ searchParams }: PageProps) => {
   const { returnUrl } = searchParams;
 
