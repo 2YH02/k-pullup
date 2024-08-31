@@ -1,8 +1,10 @@
+import getDeviceType from "@/lib/get-device-type";
 import KakaoMap from "@layout/kakao-map";
 import Roadview from "@layout/roadview";
 import AlertProvider from "@provider/alert-provider";
 import ChatIdProvider from "@provider/chat-Id-provider";
 import GeoProvider from "@provider/geo-provider";
+import GoogleAnalytics from "@provider/google-analytics";
 import ImageModalProvider from "@provider/image-modal-provider";
 import LoadMarker from "@provider/load-marker";
 import ThemeProvider from "@provider/theme-provider";
@@ -10,10 +12,9 @@ import { Toaster } from "@provider/toaster";
 import UserProvider from "@provider/user-provider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
-import getDeviceType from "@/lib/get-device-type";
-import { Device } from "./mypage/page";
 import { headers } from "next/headers";
+import "./globals.css";
+import { Device } from "./mypage/page";
 
 declare global {
   interface Window {
@@ -92,6 +93,9 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className={pretendard.className}>
+        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+        ) : null}
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
