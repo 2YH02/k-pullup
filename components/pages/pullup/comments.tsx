@@ -190,7 +190,7 @@ const Comments = ({ markerId }: CommentsProps) => {
           <div className="mb-4">
             <CommentIcon />
           </div>
-          <Text typography="t6">우와, 하나도 없네요 ㅜㅜ</Text>
+          <Text typography="t6">우와, 댓글이 하나도 없네요 ㅜㅜ</Text>
         </div>
       )}
 
