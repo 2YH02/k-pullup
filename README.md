@@ -20,6 +20,11 @@
 
 로그인한 다른 사용자는 해당 마커에 댓글을 남길 수 있어, 정보 공유 및 소통이 용이합니다.
 
+- 백엔드
+  - https://github.com/Alfex4936/chulbong-kr
+- 프론트엔드
+  - https://github.com/2YH02/k-pullup
+
 ## 🖼️ 구현 UI
 
 |      메인 화면      |      검색 (주변 검색, 초성 지원)      |      위치 채팅      |
