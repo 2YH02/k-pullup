@@ -217,7 +217,7 @@ const SideMain = ({
                 ? "mo:pt-24"
                 : "mo:pt-10"
               : "",
-            deviceType === "ios-mobile-app" ? "pb-32" : "",
+            deviceType === "ios-mobile-app" ? "pb-20" : "",
             bodyStyle
           )}
           onPointerDown={(e) => {

@@ -65,7 +65,7 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
 
   return (
     <Section className="h-full pb-0 flex flex-col">
-      <div className="flex flex-col  items-center mt-10">
+      <div className="flex flex-col  items-center web:mt-10">
         {location.latitude && location.longitude ? (
           <div className="w-[130px] h-[130px] translate-y-5 select-none">
             <Image
