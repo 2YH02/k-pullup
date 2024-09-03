@@ -53,11 +53,11 @@ const useMarkerControl = () => {
   const createMarker = ({ options, map }: CreateMarker) => {
     const imageSize =
       options.image === "selected"
-        ? new window.kakao.maps.Size(40, 54)
+        ? new window.kakao.maps.Size(43, 60)
         : new window.kakao.maps.Size(40, 40);
     const imageOption =
       options.image === "selected"
-        ? { offset: new window.kakao.maps.Point(21, 54) }
+        ? { offset: new window.kakao.maps.Point(21, 60) }
         : { offset: new window.kakao.maps.Point(21, 39) };
 
     const imageUrl = options.hasPhoto
@@ -82,6 +82,7 @@ const useMarkerControl = () => {
       title: options.markerId,
       image: pin,
       clickable: true,
+      zIndex: options.image === "selected" ? 5 : 4,
     });
 
     setMarkers([marker]);
