@@ -163,10 +163,10 @@ const RegisterClient = ({
   useEffect(() => {
     if (!map) return;
 
-    const imageSize = new window.kakao.maps.Size(44, 49);
+    const imageSize = new window.kakao.maps.Size(40, 40);
     const imageOption = { offset: new window.kakao.maps.Point(21, 39) };
     const markerImage = new window.kakao.maps.MarkerImage(
-      "/pin-pending.svg",
+      "/pending.png",
       imageSize,
       imageOption
     );

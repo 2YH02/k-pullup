@@ -51,16 +51,24 @@ const useMarkerControl = () => {
   const { deleteAllMarker, deleteOverlays } = useMapStore();
 
   const createMarker = ({ options, map }: CreateMarker) => {
-    const imageSize = new window.kakao.maps.Size(44, 49);
-    const imageOption = { offset: new window.kakao.maps.Point(21, 39) };
+    const imageSize =
+      options.image === "selected"
+        ? new window.kakao.maps.Size(40, 54)
+        : new window.kakao.maps.Size(40, 40);
+    const imageOption =
+      options.image === "selected"
+        ? { offset: new window.kakao.maps.Point(21, 54) }
+        : { offset: new window.kakao.maps.Point(21, 39) };
 
     const imageUrl = options.hasPhoto
-      ? "/pin-active-with-photo.svg"
+      ? options.image === "selected"
+        ? "/camera-selected.png"
+        : "/active-camera.png"
       : options.image === "pending"
-      ? "/pin-active.svg"
+      ? "/active.png"
       : options.image === "selected"
-      ? "/pin-selected.svg"
-      : "/pin-active.svg";
+      ? "/active-selected.png"
+      : "/active.png";
 
     const pin = new window.kakao.maps.MarkerImage(
       imageUrl,

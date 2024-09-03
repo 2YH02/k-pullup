@@ -1,5 +1,6 @@
 "use client";
 
+import useMapStore from "@/store/useMapStore";
 import updateDescription from "@api/marker/update-description";
 import Button from "@common/button";
 import Input from "@common/input";
@@ -8,7 +9,7 @@ import useInput from "@hooks/useInput";
 import EditIcon from "@icons/edit-icon";
 import LoadingIcon from "@icons/loading-icon";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface DescriptionProps {
   description: string;
@@ -19,6 +20,8 @@ interface DescriptionProps {
 const Description = ({ description, markerId, isAdmin }: DescriptionProps) => {
   const router = useRouter();
 
+  const { setSelectedId } = useMapStore();
+
   const [descriptionValue, setDescriptionValue] = useState(description);
 
   const descriptionInput = useInput(description);
@@ -27,9 +30,13 @@ const Description = ({ description, markerId, isAdmin }: DescriptionProps) => {
   const [editError, setEditError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    return () => setSelectedId(null);
+  }, []);
+
   const handleClick = async () => {
     if (description === descriptionInput.value) return;
-    
+
     setLoading(true);
     const data = await updateDescription(descriptionInput.value, markerId);
     if (data.error || data.message) {
