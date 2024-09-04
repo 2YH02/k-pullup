@@ -13,11 +13,14 @@ const AddressButton = ({ lat, lng, address }: AddressButtonProps) => {
   const { move } = useMapControl();
 
   return (
-    <button onClick={() => move({ lat, lng })}>
-      <Text typography="t4" className="w-full break-words mt-3 hover:underline">
+    <div onClick={() => move({ lat, lng })}>
+      <Text
+        typography="t4"
+        className="w-full break-words mt-3 select-text hover:underline"
+      >
         {address}
       </Text>
-    </button>
+    </div>
   );
 };
 
