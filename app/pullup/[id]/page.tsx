@@ -70,7 +70,7 @@ const PullupPage = async ({ params }: { params: Params }) => {
   const facilities = await getFacilities(~~id);
 
   if (marker.error === "Marker not found") {
-    return <NotFoud />;
+    return <NotFoud markerId={~~id} />;
   }
 
   const 철봉 = facilities.find((item) => item.facilityId === 1);

@@ -11,6 +11,7 @@ interface SearchData {
 interface SearchState {
   searches: SearchData[];
   addSearch: (data: SearchData) => void;
+  removeItem: (markerId: number) => void;
   clearSearches: VoidFunction;
 }
 
@@ -31,6 +32,18 @@ const useSearchStore = create<SearchState>()(
             return { searches: [data, ...newSearch] };
           }
           return { searches: [data, ...state.searches] };
+        }),
+      removeItem: (markerId: number) =>
+        set((state) => {
+          const newSearches = state.searches.filter((search) => {
+            return markerId !== search.d;
+          });
+
+          if (newSearches) {
+            return { searches: newSearches };
+          }
+
+          return { searches: state.searches };
         }),
       clearSearches: () => set({ searches: [] }),
     }),

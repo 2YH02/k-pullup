@@ -1,13 +1,23 @@
 "use client";
 
+import useSearchStore from "@/store/useSearchStore";
 import Button from "@common/button";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-const NotFoud = () => {
+const NotFoud = ({ markerId }: { markerId?: number }) => {
   const router = useRouter();
+  const { removeItem } = useSearchStore();
+
+  useEffect(() => {
+    if (markerId) {
+      removeItem(markerId);
+    }
+  }, [markerId]);
+  
   return (
     <SideMain
       headerTitle="위치 상세"
