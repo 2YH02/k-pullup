@@ -129,8 +129,13 @@ const RegisterClient = ({
       setNewMarkerId(newMarker.markerId);
 
       marker?.setMap(null);
-      setMarkerToStore([newMarker]);
 
+      if (registerValue.photos && registerValue.photos.length > 0) {
+        setMarkerToStore([{ ...newMarker, hasPhoto: true }]);
+      } else {
+        setMarkerToStore([newMarker]);
+      }
+      
       map.setCenter(
         new window.kakao.maps.LatLng(newMarker.latitude, newMarker.longitude)
       );
