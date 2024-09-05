@@ -79,8 +79,9 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
             ) {
               openAlert({
                 title: "위치 서비스 사용",
-                description:
-                  '위치 서비스를 사용할 수 없습니다. "기기의 설정 > 개인 정보 보호" 에서 위치서비스를 켜주세요.',
+                // description:
+                //   '위치 서비스를 사용할 수 없습니다. "기기의 설정 > 개인 정보 보호" 에서 위치서비스를 켜주세요.',
+                description: err.message,
                 onClick: () => {
                   if (window.ReactNativeWebView) {
                     window.ReactNativeWebView.postMessage("open-settings");
@@ -92,8 +93,9 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
             } else {
               openAlert({
                 title: "위치 서비스 사용",
-                description:
-                  "위치 서비스를 사용할 수 없습니다. 브라우저 설정에서 위치서비스를 켜주세요.",
+                // description:
+                //   "위치 서비스를 사용할 수 없습니다. 브라우저 설정에서 위치서비스를 켜주세요.",
+                description: err.message,
                 onClick: () => {},
               });
             }
