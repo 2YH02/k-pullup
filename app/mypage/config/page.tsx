@@ -1,5 +1,4 @@
 import SideMain from "@common/side-main";
-import Text from "@common/text";
 import getDeviceType from "@lib/get-device-type";
 import AppSetting from "@pages/config/app-setting";
 import EtcSetting from "@pages/config/etc-setting";
@@ -27,7 +26,6 @@ const ConfigPage = () => {
       <AppSetting />
       <UserSetting />
       <EtcSetting />
-      <Text className="select-text">{userAgent}</Text>
     </SideMain>
   );
 };

@@ -7,6 +7,7 @@ import GeoProvider from "@provider/geo-provider";
 import GoogleAdsense from "@provider/google-adsense";
 import GoogleAnalytics from "@provider/google-analytics";
 import ImageModalProvider from "@provider/image-modal-provider";
+import KakaoSdk from "@provider/kakao-sdk";
 import LoadMarker from "@provider/load-marker";
 import ThemeProvider from "@provider/theme-provider";
 import { Toaster } from "@provider/toaster";
@@ -20,6 +21,7 @@ import { Device } from "./mypage/page";
 declare global {
   interface Window {
     kakao: any;
+    Kakao: any;
     ReactNativeWebView?: {
       postMessage: (message: string) => void;
     };
@@ -94,6 +96,7 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className={pretendard.className}>
+        <KakaoSdk />
         {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
         ) : null}
