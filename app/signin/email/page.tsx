@@ -4,6 +4,7 @@ import SideMain from "@common/side-main";
 import getDeviceType from "@lib/get-device-type";
 import SigninForm from "@pages/signin/signin-form";
 import { headers } from "next/headers";
+import LoginButton from "../login-button";
 
 interface EmailPageProps {
   searchParams: {
@@ -32,6 +33,7 @@ const EmailSigninPage = ({ searchParams }: EmailPageProps) => {
         <Section className="px-9">
           <SigninForm returnUrl={returnUrl} />
         </Section>
+        <LoginButton />
       </div>
     </SideMain>
   );

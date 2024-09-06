@@ -6,7 +6,6 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { type Device } from "../mypage/page";
-import LoginButton from "./login-button";
 
 interface PageProps {
   searchParams: {
@@ -51,8 +50,6 @@ const SigninPage = ({ searchParams }: PageProps) => {
         <Text typography="t4" className="mt-3 mb-6">
           대한민국 철봉 지도
         </Text>
-
-        {deviceType === "ios-mobile-app" && <LoginButton />}
 
         <Link
           href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/kakao`}
