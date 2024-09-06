@@ -5,7 +5,9 @@ const LoginButton = () => {
     <button
       onClick={() => {
         window.Kakao.Auth.authorize({
-          redirectUri: "https://api.k-pullup.com/api/v1/auth/kakao",
+          redirectUri: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/kakao`,
+          throughTalk: true,
+          scope: "profile_nickname,account_email,profile_image",
         });
       }}
     >
