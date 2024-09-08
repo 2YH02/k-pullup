@@ -7,7 +7,6 @@ const KakaoSdk = () => {
   const handleLoad = () => {
     if (window.Kakao && !window.Kakao.isInitialized()) {
       window.Kakao.init(process.env.NEXT_PUBLIC_APP_KEY);
-      console.log("Kakao SDK initialized:", window.Kakao.isInitialized());
     }
   };
 

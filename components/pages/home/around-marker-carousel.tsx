@@ -113,8 +113,11 @@ const AroundMarkerCarousel = () => {
         ) : (
           <>
             <CarouselContent className="-ml-1 gap-3 w-32 h-[160px] p-1">
-              {data.map((marker) => (
-                <CarouselItem className="p-0" key={marker.markerId}>
+              {data.map((marker, index) => (
+                <CarouselItem
+                  className="p-0"
+                  key={`${marker.markerId}-${index}`}
+                >
                   <button
                     className="w-full h-full flex flex-col justify-between"
                     onClick={() => {
