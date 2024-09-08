@@ -124,13 +124,16 @@ const AroundMarkerCarousel = () => {
                       router.push(`/pullup/${marker.markerId}`);
                     }}
                   >
-                    <div className="">
+                    <div className="w-[128px] h-[128px] rounded-md overflow-hidden">
                       <Image
-                        src={"/metaimg.webp"}
+                        src={
+                          marker.thumbnail ? marker.thumbnail : "/metaimg.webp"
+                        }
                         alt={"상세"}
-                        width={128}
-                        height={128}
-                        className="shadow-md rounded-md overflow-hidden"
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                     <div className="flex items-center w-[120px] overflow-hidden whitespace-nowrap">

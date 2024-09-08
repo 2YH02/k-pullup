@@ -15,6 +15,7 @@ export interface CloseMarker {
   markerId: number;
   description: string;
   address?: string;
+  thumbnail?: string;
 }
 
 interface CloseMarkerRes {
