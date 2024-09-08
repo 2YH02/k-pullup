@@ -12,6 +12,7 @@ import Players from "@pages/home/players";
 import SearchInput from "@pages/home/search-input";
 import { headers } from "next/headers";
 import { type Device } from "./mypage/page";
+import NewImageSection from "@/components/pages/home/new-image-section";
 
 const Home = async () => {
   const images = await newPictures();
@@ -39,10 +40,7 @@ const Home = async () => {
 
       <Divider className="h-2" />
 
-      <Section>
-        <SectionTitle title="최근 추가된 이미지" />
-        <ImageCarousel data={images} priority={true} withRoute />
-      </Section>
+      <NewImageSection data={images} />
 
       <Divider className="h-2" />
 

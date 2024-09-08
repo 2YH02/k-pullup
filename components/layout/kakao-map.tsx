@@ -7,6 +7,7 @@ import LoadingIcon from "@icons/loading-icon";
 import cn from "@lib/cn";
 import useAlertStore from "@store/useAlertStore";
 import useGeolocationStore from "@store/useGeolocationStore";
+import useImageCountStore from "@store/useImageCountStore";
 import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
 import { LocateFixedIcon } from "lucide-react";
@@ -22,11 +23,19 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const { map, setMap } = useMapStore();
   const { setMarker } = useMarkerStore();
 
+  const { setCount } = useImageCountStore();
+
   const { openAlert } = useAlertStore();
 
   useEffect(() => {
     const fetch = async () => {
       const data = await getAllMarker();
+
+      const imageMarker = data.filter((marker) => {
+        return !!marker.hasPhoto;
+      });
+
+      setCount(imageMarker.length);
 
       setMarker(data);
     };

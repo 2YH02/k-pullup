@@ -14,10 +14,21 @@ const Section = ({ className, children }: SectionProps) => {
   );
 };
 
-export const SectionTitle = ({ title }: { title: string }) => {
+export const SectionTitle = ({
+  title,
+  subTitle,
+}: {
+  title: string;
+  subTitle?: string;
+}) => {
   return (
-    <Text className="mb-2 select-none" typography="t5" fontWeight="bold">
-      {title}
+    <Text
+      className="mb-2 select-none flex items-center"
+      typography="t5"
+      fontWeight="bold"
+    >
+      <p>{title}</p>
+      {subTitle && <p className="text-[10px] ml-2 text-grey">{subTitle}</p>}
     </Text>
   );
 };
