@@ -7,6 +7,7 @@ import Text from "@common/text";
 import getFacilities from "@lib/api/marker/get-facilities";
 import markerDetail from "@lib/api/marker/marker-detail";
 import getDeviceType from "@lib/get-device-type";
+import AddFacilitiesBadge from "@pages/pullup/add-facilities-badge";
 import AddressButton from "@pages/pullup/address-button";
 import ButtonList from "@pages/pullup/button-list";
 import Comments from "@pages/pullup/comments";
@@ -99,31 +100,34 @@ const PullupPage = async ({ params }: { params: Params }) => {
           <ImageCarousel photos={marker.photos} />
         </div>
 
-        <div className="flex items-center mt-2">
+        <div className="flex items-center mt-2 flex-wrap">
           {!철봉 ||
             !평행봉 ||
             (철봉.quantity <= 0 && 평행봉.quantity <= 0 && (
               <Badge
                 text={`기구 개수 정보 없음`}
-                className="flex items-center justify-center mr-2 h-8"
+                className="flex items-center justify-center mr-2 mb-2 h-8"
                 textStyle="leading-3"
               />
             ))}
           {철봉 && 철봉.quantity > 0 && (
             <Badge
               text={`철봉 ${철봉?.quantity}개`}
-              className="flex items-center justify-center mr-2 h-8"
+              className="flex items-center justify-center mr-2 mb-2 h-8"
               textStyle="leading-3"
             />
           )}
           {평행봉 && 평행봉.quantity > 0 && (
             <Badge
               text={`평행봉 ${평행봉?.quantity}개`}
-              className="flex items-center justify-center mr-2 h-8"
+              className="flex items-center justify-center mr-2 mb-2 h-8"
               textStyle="leading-3"
             />
           )}
           <WeatherBadge lat={marker.latitude} lng={marker.longitude} />
+          {marker.isChulbong && (
+            <AddFacilitiesBadge markerId={marker.markerId} />
+          )}
         </div>
 
         <AddressButton

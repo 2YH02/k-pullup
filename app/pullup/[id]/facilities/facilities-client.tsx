@@ -1,26 +1,18 @@
-import LoadingIcon from "@/components/icons/loading-icon";
+"use client";
+
+import setNewFacilities from "@api/marker/set-new-facilities";
 import BottomFixedButton from "@common/bottom-fixed-button";
 import GrowBox from "@common/grow-box";
 import Section from "@common/section";
 import Text from "@common/text";
-import MinusIcon from "@icons/minuse-icon";
-import PlusIcon from "@icons/plus-icon";
-import setNewFacilities from "@lib/api/marker/set-new-facilities";
+import LoadingIcon from "@icons/loading-icon";
+import { FacilityList } from "@pages/register/set-facilities";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-interface SetFacilitiesProps {
-  markerId: number | null;
-  next: VoidFunction;
-}
+const FacilitiesClient = ({ markerId }: { markerId: number }) => {
+  const router = useRouter();
 
-interface FacilityProps {
-  name: string;
-  count: number;
-  increase: VoidFunction;
-  decrease: VoidFunction;
-}
-
-const SetFacilities = ({ markerId, next }: SetFacilitiesProps) => {
   const [facilities, setFacilities] = useState({ 철봉: 0, 평행봉: 0 });
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -78,8 +70,9 @@ const SetFacilities = ({ markerId, next }: SetFacilitiesProps) => {
       return;
     }
 
+    router.push(`/pullup/${markerId}`);
+    router.refresh();
     setLoading(false);
-    next();
   };
 
   return (
@@ -130,7 +123,7 @@ const SetFacilities = ({ markerId, next }: SetFacilitiesProps) => {
         containerStyle="px-0"
       >
         {loading ? (
-          <LoadingIcon size="sm" className="text-white" />
+          <LoadingIcon size="sm" className="text-white m-0" />
         ) : (
           "등록하기"
         )}
@@ -139,28 +132,4 @@ const SetFacilities = ({ markerId, next }: SetFacilitiesProps) => {
   );
 };
 
-export const FacilityList = ({ count, name, decrease, increase }: FacilityProps) => {
-  return (
-    <div className="flex items-center my-2">
-      <Text>{name}</Text>
-      <GrowBox />
-      <span className="flex items-center">
-        <button
-          className="rounded-full p-1 hover:bg-white-tp-dark"
-          onClick={() => decrease()}
-        >
-          <MinusIcon size={18} />
-        </button>
-        <Text className="flex items-center justify-center w-10">{count}</Text>
-        <button
-          className="rounded-full p-1 hover:bg-white-tp-dark"
-          onClick={() => increase()}
-        >
-          <PlusIcon size={18} />
-        </button>
-      </span>
-    </div>
-  );
-};
-
-export default SetFacilities;
+export default FacilitiesClient;
