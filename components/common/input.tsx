@@ -29,6 +29,10 @@ interface InputProps extends React.ComponentProps<"input"> {
    * 컴포넌트 마운트 시 focus
    */
   isFocus?: boolean;
+  /**
+   * placeholder 정렬
+   */
+  placeholderAlign?: "center" | "left" | "right";
 }
 
 const Input = ({
@@ -38,6 +42,7 @@ const Input = ({
   isSearchButton = false,
   className,
   isFocus = false,
+  placeholderAlign = "left",
   ...props
 }: InputProps) => {
   const router = useRouter();
@@ -73,7 +78,14 @@ const Input = ({
       <input
         className={`w-full h-full focus:outline-none focus:border-primary-dark ${
           isSearchButton ? "cursor-pointer" : ""
-        } dark:bg-black-light dark:focus:border-grey-light text-black dark:text-white`}
+        } dark:bg-black-light dark:focus:border-grey-light text-black dark:text-white
+        ${
+          placeholderAlign === "center"
+            ? "placeholder:text-center"
+            : placeholderAlign === "right"
+            ? "placeholder:text-right"
+            : "placeholder:text-left"
+        }`}
         aria-invalid={isInvalid}
         ref={inputRef}
         onClick={isSearchButton ? handleClick : undefined}

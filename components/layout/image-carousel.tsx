@@ -51,8 +51,8 @@ const ImageCarousel = ({
   return (
     <Carousel opts={{ dragFree: true }}>
       <CarouselContent className={`-ml-1 gap-3 ${carouselSize} p-1`}>
-        {validData.map((item) => (
-          <CarouselItem key={item.markerId} className="p-0">
+        {validData.map((item, index) => (
+          <CarouselItem key={item.markerId + item.photoURL} className="p-0">
             <button
               className="w-full h-full overflow-hidden rounded-lg shadow-md"
               onClick={
