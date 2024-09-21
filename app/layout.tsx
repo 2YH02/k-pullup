@@ -1,6 +1,6 @@
-import getDeviceType from "@/lib/get-device-type";
 import KakaoMap from "@layout/kakao-map";
 import Roadview from "@layout/roadview";
+import getDeviceType from "@lib/get-device-type";
 import AlertProvider from "@provider/alert-provider";
 import ChatIdProvider from "@provider/chat-Id-provider";
 import GeoProvider from "@provider/geo-provider";

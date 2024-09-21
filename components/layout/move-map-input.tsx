@@ -12,6 +12,7 @@ import { MoveIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Dimmed from "@common/dimmed";
 import CloseIcon from "@icons/close-icon";
+import Tooltip from "../common/tooltip";
 
 type KakaoPlace = {
   address_name: string;
@@ -111,20 +112,20 @@ const MoveMapInput = ({ deviceType }: { deviceType: Device }) => {
   const isMobileApp =
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
 
-  const style = isMobileApp ? "mo:top-[100px]" : "";
+  const style = isMobileApp ? "mo:top-[100px]" : "mo:top-16";
   const inputStyle = isMobileApp ? "mo:top-[100px]" : "";
 
   if (!active) {
     return (
-      <button
-        className={cn(
-          "absolute right-5 mo:right-14 top-5 mo:top-16 p-1 rounded-md z-[2] bg-white shadow-simple dark:bg-black hover:bg-grey-light hover:dark:bg-grey-dark",
-          style
-        )}
+      <Tooltip
+        title="검색으로 지도 이동"
+        className={`absolute right-5 mo:right-14 top-5 ${style} p-1 rounded-md z-[28] bg-white shadow-simple dark:bg-black hover:bg-grey-light hover:dark:bg-grey-dark`}
+        position="left"
+        as="button"
         onClick={() => setActive(true)}
       >
         <MoveIcon className="dark:stroke-white stroke-black" />
-      </button>
+      </Tooltip>
     );
   }
 
