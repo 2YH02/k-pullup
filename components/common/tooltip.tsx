@@ -59,6 +59,8 @@ const Tooltip = ({
       onMouseDown={isMobile ? () => setIsVisible(true) : undefined}
       onMouseUp={isMobile ? () => setIsVisible(false) : undefined}
       onMouseOut={isMobile ? () => setIsVisible(false) : undefined}
+      onTouchStart={isMobile ? () => setIsVisible(true) : undefined}
+      onTouchEnd={isMobile ? () => setIsVisible(false) : undefined}
       className={cn("", className)}
       onClick={onClick ? onClick : undefined}
     >
