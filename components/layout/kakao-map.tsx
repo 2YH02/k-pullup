@@ -154,7 +154,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
           as="button"
           title="내 위치"
           className={cn(
-            "absolute top-16 right-5 p-1 rounded-md z-[30] mo:top-16 bg-white shadow-simple dark:bg-black hover:bg-grey-light hover:dark:bg-grey-dark",
+            "absolute top-16 right-5 p-1 rounded-md mo:z-[28] z-[30] mo:top-16 bg-white shadow-simple dark:bg-black hover:bg-grey-light hover:dark:bg-grey-dark",
             style
           )}
           position="left"

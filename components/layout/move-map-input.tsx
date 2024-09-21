@@ -117,7 +117,7 @@ const MoveMapInput = ({ deviceType }: { deviceType: Device }) => {
     return (
       <Tooltip
         title="검색으로 지도 이동"
-        className={`absolute right-5 mo:right-14 top-5 ${style} p-1 rounded-md z-[28] bg-white shadow-simple dark:bg-black hover:bg-grey-light hover:dark:bg-grey-dark`}
+        className={`absolute right-5 mo:right-14 top-5 ${style} p-1 rounded-md mo:z-[30] z-[28] bg-white shadow-simple dark:bg-black hover:bg-grey-light hover:dark:bg-grey-dark`}
         position="left"
         as="button"
         onClick={() => setActive(true)}
