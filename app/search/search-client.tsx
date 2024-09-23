@@ -78,6 +78,7 @@ const SearchClient = ({
         value={searchValue.value}
         onChange={searchValue.onChange}
         referrer={!!referrer}
+        clearFn={() => searchValue.resetValue()}
       />
 
       {result && searchValue.value.length > 0 ? (

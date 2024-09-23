@@ -1,5 +1,6 @@
 "use client";
 
+import CloseIcon from "@/components/icons/close-icon";
 import Input from "@common/input";
 import ArrowLeftIcon from "@icons/arrow-left-icon";
 import { useRouter } from "next/navigation";
@@ -8,12 +9,14 @@ interface SearchHeaderProps {
   value: string;
   referrer?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  clearFn: VoidFunction;
 }
 
 const SearchHeader = ({
   value,
   referrer = true,
   onChange,
+  clearFn,
 }: SearchHeaderProps) => {
   const router = useRouter();
 
@@ -33,6 +36,8 @@ const SearchHeader = ({
           onChange={onChange}
           placeholder="철봉 위치 주소로 검색"
           isFocus
+          icon={<CloseIcon size={20}/>}
+          onIconClick={clearFn}
         />
       </div>
     </div>
