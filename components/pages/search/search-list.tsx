@@ -8,20 +8,16 @@ import { useRouter } from "next/navigation";
 
 interface SearchResultProps {
   result: SearchData[];
-  value: string;
 }
 
-const SearchList = ({ result, value }: SearchResultProps) => {
+const SearchList = ({ result }: SearchResultProps) => {
   const router = useRouter();
   const { addSearch } = useSearchStore();
 
   return (
     <ul>
-      {result
-        .filter((item) =>
-          item.address.toLowerCase().includes(value.toLowerCase())
-        )
-        .map((item, index) => (
+      {result.map((item, index) => {
+        return (
           <li
             key={`${item.markerId ? item.markerId : item.address}-${index}`}
             className="border-b border-solid dark:border-grey-dark"
@@ -44,25 +40,55 @@ const SearchList = ({ result, value }: SearchResultProps) => {
               <div className="mr-3">
                 <SearchIcon size={20} className="fill-black dark:fill-white" />
               </div>
-              <Text>{highlightText(item.address, value)}</Text>
+              <Text>
+                {highlightText(
+                  removeMarkTags(item.address),
+                  extractMarkedText(item.address).marked
+                )}
+              </Text>
             </button>
           </li>
-        ))}
+        );
+      })}
     </ul>
   );
 };
 
-const highlightText = (text: string, highlight: string): React.ReactNode => {
-  const parts = text.split(new RegExp(`(${highlight})`, "gi"));
+const extractMarkedText = (
+  input: string
+): { marked: string[]; unmarked: string } => {
+  const markRegex = /<mark>(.*?)<\/mark>/g;
+  let marked: string[] = [];
+  let unmarked = input.replace(markRegex, (_, p1) => {
+    marked.push(p1);
+    return "";
+  });
+
+  return {
+    marked,
+    unmarked,
+  };
+};
+
+const highlightText = (text: string, highlights: string[]): React.ReactNode => {
+  const regex = new RegExp(`(${highlights.join("|")})`, "gi");
+  const parts = text.split(regex);
+
   return parts.map((part, index) =>
-    part.toLowerCase() === highlight.toLowerCase() ? (
-      <Text key={index} className="text-primary-dark dark:text-primary-dark">
+    highlights.some(
+      (highlight) => part.toLowerCase() === highlight.toLowerCase()
+    ) ? (
+      <span key={index} className="text-primary-dark dark:text-primary-dark">
         {part}
-      </Text>
+      </span>
     ) : (
       part
     )
   );
+};
+
+const removeMarkTags = (input: string): string => {
+  return input.replace(/<\/?mark>/g, "");
 };
 
 export default SearchList;

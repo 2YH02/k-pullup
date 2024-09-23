@@ -1,11 +1,9 @@
 "use client";
 
-import getSearchLoation from "@api/common/get-search-location";
 import search from "@api/search/search";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
-import useDeviceType from "@hooks/useDeviceType";
 import useInput from "@hooks/useInput";
 import SearchHeader from "@pages/search/search-header";
 import SearchList from "@pages/search/search-list";
@@ -44,22 +42,22 @@ const SearchClient = ({
       return;
     }
     const handler = setTimeout(async () => {
-      const locationSearch = await getSearchLoation(searchValue.value);
+      // const locationSearch = await getSearchLoation(searchValue.value);
       const markerSearch = await search(searchValue.value);
 
-      const data = locationSearch.documents.map((item) => {
-        return {
-          address: item.address_name,
-          position: { lat: item.y, lng: item.x },
-        };
-      });
+      // const data = locationSearch.documents.map((item) => {
+      //   return {
+      //     address: item.address_name,
+      //     position: { lat: item.y, lng: item.x },
+      //   };
+      // });
 
       if (markerSearch.error || markerSearch.message) {
         setResult([]);
         return;
       }
 
-      setResult([...markerSearch.markers, ...data]);
+      setResult([...markerSearch.markers]);
     }, 300);
 
     return () => clearTimeout(handler);
@@ -74,7 +72,7 @@ const SearchClient = ({
       />
 
       {result && result.length > 0 && searchValue.value.length > 0 ? (
-        <SearchList result={result} value={searchValue.value} />
+        <SearchList result={result} />
       ) : (
         <>
           {searches.length > 0 && (
