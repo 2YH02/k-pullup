@@ -1,9 +1,9 @@
-import LoadingIcon from "@/components/icons/loading-icon";
 import BottomFixedButton from "@common/bottom-fixed-button";
 import Button from "@common/button";
 import GrowBox from "@common/grow-box";
 import Section from "@common/section";
 import Text from "@common/text";
+import LoadingIcon from "@icons/loading-icon";
 import { resizeImage } from "img-toolkit";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -91,6 +91,8 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
     setErrorMessage("");
 
     reader.readAsDataURL(file);
+
+    e.target.value = "";
     setLoading(false);
   };
 

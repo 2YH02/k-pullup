@@ -13,8 +13,6 @@ interface TooltipProps {
   onClick?: VoidFunction;
 }
 
-// TODO: 툴팁 onclick 추가
-
 const Tooltip = ({
   title,
   className,
