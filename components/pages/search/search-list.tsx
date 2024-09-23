@@ -45,7 +45,7 @@ const SearchList = ({ result }: SearchResultProps) => {
               className="flex items-center p-3 text-left w-full h-full"
               onClick={() => {
                 addSearch({
-                  addr: item.address,
+                  addr: removeMarkTags(item.address),
                   d: item.markerId || null,
                   lat: item.position?.lat || null,
                   lng: item.position?.lng || null,

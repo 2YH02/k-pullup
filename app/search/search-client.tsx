@@ -11,6 +11,7 @@ import useSearchStore from "@store/useSearchStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { type Device } from "../mypage/page";
+import { Trash2 } from "lucide-react";
 
 export interface SearchData {
   address: string;
@@ -29,7 +30,7 @@ const SearchClient = ({
 
   const searchValue = useInput("");
 
-  const { searches, clearSearches } = useSearchStore();
+  const { searches, clearSearches, removeItem } = useSearchStore();
 
   const [result, setResult] = useState<SearchData[]>([]);
 
@@ -91,7 +92,7 @@ const SearchClient = ({
                 <SectionTitle title="최근 검색" />
                 <button onClick={() => clearSearches()}>
                   <Text typography="t6" className="text-grey dark:text-grey">
-                    목록 삭제
+                    목록 전체 삭제
                   </Text>
                 </button>
               </div>
@@ -100,16 +101,24 @@ const SearchClient = ({
                   return (
                     <li
                       key={`${search}-${index}`}
-                      onClick={() => {
-                        const url = !!search.d
-                          ? `/pullup/${search.d}`
-                          : `/search?addr=${search.addr}&lat=${search.lat}&lng=${search.lng}`;
-                        router.push(url);
-                      }}
-                      className="border-b border-solid dark:border-grey-dark"
+                      className="border-b border-solid dark:border-grey-dark flex"
                     >
-                      <button className="flex items-center p-3 text-left w-full h-full">
+                      <button
+                        className="flex items-center p-3 text-left w-full h-full"
+                        onClick={() => {
+                          const url = !!search.d
+                            ? `/pullup/${search.d}`
+                            : `/search?addr=${search.addr}&lat=${search.lat}&lng=${search.lng}`;
+                          router.push(url);
+                        }}
+                      >
                         <Text>{search.addr}</Text>
+                      </button>
+                      <button
+                        className="ml-2"
+                        onClick={() => removeItem(search.d as number)}
+                      >
+                        <Trash2 size={17} color="#333" />
                       </button>
                     </li>
                   );
