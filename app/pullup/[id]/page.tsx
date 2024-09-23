@@ -7,7 +7,6 @@ import Text from "@common/text";
 import getFacilities from "@lib/api/marker/get-facilities";
 import markerDetail from "@lib/api/marker/marker-detail";
 import getDeviceType from "@lib/get-device-type";
-import AddFacilitiesBadge from "@pages/pullup/add-facilities-badge";
 import AddressButton from "@pages/pullup/address-button";
 import ButtonList from "@pages/pullup/button-list";
 import Comments from "@pages/pullup/comments";
@@ -125,9 +124,6 @@ const PullupPage = async ({ params }: { params: Params }) => {
             />
           )}
           <WeatherBadge lat={marker.latitude} lng={marker.longitude} />
-          {marker.isChulbong && (
-            <AddFacilitiesBadge markerId={marker.markerId} />
-          )}
         </div>
 
         <AddressButton
@@ -141,11 +137,21 @@ const PullupPage = async ({ params }: { params: Params }) => {
           isAdmin={marker.isChulbong || false}
         />
         <div className="flex items-center justify-between mt-4">
-          <Link href={`/pullup/${id}/report`}>
-            <Text typography="t7" className="underline">
-              정보 수정 요청
-            </Text>
-          </Link>
+          <div>
+            <Link href={`/pullup/${id}/report`} className="mr-2">
+              <Text typography="t7" className="underline">
+                정보 수정 요청
+              </Text>
+            </Link>
+
+            {marker.isChulbong && (
+              <Link href={`/pullup/${marker.markerId}/facilities`}>
+                <Text typography="t7" className="underline">
+                  기구 개수 수정
+                </Text>
+              </Link>
+            )}
+          </div>
 
           {marker.username && (
             <div className="flex items-center">
