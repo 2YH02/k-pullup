@@ -37,6 +37,15 @@ const SearchClient = ({
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
 
   useEffect(() => {
+    const images = ["/empty-search.gif"];
+
+    images.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
+  useEffect(() => {
     if (searchValue.value === "") {
       setResult([]);
       return;
@@ -71,7 +80,7 @@ const SearchClient = ({
         referrer={!!referrer}
       />
 
-      {result && result.length > 0 && searchValue.value.length > 0 ? (
+      {result && searchValue.value.length > 0 ? (
         <SearchList result={result} />
       ) : (
         <>

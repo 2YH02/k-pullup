@@ -1,9 +1,11 @@
 "use client";
 
 import { type SearchData } from "@/app/search/search-client";
+import Section from "@/components/common/section";
 import Text from "@common/text";
 import SearchIcon from "@icons/search-icon";
 import useSearchStore from "@store/useSearchStore";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface SearchResultProps {
@@ -13,6 +15,23 @@ interface SearchResultProps {
 const SearchList = ({ result }: SearchResultProps) => {
   const router = useRouter();
   const { addSearch } = useSearchStore();
+
+  if (result.length === 0) {
+    return (
+      <Section className="flex flex-col items-center">
+        <Image
+          src="/empty-search.gif"
+          alt="empty-search"
+          width={300}
+          height={100}
+          className="mb-4"
+        />
+        <Text display="block" textAlign="center" fontWeight="bold">
+          검색 결과가 존재하지 않습니다...
+        </Text>
+      </Section>
+    );
+  }
 
   return (
     <ul>
