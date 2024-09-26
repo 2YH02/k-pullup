@@ -20,7 +20,7 @@ const SearchInput = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
     >
       <Input
         isInvalid={false}
-        placeholder="검색"
+        placeholder="철봉 주소 검색"
         icon={<SearchIcon />}
         isSearchButton
         className="shadow"

@@ -32,6 +32,7 @@ const UsernameCard = ({ user }: UsernameCardProps) => {
     setLoading(true);
     if (username.value === user.username) {
       setEditError("현재 사용 중인 이름과 동일한 이름입니다.");
+      // TODO: 로딩 확인
       return;
     }
     const response = await updateUserName(username.value);
