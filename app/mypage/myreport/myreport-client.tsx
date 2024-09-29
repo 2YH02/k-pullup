@@ -136,36 +136,38 @@ const MyreportClient = ({
     });
   };
 
-  const reportItems = Object.entries(data.markers).map(([key, { reports }]) => {
-    return (
-      <Section key={key}>
-        <SectionTitle title={`${reports[0].address || "주소 제공 안됨"}`} />
-        <Carousel opts={{ dragFree: true }}>
-          <CarouselContent className="-ml-1 gap-3 w-64 h-20 p-1">
-            {reports.map((report) => (
-              <CarouselItem className="p-0" key={report.reportID}>
-                <ShadowBox
-                  onClick={() => {
-                    setMarkerId(key);
-                    setCurData(report);
-                  }}
-                  className="w-full h-full flex items-center justify-center p-3"
-                  withAction
-                >
-                  <div className="w-1/5 shrink-0">
-                    <Received size={30} />
-                  </div>
-                  <Text className="w-4/5 shrink-0 truncate">
-                    {report.description || "설명 제공 안됨"}
-                  </Text>
-                </ShadowBox>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-      </Section>
-    );
-  });
+  const reportItems = Object.entries(data.markers).map(
+    ([key, { markerID, reports }]) => {
+      return (
+        <Section key={key}>
+          <SectionTitle title={`${reports[0].address || "주소 제공 안됨"}`} />
+          <Carousel opts={{ dragFree: true }}>
+            <CarouselContent className="-ml-1 gap-3 w-64 h-20 p-1">
+              {reports.map((report) => (
+                <CarouselItem className="p-0" key={report.reportID}>
+                  <ShadowBox
+                    onClick={() => {
+                      setMarkerId(markerID.toString());
+                      setCurData(report);
+                    }}
+                    className="w-full h-full flex items-center justify-center p-3"
+                    withAction
+                  >
+                    <div className="w-1/5 shrink-0">
+                      <Received size={30} />
+                    </div>
+                    <Text className="w-4/5 shrink-0 truncate">
+                      {report.description || "설명 제공 안됨"}
+                    </Text>
+                  </ShadowBox>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </Section>
+      );
+    }
+  );
 
   if (curData) {
     return (
