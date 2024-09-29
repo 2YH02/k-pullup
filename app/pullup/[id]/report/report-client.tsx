@@ -31,7 +31,7 @@ const ReportClient = ({
     markerId: marker.markerId,
     latitude: marker.latitude,
     longitude: marker.longitude,
-    description: marker.description || "작성된 설명이 없습니다.",
+    description: marker.description,
     photos: [],
   });
 

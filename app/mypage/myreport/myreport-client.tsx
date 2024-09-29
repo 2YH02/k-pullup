@@ -9,6 +9,7 @@ import type {
 import BottomFixedButton from "@common/bottom-fixed-button";
 import Button from "@common/button";
 import { Carousel, CarouselContent, CarouselItem } from "@common/carousel";
+import GrowBox from "@common/grow-box";
 import Section, { SectionTitle } from "@common/section";
 import ShadowBox from "@common/shadow-box";
 import SideMain from "@common/side-main";
@@ -20,7 +21,6 @@ import useAlertStore from "@store/useAlertStore";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { type Device } from "../page";
-import GrowBox from "@/components/common/grow-box";
 
 interface MyreportClientProps {
   data: MyMarkerReportRes;
