@@ -11,7 +11,7 @@ export interface Report {
 }
 
 interface Marker {
-  [key: string]: Report[];
+  [key: string]: { markerID: number; reports: Report[] };
 }
 
 export interface MyMarkerReportRes {

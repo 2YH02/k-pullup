@@ -1,7 +1,5 @@
 "use client";
 
-import ShadowBox from "@/components/common/shadow-box";
-import { Received } from "@/components/pages/mypage/link-list";
 import approveReport from "@api/report/approve-report";
 import denyReport from "@api/report/deny-report";
 import type {
@@ -12,9 +10,11 @@ import BottomFixedButton from "@common/bottom-fixed-button";
 import Button from "@common/button";
 import { Carousel, CarouselContent, CarouselItem } from "@common/carousel";
 import Section, { SectionTitle } from "@common/section";
+import ShadowBox from "@common/shadow-box";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import ImageCarousel from "@layout/image-carousel";
+import { Received } from "@pages/mypage/link-list";
 import { StatusBadge } from "@pages/mypage/report/report-list-item";
 import useAlertStore from "@store/useAlertStore";
 import { useRouter } from "next/navigation";
@@ -136,7 +136,7 @@ const MyreportClient = ({
     });
   };
 
-  const reportItems = Object.entries(data.markers).map(([key, reports]) => {
+  const reportItems = Object.entries(data.markers).map(([key, { reports }]) => {
     return (
       <Section key={key}>
         <SectionTitle title={`${reports[0].address || "주소 제공 안됨"}`} />
@@ -204,7 +204,7 @@ const MyreportClient = ({
             </div>
           </div>
 
-          {images && curData.status !== "APPROVED" && (
+          {images && images.length > 0 && curData.status !== "APPROVED" && (
             <div className="mb-4">
               <Text fontWeight="bold" className="mb-1">
                 추가된 이미지
