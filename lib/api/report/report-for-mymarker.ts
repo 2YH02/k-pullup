@@ -7,11 +7,10 @@ export interface Report {
   status: ReportStatus;
   createdAt: string;
   photos: string[];
-  address: string;
 }
 
 interface Marker {
-  [key: string]: { markerID: number; reports: Report[] };
+  [key: string]: { markerID: number; reports: Report[]; address: string };
 }
 
 export interface MyMarkerReportRes {

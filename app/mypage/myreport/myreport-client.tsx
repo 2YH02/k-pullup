@@ -20,6 +20,7 @@ import useAlertStore from "@store/useAlertStore";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { type Device } from "../page";
+import GrowBox from "@/components/common/grow-box";
 
 interface MyreportClientProps {
   data: MyMarkerReportRes;
@@ -34,11 +35,10 @@ const MyreportClient = ({
 }: MyreportClientProps) => {
   const router = useRouter();
 
-  console.log(data);
-
   const { openAlert, closeAlert } = useAlertStore();
 
   const [curData, setCurData] = useState<Report | null>(null);
+  const [curAddr, setCurAddr] = useState("");
   const [markerId, setMarkerId] = useState<string | null>(null);
 
   const images = useMemo(() => {
@@ -138,11 +138,23 @@ const MyreportClient = ({
     });
   };
 
+  const getIconBg = (status: string) => {
+    if (status === "APPROVED") return "bg-green";
+    else if (status === "DENIED") return "bg-red";
+    else return "bg-grey";
+  };
+
+  const getStatusText = (status: string) => {
+    if (status === "APPROVED") return "승인됨";
+    else if (status === "DENIED") return "거절됨";
+    else return "대기중";
+  };
+
   const reportItems = Object.entries(data.markers).map(
-    ([key, { markerID, reports }]) => {
+    ([key, { markerID, reports, address }]) => {
       return (
         <Section key={key}>
-          <SectionTitle title={`${reports[0].address || "주소 제공 안됨"}`} />
+          <SectionTitle title={`${address || "주소 제공 안됨"}`} />
           <Carousel opts={{ dragFree: true }}>
             <CarouselContent className="-ml-1 gap-3 w-64 h-20 p-1">
               {reports.map((report) => (
@@ -151,16 +163,28 @@ const MyreportClient = ({
                     onClick={() => {
                       setMarkerId(markerID.toString());
                       setCurData(report);
+                      setCurAddr(`${address || "주소 제공 안됨"}`);
                     }}
-                    className="w-full h-full flex items-center justify-center p-3"
+                    className="w-full h-full flex flex-col p-3"
                     withAction
                   >
-                    <div className="w-1/5 shrink-0">
-                      <Received size={30} />
+                    <div className="w-full h-full flex items-center">
+                      <div
+                        className={`w-2 h-2 ${getIconBg(
+                          report.status
+                        )} rounded-full mr-2`}
+                      />
+                      <Text typography="t7">
+                        {getStatusText(report.status)}
+                      </Text>
+                      <GrowBox />
+                      <Received size={24} />
                     </div>
-                    <Text className="w-4/5 shrink-0 truncate">
-                      {report.description || "설명 제공 안됨"}
-                    </Text>
+                    <div className="w-full h-full flex">
+                      <Text className="w-4/5 shrink-0 truncate">
+                        {report.description || "설명 제공 안됨"}
+                      </Text>
+                    </div>
                   </ShadowBox>
                 </CarouselItem>
               ))}
@@ -174,7 +198,7 @@ const MyreportClient = ({
   if (curData) {
     return (
       <SideMain
-        headerTitle={curData.address || "주소 제공 안됨"}
+        headerTitle={curAddr}
         fullHeight
         hasBackButton
         prevClick={() => {
@@ -196,7 +220,7 @@ const MyreportClient = ({
               <div className="flex">
                 <Text className="w-1/5">주소</Text>
                 <Text typography="t6" className="w-4/5 truncate">
-                  {curData.address || "주소 제공 안됨"}
+                  {curAddr}
                 </Text>
               </div>
               <div className="flex">
