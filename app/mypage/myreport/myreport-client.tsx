@@ -34,6 +34,8 @@ const MyreportClient = ({
 }: MyreportClientProps) => {
   const router = useRouter();
 
+  console.log(data);
+
   const { openAlert, closeAlert } = useAlertStore();
 
   const [curData, setCurData] = useState<Report | null>(null);
