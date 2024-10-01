@@ -135,7 +135,7 @@ const RegisterClient = ({
       } else {
         setMarkerToStore([newMarker]);
       }
-      
+
       map.setCenter(
         new window.kakao.maps.LatLng(newMarker.latitude, newMarker.longitude)
       );
@@ -288,6 +288,7 @@ const RegisterClient = ({
         prevUrl="/"
         returnUrl="/register"
         deviceType={deviceType}
+        withNav
       />
     );
   }
