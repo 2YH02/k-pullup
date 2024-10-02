@@ -145,11 +145,14 @@ const MoveMapInput = ({ deviceType }: { deviceType: Device }) => {
           icon={mobile ? <CloseIcon size={20} /> : true}
           onIconClick={mobile ? () => setActive(false) : undefined}
           onClick={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
         />
         {(result.length > 0 || searchStatus !== "") && (
           <div
             ref={resultRef}
             className="mt-1 w-full h-72 bg-white rounded-md shadow-md p-4 overflow-auto scrollbar-thin"
+            onClick={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
           >
             {searchStatus !== "" ? (
               <Text textAlign="center" display="block" className="mt-4">
