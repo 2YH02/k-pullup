@@ -144,6 +144,7 @@ const MoveMapInput = ({ deviceType }: { deviceType: Device }) => {
           className="px-10"
           icon={mobile ? <CloseIcon size={20} /> : true}
           onIconClick={mobile ? () => setActive(false) : undefined}
+          onClick={(e) => e.stopPropagation()}
         />
         {(result.length > 0 || searchStatus !== "") && (
           <div
