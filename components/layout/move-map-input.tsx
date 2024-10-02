@@ -42,6 +42,9 @@ type KakaoPagination = {
 };
 
 const MoveMapInput = ({ deviceType }: { deviceType: Device }) => {
+  const isMobileApp =
+    deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
+
   const { move } = useMapControl();
 
   const searchValue = useInput("");
@@ -50,7 +53,7 @@ const MoveMapInput = ({ deviceType }: { deviceType: Device }) => {
 
   const [result, setResult] = useState<KakaoPlace[]>([]);
 
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(false);
   const [mobile, setMobile] = useState(false);
 
   const [searchStatus, setSearchStatus] = useState("");
@@ -88,6 +91,7 @@ const MoveMapInput = ({ deviceType }: { deviceType: Device }) => {
   }, [searchValue.value]);
 
   useEffect(() => {
+    if (isMobileApp) return;
     const handleResize = () => {
       if (window.innerWidth <= 890) {
         setActive(false);
@@ -105,10 +109,7 @@ const MoveMapInput = ({ deviceType }: { deviceType: Device }) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
-
-  const isMobileApp =
-    deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
+  }, [isMobileApp]);
 
   const style = isMobileApp ? "mo:top-[100px]" : "mo:top-16";
   const inputStyle = isMobileApp ? "mo:top-[100px]" : "";
@@ -144,15 +145,11 @@ const MoveMapInput = ({ deviceType }: { deviceType: Device }) => {
           className="px-10"
           icon={mobile ? <CloseIcon size={20} /> : true}
           onIconClick={mobile ? () => setActive(false) : undefined}
-          onClick={(e) => e.stopPropagation()}
-          onTouchStart={(e) => e.stopPropagation()}
         />
         {(result.length > 0 || searchStatus !== "") && (
           <div
             ref={resultRef}
             className="mt-1 w-full h-72 bg-white rounded-md shadow-md p-4 overflow-auto scrollbar-thin"
-            onClick={(e) => e.stopPropagation()}
-            onTouchStart={(e) => e.stopPropagation()}
           >
             {searchStatus !== "" ? (
               <Text textAlign="center" display="block" className="mt-4">
