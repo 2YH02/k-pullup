@@ -54,7 +54,6 @@ const MoveMapInput = ({ deviceType }: { deviceType: Device }) => {
   const [result, setResult] = useState<KakaoPlace[]>([]);
 
   const [active, setActive] = useState(false);
-  const [mobile, setMobile] = useState(true);
 
   const [searchStatus, setSearchStatus] = useState("");
 
@@ -90,29 +89,10 @@ const MoveMapInput = ({ deviceType }: { deviceType: Device }) => {
     return () => clearTimeout(handler);
   }, [searchValue.value]);
 
-  // useEffect(() => {
-  //   if (isMobileApp) return;
-  //   const handleResize = () => {
-  //     if (window.innerWidth <= 890) {
-  //       setActive(false);
-  //       setMobile(true);
-  //     } else {
-  //       setActive(true);
-  //       setMobile(false);
-  //     }
-  //   };
-
-  //   window.addEventListener("resize", handleResize);
-
-  //   handleResize();
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, [isMobileApp]);
-
   const style = isMobileApp ? "mo:top-[100px]" : "mo:top-16";
   const inputStyle = isMobileApp ? "mo:top-[100px]" : "";
+
+  const mobile = true;
 
   if (!active) {
     return (
