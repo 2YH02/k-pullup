@@ -218,7 +218,6 @@ const RegisterClient = ({
         title: "이미지 용량 초과",
         description: "최대 30MB까지 이미지를 등록할 수 있습니다.",
         onClick: () => {},
-        cancel: true,
       });
       return;
     }

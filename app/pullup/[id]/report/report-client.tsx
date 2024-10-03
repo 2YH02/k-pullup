@@ -11,6 +11,7 @@ import { useToast } from "@hooks/useToast";
 import reportMarker, { ReportValue } from "@lib/api/report/report-marker";
 import ReportCompleted from "@pages/pullup/report/report-completed";
 import UploadImage from "@pages/register/upload-image";
+import useAlertStore from "@store/useAlertStore";
 import { useState } from "react";
 
 interface ReportClientProps {
@@ -22,6 +23,7 @@ const ReportClient = ({
   marker,
   deviceType = "desktop",
 }: ReportClientProps) => {
+  const { openAlert } = useAlertStore();
   const { toast } = useToast();
 
   const [completed, setCompleted] = useState(false);
@@ -37,6 +39,7 @@ const ReportClient = ({
 
   const handleImageChange = (photos?: File[] | null) => {
     if (!photos) return;
+
     setReportValue((prev) => ({
       ...prev,
       photos: photos,
@@ -52,6 +55,21 @@ const ReportClient = ({
 
   const onSubmit = async () => {
     setLoading(true);
+    if (reportValue.photos.length <= 0) return;
+    const sizeMap = reportValue.photos.map((photo) => {
+      return photo.size / (1024 * 1024);
+    });
+    const totalSize = sizeMap.reduce((a, b) => a + b);
+
+    if (totalSize > 28) {
+      openAlert({
+        title: "이미지 용량 초과",
+        description: "최대 30MB까지 이미지를 등록할 수 있습니다.",
+        onClick: () => {},
+      });
+      setLoading(false);
+      return;
+    }
     const response = await reportMarker(reportValue);
 
     if (!response.ok) {
