@@ -206,7 +206,23 @@ const RegisterClient = ({
   };
 
   const handleImageChange = (photos?: File[] | null) => {
+    if (!photos) return;
     if (photos && photos.length > 0) setUploadStatus("image");
+    const sizeMap = photos.map((photo) => {
+      return photo.size / (1024 * 1024);
+    });
+    const totalSize = sizeMap.reduce((a, b) => a + b);
+
+    if (totalSize > 28) {
+      openAlert({
+        title: "이미지 용량 초과",
+        description: "최대 30MB까지 이미지를 등록할 수 있습니다.",
+        onClick: () => {},
+        cancel: true,
+      });
+      return;
+    }
+
     setRegisterValue((prev) => ({
       ...prev,
       photos: !photos ? null : photos,

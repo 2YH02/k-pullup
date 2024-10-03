@@ -68,8 +68,7 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
 
     let file: File = await resizeImage(e.target.files[0], {
       format: "webp",
-      quality: 0.7,
-      width: 550,
+      quality: 0.8,
     });
     let reader = new FileReader();
 
@@ -82,11 +81,11 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
       setImages((prev) => [...prev, imageData]);
     };
 
-    if (file.size / (1024 * 1024) > 10) {
-      setErrorMessage("이미지는 최대 10MB까지 가능합니다.");
-      setLoading(false);
-      return;
-    }
+    // if (file.size / (1024 * 1024) > 10) {
+    //   setErrorMessage("이미지는 최대 10MB까지 가능합니다.");
+    //   setLoading(false);
+    //   return;
+    // }
 
     setErrorMessage("");
 
@@ -198,7 +197,7 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
           containerStyle="px-0"
         >
           {loading ? (
-            <LoadingIcon size="sm" className="text-white" />
+            <LoadingIcon size="sm" className="text-white m-0" />
           ) : images.length <= 0 ? (
             "이미지 없이 다음으로"
           ) : (
