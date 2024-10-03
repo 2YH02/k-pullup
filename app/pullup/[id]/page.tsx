@@ -83,7 +83,7 @@ const PullupPage = async ({ params }: { params: Params }) => {
 
   return (
     <SideMain
-      headerTitle="위치 상세"
+      headerTitle={marker.address}
       hasBackButton
       withNav
       referrer={!!referrer}
