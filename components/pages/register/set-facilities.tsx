@@ -1,15 +1,15 @@
-import LoadingIcon from "@/components/icons/loading-icon";
 import BottomFixedButton from "@common/bottom-fixed-button";
 import GrowBox from "@common/grow-box";
 import Section from "@common/section";
 import Text from "@common/text";
 import MinusIcon from "@icons/minuse-icon";
 import PlusIcon from "@icons/plus-icon";
-import setNewFacilities from "@lib/api/marker/set-new-facilities";
-import { useState } from "react";
 
 interface SetFacilitiesProps {
-  markerId: number | null;
+  increase: (cnt: number) => void;
+  decrease: (cnt: number) => void;
+  철봉: number;
+  평행봉: number;
   next: VoidFunction;
 }
 
@@ -20,68 +20,13 @@ interface FacilityProps {
   decrease: VoidFunction;
 }
 
-const SetFacilities = ({ markerId, next }: SetFacilitiesProps) => {
-  const [facilities, setFacilities] = useState({ 철봉: 0, 평행봉: 0 });
-  const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const increaseChulbong = () => {
-    setFacilities((prev) => ({
-      ...prev,
-      철봉: prev.철봉 + 1,
-    }));
-  };
-  const decreaseChulbong = () => {
-    setFacilities((prev) => ({
-      ...prev,
-      철봉: prev.철봉 - 1,
-    }));
-  };
-  const increasePenghang = () => {
-    setFacilities((prev) => ({
-      ...prev,
-      평행봉: prev.평행봉 + 1,
-    }));
-  };
-  const decreasePenghang = () => {
-    setFacilities((prev) => ({
-      ...prev,
-      평행봉: prev.평행봉 - 1,
-    }));
-  };
-
-  const submit = async () => {
-    setLoading(true);
-    if (!markerId) {
-      setErrorMessage("잠시 후 다시 시도해주세요.");
-      setLoading(false);
-      return;
-    }
-
-    const response = await setNewFacilities({
-      markerId: markerId,
-      facilities: [
-        {
-          facilityId: 1,
-          quantity: facilities.철봉,
-        },
-        {
-          facilityId: 2,
-          quantity: facilities.평행봉,
-        },
-      ],
-    });
-
-    if (!response.ok) {
-      setErrorMessage("잠시 후 다시 시도해주세요.");
-      setLoading(false);
-      return;
-    }
-
-    setLoading(false);
-    next();
-  };
-
+const SetFacilities = ({
+  next,
+  decrease,
+  increase,
+  철봉,
+  평행봉,
+}: SetFacilitiesProps) => {
   return (
     <Section className="h-full pb-0 flex flex-col">
       <div className="my-5">
@@ -94,52 +39,52 @@ const SetFacilities = ({ markerId, next }: SetFacilitiesProps) => {
       <div className="border border-solid border-primary rounded-md px-2">
         <FacilityList
           name="철봉"
-          count={facilities.철봉}
+          count={철봉}
           increase={() => {
-            if (facilities.철봉 === 99) return;
-            increaseChulbong();
+            if (철봉 === 99) return;
+            increase(1);
           }}
           decrease={() => {
-            if (facilities.철봉 === 0) return;
-            decreaseChulbong();
+            if (철봉 === 0) return;
+            decrease(1);
           }}
         />
         <FacilityList
           name="평행봉"
-          count={facilities.평행봉}
+          count={평행봉}
           increase={() => {
-            if (facilities.평행봉 === 99) return;
-            increasePenghang();
+            if (평행봉 === 99) return;
+            increase(2);
           }}
           decrease={() => {
-            if (facilities.평행봉 === 0) return;
-            decreasePenghang();
+            if (평행봉 === 0) return;
+            decrease(2);
           }}
         />
       </div>
-      <Text typography="t6" className="text-red mt-3">
+      {/* <Text typography="t6" className="text-red mt-3">
         {errorMessage}
-      </Text>
+      </Text> */}
 
       <GrowBox />
 
       <BottomFixedButton
-        onClick={submit}
+        onClick={next}
         className="flex items-center justify-center h-12"
-        disabled={loading || (facilities.철봉 === 0 && facilities.평행봉 === 0)}
         containerStyle="px-0"
       >
-        {loading ? (
-          <LoadingIcon size="sm" className="text-white" />
-        ) : (
-          "등록하기"
-        )}
+        다음
       </BottomFixedButton>
     </Section>
   );
 };
 
-export const FacilityList = ({ count, name, decrease, increase }: FacilityProps) => {
+export const FacilityList = ({
+  count,
+  name,
+  decrease,
+  increase,
+}: FacilityProps) => {
   return (
     <div className="flex items-center my-2">
       <Text>{name}</Text>

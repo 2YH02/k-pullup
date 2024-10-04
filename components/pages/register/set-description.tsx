@@ -2,16 +2,19 @@ import BottomFixedButton from "@common/bottom-fixed-button";
 import GrowBox from "@common/grow-box";
 import Section from "@common/section";
 import Text from "@common/text";
-import useInput from "@hooks/useInput";
 // TODO: textarea 공통 컴포넌트로 적용
 
 interface SetDescriptionProps {
   next: (description?: string | null) => void;
+  description: string | null;
+  setDescription: (desc: string | null) => void;
 }
 
-const SetDescription = ({ next }: SetDescriptionProps) => {
-  const description = useInput("");
-
+const SetDescription = ({
+  next,
+  description,
+  setDescription,
+}: SetDescriptionProps) => {
   return (
     <Section className="h-full pb-0 flex flex-col">
       <div className="my-5">
@@ -26,20 +29,22 @@ const SetDescription = ({ next }: SetDescriptionProps) => {
           maxLength={40}
           rows={4}
           placeholder="해당 위치에 대한 설명을 40자 이내로 작성해주세요."
-          value={description.value}
-          onChange={description.onChange}
+          value={description ? description : ""}
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
         ></textarea>
       </div>
       <GrowBox />
 
       <BottomFixedButton
         onClick={() => {
-          next(description.value === "" ? null : description.value);
+          next(description === "" ? null : description);
         }}
         className="flex items-center justify-center h-12"
         containerStyle="px-0"
       >
-        {description.value === "" ? "설명 없이 위치 생성하기" : "위치 생성하기"}
+        {description === "" ? "설명 없이 다음으로" : "다음"}
       </BottomFixedButton>
     </Section>
   );

@@ -1,17 +1,19 @@
 "use client";
 
 import { KakaoMarker } from "@/types/kakao-map.types";
+import setNewFacilities from "@api/marker/set-new-facilities";
 import setNewMarker, { SetMarkerRes } from "@api/marker/set-new-marker";
 import SideMain from "@common/side-main";
 import useIsMounted from "@hooks/useIsMounted";
 import LoadingIcon from "@icons/loading-icon";
 import AuthError from "@layout/auth-error";
-import FacilitiesComplete from "@pages/register/facilities-complete";
 import SelectLocation from "@pages/register/select-location";
 import SetDescription from "@pages/register/set-description";
 import SetFacilities from "@pages/register/set-facilities";
 import UploadComplete from "@pages/register/upload-complete";
-import UploadImage from "@pages/register/upload-image";
+import UploadImage, {
+  type ImageUploadState,
+} from "@pages/register/upload-image";
 import useAlertStore from "@store/useAlertStore";
 import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
@@ -28,7 +30,12 @@ export const registerError = {
   422: "위치 등록이 제한된 구역입니다.",
 };
 
-export type UploadStatus = "image" | "location" | "error" | "complete";
+export type UploadStatus =
+  | "image"
+  | "location"
+  | "error"
+  | "complete"
+  | "facilities";
 
 interface RegisterValue {
   latitude: number | null;
@@ -36,7 +43,14 @@ interface RegisterValue {
   photos: File[] | null;
   description: string | null;
   step: number;
+  facilities: { facilityId: number; quantity: number }[];
 }
+
+const wait = (sec: number) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, sec * 1000);
+  });
+};
 
 const RegisterClient = ({
   referrer = true,
@@ -62,6 +76,16 @@ const RegisterClient = ({
     longitude: null,
     description: null,
     step: 0,
+    facilities: [
+      {
+        facilityId: 1,
+        quantity: 0,
+      },
+      {
+        facilityId: 2,
+        quantity: 0,
+      },
+    ],
   });
 
   const [uploadStatus, setUploadStatus] = useState<UploadStatus>("location");
@@ -72,11 +96,15 @@ const RegisterClient = ({
 
   const [newMarkerId, setNewMarkerId] = useState<number | null>(null);
 
+  const [initPhotos, setInintPhotos] = useState<ImageUploadState[] | null>(
+    null
+  );
+
   const headerTitle = useMemo(() => {
     if (registerValue.step === 0) return "위치 선택";
-    if (registerValue.step === 1) return "이미지 등록";
+    if (registerValue.step === 1) return "기구 개수 등록";
     if (registerValue.step === 2) return "설명 등록";
-    if (registerValue.step === 4) return "기구 개수 등록";
+    if (registerValue.step === 3) return "이미지 등록";
   }, [registerValue.step]);
 
   useEffect(() => {
@@ -125,6 +153,36 @@ const RegisterClient = ({
       }
 
       const newMarker = (await response.json()) as SetMarkerRes;
+      if (uploadStatus === "image") {
+        await wait(1.2);
+        setUploadStatus("location");
+      }
+      await wait(0.6);
+      if (
+        registerValue.facilities[0].quantity > 0 ||
+        registerValue.facilities[1].quantity > 0
+      ) {
+        setUploadStatus("facilities");
+      }
+      const responseFac = await setNewFacilities({
+        markerId: newMarker.markerId,
+        facilities: [
+          {
+            facilityId: 1,
+            quantity: registerValue.facilities[0].quantity,
+          },
+          {
+            facilityId: 2,
+            quantity: registerValue.facilities[1].quantity,
+          },
+        ],
+      });
+
+      if (!responseFac.ok) {
+        setErrorMessage("잠시 후 다시 시도해주세요.");
+        setUploadStatus("error");
+        return;
+      }
 
       setNewMarkerId(newMarker.markerId);
 
@@ -140,20 +198,11 @@ const RegisterClient = ({
         new window.kakao.maps.LatLng(newMarker.latitude, newMarker.longitude)
       );
 
-      if (uploadStatus === "image") {
-        setTimeout(() => {
-          setUploadStatus("location");
-          setTimeout(() => {
-            setUploadStatus("complete");
-          }, 1100);
-        }, 1100);
-      } else {
-        setTimeout(() => {
-          setUploadStatus("complete");
-        }, 1100);
-      }
+      await wait(0.7);
+      setUploadStatus("complete");
     };
-    if (registerValue.step === 3) {
+
+    if (registerValue.step === 4) {
       fetch();
     }
   }, [
@@ -206,20 +255,22 @@ const RegisterClient = ({
   };
 
   const handleImageChange = (photos?: File[] | null) => {
-    if (!photos) return;
     if (photos && photos.length > 0) setUploadStatus("image");
-    const sizeMap = photos.map((photo) => {
-      return photo.size / (1024 * 1024);
-    });
-    const totalSize = sizeMap.reduce((a, b) => a + b);
 
-    if (totalSize > 28) {
-      openAlert({
-        title: "이미지 용량 초과",
-        description: "최대 30MB까지 이미지를 등록할 수 있습니다.",
-        onClick: () => {},
+    if (photos) {
+      const sizeMap = photos.map((photo) => {
+        return photo.size / (1024 * 1024);
       });
-      return;
+      const totalSize = sizeMap.reduce((a, b) => a + b);
+
+      if (totalSize > 28) {
+        openAlert({
+          title: "이미지 용량 초과",
+          description: "최대 30MB까지 이미지를 등록할 수 있습니다.",
+          onClick: () => {},
+        });
+        return;
+      }
     }
 
     setRegisterValue((prev) => ({
@@ -245,21 +296,84 @@ const RegisterClient = ({
   };
 
   const handlePrev = () => {
-    openAlert({
-      title: registerValue.step === 4 ? "개수 등록 취소" : "위치 등록 취소",
-      description:
-        registerValue.step === 4
-          ? "개수 등록을 취소 하시겠습니까?"
-          : "위치 등록을 취소 하시겠습니까?",
-      onClick: () => {
-        if (referrer) {
-          router.back();
-        } else {
-          router.push("/");
-        }
-      },
-      cancel: true,
-    });
+    if (registerValue.step === 0) {
+      if (referrer) {
+        router.back();
+      } else {
+        router.push("/");
+      }
+    } else {
+      setRegisterValue((prev) => ({ ...prev, step: prev.step - 1 }));
+    }
+  };
+
+  const changeInitPhoto = (photo: ImageUploadState) => {
+    if (initPhotos) {
+      setInintPhotos((prev) => [...(prev as ImageUploadState[]), photo]);
+    } else {
+      setInintPhotos([photo]);
+    }
+  };
+  const deleteInitPhoto = (id: string) => {
+    if (!initPhotos) return;
+    const filtered = initPhotos.filter((image) => image.id !== id);
+
+    if (filtered.length === 0) {
+      setInintPhotos(null);
+    } else {
+      setInintPhotos([...filtered]);
+    }
+  };
+
+  const setDescription = (desc: string | null) => {
+    setRegisterValue((prev) => ({ ...prev, description: desc }));
+  };
+
+  const setPosition = (position: {
+    lat: number | null;
+    lng: number | null;
+  }) => {
+    setRegisterValue((prev) => ({
+      ...prev,
+      latitude: position.lat,
+      longitude: position.lng,
+    }));
+  };
+
+  const increaseFacilities = (id: number) => {
+    let 철봉 = registerValue.facilities[0].quantity;
+    let 평행봉 = registerValue.facilities[1].quantity;
+    if (id === 1) {
+      let facilities = [
+        { facilityId: 1, quantity: 철봉 + 1 },
+        { facilityId: 2, quantity: 평행봉 },
+      ];
+      setRegisterValue((prev) => ({ ...prev, facilities }));
+    } else {
+      let facilities = [
+        { facilityId: 1, quantity: 철봉 },
+        { facilityId: 2, quantity: 평행봉 + 1 },
+      ];
+      setRegisterValue((prev) => ({ ...prev, facilities }));
+    }
+  };
+
+  const decreaseFacilities = (id: number) => {
+    let 철봉 = registerValue.facilities[0].quantity;
+    let 평행봉 = registerValue.facilities[1].quantity;
+    if (id === 1) {
+      let facilities = [
+        { facilityId: 1, quantity: 철봉 - 1 },
+        { facilityId: 2, quantity: 평행봉 },
+      ];
+      setRegisterValue((prev) => ({ ...prev, facilities }));
+    } else {
+      let facilities = [
+        { facilityId: 1, quantity: 철봉 },
+        { facilityId: 2, quantity: 평행봉 - 1 },
+      ];
+      setRegisterValue((prev) => ({ ...prev, facilities }));
+    }
   };
 
   const resetStep = () => {
@@ -313,7 +427,7 @@ const RegisterClient = ({
       headerTitle={headerTitle}
       prevClick={handlePrev}
       hasBackButton
-      withNav={registerValue.step === 3 ? false : true}
+      withNav={registerValue.step === 4 ? false : true}
       className={registerValue.step === 0 ? "duration-300" : ""}
       dragable={false}
       deviceType={deviceType}
@@ -322,33 +436,49 @@ const RegisterClient = ({
         <SelectLocation
           next={handleLocationChange}
           marker={marker as KakaoMarker}
+          position={{
+            lat: registerValue.latitude,
+            lng: registerValue.longitude,
+          }}
+          setPosition={setPosition}
         />
       )}
       {registerValue.step === 1 && (
+        <SetFacilities
+          next={handleNext}
+          increase={increaseFacilities}
+          decrease={decreaseFacilities}
+          철봉={registerValue.facilities[0].quantity}
+          평행봉={registerValue.facilities[1].quantity}
+        />
+      )}
+      {registerValue.step === 2 && (
+        <SetDescription
+          next={handleDescChange}
+          description={registerValue.description}
+          setDescription={setDescription}
+        />
+      )}
+      {registerValue.step === 3 && (
         <UploadImage
           next={handleImageChange}
           title={[
             "정확한 이미지를 등록해 주시면,",
             "다른 사람이 해당 위치를 찾는 데 큰 도움이 됩니다!",
           ]}
+          initPhotos={initPhotos}
+          setInintPhotos={changeInitPhoto}
+          deleteInintPhotos={deleteInitPhoto}
         />
       )}
-      {registerValue.step === 2 && <SetDescription next={handleDescChange} />}
-      {registerValue.step === 3 && (
+      {registerValue.step === 4 && (
         <UploadComplete
           status={uploadStatus}
           returnUrl={`/pullup/${newMarkerId}`}
           errorMessage={errorMessage}
-          next={handleNext}
           resetStep={resetStep}
           setStep={setStep}
         />
-      )}
-      {registerValue.step === 4 && (
-        <SetFacilities markerId={newMarkerId} next={handleNext} />
-      )}
-      {registerValue.step === 5 && (
-        <FacilitiesComplete returnUrl={`/pullup/${newMarkerId}`} />
       )}
     </SideMain>
   );

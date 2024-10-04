@@ -20,18 +20,25 @@ interface SelectLocationProps {
     longitude: number;
   }) => void;
   marker: KakaoMarker;
+  position: { lat: number | null; lng: number | null };
+  setPosition: (position: { lat: number | null; lng: number | null }) => void;
 }
 
-const SelectLocation = ({ next, marker }: SelectLocationProps) => {
+const SelectLocation = ({
+  next,
+  marker,
+  position,
+  setPosition,
+}: SelectLocationProps) => {
   const { map } = useMapStore();
   const { sheetHeight, setCurHeight } = useSheetHeightStore();
 
   const [viewButton, setViewButton] = useState(true);
 
-  const [location, setLocation] = useState<{
-    latitude: number | null;
-    longitude: number | null;
-  }>({ latitude: null, longitude: null });
+  // const [location, setLocation] = useState<{
+  //   latitude: number | null;
+  //   longitude: number | null;
+  // }>({ latitude: null, longitude: null });
 
   useEffect(() => {
     if (!map || !marker) return;
@@ -44,7 +51,7 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
 
       setViewButton(true);
 
-      setLocation({ latitude: latlng.getLat(), longitude: latlng.getLng() });
+      setPosition({ lat: latlng.getLat(), lng: latlng.getLng() });
       setCurHeight(sheetHeight.STEP_3.height);
     };
 
@@ -56,8 +63,8 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
   }, [map, marker]);
 
   const handleClick = () => {
-    if (location.latitude && location.longitude) {
-      setLocation({ latitude: null, longitude: null });
+    if (position.lat && position.lng) {
+      setPosition({ lat: null, lng: null });
     }
     setViewButton(false);
     setCurHeight(sheetHeight.STEP_1.height);
@@ -66,7 +73,7 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
   return (
     <Section className="h-full pb-0 flex flex-col">
       <div className="flex flex-col  items-center web:mt-10">
-        {location.latitude && location.longitude ? (
+        {position.lat && position.lng ? (
           <div className="w-[130px] h-[130px] translate-y-5 select-none">
             <Image
               src="/gopher.gif"
@@ -82,7 +89,7 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
         )}
 
         <Text className="mt-10 select-none" fontWeight="bold">
-          {location.latitude && location.longitude
+          {position.lat && position.lng
             ? "다음을 클릭해주세요"
             : "먼저 지도를 클릭해 위치를 선택해주세요."}
         </Text>
@@ -91,9 +98,7 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
           className="mt-5 web:hidden"
           variant="contrast"
         >
-          {location.latitude && location.longitude
-            ? "다시 선택하기"
-            : "위치 선택하기"}
+          {position.lat && position.lng ? "다시 선택하기" : "위치 선택하기"}
         </Button>
         <div className="w-full flex items-start mt-3">
           <div className="mr-2 mt-[2px]">
@@ -112,11 +117,11 @@ const SelectLocation = ({ next, marker }: SelectLocationProps) => {
         <BottomFixedButton
           onClick={() => {
             next({
-              latitude: location.latitude as number,
-              longitude: location.longitude as number,
+              latitude: position.lat as number,
+              longitude: position.lng as number,
             });
           }}
-          disabled={!location.latitude || !location.longitude}
+          disabled={!position.lat || !position.lng}
           className="flex items-center justify-center h-12 animate-transparent opacity-0"
           containerStyle="px-0"
         >

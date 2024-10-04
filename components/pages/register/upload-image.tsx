@@ -19,24 +19,34 @@ interface ImageUploadProps {
   withButton?: boolean;
   title?: string[];
   next: (photos: File[] | null) => void;
+  initPhotos: ImageUploadState[] | null;
+  setInintPhotos: (photo: ImageUploadState) => void;
+  deleteInintPhotos: (id: string) => void;
 }
 
-const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
+const UploadImage = ({
+  withButton = true,
+  title,
+  initPhotos,
+  setInintPhotos,
+  deleteInintPhotos,
+  next,
+}: ImageUploadProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [images, setImages] = useState<ImageUploadState[]>([]);
+  // const [images, setImages] = useState<ImageUploadState[]>([]);
   const [hover, setHover] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    if (withButton) return;
-    const files = images.map((image) => {
+    if (withButton || !initPhotos) return;
+    const files = initPhotos.map((image) => {
       return image.file;
     });
     next(files as File[]);
-  }, [images]);
+  }, [initPhotos]);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true);
@@ -60,7 +70,7 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
       return;
     }
 
-    if (images.length + e.target.files.length > 5) {
+    if (initPhotos && initPhotos.length + e.target.files.length > 5) {
       setErrorMessage("최대 5개 까지 등록 가능합니다!");
       setLoading(false);
       return;
@@ -78,14 +88,8 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
         previewURL: reader.result as string,
         id: v4(),
       };
-      setImages((prev) => [...prev, imageData]);
+      setInintPhotos(imageData);
     };
-
-    // if (file.size / (1024 * 1024) > 10) {
-    //   setErrorMessage("이미지는 최대 10MB까지 가능합니다.");
-    //   setLoading(false);
-    //   return;
-    // }
 
     setErrorMessage("");
 
@@ -97,11 +101,6 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
 
   const handleBoxClick = () => {
     fileInputRef.current?.click();
-  };
-
-  const deleteImage = (id: string) => {
-    const filtered = images.filter((image) => image.id !== id);
-    setImages(filtered);
   };
 
   return (
@@ -148,32 +147,33 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
         </div>
 
         <div className="mt-2 flex flex-wrap">
-          {images.map((image, index) => {
-            return (
-              <div key={index} className="flex flex-col items-center m-2">
-                <div className="w-[70px] h-[70px]">
-                  <Image
-                    src={image.previewURL as string}
-                    alt="다음"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="w-full h-full object-cover"
-                  />
+          {initPhotos &&
+            initPhotos.map((image, index) => {
+              return (
+                <div key={index} className="flex flex-col items-center m-2">
+                  <div className="w-[70px] h-[70px]">
+                    <Image
+                      src={image.previewURL as string}
+                      alt="다음"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <Button
+                    size="sm"
+                    onClick={() => {
+                      deleteInintPhotos(image.id as string);
+                    }}
+                    className="mt-1"
+                    variant="contrast"
+                  >
+                    삭제
+                  </Button>
                 </div>
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    deleteImage(image.id as string);
-                  }}
-                  className="mt-1"
-                  variant="contrast"
-                >
-                  삭제
-                </Button>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
 
         <div
@@ -189,8 +189,12 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
       {withButton && (
         <BottomFixedButton
           onClick={() => {
-            const imageData = images.map((image) => image.file as File);
-            next(imageData.length <= 0 ? null : imageData);
+            if (initPhotos) {
+              const imageData = initPhotos.map((image) => image.file as File);
+              next(imageData);
+            } else {
+              next(null);
+            }
           }}
           disabled={loading}
           className="flex items-center justify-center h-12"
@@ -198,10 +202,10 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
         >
           {loading ? (
             <LoadingIcon size="sm" className="text-white m-0" />
-          ) : images.length <= 0 ? (
-            "이미지 없이 다음으로"
+          ) : !initPhotos || initPhotos.length <= 0 ? (
+            "이미지 없이 위치 생성하기"
           ) : (
-            "다음"
+            "위치 생성하기"
           )}
         </BottomFixedButton>
       )}
