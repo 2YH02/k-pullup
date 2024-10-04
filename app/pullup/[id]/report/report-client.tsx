@@ -10,7 +10,7 @@ import Textarea from "@common/textarea";
 import { useToast } from "@hooks/useToast";
 import reportMarker, { ReportValue } from "@lib/api/report/report-marker";
 import ReportCompleted from "@pages/pullup/report/report-completed";
-import UploadImage from "@pages/register/upload-image";
+import UploadImage from "@pages/pullup/upload-image";
 import useAlertStore from "@store/useAlertStore";
 import { useState } from "react";
 
