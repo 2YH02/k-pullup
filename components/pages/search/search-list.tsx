@@ -20,7 +20,7 @@ const SearchList = ({ result }: SearchResultProps) => {
     return (
       <Section className="flex flex-col items-center">
         <Image
-          src="/empty-search.gif"
+          src="/empty-search2.gif"
           alt="empty-search"
           width={300}
           height={100}
