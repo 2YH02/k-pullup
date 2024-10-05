@@ -38,22 +38,40 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
       });
     };
 
-    if (navigator.geolocation) {
-      const watchId = navigator.geolocation.watchPosition(
-        (position) => {
-          setPosition(position);
-        },
-        (err) => {
-          console.error(err);
-          setGeoLocationError("위치 정보 제공 안됨");
+    if (window.ReactNativeWebView) {
+      const handleMessage = (e: any) => {
+        const data = JSON.parse(e.data);
+
+        if (data.latitude && data.longitude) {
+          setMyLocation({ lat: data.latitude, lng: data.longitude });
         }
-      );
+      };
+
+      window.addEventListener("message", handleMessage);
+      document.addEventListener("message", handleMessage);
 
       return () => {
-        navigator.geolocation.clearWatch(watchId);
+        window.removeEventListener("message", handleMessage);
+        document.removeEventListener("message", handleMessage);
       };
     } else {
-      setGeoLocationError("위치 정보 제공 안됨");
+      if (navigator.geolocation) {
+        const watchId = navigator.geolocation.watchPosition(
+          (position) => {
+            setPosition(position);
+          },
+          (err) => {
+            console.error(err);
+            setGeoLocationError("위치 정보 제공 안됨");
+          }
+        );
+
+        return () => {
+          navigator.geolocation.clearWatch(watchId);
+        };
+      } else {
+        setGeoLocationError("위치 정보 제공 안됨");
+      }
     }
   }, [setMyLocation, setGeoLocationError]);
 

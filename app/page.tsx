@@ -2,17 +2,16 @@ import newPictures from "@api/marker/new-pictures";
 import Divider from "@common/divider";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
-import ImageCarousel from "@layout/image-carousel";
 import getDeviceType from "@lib/get-device-type";
 import AroundMarkerCarousel from "@pages/home/around-marker-carousel";
 import ArticleCarousel from "@pages/home/article-carousel";
 import IconLinkList from "@pages/home/icon-link-list";
 import LocationBadge from "@pages/home/location-badge";
+import NewImageSection from "@pages/home/new-image-section";
 import Players from "@pages/home/players";
 import SearchInput from "@pages/home/search-input";
 import { headers } from "next/headers";
 import { type Device } from "./mypage/page";
-import NewImageSection from "@/components/pages/home/new-image-section";
 
 const Home = async () => {
   const images = await newPictures();

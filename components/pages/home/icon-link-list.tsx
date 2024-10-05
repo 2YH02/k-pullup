@@ -2,10 +2,10 @@
 
 import IconButton from "@common/icon-button";
 import BookmarkIcon from "@icons/bookmark-icon";
-import LocationPinIcon from "@icons/location-pin-icon";
-import RankingIcon from "@icons/ranking-icon";
 import ChatBubbleIcon from "@icons/chat-bubble-icon";
 import ConfigIcon from "@icons/config-icon";
+import LocationPinIcon from "@icons/location-pin-icon";
+import RankingIcon from "@icons/ranking-icon";
 import { useRouter } from "next/navigation";
 
 const IconLinkList = () => {

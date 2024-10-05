@@ -118,7 +118,7 @@ export default function RootLayout({
                 </UserProvider>
               </ImageModalProvider>
             </AlertProvider>
-            <KakaoMap deviceType={deviceType} />
+            {/* <KakaoMap deviceType={deviceType} /> */}
           </ChatIdProvider>
         </ThemeProvider>
         <div id="portal"></div>

@@ -2,6 +2,7 @@
 
 import { type Device } from "@/app/mypage/page";
 import getAllMarker from "@api/marker/get-all-marker";
+import Tooltip from "@common/tooltip";
 import useIsMounted from "@hooks/useIsMounted";
 import LoadingIcon from "@icons/loading-icon";
 import cn from "@lib/cn";
@@ -14,7 +15,6 @@ import { LocateFixedIcon } from "lucide-react";
 import Script from "next/script";
 import { useEffect } from "react";
 import MoveMapInput from "./move-map-input";
-import Tooltip from "../common/tooltip";
 // TODO: 지도 우클릭 기능 추가 (리스트 메뉴 형식, ex-로드뷰)
 
 const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
@@ -45,6 +45,25 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
     fetch();
   }, []);
 
+  useEffect(() => {
+    if (!window.ReactNativeWebView) return;
+    const handleMessage = (e: any) => {
+      const data = JSON.parse(e.data);
+
+      if (data.latitude && data.longitude) {
+        setMyLocation({ lat: data.latitude, lng: data.longitude });
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    document.addEventListener("message", handleMessage);
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+      document.removeEventListener("message", handleMessage);
+    };
+  });
+
   const handleLoadMap = () => {
     window.kakao.maps.load(() => {
       const mapContainer = document.getElementById("map");
@@ -69,6 +88,10 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   };
 
   const handleGps = () => {
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage("gps-permission");
+      return;
+    }
     if (!map || !myLocation) {
       const setPosition = (position: GeolocationPosition) => {
         setMyLocation({
