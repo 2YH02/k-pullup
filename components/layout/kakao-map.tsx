@@ -46,12 +46,21 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   }, []);
 
   useEffect(() => {
-    if (!window.ReactNativeWebView) return;
+    if (!window.ReactNativeWebView || !map) return;
     const handleMessage = (e: any) => {
       const data = JSON.parse(e.data);
 
       if (data.latitude && data.longitude) {
         setMyLocation({ lat: data.latitude, lng: data.longitude });
+
+        const latLng = new window.kakao.maps.LatLng(
+          data.latitude,
+          data.longitude
+        );
+
+        setCurLocation({ lat: data.latitude, lng: data.longitude });
+
+        map.setCenter(latLng);
       }
     };
 

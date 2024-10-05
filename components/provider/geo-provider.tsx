@@ -39,6 +39,7 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
     };
 
     if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage("gps-permission");
       const handleMessage = (e: any) => {
         const data = JSON.parse(e.data);
 
