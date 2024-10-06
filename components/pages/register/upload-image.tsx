@@ -1,4 +1,3 @@
-import BottomFixedButton from "@common/bottom-fixed-button";
 import Button from "@common/button";
 import GrowBox from "@common/grow-box";
 import Section from "@common/section";
@@ -187,7 +186,28 @@ const UploadImage = ({
       <GrowBox />
 
       {withButton && (
-        <BottomFixedButton
+        // <BottomFixedButton
+        //   onClick={() => {
+        //     if (initPhotos) {
+        //       const imageData = initPhotos.map((image) => image.file as File);
+        //       next(imageData);
+        //     } else {
+        //       next(null);
+        //     }
+        //   }}
+        //   disabled={loading}
+        //   className="flex items-center justify-center h-12"
+        //   containerStyle="px-0"
+        // >
+        //   {loading ? (
+        //     <LoadingIcon size="sm" className="text-white m-0" />
+        //   ) : !initPhotos || initPhotos.length <= 0 ? (
+        //     "이미지 없이 위치 생성하기"
+        //   ) : (
+        //     "위치 생성하기"
+        //   )}
+        // </BottomFixedButton>
+        <Button
           onClick={() => {
             if (initPhotos) {
               const imageData = initPhotos.map((image) => image.file as File);
@@ -197,8 +217,6 @@ const UploadImage = ({
             }
           }}
           disabled={loading}
-          className="flex items-center justify-center h-12"
-          containerStyle="px-0"
         >
           {loading ? (
             <LoadingIcon size="sm" className="text-white m-0" />
@@ -207,7 +225,7 @@ const UploadImage = ({
           ) : (
             "위치 생성하기"
           )}
-        </BottomFixedButton>
+        </Button>
       )}
     </Section>
   );

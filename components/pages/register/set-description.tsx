@@ -1,4 +1,4 @@
-import BottomFixedButton from "@common/bottom-fixed-button";
+import Button from "@common/button";
 import GrowBox from "@common/grow-box";
 import Section from "@common/section";
 import Text from "@common/text";
@@ -37,7 +37,7 @@ const SetDescription = ({
       </div>
       <GrowBox />
 
-      <BottomFixedButton
+      {/* <BottomFixedButton
         onClick={() => {
           next(description === "" ? null : description);
         }}
@@ -45,7 +45,15 @@ const SetDescription = ({
         containerStyle="px-0"
       >
         {description === "" ? "설명 없이 다음으로" : "다음"}
-      </BottomFixedButton>
+      </BottomFixedButton> */}
+
+      <Button
+        onClick={() => {
+          next(description === "" ? null : description);
+        }}
+      >
+        {description === "" ? "설명 없이 다음으로" : "다음"}
+      </Button>
     </Section>
   );
 };

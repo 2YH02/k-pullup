@@ -1,5 +1,4 @@
 import type { KaKaoMapMouseEvent, KakaoMarker } from "@/types/kakao-map.types";
-import BottomFixedButton from "@common/bottom-fixed-button";
 import Button from "@common/button";
 import GrowBox from "@common/grow-box";
 import Section from "@common/section";
@@ -71,7 +70,7 @@ const SelectLocation = ({
   };
 
   return (
-    <Section className="h-full pb-0 flex flex-col">
+    <Section className="h-full pb-0 flex flex-col pt-0">
       <div className="flex flex-col  items-center web:mt-10">
         {position.lat && position.lng ? (
           <div className="w-[130px] h-[130px] translate-y-5 select-none">
@@ -113,7 +112,7 @@ const SelectLocation = ({
 
       <GrowBox />
 
-      {viewButton && (
+      {/* {viewButton && (
         <BottomFixedButton
           onClick={() => {
             next({
@@ -127,6 +126,19 @@ const SelectLocation = ({
         >
           다음
         </BottomFixedButton>
+      )} */}
+      {viewButton && (
+        <Button
+          onClick={() => {
+            next({
+              latitude: position.lat as number,
+              longitude: position.lng as number,
+            });
+          }}
+          disabled={!position.lat || !position.lng}
+        >
+          다음
+        </Button>
       )}
     </Section>
   );

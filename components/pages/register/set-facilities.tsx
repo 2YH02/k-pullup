@@ -1,4 +1,4 @@
-import BottomFixedButton from "@common/bottom-fixed-button";
+import Button from "@common/button";
 import GrowBox from "@common/grow-box";
 import Section from "@common/section";
 import Text from "@common/text";
@@ -68,13 +68,14 @@ const SetFacilities = ({
 
       <GrowBox />
 
-      <BottomFixedButton
+      {/* <BottomFixedButton
         onClick={next}
         className="flex items-center justify-center h-12"
         containerStyle="px-0"
       >
         다음
-      </BottomFixedButton>
+      </BottomFixedButton> */}
+      <Button onClick={next}>다음</Button>
     </Section>
   );
 };

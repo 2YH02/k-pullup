@@ -430,6 +430,7 @@ const RegisterClient = ({
       withNav={registerValue.step === 4 ? false : true}
       className={registerValue.step === 0 ? "duration-300" : ""}
       dragable={false}
+      bodyStyle={deviceType === "ios-mobile-app" ? "pb-0 mb-24" : "pb-0 mb-2"}
       deviceType={deviceType}
     >
       {registerValue.step === 0 && (
