@@ -56,10 +56,10 @@ const SigninPage = ({ searchParams }: PageProps) => {
           className="w-[90%] min-w-[300px] h-12 rounded-lg bg-[#FFDB6D] flex items-center justify-center
           web:text-lg mb-4"
         >
-          <div className="flex items-center justify-center w-12 h-12 shrink-0">
+          <div className="absolute left-10 flex items-center justify-center w-12 h-12 shrink-0">
             <img src="/kakao-logo.svg" alt="카카오 로고" className="" />
           </div>
-          <div className="w-32 text-[#3D1200]">카카오 로그인</div>
+          <div className="w-full text-center text-[#3D1200]">카카오 로그인</div>
         </Link>
 
         <Link
@@ -67,10 +67,10 @@ const SigninPage = ({ searchParams }: PageProps) => {
           className="w-[90%] min-w-[300px] h-12 rounded-lg bg-[#1FBB64] flex items-center justify-center
           web:text-lg text-white mb-4"
         >
-          <div className="flex items-center justify-center w-12 h-12 shrink-0">
+          <div className="absolute left-10 flex items-center justify-center w-12 h-12 shrink-0">
             <img src="/naver-logo.svg" alt="네이버 로고" className="" />
           </div>
-          <div className="w-32 text-white">네이버 로그인</div>
+          <div className="w-full text-center text-white">네이버 로그인</div>
         </Link>
 
         <Link
@@ -79,10 +79,10 @@ const SigninPage = ({ searchParams }: PageProps) => {
           web:text-lg border border-solid border-grey"
           replace
         >
-          <div className="flex items-center justify-center w-12 h-12 shrink-0">
+          <div className="absolute left-10 flex items-center justify-center w-12 h-12 shrink-0">
             <img src="/google-logo.svg" alt="구글 로고" className="" />
           </div>
-          <div className="w-32 text-black">구글 로그인</div>
+          <div className="w-full text-center text-black">구글 로그인</div>
         </Link>
 
         <Link
