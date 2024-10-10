@@ -17,6 +17,7 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
   const {
     myLocation,
     curLocation,
+    myLocationPrev,
     setRegion,
     setMyLocation,
     setCurLocation,
@@ -76,29 +77,24 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
     }
   }, [setMyLocation, setGeoLocationError]);
 
-  // TODO: 사용자 위치 이동 지도 움직임 금지 이후 코드 제거 필요
-  // useEffect(() => {
-  //   if (!map) return;
-  //   if (
-  //     myLocation &&
-  //     curLocation.lat === 37.566535 &&
-  //     curLocation.lng === 126.9779692
-  //   ) {
-  //     const moveLatLon = new window.kakao.maps.LatLng(
-  //       myLocation.lat,
-  //       myLocation.lng
-  //     );
+  useEffect(() => {
+    if (!map) return;
+    if (myLocation && !myLocationPrev) {
+      const moveLatLon = new window.kakao.maps.LatLng(
+        myLocation.lat,
+        myLocation.lng
+      );
 
-  //     setCurLocation({
-  //       lat: myLocation.lat,
-  //       lng: myLocation.lng,
-  //     });
+      setCurLocation({
+        lat: myLocation.lat,
+        lng: myLocation.lng,
+      });
 
-  //     if (!pathname.startsWith("/pullup")) {
-  //       map.setCenter(moveLatLon);
-  //     }
-  //   }
-  // }, [myLocation, map]);
+      if (!pathname.startsWith("/pullup")) {
+        map.setCenter(moveLatLon);
+      }
+    }
+  }, [myLocation, map]);
 
   useEffect(() => {
     if (!map || !myLocation) return;
