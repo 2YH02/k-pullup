@@ -39,7 +39,7 @@ const SigninPage = ({ searchParams }: PageProps) => {
       <Section className="flex flex-col items-center justify-start pb-0">
         <div className="w-36 h-36 rounded-3xl overflow-hidden">
           <Image
-            src="/signinimg.webp"
+            src="/logo.png"
             alt="로그인"
             width={0}
             height={0}
