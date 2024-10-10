@@ -13,7 +13,7 @@ import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
 import { LocateFixedIcon } from "lucide-react";
 import Script from "next/script";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import MoveMapInput from "./move-map-input";
 // TODO: 지도 우클릭 기능 추가 (리스트 메뉴 형식, ex-로드뷰)
 
@@ -28,6 +28,8 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const { setCount } = useImageCountStore();
 
   const { openAlert } = useAlertStore();
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -71,7 +73,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
       window.removeEventListener("message", handleMessage);
       document.removeEventListener("message", handleMessage);
     };
-  });
+  }, []);
 
   const handleLoadMap = () => {
     window.kakao.maps.load(() => {
@@ -102,6 +104,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
       return;
     }
     if (!map || !myLocation) {
+      setLoading(true);
       const setPosition = (position: GeolocationPosition) => {
         setMyLocation({
           lat: position.coords.latitude,
@@ -150,6 +153,8 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
       } else {
         setGeoLocationError("위치 정보 제공 안됨");
       }
+
+      setLoading(false);
       return;
     }
 
@@ -163,7 +168,9 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const isMobileApp =
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
 
-  const style = isMobileApp ? "mo:top-[100px]" : "";
+  const style = isMobileApp
+    ? "mo:top-[100px] active:bg-grey-light active:dark:bg-grey-dark"
+    : "hover:bg-grey-light hover:dark:bg-grey-dark";
 
   if (!isMounted) {
     return (
@@ -181,12 +188,19 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
         src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_APP_KEY}&libraries=clusterer,services&autoload=false`}
         onLoad={handleLoadMap}
       />
+      {loading && (
+        <div className="z-[60] absolute top-0 left-0 w-dvw h-dvh bg-[#ffffffb2] flex items-center justify-center">
+          <div>
+            <LoadingIcon className="m-0" />
+          </div>
+        </div>
+      )}
       <div id="map" className="relative w-full h-dvh">
         <Tooltip
           as="button"
           title="내 위치"
           className={cn(
-            "absolute top-16 right-5 p-1 rounded-md z-[28] mo:z-[4] mo:top-16 bg-white shadow-simple dark:bg-black hover:bg-grey-light hover:dark:bg-grey-dark",
+            "absolute top-16 right-5 p-1 rounded-md z-[28] mo:z-[4] mo:top-16 bg-white shadow-simple dark:bg-black",
             style
           )}
           position="left"

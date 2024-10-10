@@ -125,7 +125,7 @@ const Button = ({
     fullClass,
     "rounded",
     "focus:outline-none select-none",
-    !disabled && "hover:bg-opacity-75"
+    !disabled && "active:bg-opacity-75"
   );
 
   return (
