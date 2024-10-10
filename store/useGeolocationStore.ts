@@ -17,7 +17,6 @@ interface Region {
 
 interface GeolocationState {
   region: Region | null;
-  myLocationPrev: Location | null;
   myLocation: Location | null;
   curLocation: Location;
   geoLocationError: null | string;
@@ -30,10 +29,6 @@ interface GeolocationState {
 const useGeolocationStore = create<GeolocationState>()((set) => ({
   region: null,
   /**
-   * 이전 유저 위치
-   */
-  myLocationPrev: null,
-  /**
    * 현재 유저 위치
    */
   myLocation: null,
@@ -42,8 +37,7 @@ const useGeolocationStore = create<GeolocationState>()((set) => ({
    */
   curLocation: { lat: 37.566535, lng: 126.9779692 },
   geoLocationError: null,
-  setMyLocation: (myLocation) =>
-    set((prev) => ({ myLocation, myLocationPrev: prev.myLocation })),
+  setMyLocation: (myLocation) => set({ myLocation }),
   setCurLocation: (curLocation) => set({ curLocation }),
   setRegion: (region: Region) => set({ region }),
   setGeoLocationError: (error) => set({ geoLocationError: error }),

@@ -17,7 +17,6 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
   const {
     myLocation,
     curLocation,
-    myLocationPrev,
     setRegion,
     setMyLocation,
     setCurLocation,
@@ -30,6 +29,8 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
   const [myLocateOverlay, setMyLocateOverlay] = useState<CustomOverlay | null>(
     null
   );
+
+  const [locationMove, setLocationMove] = useState(true);
 
   useEffect(() => {
     const setPosition = (position: GeolocationPosition) => {
@@ -79,7 +80,7 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
 
   useEffect(() => {
     if (!map) return;
-    if (myLocation && !myLocationPrev) {
+    if (myLocation && locationMove) {
       const moveLatLon = new window.kakao.maps.LatLng(
         myLocation.lat,
         myLocation.lng
@@ -92,9 +93,10 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
 
       if (!pathname.startsWith("/pullup")) {
         map.setCenter(moveLatLon);
+        setLocationMove(false);
       }
     }
-  }, [myLocation, map]);
+  }, [myLocation, map, locationMove]);
 
   useEffect(() => {
     if (!map || !myLocation) return;
