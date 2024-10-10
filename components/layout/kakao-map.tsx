@@ -100,8 +100,8 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
 
   const handleGps = () => {
     if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage("gps-permission");
       if (myLocation && map) {
-        window.ReactNativeWebView.postMessage("gps-permission");
         const latLng = new window.kakao.maps.LatLng(
           myLocation.lat,
           myLocation.lng
