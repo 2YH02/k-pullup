@@ -99,8 +99,17 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   };
 
   const handleGps = () => {
-    if (window.ReactNativeWebView) {
+    if (window.ReactNativeWebView && myLocation && map) {
       window.ReactNativeWebView.postMessage("gps-permission");
+      const latLng = new window.kakao.maps.LatLng(
+        myLocation.lat,
+        myLocation.lng
+      );
+
+      setCurLocation({ lat: myLocation.lat, lng: myLocation.lng });
+
+      map.setCenter(latLng);
+
       return;
     }
     if (!map || !myLocation) {
