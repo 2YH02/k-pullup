@@ -157,6 +157,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
             setGeoLocationError("위치 정보 제공 안됨");
           }
         );
+        setLoading(false);
 
         return () => {
           navigator.geolocation.clearWatch(watchId);
