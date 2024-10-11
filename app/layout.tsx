@@ -59,6 +59,8 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
+  viewport:
+    "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
   title: "대한민국 철봉 지도",
   keywords: "철봉지도,위치등록,철봉정보,채팅,위치검색,관리,철봉찾기",
   description:
