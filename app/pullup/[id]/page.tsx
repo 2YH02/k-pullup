@@ -1,4 +1,5 @@
 import { type Device } from "@/app/mypage/page";
+import { formatDate } from "@/lib/format-date";
 import Badge from "@common/badge";
 import Divider from "@common/divider";
 import Section from "@common/section";
@@ -136,7 +137,8 @@ const PullupPage = async ({ params }: { params: Params }) => {
           markerId={marker.markerId}
           isAdmin={marker.isChulbong || false}
         />
-        <div className="flex items-center justify-between mt-4">
+        <Text className="mt-2 text-grey dark:text-[#999]" typography="t7">최종 수정일: {formatDate(marker.updatedAt)}</Text>
+        <div className="flex items-center justify-between">
           <div>
             <Link href={`/pullup/${id}/report`} className="mr-2">
               <Text typography="t7" className="underline">
