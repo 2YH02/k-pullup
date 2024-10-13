@@ -9,6 +9,7 @@ import { AlertTriangleIcon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Proposal } from "../mypage/link-list";
+import locateVerify from "@/lib/api/marker/locate-verify";
 
 interface SelectLocationProps {
   next: ({
@@ -34,15 +35,14 @@ const SelectLocation = ({
 
   const [viewButton, setViewButton] = useState(true);
 
-  // const [location, setLocation] = useState<{
-  //   latitude: number | null;
-  //   longitude: number | null;
-  // }>({ latitude: null, longitude: null });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!map || !marker) return;
 
     const handleMapClick = (e: KaKaoMapMouseEvent) => {
+      setErrorMessage("");
       const latlng = e.latLng;
 
       marker.setVisible(true);
@@ -67,6 +67,33 @@ const SelectLocation = ({
     }
     setViewButton(false);
     setCurHeight(sheetHeight.STEP_1.height);
+  };
+
+  const handleNext = async () => {
+    if (!position.lat || !position.lng) return;
+    setLoading(true);
+    const res = await locateVerify(position.lat, position.lng);
+
+    if (res.error) {
+      if (res.error === "there is a marker already nearby") {
+        setErrorMessage("주변에 이미 철봉이 있습니다.");
+      } else if (res.error.includes("marker is in restricted area")) {
+        setErrorMessage("위치 등록이 제한된 구역입니다.");
+      } else if (res.error === "operation is only allowed within South Korea") {
+        setErrorMessage("위치는 대한민국에만 등록 가능합니다.");
+      } else {
+        setErrorMessage("잠시 후 다시 시도해주세요.");
+      }
+
+      setLoading(false);
+      return;
+    }
+
+    setLoading(false);
+    next({
+      latitude: position.lat as number,
+      longitude: position.lng as number,
+    });
   };
 
   return (
@@ -108,34 +135,19 @@ const SelectLocation = ({
             사전 안내 없이 삭제될 수 있습니다.
           </Text>
         </div>
+        {errorMessage !== "" && (
+          <Text typography="t7" className="text-red mt-5">
+            {errorMessage}
+          </Text>
+        )}
       </div>
 
       <GrowBox />
 
-      {/* {viewButton && (
-        <BottomFixedButton
-          onClick={() => {
-            next({
-              latitude: position.lat as number,
-              longitude: position.lng as number,
-            });
-          }}
-          disabled={!position.lat || !position.lng}
-          className="flex items-center justify-center h-12 animate-transparent opacity-0"
-          containerStyle="px-0"
-        >
-          다음
-        </BottomFixedButton>
-      )} */}
       {viewButton && (
         <Button
-          onClick={() => {
-            next({
-              latitude: position.lat as number,
-              longitude: position.lng as number,
-            });
-          }}
-          disabled={!position.lat || !position.lng}
+          onClick={handleNext}
+          disabled={!position.lat || !position.lng || loading}
         >
           다음
         </Button>
