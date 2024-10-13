@@ -25,6 +25,7 @@ const MyreportPage = async () => {
         errorTitle="요청한 받은 장소가 없습니다."
         hasBackButton
         fullHeight
+        deviceType={deviceType}
       />
     );
   }

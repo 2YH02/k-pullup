@@ -28,6 +28,7 @@ const RankingPage = async () => {
         hasBackButton
         errorTitle="로그인 후 위치를 저장하고 관리해보세요!"
         returnUrl="/mypage/bookmark"
+        deviceType={deviceType}
       />
     );
   }
@@ -38,6 +39,7 @@ const RankingPage = async () => {
         headerTitle="저장한 장소"
         hasBackButton
         errorTitle="저장된 위치가 없습니다."
+        deviceType={deviceType}
       />
     );
   }

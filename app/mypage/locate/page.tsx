@@ -37,7 +37,7 @@ const RankingPage = async () => {
   }
 
   if (!markers || markers.markers.length <= 0) {
-    return <NotFound />;
+    return <NotFound deviceType={deviceType} />;
   }
 
   return (

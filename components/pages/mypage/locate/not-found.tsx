@@ -1,12 +1,13 @@
 "use client";
 
+import { type Device } from "@/app/mypage/page";
 import Button from "@common/button";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import { useRouter } from "next/navigation";
 
-const NotFound = () => {
+const NotFound = ({ deviceType }: { deviceType: Device }) => {
   const router = useRouter();
 
   return (
@@ -16,6 +17,7 @@ const NotFound = () => {
       prevClick={() => {
         router.replace("/mypage");
       }}
+      deviceType={deviceType}
     >
       <Section className="mt-10">
         <Text display="block" textAlign="center" className="mb-5">
