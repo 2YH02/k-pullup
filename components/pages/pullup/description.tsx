@@ -97,8 +97,8 @@ const Description = ({ description, markerId, isAdmin }: DescriptionProps) => {
   }
 
   return (
-    <div>
-      <Text typography="t6" className="break-all">
+    <div className="flex">
+      <Text typography="t6" className="break-all mr-2">
         {descriptionValue || "작성된 설명이 없습니다."}
       </Text>
       {isAdmin && (
