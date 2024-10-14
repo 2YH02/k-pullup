@@ -8,6 +8,7 @@ import Text from "@common/text";
 import PinIcon from "@icons/pin-icon";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+// TODO: 주변 검색 무한스크롤 넣기
 
 interface AroundSearchProps {
   address: string;
@@ -25,6 +26,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [click, setClick] = useState(false);
 
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
@@ -86,21 +88,32 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
     if (data.error || data.message) {
       setIsLoading(false);
       setMarkers([]);
+      setClick(true);
       return;
     }
 
     setMarkers(data.markers);
     setTotalPages(data.totalPages);
     setIsLoading(false);
+    setClick(true);
   };
 
   return (
     <Section>
       <SectionTitle title="주변 위치 탐색" />
       <div className="flex justify-between items-center">
-        <Text display="block" className="break-all mr-6" typography="t6">
-          {address} 주변 철봉
-        </Text>
+        <div>
+          <Text
+            className="break-all mr-[6px] text-primary-dark"
+            fontWeight="bold"
+            typography="t6"
+          >
+            {address}
+          </Text>
+          <Text className="break-all mr-6" typography="t6">
+            주변 철봉
+          </Text>
+        </div>
         <Text display="block">{distance}m</Text>
       </div>
       <div>
@@ -127,7 +140,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
       </div>
 
       <div>
-        {markers ? (
+        {markers && markers.length > 0 ? (
           <>
             {markers?.map((marker, index) => {
               return (
@@ -154,9 +167,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
             )}
           </>
         ) : (
-          <>
-            <Text className="mt-5">주변에 철봉이 없습니다</Text>
-          </>
+          <>{click && <Text className="mt-5">주변에 철봉이 없습니다</Text>}</>
         )}
       </div>
     </Section>

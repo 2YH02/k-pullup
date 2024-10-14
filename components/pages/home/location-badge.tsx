@@ -5,6 +5,7 @@ import LocationIcon from "@icons/location-icon";
 import useGeolocationStore from "@store/useGeolocationStore";
 
 const LocationBadge = () => {
+  // TODO: 주소 가져오기 이후 훅 분리 필요 (search/around-client 에서 사용 중)
   const { region, geoLocationError } = useGeolocationStore();
 
   if (!region || geoLocationError) {

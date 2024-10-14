@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { type Device } from "../mypage/page";
 import { Trash2 } from "lucide-react";
+import Button from "@/components/common/button";
 
 export interface SearchData {
   address: string;
@@ -86,8 +87,29 @@ const SearchClient = ({
         <SearchList result={result} />
       ) : (
         <>
+          <Section>
+            <Text
+              className="mb-2"
+              typography="t5"
+              display="block"
+              fontWeight="bold"
+            >
+              원하는 주소에 철봉이 있는지 확인해 보세요.
+            </Text>
+            <Text typography="t6" display="block">
+              철봉이 없을 경우, 주변 지역을 검색하여 철봉 위치를 확인할 수
+              있습니다.
+            </Text>
+            <Button
+              className="mt-2"
+              size="sm"
+              onClick={() => router.push("/search/around")}
+            >
+              주변 검색
+            </Button>
+          </Section>
           {searches.length > 0 && (
-            <Section className="mt-3">
+            <Section>
               <div className="flex justify-between items-center">
                 <SectionTitle title="최근 검색" />
                 <button onClick={() => clearSearches()}>
@@ -126,20 +148,6 @@ const SearchClient = ({
               </ul>
             </Section>
           )}
-          <Section>
-            <Text
-              className="mb-2"
-              typography="t5"
-              display="block"
-              fontWeight="bold"
-            >
-              원하는 주소에 철봉이 있는지 확인해 보세요.
-            </Text>
-            <Text typography="t6" display="block">
-              철봉이 없을 경우, 주변 지역을 검색하여 철봉 위치를 확인할 수
-              있습니다.
-            </Text>
-          </Section>
         </>
       )}
     </SideMain>

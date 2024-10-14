@@ -63,11 +63,11 @@ const AroundMarkerCarousel = () => {
     );
   }
 
-  if (geolocationError) {
+  if (geolocationError || !data || data.length === 0) {
     return (
       <Section>
         <SectionTitle title="내 주변 철봉" />
-        <div className="flex flex-col justify-around h-[160px]">
+        <div className="flex flex-col justify-around h-[100px]">
           <div className="mb-2">
             <Text display="block">
               현재 위치 정보가 제공되고 있지 않습니다.
@@ -76,7 +76,7 @@ const AroundMarkerCarousel = () => {
           </div>
           <Button
             onClick={() => {
-              router.push("/search");
+              router.push("/search/around");
             }}
             size="sm"
             className="w-32"
