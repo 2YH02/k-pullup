@@ -163,6 +163,7 @@ const UploadImage = ({
                   <Button
                     size="sm"
                     onClick={() => {
+                      setErrorMessage("");
                       deleteInintPhotos(image.id as string);
                     }}
                     className="mt-1"
@@ -216,6 +217,7 @@ const UploadImage = ({
               next(null);
             }
           }}
+          className="flex items-center justify-center h-12"
           disabled={loading}
         >
           {loading ? (

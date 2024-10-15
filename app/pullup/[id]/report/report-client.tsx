@@ -2,7 +2,8 @@
 
 import { type Device } from "@/app/mypage/page";
 import { Marker } from "@/types/marker.types";
-import BottomFixedButton from "@common/bottom-fixed-button";
+import Button from "@common/button";
+import GrowBox from "@common/grow-box";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
@@ -53,6 +54,13 @@ const ReportClient = ({
     }));
   };
 
+  const setLoadingTrue = () => {
+    setLoading(true);
+  };
+  const setLoadingFalse = () => {
+    setLoading(false);
+  };
+
   const onSubmit = async () => {
     setLoading(true);
     if (reportValue.photos.length <= 0) return;
@@ -91,33 +99,40 @@ const ReportClient = ({
   return (
     <SideMain
       headerTitle="정보 수정 요청"
-      className="flex flex-col"
       fullHeight
       hasBackButton
       deviceType={deviceType}
     >
-      <Section className="pb-0 h-40">
-        <Text className="mb-1" fontWeight="bold">
-          수정할 설명을 입력해주세요.
-        </Text>
-        <Textarea
-          placeholder="해당 위치에 대한 설명을 40자 이내로 작성해주세요."
-          value={reportValue.description}
-          onChange={handleDescChange}
-        />
-      </Section>
-      <div className="h-[calc(100%-240px)]">
-        <UploadImage
-          next={handleImageChange}
-          withButton={false}
-          title={["새로운 이미지를 추가해주세요. (필수!)"]}
-        />
-        <BottomFixedButton
-          onClick={onSubmit}
-          disabled={reportValue.photos.length <= 0 || loading}
-        >
-          수정 요청
-        </BottomFixedButton>
+      <div className="flex flex-col h-full">
+        <Section className=" pb-0">
+          <Text className="mb-1" fontWeight="bold">
+            수정할 설명을 입력해주세요.
+          </Text>
+          <Textarea
+            placeholder="해당 위치에 대한 설명을 40자 이내로 작성해주세요."
+            value={reportValue.description}
+            onChange={handleDescChange}
+          />
+        </Section>
+        <div>
+          <UploadImage
+            next={handleImageChange}
+            withButton={false}
+            title={["새로운 이미지를 추가해주세요. (필수!)"]}
+            setLoadingTrue={setLoadingTrue}
+            setLoadingFalse={setLoadingFalse}
+          />
+        </div>
+        <GrowBox />
+        <div className="px-4">
+          <Button
+            onClick={onSubmit}
+            full
+            disabled={reportValue.photos.length <= 0 || loading}
+          >
+            수정 요청
+          </Button>
+        </div>
       </div>
     </SideMain>
   );

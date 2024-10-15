@@ -19,9 +19,17 @@ interface ImageUploadProps {
   withButton?: boolean;
   title?: string[];
   next: (photos: File[] | null) => void;
+  setLoadingTrue: VoidFunction;
+  setLoadingFalse: VoidFunction;
 }
 
-const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
+const UploadImage = ({
+  withButton = true,
+  title,
+  next,
+  setLoadingFalse,
+  setLoadingTrue,
+}: ImageUploadProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [images, setImages] = useState<ImageUploadState[]>([]);
@@ -40,6 +48,7 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true);
+    setLoadingTrue();
     const suppertedFormats = [
       "image/jpeg",
       "image/png",
@@ -93,6 +102,7 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
 
     e.target.value = "";
     setLoading(false);
+    setLoadingFalse();
   };
 
   const handleBoxClick = () => {
@@ -164,6 +174,7 @@ const UploadImage = ({ withButton = true, title, next }: ImageUploadProps) => {
                 <Button
                   size="sm"
                   onClick={() => {
+                    setErrorMessage("");
                     deleteImage(image.id as string);
                   }}
                   className="mt-1"
