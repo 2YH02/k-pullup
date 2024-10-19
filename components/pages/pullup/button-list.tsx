@@ -1,7 +1,11 @@
 "use client";
 
-import { Marker } from "@/types/marker.types";
+import { type Marker } from "@/types/marker.types";
+import convertWgs from "@api/marker/convert-wgs";
 import Divider from "@common/divider";
+import IconButton from "@common/icon-button";
+import useGps from "@hooks/useGps";
+import { ArrowDownToDot } from "lucide-react";
 import BookmarkButton from "./bookmark-button";
 import ChatButton from "./chat-button";
 import DeleteButton from "./delete-button";
@@ -13,6 +17,22 @@ interface ButtonListProps {
 }
 
 const ButtonList = ({ marker }: ButtonListProps) => {
+  const { handleGps } = useGps();
+  const openLocation = async () => {
+    const myLocate = handleGps();
+    if (myLocate) {
+      const sp = await convertWgs(myLocate.lat, myLocate.lng);
+      const dst = await convertWgs(marker.latitude, marker.longitude);
+
+      if (sp && dst) {
+        let url = `https://map.kakao.com/?map_type=TYPE_MAP&target=walk&rt=${sp.X},${sp.Y},${dst.X},${dst.Y}&rt1=내 위치&rt2=${marker.address}`;
+
+        // kakaomap://route?sp=37.53723,127.00551&ep=37.49795,127.027637&by=FOOT
+        window.open(url, "_blank");
+      }
+    }
+  };
+
   return (
     <div className="flex border-t border-solid border-grey-light dark:border-grey-dark">
       <BookmarkButton
@@ -35,6 +55,13 @@ const ButtonList = ({ marker }: ButtonListProps) => {
           <DeleteButton markerId={marker.markerId} />
         </>
       )}
+      <Divider className="w-[1px] my-2" />
+      <IconButton
+        icon={<ArrowDownToDot size={26} color="#f9b4ab" />}
+        text="길찾기"
+        className="flex-1"
+        onClick={openLocation}
+      />
     </div>
   );
 };
