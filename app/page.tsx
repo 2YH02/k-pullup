@@ -13,6 +13,8 @@ import SearchInput from "@pages/home/search-input";
 import { headers } from "next/headers";
 import { type Device } from "./mypage/page";
 
+// TODO: 마커 삭제 후 등록하기 눌러서 그 위치 찍어놈 -> 다른 탭 -> 탭 돌아옴 현재위치 가있음
+
 const Home = async () => {
   const images = await newPictures();
 

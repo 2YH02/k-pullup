@@ -7,7 +7,6 @@ import IconButton from "@common/icon-button";
 import useGps from "@hooks/useGps";
 import { ArrowDownToDot } from "lucide-react";
 import BookmarkButton from "./bookmark-button";
-import ChatButton from "./chat-button";
 import DeleteButton from "./delete-button";
 import RoadviewButton from "./roadview-button";
 import ShareButton from "./share-button";
@@ -40,21 +39,7 @@ const ButtonList = ({ marker }: ButtonListProps) => {
         favorited={marker.favorited || false}
       />
       <Divider className="w-[1px] my-2" />
-      <ShareButton
-        markerId={marker.markerId}
-        lat={marker.latitude}
-        lng={marker.longitude}
-      />
-      <Divider className="w-[1px] my-2" />
-      <ChatButton markerId={marker.markerId} />
-      <Divider className="w-[1px] my-2" />
       <RoadviewButton lat={marker.latitude} lng={marker.longitude} />
-      {marker.isChulbong && (
-        <>
-          <Divider className="w-[1px] my-2" />
-          <DeleteButton markerId={marker.markerId} />
-        </>
-      )}
       <Divider className="w-[1px] my-2" />
       <IconButton
         icon={<ArrowDownToDot size={26} color="#f9b4ab" />}
@@ -62,6 +47,18 @@ const ButtonList = ({ marker }: ButtonListProps) => {
         className="flex-1"
         onClick={openLocation}
       />
+      <Divider className="w-[1px] my-2" />
+      <ShareButton
+        markerId={marker.markerId}
+        lat={marker.latitude}
+        lng={marker.longitude}
+      />
+      {marker.isChulbong && (
+        <>
+          <Divider className="w-[1px] my-2" />
+          <DeleteButton markerId={marker.markerId} />
+        </>
+      )}
     </div>
   );
 };

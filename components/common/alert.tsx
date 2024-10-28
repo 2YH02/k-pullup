@@ -9,10 +9,11 @@ import Text from "./text";
 
 interface Props {
   open?: boolean;
-  title: React.ReactNode;
+  title?: React.ReactNode;
   description?: React.ReactNode;
   buttonLabel?: string;
   cancel?: boolean;
+  contents?: React.ReactNode;
   onClick?: VoidFunction;
   onClickAsync?: () => Promise<void>;
 }
@@ -23,6 +24,7 @@ const Alert = ({
   description,
   buttonLabel = "확인",
   cancel,
+  contents,
   onClick,
   onClickAsync,
 }: Props) => {
@@ -45,6 +47,19 @@ const Alert = ({
       onClick();
     }
   };
+
+  if (contents) {
+    return (
+      <Dimmed onClose={closeAlert}>
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 p-6
+        overflow-hidden bg-white dark:bg-black rounded-lg z-40"
+        >
+          {contents}
+        </div>
+      </Dimmed>
+    );
+  }
 
   return (
     <Dimmed onClose={closeAlert}>
