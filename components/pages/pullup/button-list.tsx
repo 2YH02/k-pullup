@@ -6,12 +6,17 @@ import BookmarkButton from "./bookmark-button";
 import DeleteButton from "./delete-button";
 import RoadviewButton from "./roadview-button";
 import ShareButton from "./share-button";
+import IconButton from "@/components/common/icon-button";
+import { Users2Icon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface ButtonListProps {
   marker: Marker;
 }
 
 const ButtonList = ({ marker }: ButtonListProps) => {
+  const router = useRouter();
+
   return (
     <div className="flex border-t border-solid border-grey-light dark:border-grey-dark">
       <BookmarkButton
@@ -20,6 +25,15 @@ const ButtonList = ({ marker }: ButtonListProps) => {
       />
       <Divider className="w-[1px] my-2" />
       <RoadviewButton lat={marker.latitude} lng={marker.longitude} />
+      <Divider className="w-[1px] my-2" />
+      <div className="relative flex-1">
+        <IconButton
+          icon={<Users2Icon size={25} className="stroke-primary" />}
+          text="모먼트"
+          className="w-full"
+          onClick={() => router.push(`/pullup/${marker.markerId}/moment`)}
+        />
+      </div>
       <Divider className="w-[1px] my-2" />
       <ShareButton
         markerId={marker.markerId}

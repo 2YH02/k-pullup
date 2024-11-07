@@ -31,11 +31,13 @@ const ListItem = ({
           onClick ? "w-full" : ""
         } rounded-lg border border-solid 
           border-grey-light dark:border-none dark:bg-black-light mb-4 ${
-            hover ? "web:shadow-simple-primary" : ""
+            hover ? "shadow-simple-primary" : ""
           }`}
         onClick={onClick}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
+        onTouchStart={() => setHover(true)}
+        onTouchEnd={() => setHover(false)}
       >
         {children}
 
