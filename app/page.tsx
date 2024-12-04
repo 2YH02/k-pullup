@@ -7,16 +7,17 @@ import AroundMarkerCarousel from "@pages/home/around-marker-carousel";
 import ArticleCarousel from "@pages/home/article-carousel";
 import IconLinkList from "@pages/home/icon-link-list";
 import LocationBadge from "@pages/home/location-badge";
+import MomentList from "@pages/home/moment-list";
 import NewImageSection from "@pages/home/new-image-section";
 import Players from "@pages/home/players";
 import SearchInput from "@pages/home/search-input";
 import { headers } from "next/headers";
 import { type Device } from "./mypage/page";
-
-// TODO: 마커 삭제 후 등록하기 눌러서 그 위치 찍어놈 -> 다른 탭 -> 탭 돌아옴 현재위치 가있음
+import getAllMoment from "@/lib/api/moment/get-all-moment";
 
 const Home = async () => {
   const images = await newPictures();
+  const moment = await getAllMoment();
 
   const headersList = headers();
   const userAgent = headersList.get("user-agent");
@@ -30,6 +31,10 @@ const Home = async () => {
       </Section>
 
       <SearchInput deviceType={deviceType} />
+
+      <Section className="py-0">
+        <MomentList data={moment || []} />
+      </Section>
 
       <Section>
         <ArticleCarousel />
