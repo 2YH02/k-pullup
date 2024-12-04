@@ -59,7 +59,7 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
       };
     } else {
       if (navigator.geolocation) {
-        const watchId = navigator.geolocation.watchPosition(
+        navigator.geolocation.getCurrentPosition(
           (position) => {
             setPosition(position);
           },
@@ -68,10 +68,6 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
             setGeoLocationError("위치 정보 제공 안됨");
           }
         );
-
-        return () => {
-          navigator.geolocation.clearWatch(watchId);
-        };
       } else {
         setGeoLocationError("위치 정보 제공 안됨");
       }

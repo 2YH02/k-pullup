@@ -99,7 +99,6 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   };
 
   const handleGps = () => {
-    console.log(1);
     setLoading(true);
     if (window.ReactNativeWebView) {
       window.ReactNativeWebView.postMessage("gps-permission");
