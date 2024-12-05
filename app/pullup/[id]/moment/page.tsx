@@ -10,7 +10,7 @@ const MomentPage = async ({ params }: { params: { id: string } }) => {
   const headersList = headers();
   const userAgent = headersList.get("user-agent");
 
-  const data = await getMomentForMarker(6969);
+  const data = await getMomentForMarker(~~id);
 
   const deviceType: Device = getDeviceType(userAgent as string);
   return (

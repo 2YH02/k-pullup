@@ -96,7 +96,7 @@ const MomentClient = ({
       />
     );
   }
-
+  // TODO: 뒤로가기 시 replace pullupID로
   return (
     <SideMain
       headerTitle="모먼트"
