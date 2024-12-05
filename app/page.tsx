@@ -32,9 +32,9 @@ const Home = async () => {
 
       <SearchInput deviceType={deviceType} />
 
-      <Section className="py-0">
+      {/* <Section className="py-0">
         <MomentList data={moment || []} />
-      </Section>
+      </Section> */}
 
       <Section>
         <ArticleCarousel />
