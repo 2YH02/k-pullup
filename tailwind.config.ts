@@ -57,11 +57,17 @@ const config: Config = {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        "gradient-animate": {
+          "0%": { "background-position": "0% 50%" },
+          "50%": { "background-position": "100% 50%" },
+          "100%": { "background-position": "0% 50%" },
+        },
       },
       animation: {
         grow: "grow 0.1s ease-in-out forwards",
         ripple: "ripple 1.5s infinite",
         transparent: "transparent .8s ease-in-out forwards",
+        "gradient-animate": "gradient-animate 5s ease infinite",
       },
     },
   },

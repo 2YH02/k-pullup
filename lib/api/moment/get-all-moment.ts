@@ -5,7 +5,9 @@ const getAllMoment = async () => {
 
   const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
 
-  const response = await fetchData(`${url}/markers/stories`);
+  const response = await fetchData(`${url}/markers/stories`, {
+    cache: "no-store",
+  });
 
   if (!response.ok) throw new Error("에러");
 

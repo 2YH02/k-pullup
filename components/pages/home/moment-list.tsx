@@ -65,24 +65,72 @@ const MomentList = ({ data }: { data: Moment[] }) => {
     setCurMoment(moment);
   };
 
+  const nextMoment = () => {
+    if (!curMoment) return;
+    let i = data.findIndex((moment) => curMoment.storyID === moment.storyID);
+    if (i === data.length - 1) setCurMoment(data[0]);
+    else setCurMoment(data[i + 1]);
+  };
+  const prevMoment = () => {
+    if (!curMoment) return;
+    let i = data.findIndex((moment) => curMoment.storyID === moment.storyID);
+    if (i === 0) setCurMoment(data[data.length - 1]);
+    else setCurMoment(data[i - 1]);
+  };
+
+  const handleClickNext = (e: MouseEvent) => {
+    const divElement = e.currentTarget;
+    const clickX = e.nativeEvent.offsetX;
+    const divWidth = divElement.clientWidth;
+
+    if (clickX < divWidth / 2) {
+      prevMoment();
+    } else {
+      nextMoment();
+    }
+  };
+
   if (viewMoment && curMoment) {
     return (
       <div className="absolute mo:fixed top-0 left-0 flex flex-col w-full h-full bg-black z-50 web:rounded-lg">
+        <div className="flex gap-1 p-1">
+          {data.map((moment) => {
+            if (curMoment.storyID === moment.storyID) {
+              return (
+                <span
+                  key={moment.storyID}
+                  className="grow bg-grey-light h-[2px] rounded-lg"
+                />
+              );
+            } else {
+              return (
+                <span
+                  key={moment.storyID}
+                  className="grow bg-grey h-[2px] rounded-lg"
+                />
+              );
+            }
+          })}
+        </div>
         <div className="shrink-0 flex items-center justify-between pl-2 pr-4 h-10">
           <span className="text-white">{curMoment.username}</span>
           <button onClick={() => setViewMoment(false)}>
             <XIcon color="white" />
           </button>
         </div>
-        <div className="grow relative w-full h-full">
-          <Image
-            src={curMoment.photoURL}
-            fill
-            alt={curMoment.caption}
-            className="object-contain"
-          />
+        <div className="flex flex-col w-full h-full" onClick={handleClickNext}>
+          <div className="grow relative w-full h-full">
+            <Image
+              src={curMoment.photoURL}
+              fill
+              alt={curMoment.caption}
+              className="object-contain"
+            />
+          </div>
+          <div className="w-full text-white p-4 text-wrap break-words">
+            {curMoment.caption}
+          </div>
         </div>
-        <div className="w-full text-white p-4 text-wrap break-words">{curMoment.caption}</div>
       </div>
     );
   }
@@ -101,11 +149,11 @@ const MomentList = ({ data }: { data: Moment[] }) => {
         {data.map((moment) => (
           <button
             key={`${moment.caption} ${moment.createdAt}`}
-            className="relative shrink-0 bg-rainbow-gradient rounded-full w-14 h-14"
+            className="relative shrink-0 bg-rainbow-gradient rounded-full w-12 h-12 bg-[length:200%_200%] animate-gradient-animate"
             onClick={() => handleViewMoment(moment)}
           >
             <div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50px] h-[50px] bg-white rounded-full
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 bg-white rounded-full
               border-2 border-solid border-white dark:border-black"
               style={{
                 backgroundImage: `url(${moment.photoURL})`,

@@ -1,4 +1,5 @@
 import newPictures from "@api/marker/new-pictures";
+import getAllMoment from "@api/moment/get-all-moment";
 import Divider from "@common/divider";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
@@ -13,7 +14,6 @@ import Players from "@pages/home/players";
 import SearchInput from "@pages/home/search-input";
 import { headers } from "next/headers";
 import { type Device } from "./mypage/page";
-import getAllMoment from "@/lib/api/moment/get-all-moment";
 
 const Home = async () => {
   const images = await newPictures();
@@ -32,9 +32,9 @@ const Home = async () => {
 
       <SearchInput deviceType={deviceType} />
 
-      {/* <Section className="py-0">
+      <Section className="py-0">
         <MomentList data={moment || []} />
-      </Section> */}
+      </Section>
 
       <Section>
         <ArticleCarousel />
