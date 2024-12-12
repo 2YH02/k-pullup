@@ -1,11 +1,17 @@
 "use client";
 
+import Skeleton from "@/components/common/skeleton";
+import type { Marker } from "@/types/marker.types";
+import markerDetail from "@api/marker/marker-detail";
 import type { Moment } from "@api/moment/get-moment-for-marker";
 import { XIcon } from "lucide-react";
 import Image from "next/image";
-import { MouseEvent, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 
 const MomentList = ({ data }: { data: Moment[] }) => {
+  const rounter = useRouter();
+
   const sliderRef = useRef<HTMLDivElement>(null);
   const isDown = useRef<boolean>(false);
   const startX = useRef<number>(0);
@@ -14,6 +20,21 @@ const MomentList = ({ data }: { data: Moment[] }) => {
   const [style, setStyle] = useState({ transform: "translateX(0px)" });
   const [viewMoment, setViewMoment] = useState(false);
   const [curMoment, setCurMoment] = useState<Moment | null>(null);
+
+  const [curLocate, setCurLocate] = useState<Marker | null>(null);
+
+  useEffect(() => {
+    if (!curMoment) return;
+    const fetch = async () => {
+      const data = await markerDetail({ id: curMoment.markerID });
+
+      if (data) {
+        setCurLocate(data);
+      }
+    };
+
+    fetch();
+  }, [curMoment]);
 
   let animationFrameId: number;
 
@@ -67,12 +88,14 @@ const MomentList = ({ data }: { data: Moment[] }) => {
 
   const nextMoment = () => {
     if (!curMoment) return;
+    setCurLocate(null);
     let i = data.findIndex((moment) => curMoment.storyID === moment.storyID);
     if (i === data.length - 1) setCurMoment(data[0]);
     else setCurMoment(data[i + 1]);
   };
   const prevMoment = () => {
     if (!curMoment) return;
+    setCurLocate(null);
     let i = data.findIndex((moment) => curMoment.storyID === moment.storyID);
     if (i === 0) setCurMoment(data[data.length - 1]);
     else setCurMoment(data[i - 1]);
@@ -119,12 +142,30 @@ const MomentList = ({ data }: { data: Moment[] }) => {
           </button>
         </div>
         <div className="flex flex-col w-full h-full" onClick={handleClickNext}>
+          <div className="flex flex-col items-center h-12">
+            <div className="h-6 w-full text-grey-light text-center text-sm text-wrap break-words">
+              {curLocate ? (
+                curLocate.address
+              ) : (
+                <Skeleton className="mx-auto w-2/3 h-5" />
+              )}
+            </div>
+            <button
+              className="text-grey text-xs hover:underline"
+              onClick={(e) => {
+                e.stopPropagation();
+                rounter.push(`/pullup/${curMoment.markerID}`);
+              }}
+            >
+              위치 자세히보기
+            </button>
+          </div>
           <div className="grow relative w-full h-full">
             <Image
               src={curMoment.photoURL}
               fill
               alt={curMoment.caption}
-              className="object-contain"
+              className="object-contain z-10"
             />
           </div>
           <div className="w-full text-white p-4 text-wrap break-words">
