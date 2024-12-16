@@ -1,9 +1,10 @@
 "use client";
 
-import Skeleton from "@/components/common/skeleton";
 import type { Marker } from "@/types/marker.types";
 import markerDetail from "@api/marker/marker-detail";
 import type { Moment } from "@api/moment/get-moment-for-marker";
+import Skeleton from "@common/skeleton";
+import { decodeBlurhash, pixelsToDataUrl } from "@lib/decode-hash";
 import { XIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -22,6 +23,8 @@ const MomentList = ({ data }: { data: Moment[] }) => {
   const [curMoment, setCurMoment] = useState<Moment | null>(null);
 
   const [curLocate, setCurLocate] = useState<Marker | null>(null);
+
+  const [imageSrc, setImageSrc] = useState<string[]>([]);
 
   useEffect(() => {
     if (!curMoment) return;
@@ -113,6 +116,22 @@ const MomentList = ({ data }: { data: Moment[] }) => {
     }
   };
 
+  useEffect(() => {
+    const width = 500;
+    const height = 500;
+
+    const pixelsMap = data.map((moment) => {
+      return decodeBlurhash(moment.blurhash, width, height);
+    });
+
+    if (!pixelsMap) return;
+    const urlMap = pixelsMap.map((pixels) => {
+      return pixelsToDataUrl(pixels, width, height);
+    });
+
+    setImageSrc(urlMap);
+  }, [data]);
+
   if (viewMoment && curMoment) {
     return (
       <div className="absolute mo:fixed top-0 left-0 flex flex-col w-full h-full bg-black z-50 web:rounded-lg">
@@ -187,7 +206,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
         onMouseMove={handleMouseMove}
         style={style}
       >
-        {data.map((moment) => (
+        {data.map((moment, i) => (
           <button
             key={`${moment.caption} ${moment.createdAt}`}
             className="relative shrink-0 bg-rainbow-gradient rounded-full w-12 h-12 bg-[length:200%_200%] animate-gradient-animate"
@@ -197,7 +216,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 bg-white rounded-full
               border-2 border-solid border-white dark:border-black"
               style={{
-                backgroundImage: `url(${moment.photoURL})`,
+                backgroundImage: `url(${imageSrc[i]})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
               }}

@@ -1,6 +1,7 @@
 import fetchData from "@lib/fetchData";
 
 export interface Moment {
+  blurhash:string;
   username: string;
   caption: string;
   photoURL: string;
