@@ -1,7 +1,7 @@
 import fetchData from "@lib/fetchData";
 
 export interface Moment {
-  blurhash:string;
+  blurhash: string;
   username: string;
   caption: string;
   photoURL: string;
@@ -10,6 +10,7 @@ export interface Moment {
   storyID: number;
   markerID: number;
   userID: number;
+  address: string;
 }
 
 const getMomentForMarker = async (markerId: number) => {

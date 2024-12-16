@@ -1,14 +1,17 @@
 "use client";
 
-import type { Marker } from "@/types/marker.types";
-import markerDetail from "@api/marker/marker-detail";
 import type { Moment } from "@api/moment/get-moment-for-marker";
-import Skeleton from "@common/skeleton";
 import { decodeBlurhash, pixelsToDataUrl } from "@lib/decode-hash";
 import { XIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MouseEvent, useEffect, useRef, useState } from "react";
+
+const getCity = (address: string): string => {
+  if (!address) return "";
+  const city = address.split(" ")[1].replace(/시/g, "");
+  return city;
+};
 
 const MomentList = ({ data }: { data: Moment[] }) => {
   const rounter = useRouter();
@@ -22,22 +25,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
   const [viewMoment, setViewMoment] = useState(false);
   const [curMoment, setCurMoment] = useState<Moment | null>(null);
 
-  const [curLocate, setCurLocate] = useState<Marker | null>(null);
-
   const [imageSrc, setImageSrc] = useState<string[]>([]);
-
-  useEffect(() => {
-    if (!curMoment) return;
-    const fetch = async () => {
-      const data = await markerDetail({ id: curMoment.markerID });
-
-      if (data) {
-        setCurLocate(data);
-      }
-    };
-
-    fetch();
-  }, [curMoment]);
 
   let animationFrameId: number;
 
@@ -91,14 +79,12 @@ const MomentList = ({ data }: { data: Moment[] }) => {
 
   const nextMoment = () => {
     if (!curMoment) return;
-    setCurLocate(null);
     let i = data.findIndex((moment) => curMoment.storyID === moment.storyID);
     if (i === data.length - 1) setCurMoment(data[0]);
     else setCurMoment(data[i + 1]);
   };
   const prevMoment = () => {
     if (!curMoment) return;
-    setCurLocate(null);
     let i = data.findIndex((moment) => curMoment.storyID === moment.storyID);
     if (i === 0) setCurMoment(data[data.length - 1]);
     else setCurMoment(data[i - 1]);
@@ -117,8 +103,8 @@ const MomentList = ({ data }: { data: Moment[] }) => {
   };
 
   useEffect(() => {
-    const width = 500;
-    const height = 500;
+    const width = 100;
+    const height = 100;
 
     const pixelsMap = data.map((moment) => {
       return decodeBlurhash(moment.blurhash, width, height);
@@ -163,11 +149,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
         <div className="flex flex-col w-full h-full" onClick={handleClickNext}>
           <div className="flex flex-col items-center h-12">
             <div className="h-6 w-full text-grey-light text-center text-sm text-wrap break-words">
-              {curLocate ? (
-                curLocate.address
-              ) : (
-                <Skeleton className="mx-auto w-2/3 h-5" />
-              )}
+              {curMoment.address}
             </div>
             <button
               className="text-grey text-xs hover:underline"
@@ -207,21 +189,26 @@ const MomentList = ({ data }: { data: Moment[] }) => {
         style={style}
       >
         {data.map((moment, i) => (
-          <button
-            key={`${moment.caption} ${moment.createdAt}`}
-            className="relative shrink-0 bg-rainbow-gradient rounded-full w-12 h-12 bg-[length:200%_200%] animate-gradient-animate"
-            onClick={() => handleViewMoment(moment)}
-          >
-            <div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 bg-white rounded-full
+          <div className="relative">
+            <button
+              key={`${moment.caption} ${moment.createdAt}`}
+              className="relative shrink-0 bg-rainbow-gradient rounded-full w-12 h-12 bg-[length:200%_200%] animate-gradient-animate"
+              onClick={() => handleViewMoment(moment)}
+            >
+              <div className="absolute top-1/2 left-1/2 text-white font-bold text-xs z-50 -translate-x-1/2 -translate-y-1/2">
+                {getCity(moment.address)}
+              </div>
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 bg-white rounded-full
               border-2 border-solid border-white dark:border-black"
-              style={{
-                backgroundImage: `url(${imageSrc[i]})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            ></div>
-          </button>
+                style={{
+                  backgroundImage: `url(${imageSrc[i]})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "",
+                }}
+              ></div>
+            </button>
+          </div>
         ))}
       </div>
     </div>
