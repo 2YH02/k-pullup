@@ -189,9 +189,11 @@ const MomentList = ({ data }: { data: Moment[] }) => {
         style={style}
       >
         {data.map((moment, i) => (
-          <div className="relative">
+          <div
+            className="relative"
+            key={`${moment.caption} ${moment.createdAt}`}
+          >
             <button
-              key={`${moment.caption} ${moment.createdAt}`}
               className="relative shrink-0 bg-rainbow-gradient rounded-full w-12 h-12 bg-[length:200%_200%] animate-gradient-animate"
               onClick={() => handleViewMoment(moment)}
             >
