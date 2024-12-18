@@ -1,5 +1,6 @@
 "use client";
 
+import Text from "@/components/common/text";
 import type { Moment } from "@api/moment/get-moment-for-marker";
 import { decodeBlurhash, pixelsToDataUrl } from "@lib/decode-hash";
 import { XIcon } from "lucide-react";
@@ -9,7 +10,7 @@ import { MouseEvent, useEffect, useRef, useState } from "react";
 
 const getCity = (address: string): string => {
   if (!address) return "";
-  const city = address.split(" ")[1].replace(/시/g, "");
+  const city = address.split(" ")[1];
   return city;
 };
 
@@ -190,16 +191,13 @@ const MomentList = ({ data }: { data: Moment[] }) => {
       >
         {data.map((moment, i) => (
           <div
-            className="relative"
+            className="flex flex-col justify-center items-center"
             key={`${moment.caption} ${moment.createdAt}`}
           >
             <button
               className="relative shrink-0 bg-rainbow-gradient rounded-full w-12 h-12 bg-[length:200%_200%] animate-gradient-animate"
               onClick={() => handleViewMoment(moment)}
             >
-              <div className="absolute top-1/2 left-1/2 text-white font-bold text-xs z-50 -translate-x-1/2 -translate-y-1/2">
-                {getCity(moment.address)}
-              </div>
               <div
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 bg-white rounded-full
               border-2 border-solid border-white dark:border-black"
@@ -210,6 +208,9 @@ const MomentList = ({ data }: { data: Moment[] }) => {
                 }}
               ></div>
             </button>
+            <Text display="block" textAlign="center" typography="t7">
+              {getCity(moment.address)}
+            </Text>
           </div>
         ))}
       </div>
