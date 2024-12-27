@@ -14,6 +14,7 @@ import Players from "@pages/home/players";
 import SearchInput from "@pages/home/search-input";
 import { headers } from "next/headers";
 import { type Device } from "./mypage/page";
+import NoticeSlide from "@/components/pages/home/notice-slide";
 
 const Home = async () => {
   const images = await newPictures();
@@ -31,6 +32,10 @@ const Home = async () => {
       </Section>
 
       <SearchInput deviceType={deviceType} />
+
+      <Section className="py-0">
+        <NoticeSlide />
+      </Section>
 
       <Section className="py-0">
         <MomentList data={moment || []} />
