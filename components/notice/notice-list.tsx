@@ -100,11 +100,12 @@ const NoticeList = ({ tab }: NoticeListProps) => {
             </button>
             {notice.active && (
               <ReactMarkdown
-                children={notice.content}
                 rehypePlugins={[rehypeRaw]}
                 remarkPlugins={[remarkGfm]}
                 className="text-sm dark:text-grey-light"
-              />
+              >
+                {notice.content}
+              </ReactMarkdown>
             )}
           </div>
         );
