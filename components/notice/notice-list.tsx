@@ -13,7 +13,7 @@ export type Notice = {
   category: "업데이트" | "일반";
   title: string;
   content: string;
-  createdAd: string;
+  createdAt: string;
 };
 
 export type NoticeWithActive = Notice & {
@@ -87,7 +87,7 @@ const NoticeList = ({ tab }: NoticeListProps) => {
                   </Text>
                 </div>
                 <Text typography="t7" className="text-grey dark:text-grey">
-                  {notice.createdAd}
+                  {notice.createdAt}
                 </Text>
               </div>
               <div className="p-3">
