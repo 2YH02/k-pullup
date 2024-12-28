@@ -102,7 +102,7 @@ const NoticeList = ({ tab }: NoticeListProps) => {
               <ReactMarkdown
                 rehypePlugins={[rehypeRaw]}
                 remarkPlugins={[remarkGfm]}
-                className="text-sm dark:text-grey-light"
+                className="text-sm text-black dark:text-grey-light"
               >
                 {notice.content}
               </ReactMarkdown>
