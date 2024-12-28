@@ -37,7 +37,7 @@ const Home = async () => {
         <NoticeSlide />
       </Section>
 
-      <Section className="py-0">
+      <Section className="pb-0">
         <MomentList data={moment || []} />
       </Section>
 
