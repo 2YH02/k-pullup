@@ -10,11 +10,11 @@ import IconLinkList from "@pages/home/icon-link-list";
 import LocationBadge from "@pages/home/location-badge";
 import MomentList from "@pages/home/moment-list";
 import NewImageSection from "@pages/home/new-image-section";
+import NoticeSlide from "@pages/home/notice-slide";
 import Players from "@pages/home/players";
 import SearchInput from "@pages/home/search-input";
 import { headers } from "next/headers";
 import { type Device } from "./mypage/page";
-import NoticeSlide from "@/components/pages/home/notice-slide";
 
 const Home = async () => {
   const images = await newPictures();

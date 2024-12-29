@@ -76,7 +76,7 @@ const NoticeList = ({ tab }: NoticeListProps) => {
               <div className="grow">
                 <div>
                   <Text
-                    className="text-coral dark:text-coral"
+                    className="text-coral dark:text-coral mr-1"
                     fontWeight="bold"
                     typography="t6"
                   >
