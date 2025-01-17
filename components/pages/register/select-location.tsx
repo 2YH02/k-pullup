@@ -83,7 +83,6 @@ const SelectLocation = ({
         setErrorMessage("위치는 대한민국에만 등록 가능합니다.");
       } else if (res.error === "invalid latitude (Must be between 32 and 39)") {
         setErrorMessage("위치 등록이 제한된 구역입니다.");
-        // TODO: 에러 확인하기
       } else {
         setErrorMessage("잠시 후 다시 시도해주세요.");
       }
