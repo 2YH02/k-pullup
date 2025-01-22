@@ -4,7 +4,13 @@ import LoadingIcon from "@icons/loading-icon";
 import getDeviceType from "@lib/get-device-type";
 import { headers } from "next/headers";
 
-const PageLoading = ({ fullHeight = false }: { fullHeight?: boolean }) => {
+const PageLoading = ({
+  fullHeight = false,
+  withNav = true,
+}: {
+  fullHeight?: boolean;
+  withNav?: boolean;
+}) => {
   const headersList = headers();
   const userAgent = headersList.get("user-agent");
 
@@ -13,7 +19,7 @@ const PageLoading = ({ fullHeight = false }: { fullHeight?: boolean }) => {
     <SideMain
       headerTitle=" "
       fullHeight={fullHeight}
-      withNav
+      withNav={withNav}
       deviceType={deviceType}
     >
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">

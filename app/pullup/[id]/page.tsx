@@ -86,7 +86,6 @@ const PullupPage = async ({ params }: { params: Params }) => {
     <SideMain
       headerTitle={marker.address}
       hasBackButton
-      withNav
       referrer={!!referrer}
       deviceType={deviceType}
     >
