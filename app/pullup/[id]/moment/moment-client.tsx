@@ -84,7 +84,7 @@ const MomentClient = ({
   };
 
   const handleBoxClick = () => {
-    if (!user) {
+    if (user?.error || !user) {
       openAlert({
         title: "접근 권한이 없습니다.",
         description: "로그인 후 다시 시도해 주세요.",
@@ -115,7 +115,7 @@ const MomentClient = ({
       />
     );
   }
-  // TODO: 뒤로가기 시 replace pullupID로
+
   return (
     <SideMain
       headerTitle="모먼트"
