@@ -12,7 +12,7 @@ import cn from "@lib/cn";
 import useScrollRefStore from "@store/useScrollRefStore";
 import useSheetHeightStore from "@store/useSheetHeightStore";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SheetHeightProvider from "../provider/sheet-height-provider";
 import Text from "./text";
 
