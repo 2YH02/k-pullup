@@ -16,7 +16,7 @@ import useAlertStore from "@store/useAlertStore";
 import useUserStore from "@store/useUserStore";
 import { Trash2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 
 interface CommentsProps {
   markerId: number;
@@ -72,7 +72,13 @@ const Comments = ({ markerId }: CommentsProps) => {
         return;
       }
 
-      setComments(data.comments);
+      setComments(
+        data.comments.sort((a, b) => {
+          if (a.username === "k-pullup") return -1;
+          if (b.username === "k-pullup") return 1;
+          return 0;
+        })
+      );
       setTotalPages(data.totalPages);
       setCommentsLoading(false);
     };
@@ -194,93 +200,87 @@ const Comments = ({ markerId }: CommentsProps) => {
           <Text typography="t6">우와, 댓글이 하나도 없네요 ㅜㅜ</Text>
         </div>
       )}
-      {comments
-        .sort((a, b) => {
-          if (a.username === "k-pullup") return -1;
-          if (b.username === "k-pullup") return 1;
-          return 0;
-        })
-        .map((comment, index) => {
-          if (comment.username === "k-pullup") {
-            return (
-              <ListItem
-                key={comment.commentId}
-                icon={
-                  user?.chulbong || user?.userId === comment.userId ? (
-                    <Trash2Icon className="stroke-grey-dark" size={20} />
-                  ) : undefined
-                }
-                onIconClick={async () => {
-                  if (
-                    deleteLoading ||
-                    !user ||
-                    (!user.chulbong && user.userId !== comment.userId)
-                  )
-                    return;
-                  await handleDelete(comment.commentId);
-                }}
-              >
-                <ListContents
-                  title={comment.commentText}
-                  subTitle={formatDate(comment.postedAt)}
-                />
-
-                <ListRight>
-                  <Text typography="t7">{comment.username}</Text>
-                </ListRight>
-              </ListItem>
-            );
-          }
+      {comments.map((comment, index) => {
+        if (comment.username === "k-pullup") {
           return (
-            <div
+            <ListItem
               key={comment.commentId}
-              className={cn("p-2", {
-                "border-b border-solid border-[#ddd]":
-                  index !== comments.length - 1,
-              })}
+              icon={
+                user?.chulbong || user?.userId === comment.userId ? (
+                  <Trash2Icon className="stroke-grey-dark" size={20} />
+                ) : undefined
+              }
+              onIconClick={async () => {
+                if (
+                  deleteLoading ||
+                  !user ||
+                  (!user.chulbong && user.userId !== comment.userId)
+                )
+                  return;
+                await handleDelete(comment.commentId);
+              }}
             >
-              <div className="flex justify-between items-center">
-                <Text typography="t6" fontWeight="bold">
-                  {comment.username}
-                </Text>
+              <ListContents
+                title={comment.commentText}
+                subTitle={formatDate(comment.postedAt)}
+              />
 
-                {(user?.chulbong || user?.userId === comment.userId) && (
-                  <button
-                    onClick={() => {
-                      if (
-                        deleteLoading ||
-                        !user ||
-                        (!user.chulbong && user.userId !== comment.userId)
-                      )
-                        return;
-
-                      openAlert({
-                        title: "삭제",
-                        description: "작성하신 댓글을 삭제하시겠습니까?",
-                        onClick: async () => {
-                          await handleDelete(comment.commentId);
-                        },
-                        cancel: true,
-                      });
-                    }}
-                  >
-                    <Trash2Icon className="stroke-grey-dark" size={14} />
-                  </button>
-                )}
-              </div>
-              <div>
-                <Text className="break-all text-[15px]">
-                  {comment.commentText}
-                </Text>
-              </div>
-              <div>
-                <Text typography="t7" className="text-grey">
-                  {formatDate(comment.postedAt)}
-                </Text>
-              </div>
-            </div>
+              <ListRight>
+                <Text typography="t7">{comment.username}</Text>
+              </ListRight>
+            </ListItem>
           );
-        })}
+        }
+        return (
+          <div
+            key={comment.commentId}
+            className={cn("p-2", {
+              "border-b border-solid border-[#ddd]":
+                index !== comments.length - 1,
+            })}
+          >
+            <div className="flex justify-between items-center">
+              <Text typography="t6" fontWeight="bold">
+                {comment.username}
+              </Text>
+
+              {(user?.chulbong || user?.userId === comment.userId) && (
+                <button
+                  onClick={() => {
+                    if (
+                      deleteLoading ||
+                      !user ||
+                      (!user.chulbong && user.userId !== comment.userId)
+                    )
+                      return;
+
+                    openAlert({
+                      title: "삭제",
+                      description: "작성하신 댓글을 삭제하시겠습니까?",
+                      onClick: async () => {
+                        await handleDelete(comment.commentId);
+                      },
+                      cancel: true,
+                    });
+                  }}
+                >
+                  <Trash2Icon className="stroke-grey-dark" size={14} />
+                </button>
+              )}
+            </div>
+            <div>
+              <Text className="break-all text-[15px]">
+                {comment.commentText}
+              </Text>
+            </div>
+            <div>
+              <Text typography="t7" className="text-grey">
+                {formatDate(comment.postedAt)}
+              </Text>
+            </div>
+          </div>
+        );
+      })}
 
       {commentsLoading && <Skeleton className="w-full h-16 rounded-lg mt-4" />}
       {totalPages > currentPage && (
