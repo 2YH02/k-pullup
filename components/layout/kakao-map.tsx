@@ -95,6 +95,14 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
       };
 
       window.kakao.maps.event.addListener(map, "dragend", handleDrag);
+
+      window.kakao.maps.event.addListener(map, "click", (mouseEvent: any) => {
+        const latlng = mouseEvent.latLng;
+
+        const message = `위도: ${latlng.getLat()}, 경도: ${latlng.getLng()}`;
+
+        console.log(message);
+      });
     });
   };
 
