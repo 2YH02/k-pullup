@@ -99,7 +99,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
       window.kakao.maps.event.addListener(map, "click", (mouseEvent: any) => {
         const latlng = mouseEvent.latLng;
 
-        const message = `위도: ${latlng.getLat()}, 경도: ${latlng.getLng()}`;
+        const message = `좌표: ${latlng.getLat()}, ${latlng.getLng()}`;
 
         console.log(message);
       });
