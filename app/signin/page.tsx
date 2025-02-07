@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { type Device } from "../mypage/page";
+import KakaoLoginButton from "@/components/pages/signin/kakao-login-button";
 
 interface PageProps {
   searchParams: {
@@ -51,16 +52,7 @@ const SigninPage = ({ searchParams }: PageProps) => {
           대한민국 철봉 지도
         </Text>
 
-        <Link
-          href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/kakao`}
-          className="w-[90%] min-w-[300px] h-12 rounded-lg bg-[#FFDB6D] flex items-center justify-center
-          web:text-lg mb-4"
-        >
-          <div className="absolute left-10 flex items-center justify-center w-12 h-12 shrink-0">
-            <img src="/kakao-logo.svg" alt="카카오 로고" className="" />
-          </div>
-          <div className="w-full text-center text-[#3D1200]">카카오 로그인</div>
-        </Link>
+        <KakaoLoginButton />
 
         <Link
           href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/naver`}
