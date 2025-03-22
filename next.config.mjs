@@ -21,7 +21,7 @@ const nextConfig = {
         has: [
           {
             type: "host",
-            value: "www.k-pullup.com",
+            value: "test.k-pullup.com",
           },
         ],
         destination: "https://m.k-pullup.com/me",
@@ -32,7 +32,7 @@ const nextConfig = {
         has: [
           {
             type: "host",
-            value: "www.k-pullup.com",
+            value: "test.k-pullup.com",
           },
         ],
         destination: "https://m.k-pullup.com",
