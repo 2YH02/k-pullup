@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import SheetHeightProvider from "../provider/sheet-height-provider";
 import Text from "./text";
+import { BsBuilding, BsChatDots, BsEmojiWink, BsGeo } from "react-icons/bs";
 
 interface SideMainProps {
   withNav?: boolean;
@@ -37,26 +38,26 @@ interface SideMainProps {
 const menus = [
   {
     name: "홈",
-    icon: <HomeIcon />,
-    iconActive: <HomeIcon className="fill-white" />,
+    icon: <BsBuilding size={22} className="fill-grey" />,
+    iconActive: <BsBuilding size={22} className="fill-primary" />,
     path: "/",
   },
   {
-    name: "채팅",
-    icon: <ChatBubbleIcon />,
-    iconActive: <ChatBubbleIcon className="fill-white" />,
-    path: "/chat",
+    name: "소셜",
+    icon: <BsChatDots size={22} className="fill-grey" />,
+    iconActive: <BsChatDots size={22} className="fill-primary" />,
+    path: "/social",
   },
   {
     name: "등록",
-    icon: <SignIcon />,
-    iconActive: <SignIcon className="fill-white" />,
+    icon: <BsGeo size={22} className="fill-grey" />,
+    iconActive: <BsGeo size={22} className="fill-primary" />,
     path: "/register",
   },
   {
     name: "내 정보",
-    icon: <UserIcon />,
-    iconActive: <UserIcon className="fill-white" />,
+    icon: <BsEmojiWink size={22} className="fill-grey" />,
+    iconActive: <BsEmojiWink size={22} className="fill-primary" />,
     path: "/mypage",
   },
 ];

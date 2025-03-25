@@ -93,12 +93,6 @@ const NavLink = ({
 
   return (
     <li className="flex grow flex-col justify-center items-center relative w-1/4 h-full z-20">
-      {isActive && (
-        <span
-          className={`absolute bg-primary shadow-dark dark:bg-grey h-12 w-12 rounded-full origin-center`}
-        />
-      )}
-
       <Link
         href={url}
         className="w-full h-full relative flex flex-col justify-center cursor-pointer"
@@ -108,10 +102,7 @@ const NavLink = ({
           typography="t7"
           display="block"
           textAlign="center"
-          fontWeight="bold"
-          className={`${
-            isActive ? "text-white" : "text-primary-dark dark:text-grey-light"
-          } z-20`}
+          className={`${isActive ? "text-primary" : "text-grey"} z-20`}
         >
           {title}
         </Text>
