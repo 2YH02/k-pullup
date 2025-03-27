@@ -12,7 +12,8 @@ const LocationBadge = () => {
     return (
       <Badge
         text="위치 정보 없음"
-        icon={<LocationIcon size={20} className="fill-primary-dark" />}
+        icon={<LocationIcon size={18} className="fill-primary" />}
+        className="border-none"
       />
     );
   }
@@ -26,8 +27,8 @@ const LocationBadge = () => {
   return (
     <Badge
       text={title as string}
-      icon={<LocationIcon size={20} className="fill-primary-dark" />}
-      className="pl-[5px]"
+      icon={<LocationIcon size={18} className="fill-primary" />}
+      className="pl-[5px] border-none"
     />
   );
 };

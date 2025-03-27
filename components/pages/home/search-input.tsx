@@ -3,8 +3,8 @@
 import { type Device } from "@/app/mypage/page";
 import Input from "@common/input";
 import Section from "@common/section";
-import SearchIcon from "@icons/search-icon";
 import cn from "@lib/cn";
+import { BsSearch } from "react-icons/bs";
 
 const SearchInput = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const isMobileApp =
@@ -21,9 +21,9 @@ const SearchInput = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
       <Input
         isInvalid={false}
         placeholder="철봉 주소 검색"
-        icon={<SearchIcon />}
+        icon={<BsSearch size={20} className="fill-[#555] dark:fill-grey-light" />}
         isSearchButton
-        className="shadow"
+        className="shadow border-grey-light"
       />
     </Section>
   );

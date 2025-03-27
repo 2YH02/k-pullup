@@ -33,7 +33,7 @@ const Home = async () => {
 
       <SearchInput deviceType={deviceType} />
 
-      <Section className="py-0">
+      <Section className="py-1">
         <NoticeSlide />
       </Section>
 

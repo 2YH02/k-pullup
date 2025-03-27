@@ -68,7 +68,7 @@ const Input = ({
   return (
     <div
       className={cn(
-        `relative w-full rounded-3xl overflow-hidden h-10 px-4 pr-10 text-base font-medium border-2
+        `relative w-full rounded-md overflow-hidden h-10 px-4 pr-10 text-base font-medium border
         bg-white dark:bg-black-light border-primary ${
           isInvalid ? "border-red dark:border-red" : "dark:border-grey"
         } ${isSearchButton ? "cursor-pointer select-none" : ""}`,
