@@ -1,17 +1,15 @@
 "use client";
 
 import { type Device } from "@/app/mypage/page";
-import Button from "@common/button";
-import GrowBox from "@common/grow-box";
 import Input from "@common/input";
-import Section from "@common/section";
 import SideMain from "@common/side-main";
-import Text from "@common/text";
+import WarningText from "@common/warning-text";
 import useInput from "@hooks/useInput";
 import LoadingIcon from "@icons/loading-icon";
+import cn from "@lib/cn";
 import { useRouter } from "next/navigation";
-import { Fragment, useEffect, useRef, useState } from "react";
-import { v4 } from "uuid";
+import { useEffect, useRef, useState } from "react";
+import { BsArrowUp } from "react-icons/bs";
 
 export interface ChatMessage {
   uid: string;
@@ -20,15 +18,7 @@ export interface ChatMessage {
   userNickname: string;
   roomID: string;
   timestamp: number;
-  isOwner: boolean;
-}
-
-export interface Chatdata {
-  msg: string;
-  name: string;
-  isOwner: boolean;
-  mid: string;
-  userid: string;
+  isOwner?: boolean;
 }
 
 interface ChatDetailClientProps {
@@ -50,16 +40,14 @@ const ChatDetailClient = ({
   const chatBox = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [connection, setConnection] = useState(false);
-
-  const [messages, setMessages] = useState<Chatdata[]>([]);
-  const [connectionMsg, setConnectionMsg] = useState("");
-
-  const [isChatError, setIsChatError] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
 
   const [subTitle, setSubTitle] = useState("");
 
   const [cid, setCid] = useState<null | string>(null);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [isConnectionError, setIsConnectionError] = useState(false);
 
   useEffect(() => {
     if (!inputRef.current) return;
@@ -67,8 +55,10 @@ const ChatDetailClient = ({
   }, [inputRef]);
 
   useEffect(() => {
-    const cid = localStorage.getItem("cid");
-    setCid(cid);
+    const cidJson = localStorage.getItem("cid");
+    if (!cidJson) return;
+    const newCid = JSON.parse(cidJson).cid;
+    setCid(newCid);
   }, []);
 
   useEffect(() => {
@@ -81,47 +71,34 @@ const ChatDetailClient = ({
     );
 
     ws.current.onopen = () => {
+      setIsLoading(false);
       setMessages([]);
-      setConnection(true);
-      setConnectionMsg(
-        "비속어 사용에 주의해주세요. 이후 서비스 사용이 제한될 수 있습니다!"
-      );
     };
 
     ws.current.onmessage = async (event) => {
       const data: ChatMessage = JSON.parse(event.data);
       if (data.userNickname === "chulbong-kr") {
         const titleArr = data.message.split(" ");
-
-        setSubTitle(`${titleArr[1]} ${titleArr[2]} ${titleArr[3]}`);
+        const subTitle = `${titleArr[1]} ${titleArr[2]} ${titleArr[3]}`;
+        setSubTitle(subTitle);
       }
 
       setMessages((prevMessages) => [
         ...prevMessages,
         {
-          msg: data.message,
-          name: data.userNickname,
-          isOwner: data.isOwner,
-          mid: data.uid,
-          userid: data.userId,
+          ...data,
         },
       ]);
     };
 
-    ws.current.onerror = (error) => {
-      setConnectionMsg(
-        "채팅방에 참여 중 에러가 발생하였습니다. 잠시 후 다시 시도해 주세요!"
-      );
-      console.error("연결 에러:", error);
-      setIsChatError(true);
+    ws.current.onerror = () => {
+      setIsLoading(false);
+      setIsConnectionError(true);
     };
 
     ws.current.onclose = () => {
-      setConnectionMsg(
-        "채팅방에 참여 중 에러가 발생하였습니다. 잠시 후 다시 시도해 주세요!"
-      );
-      console.log("연결 종료");
-      setIsChatError(true);
+      setIsLoading(false);
+      setIsConnectionError(true);
     };
 
     return () => {
@@ -155,27 +132,7 @@ const ChatDetailClient = ({
     inputRef.current?.focus();
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      handleChat();
-    }
-  };
-
-  if (!connection && !isChatError) {
-    return (
-      <SideMain
-        headerTitle={headerTitle as string}
-        fullHeight
-        hasBackButton
-        prevClick={() => router.replace("/social")}
-        deviceType={deviceType}
-      >
-        <Section className="flex items-center justify-center h-full">
-          <LoadingIcon size="lg" className="m-0" />
-        </Section>
-      </SideMain>
-    );
-  }
+  if (!cid) return null;
 
   return (
     <SideMain
@@ -186,128 +143,123 @@ const ChatDetailClient = ({
       deviceType={deviceType}
       bodyStyle="pb-0"
     >
-      <Section className="flex flex-col pb-0 h-full">
-        <Text
-          typography="t7"
-          textAlign="center"
-          display="block"
-          className="text-red dark:text-red"
-        >
-          {connectionMsg}
-        </Text>
-        {!isChatError ? (
-          <>
-            <div
-              className="flex flex-col h-full overflow-auto scrollbar-hidden"
-              ref={chatBox}
-            >
-              <GrowBox />
-              {messages.map((message) => {
-                if (message.name === "chulbong-kr") return;
-                if (message.msg?.includes("님이 입장하셨습니다.")) {
-                  return (
-                    <div
-                      key={message.mid}
-                      className="shrink-0 truncate px-5 py-2 text-center text-sm text-grey-dark"
-                    >
-                      <Text
-                        typography="t7"
-                        className="text-grey-dark dark:text-grey"
-                      >
-                        {message.name}님이 참여하였습니다.
-                      </Text>
-                    </div>
-                  );
-                }
-                if (message.msg?.includes("님이 퇴장하셨습니다.")) {
-                  return (
-                    <div
-                      key={message.mid}
-                      className="shrink-0 truncate px-5 py-2 text-center text-sm text-grey-dark"
-                    >
-                      <Text
-                        typography="t7"
-                        className="text-grey-dark dark:text-grey"
-                      >
-                        {message.name}님이 나가셨습니다.
-                      </Text>
-                    </div>
-                  );
-                }
-                return (
-                  <Fragment key={message.mid}>
-                    {message.userid === cid ? (
-                      <div className="flex flex-col items-end w-full py-2">
-                        <div className="max-w-[250px] px-5 py-1 flex items-center justify-start rounded-3xl bg-primary-dark dark:bg-slate-700 shadow-sm">
-                          <Text className="text-white">{message.msg}</Text>
-                        </div>
-                        <div className="text-xs text-grey-dark">
-                          <Text typography="t7" className="text-grey">
-                            {message.name}
-                          </Text>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-start w-full py-2">
-                        <div className="max-w-[170px] px-5 py-1 flex items-center justify-start rounded-3xl bg-primary dark:bg-slate-600 shadow-sm">
-                          <Text className="text-white">{message.msg}</Text>
-                        </div>
-                        <div className="text-xs text-grey-dark">
-                          <Text typography="t7" className="text-grey">
-                            {message.name}
-                          </Text>
-                        </div>
-                      </div>
-                    )}
-                  </Fragment>
-                );
-              })}
-            </div>
-            <div
-              className={deviceType === "ios-mobile-app" ? "pt-2 pb-8" : "py-2"}
-            >
+      {isLoading && (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <LoadingIcon size="lg" className="m-0" />
+        </div>
+      )}
+      {isConnectionError ? (
+        <div className="mt-14 text-center">
+          <div className="text-2xl font-bold mb-1">연결 실패</div>
+          <div className="text-grey text-sm">채팅방 입장에 실패하였습니다.</div>
+          <div className="text-grey text-sm">잠시 후 다시 접속해주세요.</div>
+        </div>
+      ) : (
+        <>
+          <div
+            ref={chatBox}
+            className={cn(
+              "h-[calc(100%-48px)] p-4 overflow-auto overflow-x-hidden"
+            )}
+          >
+            {messages.map((message) => {
+              return (
+                <MessageBubble
+                  key={`${message.timestamp} ${message.message} ${message.userNickname}`}
+                  message={message}
+                  cid={cid}
+                />
+              );
+            })}
+          </div>
+
+          <div className={cn("shrink-0 px-4 py-1 flex gap-4 items-center")}>
+            <div className="grow">
               <Input
-                isInvalid={false}
-                icon={<SendIcon />}
-                disabled={!connection}
-                ref={inputRef}
-                maxLength={40}
+                type="text"
+                className="h-9 bg-[#f1f1f1] dark:bg-black-light border-none"
                 value={chatValue.value}
                 onChange={chatValue.onChange}
-                onKeyDown={handleKeyPress}
-                onIconClick={handleChat}
+                placeholder="메시지를 입력해 주세요."
+                isInvalid={false}
               />
             </div>
-          </>
-        ) : (
-          <div className="mt-5 mx-auto">
-            <Button
-              onClick={() => {
-                localStorage.setItem("cid", JSON.stringify({ cid: v4() }));
-                router.refresh();
-              }}
-            >
-              새로고침
-            </Button>
+            <div>
+              <button
+                className="bg-primary rounded-full dark:bg-primary p-2"
+                onClick={handleChat}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleChat();
+                  }
+                }}
+              >
+                <BsArrowUp className="text-white" />
+              </button>
+            </div>
           </div>
-        )}
-      </Section>
+        </>
+      )}
     </SideMain>
   );
 };
 
-const SendIcon = () => {
+const MessageBubble = ({
+  message,
+  cid,
+}: {
+  message: ChatMessage;
+  cid: string;
+}) => {
+  if (message.userNickname === "chulbong-kr") return;
+  if (message.message?.includes("님이 입장하셨습니다.")) {
+    return (
+      <div className="shrink-0 truncate px-5 py-2 text-center text-grey-dark p-2">
+        <div className="text-grey text-xs">
+          {message.userNickname}님이 참여하였습니다.
+        </div>
+      </div>
+    );
+  }
+  if (message.message?.includes("님이 퇴장하셨습니다.")) {
+    return (
+      <div className="shrink-0 truncate px-5 py-2 text-center text-grey-dark p-2">
+        <div className="text-grey text-xs">
+          {message.userNickname}님이 나가셨습니다.
+        </div>
+      </div>
+    );
+  }
+
+  if (message.message?.includes("공지:")) {
+    return (
+      <WarningText className="justify-center p-2">
+        {message.message}
+      </WarningText>
+    );
+  }
   return (
-    <svg
-      viewBox="0 0 48 48"
-      xmlns="http://www.w3.org/2000/svg"
-      height="22"
-      width="22"
-      className="fill-primary dark:fill-white"
-    >
-      <path d="M4.02 42l41.98-18-41.98-18-.02 14 30 4-30 4z" />
-      <path d="M0 0h48v48h-48z" fill="none" />
-    </svg>
+    <>
+      {message.userId === cid ? (
+        <div className="flex flex-col items-end w-full p-2">
+          <div className="max-w-[90%] px-5 py-1 flex items-center justify-start rounded-3xl bg-primary dark:bg-primary-dark shadow-sm">
+            <div className="text-white text-sm">{message.message}</div>
+          </div>
+          <div className="text-xs">
+            <div className="text-[10px] mt-[2px]">{message.userNickname}</div>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col items-start w-full p-2">
+          <div className="max-w-[90%] px-5 py-1 flex items-center justify-start rounded-3xl bg-grey-light text-black-light dark:bg-grey dark:text-white shadow-sm">
+            <div className="text-sm">{message.message}</div>
+          </div>
+          <div className="text-xs">
+            <div className="text-[10px] mt-[2px]">{message.userNickname}</div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

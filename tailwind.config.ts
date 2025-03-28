@@ -37,6 +37,8 @@ const config: Config = {
         "dark-teel": "#264e70",
         "grayish-teel": "#679186",
         "pale-mint": "#679186",
+        yellow: "#E5B700",
+        "yellow-dark": "#FFF200",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
