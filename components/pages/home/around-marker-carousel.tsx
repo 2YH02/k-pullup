@@ -1,5 +1,8 @@
 "use client";
 
+import HorizontalScroll, {
+  ScrollItem,
+} from "@/components/common/horizontal-scroll";
 import closeMarker, { type CloseMarker } from "@api/marker/close-marker";
 import Button from "@common/button";
 import { Carousel, CarouselContent, CarouselItem } from "@common/carousel";
@@ -69,10 +72,12 @@ const AroundMarkerCarousel = () => {
         <SectionTitle title="내 주변 철봉" />
         <div className="flex flex-col justify-around h-[100px]">
           <div className="mb-2">
-            <Text display="block">
+            <Text display="block" typography="t6">
               현재 위치 정보가 제공되고 있지 않습니다.
             </Text>
-            <Text display="block">위치 정보 제공에 동의해주세요.</Text>
+            <Text display="block" typography="t6">
+              위치 정보 제공에 동의해주세요.
+            </Text>
           </div>
           <Button
             onClick={() => {
@@ -91,63 +96,60 @@ const AroundMarkerCarousel = () => {
   return (
     <Section>
       <SectionTitle title="내 주변 철봉" />
-      <Carousel opts={{ dragFree: true }}>
-        {!data ? (
-          <div className="flex flex-col justify-around h-[160px]">
-            <div className="mb-2">
-              <Text display="block">
-                현재 위치 주변에 2,000m 내에 철봉이 없습니다.
-              </Text>
-              <Text display="block">더 넓은 범위에서 찾아보세요!</Text>
-            </div>
-            <Button
-              onClick={() => {
-                router.push("/search");
-              }}
-              size="sm"
-              className="w-32"
-            >
-              주변 검색
-            </Button>
+      {!data ? (
+        <div className="flex flex-col justify-around h-[160px]">
+          <div className="mb-2">
+            <Text display="block" typography="t6">
+              현재 위치 주변에 2,000m 내에 철봉이 없습니다.
+            </Text>
+            <Text display="block" typography="t6">
+              더 넓은 범위에서 찾아보세요!
+            </Text>
           </div>
-        ) : (
-          <>
-            <CarouselContent className="-ml-1 gap-3 w-32 h-[160px] p-1">
-              {data.map((marker, index) => (
-                <CarouselItem
-                  className="p-0"
-                  key={`${marker.markerId}-${index}`}
-                >
-                  <button
-                    className="w-full h-full flex flex-col justify-between"
-                    onClick={() => {
-                      router.push(`/pullup/${marker.markerId}`);
-                    }}
-                  >
-                    <div className="w-[128px] h-[128px] rounded-md overflow-hidden">
-                      <Image
-                        src={
-                          marker.thumbnail ? marker.thumbnail : "/metaimg.webp"
-                        }
-                        alt={"상세"}
-                        width={0}
-                        height={0}
-                        sizes="100vw"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="flex items-center w-[120px] overflow-hidden whitespace-nowrap">
-                      <Text className="truncate" typography="t6">
-                        {splitAddress(marker.address)}
-                      </Text>
-                    </div>
-                  </button>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </>
-        )}
-      </Carousel>
+          <Button
+            onClick={() => {
+              router.push("/search");
+            }}
+            size="sm"
+            className="w-32"
+          >
+            주변 검색
+          </Button>
+        </div>
+      ) : (
+        <HorizontalScroll>
+          {data.map((marker, index) => (
+            <ScrollItem
+              className="p-0 w-32 h-[160px]"
+              key={`${marker.markerId}-${index}`}
+            >
+              <button
+                className="w-full h-full flex flex-col justify-between"
+                onClick={() => {
+                  router.push(`/pullup/${marker.markerId}`);
+                }}
+              >
+                <div className="w-[128px] h-[128px] rounded-md overflow-hidden">
+                  <Image
+                    src={marker.thumbnail ? marker.thumbnail : "/metaimg.webp"}
+                    alt={"상세"}
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    className="w-full h-full object-cover"
+                    draggable={false}
+                  />
+                </div>
+                <div className="flex items-center w-[120px] overflow-hidden whitespace-nowrap">
+                  <Text className="truncate" typography="t6">
+                    {splitAddress(marker.address)}
+                  </Text>
+                </div>
+              </button>
+            </ScrollItem>
+          ))}
+        </HorizontalScroll>
+      )}
     </Section>
   );
 };

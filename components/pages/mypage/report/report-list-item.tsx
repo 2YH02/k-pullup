@@ -71,7 +71,7 @@ const ReportListItem = ({ data, onDelete }: ReportListItemProps) => {
           <Text fontWeight="bold" className="mb-1">
             추가된 이미지
           </Text>
-          <ImageCarousel data={images} size="md" />
+          <ImageCarousel data={images} />
         </div>
       )}
 
