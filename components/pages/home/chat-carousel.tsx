@@ -92,7 +92,7 @@ const ChatCarousel = () => {
             onClick={() => handleClick(v.code)}
             className="text-left flex flex-col shrink-0 w-32 h-32 p-2 rounded-md shadow-full dark:border dark:border-solid dark:border-black-light"
           >
-            <div className="font-bold">{v.location} 채팅방</div>
+            <div className="font-bold text-black dark:text-white">{v.location} 채팅방</div>
             <div className="mt-2 text-sm text-grey-dark dark:text-grey">
               {v.message}
             </div>

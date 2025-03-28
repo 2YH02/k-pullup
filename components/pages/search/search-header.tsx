@@ -31,7 +31,7 @@ const SearchHeader = ({
       <div className="grow pr-4">
         <Input
           isInvalid={false}
-          className="rounded-md"
+          className="rounded-md border-grey-light"
           value={value}
           onChange={onChange}
           placeholder="철봉 위치 주소로 검색"

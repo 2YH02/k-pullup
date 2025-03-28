@@ -150,7 +150,7 @@ const ChatDetailClient = ({
       )}
       {isConnectionError ? (
         <div className="mt-14 text-center">
-          <div className="text-2xl font-bold mb-1">연결 실패</div>
+          <div className="text-2xl font-bold mb-1 text-black dark:text-white">연결 실패</div>
           <div className="text-grey text-sm">채팅방 입장에 실패하였습니다.</div>
           <div className="text-grey text-sm">잠시 후 다시 접속해주세요.</div>
         </div>
@@ -246,7 +246,7 @@ const MessageBubble = ({
             <div className="text-white text-sm">{message.message}</div>
           </div>
           <div className="text-xs">
-            <div className="text-[10px] mt-[2px]">{message.userNickname}</div>
+            <div className="text-[10px] mt-[2px] text-black dark:text-white">{message.userNickname}</div>
           </div>
         </div>
       ) : (
@@ -255,7 +255,7 @@ const MessageBubble = ({
             <div className="text-sm">{message.message}</div>
           </div>
           <div className="text-xs">
-            <div className="text-[10px] mt-[2px]">{message.userNickname}</div>
+            <div className="text-[10px] mt-[2px] text-black dark:text-white">{message.userNickname}</div>
           </div>
         </div>
       )}

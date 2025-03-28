@@ -81,7 +81,7 @@ const List = ({
   if (!data) {
     return (
       <div>
-        <div>랭킹에 등록되어 있는 철봉이 없습니다.</div>
+        <div className="text-black dark:text-white">랭킹에 등록되어 있는 철봉이 없습니다.</div>
       </div>
     );
   }
@@ -105,8 +105,8 @@ const List = ({
             className="flex items-center p-2 text-left active:bg-grey-light dark:active:bg-grey-dark w-full rounded-md"
             onClick={() => router.push(`/pullup/${item.markerId}`)}
           >
-            <div className="shrink-0 font-bold mr-2 w-7">{index + 1}</div>
-            <div className="grow text-sm">{item.address}</div>
+            <div className="shrink-0 font-bold mr-2 w-7 text-black dark:text-white">{index + 1}</div>
+            <div className="grow text-sm text-black dark:text-white">{item.address}</div>
             <div className="shrink-0">
               <PinIcon />
             </div>
