@@ -78,7 +78,7 @@ const Input = ({
       <input
         className={`w-full h-full focus:outline-none bg-transparent focus:border-primary-dark ${
           isSearchButton ? "cursor-pointer" : ""
-        } dark:bg-black-light dark:focus:border-grey-light text-grey dark:text-white placeholder:text-sm
+        } dark:bg-black-light dark:focus:border-grey-light text-black placeholder:text-grey dark:text-white placeholder:text-sm
         ${
           placeholderAlign === "center"
             ? "placeholder:text-center"

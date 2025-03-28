@@ -1,4 +1,6 @@
+import ArticleCarousel from "@/components/pages/home/article-carousel";
 import ChatCarousel from "@/components/pages/home/chat-carousel";
+import Players from "@/components/pages/home/players";
 import newPictures from "@api/marker/new-pictures";
 import getAllMoment from "@api/moment/get-all-moment";
 import Section, { SectionTitle } from "@common/section";
@@ -39,6 +41,10 @@ const Home = async () => {
       </Section>
 
       <Section>
+        <ArticleCarousel />
+      </Section>
+
+      <Section>
         <SectionTitle
           title="지역 채팅"
           subTitle="다른 사람들과 소통해보세요."
@@ -46,23 +52,19 @@ const Home = async () => {
         <ChatCarousel />
       </Section>
 
-      {/* <Divider className="h-2" /> */}
-
       <NewImageSection data={images} />
-
-      {/* <Divider className="h-2" /> */}
 
       <AroundMarkerCarousel />
 
-      {/* <Section>
-        <ArticleCarousel />
+      <Section>
+        <SectionTitle title="철봉 가이드" />
+        <Players />
       </Section>
 
+      {/* 
       <Section className="pt-0">
         <IconLinkList />
-      </Section>
-
-      <Divider className="h-2" /> */}
+      </Section> */}
 
       {/* <Divider className="h-2" /> */}
 

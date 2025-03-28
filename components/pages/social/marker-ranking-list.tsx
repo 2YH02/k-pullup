@@ -81,7 +81,9 @@ const List = ({
   if (!data) {
     return (
       <div>
-        <div className="text-black dark:text-white">랭킹에 등록되어 있는 철봉이 없습니다.</div>
+        <div className="text-black dark:text-white">
+          랭킹에 등록되어 있는 철봉이 없습니다.
+        </div>
       </div>
     );
   }
@@ -105,8 +107,12 @@ const List = ({
             className="flex items-center p-2 text-left active:bg-grey-light dark:active:bg-grey-dark w-full rounded-md"
             onClick={() => router.push(`/pullup/${item.markerId}`)}
           >
-            <div className="shrink-0 font-bold mr-2 w-7 text-black dark:text-white">{index + 1}</div>
-            <div className="grow text-sm text-black dark:text-white">{item.address}</div>
+            <div className="shrink-0 font-bold mr-2 w-7 text-black dark:text-white">
+              {index + 1}
+            </div>
+            <div className="grow text-sm text-black dark:text-white">
+              {item.address}
+            </div>
             <div className="shrink-0">
               <PinIcon />
             </div>
@@ -114,20 +120,20 @@ const List = ({
         );
       })}
       <div className="flex justify-center gap-3">
-        {hasMore && (
-          <button
-            onClick={loadMore}
-            className="underline text-sm text-grey-dark dark:text-grey"
-          >
-            더보기
-          </button>
-        )}
         {visibleCount > 10 && (
           <button
             onClick={resetList}
             className="underline text-sm text-grey-dark dark:text-grey"
           >
             접기
+          </button>
+        )}
+        {hasMore && (
+          <button
+            onClick={loadMore}
+            className="underline text-sm text-grey-dark dark:text-grey"
+          >
+            더보기
           </button>
         )}
       </div>
