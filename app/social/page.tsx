@@ -1,11 +1,11 @@
-import ChatCarousel from "@/components/pages/home/chat-carousel";
-import MomentList from "@/components/pages/home/moment-list";
-import MarkerRankingList from "@/components/pages/social/marker-ranking-list";
-import markerRanking from "@/lib/api/marker/marker-ranking";
-import getAllMoment from "@/lib/api/moment/get-all-moment";
+import markerRanking from "@api/marker/marker-ranking";
+import getAllMoment from "@api/moment/get-all-moment";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import getDeviceType from "@lib/get-device-type";
+import ChatCarousel from "@pages/home/chat-carousel";
+import MomentList from "@pages/home/moment-list";
+import MarkerRankingList from "@pages/social/marker-ranking-list";
 import { headers } from "next/headers";
 import { type Device } from "../mypage/page";
 
@@ -28,6 +28,10 @@ const Social = async () => {
   return (
     <SideMain headerTitle="소셜" withNav fullHeight deviceType={deviceType}>
       <Section className="pb-0">
+        {!!moment && moment.length > 0 && (
+          <SectionTitle title="모먼트" subTitle="당신의 순간을 공유해보세요." />
+        )}
+
         <MomentList data={moment || []} />
       </Section>
       <Section>

@@ -49,6 +49,10 @@ const Home = async () => {
         <IconLinkList />
       </Section>
 
+      <NewImageSection data={images} />
+
+      <AroundMarkerCarousel />
+
       <Section>
         <SectionTitle
           title="지역 채팅"
@@ -56,10 +60,6 @@ const Home = async () => {
         />
         <ChatCarousel />
       </Section>
-
-      <NewImageSection data={images} />
-
-      <AroundMarkerCarousel />
 
       <Section>
         <SectionTitle title="철봉 가이드" />

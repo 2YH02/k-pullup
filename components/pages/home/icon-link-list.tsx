@@ -27,19 +27,19 @@ const IconLinkList = () => {
           text="위치등록"
           onClick={() => router.push("/register")}
         />
-      </div>
-      <div className="flex gap-2">
-        {/* <IconButton
-          icon={<ChatBubbleIcon size={34} link />}
-          text="지역 채팅"
-          onClick={() => router.push("/chat")}
-        /> */}
         <IconButton
           icon={<ConfigIcon size={34} link />}
           text="설정"
           onClick={() => router.push("/mypage/config")}
         />
       </div>
+      {/* <div className="flex gap-2">
+        <IconButton
+          icon={<ChatBubbleIcon size={34} link />}
+          text="지역 채팅"
+          onClick={() => router.push("/chat")}
+        />
+      </div> */}
     </div>
   );
 };
