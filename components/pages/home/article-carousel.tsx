@@ -17,7 +17,7 @@ const ArticleCarousel = () => {
   const router = useRouter();
 
   const [emblaRef] = useEmblaCarousel({ loop: true }, [
-    Autoplay({ delay: 2000 }),
+    Autoplay({ delay: 4000 }),
   ]);
 
   const list: List[] = [
@@ -39,14 +39,15 @@ const ArticleCarousel = () => {
     <div className="embla" ref={emblaRef}>
       <div className="embla__container">
         {list.map((item) => (
-          <button
-            key={item.title}
-            className={`embla__slide h-28 w-full ${item.color} rounded-lg flex items-center justify-center text-lg select-none`}
-            onClick={() => router.push(item.url)}
-          >
-            {item.icon && <div className="mr-5">{item.icon}</div>}
-            <Text className="dark:text-black">{item.title}</Text>
-          </button>
+          <div key={item.title} className="embla__slide h-28 w-full px-1">
+            <button
+              className={`${item.color} rounded-lg h-full w-full flex items-center justify-center text-lg select-none`}
+              onClick={() => router.push(item.url)}
+            >
+              {item.icon && <div className="mr-5">{item.icon}</div>}
+              <Text className="dark:text-black">{item.title}</Text>
+            </button>
+          </div>
         ))}
       </div>
     </div>

@@ -7,7 +7,6 @@ import WarningText from "@common/warning-text";
 import useInput from "@hooks/useInput";
 import LoadingIcon from "@icons/loading-icon";
 import cn from "@lib/cn";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { BsArrowUp } from "react-icons/bs";
 
@@ -32,8 +31,6 @@ const ChatDetailClient = ({
   headerTitle,
   deviceType = "desktop",
 }: ChatDetailClientProps) => {
-  const router = useRouter();
-
   const chatValue = useInput("");
 
   const ws = useRef<WebSocket | null>(null);
@@ -144,7 +141,6 @@ const ChatDetailClient = ({
       headerTitle={`${headerTitle as string} ${subTitle}`}
       fullHeight
       hasBackButton
-      prevClick={() => router.replace("/social")}
       deviceType={deviceType}
       bodyStyle="pb-0"
     >

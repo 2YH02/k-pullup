@@ -1,5 +1,6 @@
 import ArticleCarousel from "@/components/pages/home/article-carousel";
 import ChatCarousel from "@/components/pages/home/chat-carousel";
+import IconLinkList from "@/components/pages/home/icon-link-list";
 import Players from "@/components/pages/home/players";
 import newPictures from "@api/marker/new-pictures";
 import getAllMoment from "@api/moment/get-all-moment";
@@ -42,6 +43,10 @@ const Home = async () => {
 
       <Section>
         <ArticleCarousel />
+      </Section>
+
+      <Section className="pt-0">
+        <IconLinkList />
       </Section>
 
       <Section>
