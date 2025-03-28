@@ -1,17 +1,14 @@
+import ChatCarousel from "@/components/pages/home/chat-carousel";
 import newPictures from "@api/marker/new-pictures";
 import getAllMoment from "@api/moment/get-all-moment";
-import Divider from "@common/divider";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import getDeviceType from "@lib/get-device-type";
 import AroundMarkerCarousel from "@pages/home/around-marker-carousel";
-import ArticleCarousel from "@pages/home/article-carousel";
-import IconLinkList from "@pages/home/icon-link-list";
 import LocationBadge from "@pages/home/location-badge";
 import MomentList from "@pages/home/moment-list";
 import NewImageSection from "@pages/home/new-image-section";
 import NoticeSlide from "@pages/home/notice-slide";
-import Players from "@pages/home/players";
 import SearchInput from "@pages/home/search-input";
 import { headers } from "next/headers";
 import { type Device } from "./mypage/page";
@@ -42,6 +39,22 @@ const Home = async () => {
       </Section>
 
       <Section>
+        <SectionTitle
+          title="지역 채팅"
+          subTitle="다른 사람들과 소통해보세요."
+        />
+        <ChatCarousel />
+      </Section>
+
+      {/* <Divider className="h-2" /> */}
+
+      <NewImageSection data={images} />
+
+      {/* <Divider className="h-2" /> */}
+
+      <AroundMarkerCarousel />
+
+      {/* <Section>
         <ArticleCarousel />
       </Section>
 
@@ -49,20 +62,14 @@ const Home = async () => {
         <IconLinkList />
       </Section>
 
-      <Divider className="h-2" />
+      <Divider className="h-2" /> */}
 
-      <NewImageSection data={images} />
+      {/* <Divider className="h-2" /> */}
 
-      <Divider className="h-2" />
-
-      <AroundMarkerCarousel />
-
-      <Divider className="h-2" />
-
-      <Section>
+      {/* <Section>
         <SectionTitle title="철봉 가이드" />
         <Players />
-      </Section>
+      </Section> */}
     </SideMain>
   );
 };

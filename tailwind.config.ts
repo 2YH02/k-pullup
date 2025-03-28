@@ -14,6 +14,10 @@ const config: Config = {
         mo: { max: "484px" },
         web: "485px",
       },
+      boxShadow: {
+        full: "rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em",
+        "inner-full": "rgba(0, 0, 0, 0.1) 0px 2px 8px 0px inset",
+      },
       colors: {
         primary: "#f9b4ab",
         "primary-dark": "#f29992",

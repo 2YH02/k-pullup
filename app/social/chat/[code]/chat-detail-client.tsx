@@ -167,7 +167,7 @@ const ChatDetailClient = ({
         headerTitle={headerTitle as string}
         fullHeight
         hasBackButton
-        prevClick={() => router.replace("/chat")}
+        prevClick={() => router.replace("/social")}
         deviceType={deviceType}
       >
         <Section className="flex items-center justify-center h-full">
@@ -182,7 +182,7 @@ const ChatDetailClient = ({
       headerTitle={`${headerTitle as string} ${subTitle}`}
       fullHeight
       hasBackButton
-      prevClick={() => router.replace("/chat")}
+      prevClick={() => router.replace("/social")}
       deviceType={deviceType}
       bodyStyle="pb-0"
     >

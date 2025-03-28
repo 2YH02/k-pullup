@@ -5,7 +5,6 @@ import HorizontalScroll, {
 } from "@/components/common/horizontal-scroll";
 import closeMarker, { type CloseMarker } from "@api/marker/close-marker";
 import Button from "@common/button";
-import { Carousel, CarouselContent, CarouselItem } from "@common/carousel";
 import Section, { SectionTitle } from "@common/section";
 import Skeleton from "@common/skeleton";
 import Text from "@common/text";
