@@ -1,6 +1,7 @@
 "use client";
 
 import Text from "@/components/common/text";
+import minutesAgo from "@/lib/minutes-ago";
 import type { Moment } from "@api/moment/get-moment-for-marker";
 import { decodeBlurhash, pixelsToDataUrl } from "@lib/decode-hash";
 import { XIcon } from "lucide-react";
@@ -120,6 +121,8 @@ const MomentList = ({ data }: { data: Moment[] }) => {
   }, [data]);
 
   if (viewMoment && curMoment) {
+    const { hours, minutes } = minutesAgo(curMoment.createdAt);
+
     return (
       <div className="absolute mo:fixed top-0 left-0 flex flex-col w-full h-full bg-black z-50 web:rounded-lg">
         <div className="flex gap-1 p-1">
@@ -142,7 +145,13 @@ const MomentList = ({ data }: { data: Moment[] }) => {
           })}
         </div>
         <div className="shrink-0 flex items-center justify-between pl-2 pr-4 h-10">
-          <span className="text-white">{curMoment.username}</span>
+          <div>
+            <span className="text-white mr-2">{curMoment.username}</span>
+            <span className="text-grey text-xs">
+              {hours > 0 && `${hours}시간`}
+              {`${minutes}분 전`}
+            </span>
+          </div>
           <button onClick={() => setViewMoment(false)}>
             <XIcon color="white" />
           </button>
