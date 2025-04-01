@@ -61,18 +61,6 @@ const Home = async () => {
         <ChatCarousel />
       </Section>
 
-      <Section>
-        <SectionTitle title="철봉 가이드" />
-        <Players />
-      </Section>
-
-      {/* 
-      <Section className="pt-0">
-        <IconLinkList />
-      </Section> */}
-
-      {/* <Divider className="h-2" /> */}
-
       {/* <Section>
         <SectionTitle title="철봉 가이드" />
         <Players />
