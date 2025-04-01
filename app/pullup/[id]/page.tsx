@@ -56,7 +56,7 @@ const PullupPage = async ({ params }: { params: Params }) => {
   const facilities = await getFacilities(~~id);
 
   if (marker.error === "Marker not found") {
-    return <NotFoud markerId={~~id} />;
+    return <NotFoud addr={marker.addr} />;
   }
 
   return (

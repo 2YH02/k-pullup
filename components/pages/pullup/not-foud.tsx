@@ -8,16 +8,16 @@ import Text from "@common/text";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const NotFoud = ({ markerId }: { markerId?: number }) => {
+const NotFoud = ({ addr }: { addr?: string }) => {
   const router = useRouter();
   const { removeItem } = useSearchStore();
 
   useEffect(() => {
-    if (markerId) {
-      removeItem(markerId);
+    if (addr) {
+      removeItem(addr);
     }
-  }, [markerId]);
-  
+  }, [addr]);
+
   return (
     <SideMain
       headerTitle="위치 상세"
