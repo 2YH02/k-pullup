@@ -178,7 +178,7 @@ const SearchClient = ({
                           {search.place && (
                             <Text
                               typography="t7"
-                              className="break-all text-grey"
+                              className="break-all text-grey dark:text-grey"
                             >
                               {search.place}
                             </Text>

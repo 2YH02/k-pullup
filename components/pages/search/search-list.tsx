@@ -117,7 +117,7 @@ const SearchList = ({ result, kakaoSearchResult }: SearchResultProps) => {
                 <Text typography="t6" className="break-all">
                   {item.address_name}
                 </Text>
-                <Text typography="t7" className="break-all text-grey">
+                <Text typography="t7" className="break-all text-grey dark:text-grey">
                   {item.place_name}
                 </Text>
               </div>
