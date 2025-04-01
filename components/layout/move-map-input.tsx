@@ -14,7 +14,7 @@ import Dimmed from "@common/dimmed";
 import CloseIcon from "@icons/close-icon";
 import Tooltip from "../common/tooltip";
 
-type KakaoPlace = {
+export type KakaoPlace = {
   address_name: string;
   category_group_code: string;
   category_group_name: string;
@@ -29,7 +29,7 @@ type KakaoPlace = {
   y: string;
 };
 
-type KakaoPagination = {
+export type KakaoPagination = {
   totalCount: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;

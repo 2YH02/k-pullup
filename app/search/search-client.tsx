@@ -1,18 +1,24 @@
 "use client";
 
 import search from "@api/search/search";
+import Button from "@common/button";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import useInput from "@hooks/useInput";
+import useMapControl from "@hooks/useMapControl";
+import type { KakaoPagination, KakaoPlace } from "@layout/move-map-input";
 import SearchHeader from "@pages/search/search-header";
-import SearchList from "@pages/search/search-list";
+import SearchList, {
+  extractMarkedText,
+  highlightText,
+  removeMarkTags,
+} from "@pages/search/search-list";
 import useSearchStore from "@store/useSearchStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BsXLg } from "react-icons/bs";
 import { type Device } from "../mypage/page";
-import { Trash2 } from "lucide-react";
-import Button from "@/components/common/button";
 
 export interface SearchData {
   address: string;
@@ -32,8 +38,10 @@ const SearchClient = ({
   const searchValue = useInput("");
 
   const { searches, clearSearches, removeItem } = useSearchStore();
+  const { move } = useMapControl();
 
   const [result, setResult] = useState<SearchData[]>([]);
+  const [kakaoSearchData, setKakaoSearchData] = useState<KakaoPlace[]>([]);
 
   const isMobileApp =
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
@@ -53,15 +61,7 @@ const SearchClient = ({
       return;
     }
     const handler = setTimeout(async () => {
-      // const locationSearch = await getSearchLoation(searchValue.value);
       const markerSearch = await search(searchValue.value);
-
-      // const data = locationSearch.documents.map((item) => {
-      //   return {
-      //     address: item.address_name,
-      //     position: { lat: item.y, lng: item.x },
-      //   };
-      // });
 
       if (markerSearch.error || markerSearch.message) {
         setResult([]);
@@ -71,7 +71,36 @@ const SearchClient = ({
       setResult([...markerSearch.markers]);
     }, 300);
 
-    return () => clearTimeout(handler);
+    // 카카오 주소 검색
+    if (searchValue.value === "") {
+      setResult([]);
+      return;
+    }
+
+    let ps = new window.kakao.maps.services.Places();
+
+    const placesSearchCB = (
+      data: KakaoPlace[],
+      status: string,
+      _: KakaoPagination
+    ) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        setKakaoSearchData([...data]);
+      } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
+        return;
+      } else if (status === window.kakao.maps.services.Status.ERROR) {
+        return;
+      }
+    };
+
+    const kakaoSearchHandler = setTimeout(async () => {
+      ps.keywordSearch(searchValue.value, placesSearchCB);
+    }, 300);
+
+    return () => {
+      clearTimeout(kakaoSearchHandler);
+      clearTimeout(handler);
+    };
   }, [searchValue.value]);
 
   return (
@@ -84,7 +113,7 @@ const SearchClient = ({
       />
 
       {result && searchValue.value.length > 0 ? (
-        <SearchList result={result} />
+        <SearchList result={result} kakaoSearchResult={kakaoSearchData} />
       ) : (
         <>
           <Section>
@@ -126,21 +155,41 @@ const SearchClient = ({
                       className="border-b border-solid dark:border-grey-dark flex"
                     >
                       <button
-                        className="flex items-center p-3 text-left w-full h-full"
+                        className="flex items-center py-3 text-left w-full h-full"
                         onClick={() => {
-                          const url = !!search.d
-                            ? `/pullup/${search.d}`
-                            : `/search?addr=${search.addr}&lat=${search.lat}&lng=${search.lng}`;
-                          router.push(url);
+                          if (search.d) {
+                            router.push(`/pullup/${search.d}`);
+                          } else {
+                            console.log(search);
+                            move({
+                              lat: Number(search.lat),
+                              lng: Number(search.lng),
+                            });
+                          }
                         }}
                       >
-                        <Text>{search.addr}</Text>
+                        <div className="flex flex-col">
+                          <Text typography="t6" className="break-all">
+                            {highlightText(
+                              removeMarkTags(search.addr as string),
+                              extractMarkedText(search.addr as string).marked
+                            )}
+                          </Text>
+                          {search.place && (
+                            <Text
+                              typography="t7"
+                              className="break-all text-grey"
+                            >
+                              {search.place}
+                            </Text>
+                          )}
+                        </div>
                       </button>
                       <button
                         className="ml-2"
-                        onClick={() => removeItem(search.d as number)}
+                        onClick={() => removeItem(search.addr as string)}
                       >
-                        <Trash2 size={17} color="#333" />
+                        <BsXLg color="#333" />
                       </button>
                     </li>
                   );

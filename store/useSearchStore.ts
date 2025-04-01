@@ -2,8 +2,9 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface SearchData {
-  addr: string;
-  d: number | null;
+  addr?: string;
+  place?: string;
+  d?: number | null;
   lat?: string | null;
   lng?: string | null;
 }
@@ -11,7 +12,7 @@ interface SearchData {
 interface SearchState {
   searches: SearchData[];
   addSearch: (data: SearchData) => void;
-  removeItem: (markerId: number) => void;
+  removeItem: (addr: string) => void;
   clearSearches: VoidFunction;
 }
 
@@ -33,10 +34,10 @@ const useSearchStore = create<SearchState>()(
           }
           return { searches: [data, ...state.searches] };
         }),
-      removeItem: (markerId: number) =>
+      removeItem: (addr: string) =>
         set((state) => {
           const newSearches = state.searches.filter((search) => {
-            return markerId !== search.d;
+            return addr !== search.addr;
           });
 
           if (newSearches) {

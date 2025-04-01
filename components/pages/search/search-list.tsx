@@ -1,22 +1,29 @@
 "use client";
 
 import { type SearchData } from "@/app/search/search-client";
-import Section from "@/components/common/section";
+import GrowBox from "@common/grow-box";
+import Section from "@common/section";
 import Text from "@common/text";
-import SearchIcon from "@icons/search-icon";
+import useMapControl from "@hooks/useMapControl";
+import PinIcon from "@icons/pin-icon";
+import { type KakaoPlace } from "@layout/move-map-input";
 import useSearchStore from "@store/useSearchStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { BsPinMapFill } from "react-icons/bs";
 
 interface SearchResultProps {
   result: SearchData[];
+  kakaoSearchResult: KakaoPlace[];
 }
 
-const SearchList = ({ result }: SearchResultProps) => {
+const SearchList = ({ result, kakaoSearchResult }: SearchResultProps) => {
   const router = useRouter();
-  const { addSearch } = useSearchStore();
 
-  if (result.length === 0) {
+  const { addSearch } = useSearchStore();
+  const { move } = useMapControl();
+
+  if (result.length === 0 && kakaoSearchResult.length === 0) {
     return (
       <Section className="flex flex-col items-center">
         <Image
@@ -35,6 +42,12 @@ const SearchList = ({ result }: SearchResultProps) => {
 
   return (
     <ul>
+      {result.length > 0 && (
+        <Text fontWeight="bold" className="px-4">
+          철봉 위치
+        </Text>
+      )}
+
       {result.map((item, index) => {
         return (
           <li
@@ -42,10 +55,10 @@ const SearchList = ({ result }: SearchResultProps) => {
             className="border-b border-solid dark:border-grey-dark"
           >
             <button
-              className="flex items-center p-3 text-left w-full h-full"
+              className="flex items-center p-2 px-4 text-left w-full h-full"
               onClick={() => {
                 addSearch({
-                  addr: removeMarkTags(item.address),
+                  addr: item.address,
                   d: item.markerId || null,
                   lat: item.position?.lat || null,
                   lng: item.position?.lng || null,
@@ -56,15 +69,62 @@ const SearchList = ({ result }: SearchResultProps) => {
                 router.push(url);
               }}
             >
-              <div className="mr-3">
-                <SearchIcon size={20} className="fill-black dark:fill-white" />
+              <div className="w-[90%]">
+                <Text typography="t6" className="break-all">
+                  {highlightText(
+                    removeMarkTags(item.address),
+                    extractMarkedText(item.address).marked
+                  )}
+                </Text>
               </div>
-              <Text>
-                {highlightText(
-                  removeMarkTags(item.address),
-                  extractMarkedText(item.address).marked
-                )}
-              </Text>
+              <GrowBox />
+              <div className="shrink-0 w-[10%] flex items-center justify-center">
+                <PinIcon />
+              </div>
+            </button>
+          </li>
+        );
+      })}
+
+      {kakaoSearchResult.length > 0 && (
+        <Text fontWeight="bold" className="px-4 pt-4">
+          지도 이동
+        </Text>
+      )}
+
+      {kakaoSearchResult.map((item) => {
+        return (
+          <li
+            key={item.id}
+            className="border-b border-solid dark:border-grey-dark"
+          >
+            <button
+              className="flex items-center p-2 px-4 text-left w-full h-full"
+              onClick={() => {
+                move({
+                  lat: Number(item.y),
+                  lng: Number(item.x),
+                });
+                addSearch({
+                  addr: item.address_name,
+                  place: item.place_name,
+                  lat: item.y || null,
+                  lng: item.x || null,
+                });
+              }}
+            >
+              <div className="w-[90%] flex flex-col">
+                <Text typography="t6" className="break-all">
+                  {item.address_name}
+                </Text>
+                <Text typography="t7" className="break-all text-grey">
+                  {item.place_name}
+                </Text>
+              </div>
+              <GrowBox />
+              <div className="shrink-0 w-[10%] flex items-center justify-center">
+                <BsPinMapFill className="fill-primary" />
+              </div>
             </button>
           </li>
         );
@@ -73,7 +133,7 @@ const SearchList = ({ result }: SearchResultProps) => {
   );
 };
 
-const extractMarkedText = (
+export const extractMarkedText = (
   input: string
 ): { marked: string[]; unmarked: string } => {
   const markRegex = /<mark>(.*?)<\/mark>/g;
@@ -89,7 +149,10 @@ const extractMarkedText = (
   };
 };
 
-const highlightText = (text: string, highlights: string[]): React.ReactNode => {
+export const highlightText = (
+  text: string,
+  highlights: string[]
+): React.ReactNode => {
   const regex = new RegExp(`(${highlights.join("|")})`, "gi");
   const parts = text.split(regex);
 
@@ -106,7 +169,7 @@ const highlightText = (text: string, highlights: string[]): React.ReactNode => {
   );
 };
 
-const removeMarkTags = (input: string): string => {
+export const removeMarkTags = (input: string): string => {
   return input.replace(/<\/?mark>/g, "");
 };
 
