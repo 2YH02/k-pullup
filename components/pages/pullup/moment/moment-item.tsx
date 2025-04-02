@@ -1,10 +1,11 @@
+import { formatDate } from "@/lib/format-date";
 import useAlertStore from "@/store/useAlertStore";
 import useUserStore from "@/store/useUserStore";
 import deleteMoment from "@api/moment/delete-moment";
 import type { Moment } from "@api/moment/get-moment-for-marker";
 import Text from "@common/text";
-import { Trash2Icon } from "lucide-react";
 import Image from "next/image";
+import { BsX } from "react-icons/bs";
 
 interface MomentItem {
   moment: Moment;
@@ -37,7 +38,23 @@ const MomentItem = ({ moment, filterMoment }: MomentItem) => {
     });
   };
   return (
-    <div className="mb-6">
+    <div className="mb-6 py-2">
+      <div className="px-2 flex items-center justify-between h-10 w-full">
+        <div className="flex flex-col">
+          <Text fontWeight="bold">{moment.username}</Text>
+          <Text typography="t7" className="text-grey">
+            {formatDate(moment.createdAt)}
+          </Text>
+        </div>
+        {user && user.userId === moment.userID && (
+          <button onClick={handledelete}>
+            <BsX size={24} className="text-grey dark:text-grey" />
+          </button>
+        )}
+      </div>
+      <div className="w-full flex flex-col justify-center px-2">
+        <Text className="text-wrap break-words">{moment.caption}</Text>
+      </div>
       <div className="relative w-full h-96">
         <Image
           src={moment.photoURL}
@@ -45,19 +62,6 @@ const MomentItem = ({ moment, filterMoment }: MomentItem) => {
           alt={moment.caption}
           className="object-cover"
         />
-        <div className="absolute top-0 left-0 p-2 flex items-center justify-between h-10 w-full bg-[rgba(0,0,0,0.3)]">
-          <span className="text-white">{moment.username}</span>
-          {user && user.userId === moment.userID && (
-            <button onClick={handledelete}>
-              <Trash2Icon size={20} color="white" />
-            </button>
-          )}
-        </div>
-      </div>
-      <div className="w-full flex flex-col justify-center p-2">
-        <Text className="text-wrap break-words">
-          {moment.caption}
-        </Text>
       </div>
     </div>
   );

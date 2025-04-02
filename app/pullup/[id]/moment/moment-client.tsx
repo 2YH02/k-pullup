@@ -1,16 +1,17 @@
 "use client";
 
 import type { Device } from "@/app/mypage/page";
-import MomentItem from "@/components/pages/pullup/moment/moment-item";
-import { type Moment } from "@/lib/api/moment/get-moment-for-marker";
-import useAlertStore from "@/store/useAlertStore";
-import useUserStore from "@/store/useUserStore";
+import { type Moment } from "@api/moment/get-moment-for-marker";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import AddMomentButton from "@pages/pullup/moment/add-moment-button";
 import AddMomentPage from "@pages/pullup/moment/add-moment-page";
+import MomentItem from "@pages/pullup/moment/moment-item";
+import useAlertStore from "@store/useAlertStore";
+import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
+import { BsUpload } from "react-icons/bs";
 
 const MomentClient = ({
   deviceType,
@@ -122,6 +123,8 @@ const MomentClient = ({
       fullHeight
       hasBackButton
       deviceType={deviceType}
+      headerIcon={<BsUpload />}
+      headerIconClick={handleBoxClick}
     >
       <input
         type="file"
@@ -129,9 +132,6 @@ const MomentClient = ({
         ref={fileInputRef}
         className="hidden"
       />
-      <Section>
-        <AddMomentButton onClick={handleBoxClick} />
-      </Section>
       {moments.map((moment) => {
         return (
           <MomentItem
