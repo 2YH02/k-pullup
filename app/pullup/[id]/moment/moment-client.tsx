@@ -1,10 +1,10 @@
 "use client";
 
 import type { Device } from "@/app/mypage/page";
+import Section from "@/components/common/section";
+import Text from "@/components/common/text";
 import { type Moment } from "@api/moment/get-moment-for-marker";
-import Section from "@common/section";
 import SideMain from "@common/side-main";
-import AddMomentButton from "@pages/pullup/moment/add-moment-button";
 import AddMomentPage from "@pages/pullup/moment/add-moment-page";
 import MomentItem from "@pages/pullup/moment/moment-item";
 import useAlertStore from "@store/useAlertStore";
@@ -117,15 +117,48 @@ const MomentClient = ({
     );
   }
 
+  if (moments.length <= 0) {
+    return (
+      <SideMain
+        headerTitle="모먼트"
+        fullHeight
+        hasBackButton
+        deviceType={deviceType}
+        headerIcon={
+          <BsUpload size={18} className="text-black dark:text-grey-light" />
+        }
+        headerIconClick={handleBoxClick}
+      >
+        <input
+          type="file"
+          onChange={handleImageChange}
+          ref={fileInputRef}
+          className="hidden"
+        />
+        <Section className="mt-10">
+          <Text fontWeight="bold" textAlign="center" display="block">
+            등록된 모먼트가 없습니다.
+          </Text>
+          <Text typography="t6" textAlign="center" display="block">
+            다른 사람들과 당신의 순간을 공유해보세요!
+          </Text>
+        </Section>
+      </SideMain>
+    );
+  }
+
   return (
     <SideMain
       headerTitle="모먼트"
       fullHeight
       hasBackButton
       deviceType={deviceType}
-      headerIcon={<BsUpload />}
+      headerIcon={
+        <BsUpload size={18} className="text-black dark:text-grey-light" />
+      }
       headerIconClick={handleBoxClick}
     >
+      <div className="p-2" />
       <input
         type="file"
         onChange={handleImageChange}

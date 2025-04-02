@@ -21,7 +21,7 @@ import Tabs from "@pages/pullup/tabs";
 import WeatherBadge from "@pages/pullup/weather-badge";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { BsBuilding } from "react-icons/bs";
+import { BsHouseDoor } from "react-icons/bs";
 
 interface PullupClientProps {
   facilities: FacilitiesRes[];
@@ -53,7 +53,7 @@ const PullupClient = ({
       referrer={!!referrer}
       deviceType={deviceType}
       headerIcon={
-        <BsBuilding size={20} className="fill-grey dark:fill-grey-light" />
+        <BsHouseDoor size={20} className="text-black dark:text-grey-light" />
       }
       headerIconClick={() => {
         router.push("/");
