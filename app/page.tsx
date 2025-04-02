@@ -37,13 +37,13 @@ const Home = async () => {
         <NoticeSlide />
       </Section>
 
-      <Ads type="feed" className="h-28" />
-
       {!!moment && moment.length > 0 && (
         <Section className="pb-0">
           <MomentList data={moment || []} />
         </Section>
       )}
+
+      <Ads type="feed" className="h-28" />
 
       <Section>
         <ArticleCarousel />
