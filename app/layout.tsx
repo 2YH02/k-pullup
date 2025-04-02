@@ -102,7 +102,7 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
         ) : null}
-        {/* <GoogleAdsense /> */}
+        <GoogleAdsense />
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
