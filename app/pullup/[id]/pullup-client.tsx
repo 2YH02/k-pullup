@@ -1,9 +1,9 @@
 "use client";
 
 import { type Device } from "@/app/mypage/page";
-import HomeIcon from "@/components/icons/home-icon";
 import { type Marker } from "@/types/marker.types";
 import { type FacilitiesRes } from "@api/marker/get-facilities";
+import Ads from "@common/ads";
 import Badge from "@common/badge";
 import Divider from "@common/divider";
 import Section from "@common/section";
@@ -142,7 +142,9 @@ const PullupClient = ({
         <ButtonList marker={marker} />
       </Section>
 
-      <Divider className="h-2" />
+      <div className="bg-grey-light dark:bg-grey-dark p-1">
+        <Ads type="feed" />
+      </div>
 
       <Tabs tabs={tabData} />
     </SideMain>
