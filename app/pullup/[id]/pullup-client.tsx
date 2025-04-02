@@ -142,9 +142,9 @@ const PullupClient = ({
         <ButtonList marker={marker} />
       </Section>
 
-      <div className="bg-grey-light dark:bg-grey-dark p-1">
-        <Ads type="feed" />
-      </div>
+      <Divider className="h-2" />
+      <Ads type="feed" />
+      <Divider className="h-2" />
 
       <Tabs tabs={tabData} />
     </SideMain>

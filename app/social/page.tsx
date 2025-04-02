@@ -9,6 +9,7 @@ import MomentList from "@pages/home/moment-list";
 import MarkerRankingList from "@pages/social/marker-ranking-list";
 import { headers } from "next/headers";
 import { type Device } from "../mypage/page";
+import Divider from "@/components/common/divider";
 
 export const generateMetadata = () => {
   return {
@@ -44,9 +45,7 @@ const Social = async () => {
         <ChatCarousel />
       </Section>
 
-      <Section className="px-0 py-0">
-        <Ads type="feed" />
-      </Section>
+      <Ads type="feed" />
 
       <Section>
         <SectionTitle title="인기 많은 철봉" />
