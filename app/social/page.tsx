@@ -1,5 +1,6 @@
 import markerRanking from "@api/marker/marker-ranking";
 import getAllMoment from "@api/moment/get-all-moment";
+import Ads from "@common/ads";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import getDeviceType from "@lib/get-device-type";
@@ -34,6 +35,7 @@ const Social = async () => {
 
         <MomentList data={moment || []} />
       </Section>
+
       <Section>
         <SectionTitle
           title="지역 채팅"
@@ -41,6 +43,11 @@ const Social = async () => {
         />
         <ChatCarousel />
       </Section>
+
+      <Section className="px-0 py-0">
+        <Ads type="feed" />
+      </Section>
+
       <Section>
         <SectionTitle title="인기 많은 철봉" />
         <MarkerRankingList allRanking={rankingData} />

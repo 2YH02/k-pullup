@@ -1,13 +1,13 @@
-import ArticleCarousel from "@/components/pages/home/article-carousel";
-import ChatCarousel from "@/components/pages/home/chat-carousel";
-import IconLinkList from "@/components/pages/home/icon-link-list";
-import Players from "@/components/pages/home/players";
 import newPictures from "@api/marker/new-pictures";
 import getAllMoment from "@api/moment/get-all-moment";
+import Ads from "@common/ads";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import getDeviceType from "@lib/get-device-type";
 import AroundMarkerCarousel from "@pages/home/around-marker-carousel";
+import ArticleCarousel from "@pages/home/article-carousel";
+import ChatCarousel from "@pages/home/chat-carousel";
+import IconLinkList from "@pages/home/icon-link-list";
 import LocationBadge from "@pages/home/location-badge";
 import MomentList from "@pages/home/moment-list";
 import NewImageSection from "@pages/home/new-image-section";
@@ -37,9 +37,13 @@ const Home = async () => {
         <NoticeSlide />
       </Section>
 
-      <Section className="pb-0">
-        <MomentList data={moment || []} />
-      </Section>
+      <Ads type="feed" className="h-28" />
+
+      {!!moment && moment.length > 0 && (
+        <Section className="pb-0">
+          <MomentList data={moment || []} />
+        </Section>
+      )}
 
       <Section>
         <ArticleCarousel />
@@ -60,11 +64,6 @@ const Home = async () => {
         />
         <ChatCarousel />
       </Section>
-
-      {/* <Section>
-        <SectionTitle title="철봉 가이드" />
-        <Players />
-      </Section> */}
     </SideMain>
   );
 };

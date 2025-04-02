@@ -21,7 +21,7 @@ import { Device } from "./mypage/page";
 declare global {
   interface Window {
     kakao: any;
-    Kakao: any;
+    adsbygoogle: any;
     ReactNativeWebView?: {
       postMessage: (message: string) => void;
     };
