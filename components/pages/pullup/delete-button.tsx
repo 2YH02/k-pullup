@@ -3,8 +3,8 @@ import IconButton from "@common/icon-button";
 import { useToast } from "@hooks/useToast";
 import useAlertStore from "@store/useAlertStore";
 import useMarkerStore from "@store/useMarkerStore";
-import { Trash2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { BsTrash } from "react-icons/bs";
 
 interface DeleteButtonProps {
   markerId: number;
@@ -40,7 +40,7 @@ const DeleteButton = ({ markerId }: DeleteButtonProps) => {
   };
   return (
     <IconButton
-      icon={<Trash2Icon scale={25} className="stroke-primary" />}
+      icon={<BsTrash size={20} className="fill-primary" />}
       text="삭제"
       className="flex-1"
       onClick={handleClick}

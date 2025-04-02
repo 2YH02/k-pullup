@@ -4,6 +4,7 @@ import type { Photo } from "@/types/marker.types";
 import { Carousel, CarouselContent, CarouselItem } from "@common/carousel";
 import Skeleton from "@common/skeleton";
 import Autoplay from "embla-carousel-autoplay";
+import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 
@@ -14,16 +15,19 @@ interface ImageCarouselProps {
 const ImageCarousel = ({ photos }: ImageCarouselProps) => {
   const [loading, setLoading] = useState(false);
 
-  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }));
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ delay: 4000 }),
+  ]);
+
 
   if (!photos) return null;
 
   return (
-    <Carousel plugins={[plugin.current]} className="rounded-md overflow-hidden">
-      <CarouselContent>
+    <div className="rounded-md overflow-hidden embla" ref={emblaRef}>
+      <div className="embla__container">
         {photos.map((photo) => (
-          <CarouselItem key={photo.photoId}>
-            <div className="h-44 w-full rounded-md overflow-hidden">
+          <div key={photo.photoId} className="h-44 w-full embla__slide mt-2 px-2">
+            <div className="h-full w-full rounded-md overflow-hidden">
               {!loading && <Skeleton className="h-full w-full rounded-md" />}
               <Image
                 src={photo.photoUrl}
@@ -37,10 +41,10 @@ const ImageCarousel = ({ photos }: ImageCarouselProps) => {
                 onLoad={() => setLoading(true)}
               />
             </div>
-          </CarouselItem>
+          </div>
         ))}
-      </CarouselContent>
-    </Carousel>
+      </div>
+    </div>
   );
 };
 

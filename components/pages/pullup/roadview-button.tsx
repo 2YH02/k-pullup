@@ -1,6 +1,6 @@
 import IconButton from "@common/icon-button";
 import useRoadviewStore from "@store/useRoadviewStore";
-import { MapPin } from "lucide-react";
+import { BsFillPinMapFill } from "react-icons/bs";
 
 interface RoadviewButtonProps {
   lat: number;
@@ -19,7 +19,7 @@ const RoadviewButton = ({ lat, lng }: RoadviewButtonProps) => {
 
   return (
     <IconButton
-      icon={<MapPin size={26} color="#f9b4ab" />}
+      icon={<BsFillPinMapFill size={20} className="fill-primary" />}
       text="거리뷰"
       className="flex-1"
       onClick={open}

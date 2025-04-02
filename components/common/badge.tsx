@@ -48,13 +48,13 @@ const Badge = ({
       className={cn(
         `${
           withBorder ? "border border-primary-dark border-solid" : ""
-        } px-2 py-1 rounded-3xl inline-block select-none`,
+        } px-4 py-1 rounded-3xl inline-block select-none`,
         className
       )}
       onClick={isButton ? onClick : undefined}
     >
       <div className="flex items-center justify-center">
-        {icon && <span className="mr-1">{icon}</span>}
+        {icon && <span className="mr-2">{icon}</span>}
         <Text typography="t6" fontWeight="bold" className={textStyle}>
           {text}
         </Text>

@@ -21,6 +21,7 @@ import Tabs from "@pages/pullup/tabs";
 import WeatherBadge from "@pages/pullup/weather-badge";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { BsBuilding } from "react-icons/bs";
 
 interface PullupClientProps {
   facilities: FacilitiesRes[];
@@ -52,7 +53,7 @@ const PullupClient = ({
       referrer={!!referrer}
       deviceType={deviceType}
       headerIcon={
-        <HomeIcon size={24} className="fill-[#232323] dark:fill-grey-light" />
+        <BsBuilding size={20} className="fill-grey dark:fill-grey-light" />
       }
       headerIconClick={() => {
         router.push("/");
@@ -63,32 +64,31 @@ const PullupClient = ({
         lng={marker.longitude}
         markerId={marker.markerId}
       />
-      <Section className="pb-0">
-        <div>
-          <ImageCarousel photos={marker.photos} />
-        </div>
 
+      <ImageCarousel photos={marker.photos} />
+
+      <Section className="py-0">
         <div className="flex items-center mt-2 flex-wrap">
           {!철봉 ||
             !평행봉 ||
             (철봉.quantity <= 0 && 평행봉.quantity <= 0 && (
               <Badge
                 text={`기구 개수 정보 없음`}
-                className="flex items-center justify-center mr-2 mb-2 h-8"
+                className="flex items-center justify-center mr-2 mb-2 h-7"
                 textStyle="leading-3"
               />
             ))}
           {철봉 && 철봉.quantity > 0 && (
             <Badge
               text={`철봉 ${철봉?.quantity}개`}
-              className="flex items-center justify-center mr-2 mb-2 h-8"
+              className="flex items-center justify-center mr-2 mb-2 h-7"
               textStyle="leading-3"
             />
           )}
           {평행봉 && 평행봉.quantity > 0 && (
             <Badge
               text={`평행봉 ${평행봉?.quantity}개`}
-              className="flex items-center justify-center mr-2 mb-2 h-8"
+              className="flex items-center justify-center mr-2 mb-2 h-7"
               textStyle="leading-3"
             />
           )}

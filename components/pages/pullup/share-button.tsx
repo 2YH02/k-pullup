@@ -1,6 +1,5 @@
 "use client";
 
-import Input from "@/components/common/input";
 import convertWgs from "@api/marker/convert-wgs";
 import Button from "@common/button";
 import IconButton from "@common/icon-button";
@@ -11,8 +10,8 @@ import CloseIcon from "@icons/close-icon";
 import LoadingIcon from "@icons/loading-icon";
 import downloadPdf from "@lib/api/marker/download-pdf";
 import useAlertStore from "@store/useAlertStore";
-import { Copy, ShareIcon } from "lucide-react";
 import { useState } from "react";
+import { BsFillShareFill } from "react-icons/bs";
 
 interface ShareButtonProps {
   markerId: number;
@@ -27,7 +26,7 @@ const ShareButton = ({ markerId, lat, lng, address }: ShareButtonProps) => {
   return (
     <div className="relative flex-1">
       <IconButton
-        icon={<ShareIcon size={25} className="stroke-primary" />}
+        icon={<BsFillShareFill size={20} className="fill-primary" />}
         text="공유 / 길찾기"
         className="w-full"
         onClick={() => {

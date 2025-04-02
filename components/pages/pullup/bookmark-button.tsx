@@ -7,6 +7,7 @@ import setFavorite from "@lib/api/favorite/set-favorite";
 import useAlertStore from "@store/useAlertStore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 
 interface BookmarkButtonProps {
   markerId: number;
@@ -82,30 +83,17 @@ const BookmarkButton = ({
   };
   return (
     <IconButton
-      icon={<BookmarkIcon active={isActive} />}
+      icon={
+        isActive ? (
+          <BsBookmarkFill size={20} className="fill-primary" />
+        ) : (
+          <BsBookmark size={20} className="fill-primary" />
+        )
+      }
       text="북마크"
       className="flex-1"
       onClick={handleClick}
     />
-  );
-};
-
-const BookmarkIcon = ({ active }: { active: boolean }) => {
-  const style = active ? "fill-primary" : "fill-none stroke-primary";
-  return (
-    <svg
-      viewBox="0 0 48 48"
-      height="25"
-      width="25"
-      strokeWidth={3}
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M34 6H14c-2.21 0-3.98 1.79-3.98 4L10 42l14-6 14 6V10c0-2.21-1.79-4-4-4z"
-        className={style}
-      />
-      <path d="M0 0h48v48H0z" fill="none" />
-    </svg>
   );
 };
 

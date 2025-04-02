@@ -28,16 +28,16 @@ const WeatherBadge = ({ lat, lng }: WeatherBadgeProps) => {
   }, []);
 
   if (loading) {
-    return <Skeleton className="w-[92px] h-8 rounded-3xl mr-2 mb-2" />;
+    return <Skeleton className="w-28 h-7 rounded-3xl mr-2 mb-2" />;
   }
 
   if (!weather) return null;
 
   return (
     <Badge
-      icon={<img src={weather.iconImage} className="w-6" />}
+      icon={<img src={weather.iconImage} className="w-5" />}
       text={`${weather.temperature} °C`}
-      className="flex items-center justify-center h-8 mr-2 mb-2"
+      className="flex items-center justify-center h-7 mr-2 mb-2"
       textStyle="leading-3"
     />
   );

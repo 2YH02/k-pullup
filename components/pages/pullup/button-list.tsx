@@ -1,14 +1,14 @@
 "use client";
 
+import IconButton from "@/components/common/icon-button";
 import { type Marker } from "@/types/marker.types";
 import Divider from "@common/divider";
+import { useRouter } from "next/navigation";
+import { BsPersonBoundingBox } from "react-icons/bs";
 import BookmarkButton from "./bookmark-button";
 import DeleteButton from "./delete-button";
 import RoadviewButton from "./roadview-button";
 import ShareButton from "./share-button";
-import IconButton from "@/components/common/icon-button";
-import { Users2Icon } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 interface ButtonListProps {
   marker: Marker;
@@ -28,7 +28,7 @@ const ButtonList = ({ marker }: ButtonListProps) => {
       <Divider className="w-[1px] my-2" />
       <div className="relative flex-1">
         <IconButton
-          icon={<Users2Icon size={25} className="stroke-primary" />}
+          icon={<BsPersonBoundingBox size={20} className="fill-primary" />}
           text="모먼트"
           className="w-full"
           onClick={() => router.push(`/pullup/${marker.markerId}/moment`)}
