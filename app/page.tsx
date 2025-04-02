@@ -43,7 +43,7 @@ const Home = async () => {
         </Section>
       )}
 
-      <Ads type="feed" className="h-28" />
+      <Ads type="feed" />
 
       <Section>
         <ArticleCarousel />

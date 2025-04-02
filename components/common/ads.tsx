@@ -24,7 +24,15 @@ const Ads = ({
   }, [type]);
 
   useEffect(() => {
-    (window.adsbygoogle = window.adsbygoogle || []).push({});
+    const pushAds = async () => {
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    pushAds();
   }, []);
 
   // dark 5674732571 light 2864736407
@@ -32,7 +40,7 @@ const Ads = ({
   if (type === "feed") {
     return (
       <ins
-        className={cn("adsbygoogle w-full block", className)}
+        className={cn("adsbygoogle w-full block h-28", className)}
         data-ad-format="fluid"
         data-ad-layout-key="-fb+5w+4e-db+86"
         data-ad-client="ca-pub-7114697513685043"

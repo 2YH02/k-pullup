@@ -65,6 +65,10 @@ input[type="range"]::-ms-thumb {
   border: 2px solid #d3d3d3;
 }
 
+ins.adsbygoogle[data-ad-status="unfilled"] {
+  display: none !important;
+}
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
