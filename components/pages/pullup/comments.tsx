@@ -14,9 +14,9 @@ import cn from "@lib/cn";
 import { formatDate } from "@lib/format-date";
 import useAlertStore from "@store/useAlertStore";
 import useUserStore from "@store/useUserStore";
-import { Trash2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { BsX } from "react-icons/bs";
 
 interface CommentsProps {
   markerId: number;
@@ -72,13 +72,7 @@ const Comments = ({ markerId }: CommentsProps) => {
         return;
       }
 
-      setComments(
-        data.comments.sort((a, b) => {
-          if (a.username === "k-pullup") return -1;
-          if (b.username === "k-pullup") return 1;
-          return 0;
-        })
-      );
+      setComments(data.comments);
       setTotalPages(data.totalPages);
       setCommentsLoading(false);
     };
@@ -145,8 +139,19 @@ const Comments = ({ markerId }: CommentsProps) => {
       setCreateLoading(false);
       return;
     }
-
-    setComments((prev) => [data, ...prev]);
+    
+    setComments((prev) => {
+      if (data.username !== "k-pullup") {
+        const nonKIndex = prev.findIndex(
+          (comment) => comment.username !== "k-pullup"
+        );
+        if (nonKIndex === -1) {
+          return [data, ...prev];
+        }
+        return [...prev.slice(0, nonKIndex), data, ...prev.slice(nonKIndex)];
+      }
+      return [data, ...prev];
+    });
     setCreateLoading(false);
     commentValue.resetValue();
   };
@@ -207,7 +212,7 @@ const Comments = ({ markerId }: CommentsProps) => {
               key={comment.commentId}
               icon={
                 user?.chulbong || user?.userId === comment.userId ? (
-                  <Trash2Icon className="stroke-grey-dark" size={20} />
+                  <BsX size={22} color="#777" />
                 ) : undefined
               }
               onIconClick={async () => {
@@ -239,7 +244,7 @@ const Comments = ({ markerId }: CommentsProps) => {
                 index !== comments.length - 1,
             })}
           >
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center mb-1">
               <Text typography="t6" fontWeight="bold">
                 {comment.username}
               </Text>
@@ -264,7 +269,7 @@ const Comments = ({ markerId }: CommentsProps) => {
                     });
                   }}
                 >
-                  <Trash2Icon className="stroke-grey-dark" size={14} />
+                  <BsX size={22} color="#777" />
                 </button>
               )}
             </div>
