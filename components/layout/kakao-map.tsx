@@ -14,7 +14,6 @@ import useMarkerStore from "@store/useMarkerStore";
 import { LocateFixedIcon } from "lucide-react";
 import Script from "next/script";
 import { useEffect, useState } from "react";
-import MoveMapInput from "./move-map-input";
 // TODO: 지도 우클릭 기능 추가 (리스트 메뉴 형식, ex-로드뷰)
 
 const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
@@ -222,7 +221,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
         >
           <LocateFixedIcon className="dark:stroke-white stroke-black" />
         </Tooltip>
-        <MoveMapInput deviceType={deviceType} />
+        {/* <MoveMapInput deviceType={deviceType} /> */}
       </div>
     </>
   );

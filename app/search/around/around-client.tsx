@@ -13,8 +13,7 @@ interface Props {
 }
 
 const AroundClient = ({ deviceType }: Props) => {
-  const { curLocation } = useGeolocationStore();
-  const { region, geoLocationError } = useGeolocationStore();
+  const { region, geoLocationError, curLocation } = useGeolocationStore();
 
   const [addr, setAddr] = useState<string | null>(null);
 

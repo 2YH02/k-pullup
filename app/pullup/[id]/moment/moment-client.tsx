@@ -1,10 +1,12 @@
 "use client";
 
 import type { Device } from "@/app/mypage/page";
-import Section from "@/components/common/section";
-import Text from "@/components/common/text";
 import { type Moment } from "@api/moment/get-moment-for-marker";
+import Button from "@common/button";
+import Divider from "@common/divider";
+import Section from "@common/section";
 import SideMain from "@common/side-main";
+import Text from "@common/text";
 import AddMomentPage from "@pages/pullup/moment/add-moment-page";
 import MomentItem from "@pages/pullup/moment/moment-item";
 import useAlertStore from "@store/useAlertStore";
@@ -142,6 +144,12 @@ const MomentClient = ({
           <Text typography="t6" textAlign="center" display="block">
             다른 사람들과 당신의 순간을 공유해보세요!
           </Text>
+
+          <div className="text-center mt-4">
+            <Button full onClick={handleBoxClick} size="sm">
+              등록하기
+            </Button>
+          </div>
         </Section>
       </SideMain>
     );
@@ -165,13 +173,12 @@ const MomentClient = ({
         ref={fileInputRef}
         className="hidden"
       />
-      {moments.map((moment) => {
+      {moments.map((moment, i) => {
         return (
-          <MomentItem
-            key={`${moment.caption} ${moment.createdAt}`}
-            moment={moment}
-            filterMoment={deleteMoment}
-          />
+          <div key={`${moment.caption} ${moment.createdAt}`}>
+            <MomentItem moment={moment} filterMoment={deleteMoment} />
+            {i !== moments.length - 1 && <Divider className="w-full h-4" />}
+          </div>
         );
       })}
     </SideMain>

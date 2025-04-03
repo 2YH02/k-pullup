@@ -1,9 +1,9 @@
-import { formatDate } from "@/lib/format-date";
-import useAlertStore from "@/store/useAlertStore";
-import useUserStore from "@/store/useUserStore";
 import deleteMoment from "@api/moment/delete-moment";
 import type { Moment } from "@api/moment/get-moment-for-marker";
 import Text from "@common/text";
+import { formatDate } from "@lib/format-date";
+import useAlertStore from "@store/useAlertStore";
+import useUserStore from "@store/useUserStore";
 import Image from "next/image";
 import { BsX } from "react-icons/bs";
 
@@ -38,7 +38,7 @@ const MomentItem = ({ moment, filterMoment }: MomentItem) => {
     });
   };
   return (
-    <div className="mb-6 py-2">
+    <div className="py-3">
       <div className="px-2 flex items-center justify-between h-10 w-full">
         <div className="flex flex-col">
           <Text fontWeight="bold">{moment.username}</Text>

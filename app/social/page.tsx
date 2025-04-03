@@ -9,7 +9,6 @@ import MomentList from "@pages/home/moment-list";
 import MarkerRankingList from "@pages/social/marker-ranking-list";
 import { headers } from "next/headers";
 import { type Device } from "../mypage/page";
-import Divider from "@/components/common/divider";
 
 export const generateMetadata = () => {
   return {

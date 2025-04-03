@@ -1,10 +1,10 @@
 "use client";
 
-import Text from "@/components/common/text";
 import minutesAgo from "@/lib/minutes-ago";
 import type { Moment } from "@api/moment/get-moment-for-marker";
+import Text from "@common/text";
 import { decodeBlurhash, pixelsToDataUrl } from "@lib/decode-hash";
-import { XIcon } from "lucide-react";
+import { Plus, XIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MouseEvent, useEffect, useRef, useState } from "react";
@@ -16,7 +16,7 @@ const getCity = (address: string): string => {
 };
 
 const MomentList = ({ data }: { data: Moment[] }) => {
-  const rounter = useRouter();
+  const router = useRouter();
 
   const sliderRef = useRef<HTMLDivElement>(null);
   const isDown = useRef<boolean>(false);
@@ -125,25 +125,28 @@ const MomentList = ({ data }: { data: Moment[] }) => {
 
     return (
       <div className="absolute mo:fixed top-0 left-0 flex flex-col w-full h-full bg-black z-50 web:rounded-lg">
-        <div className="flex gap-1 p-1">
-          {data.map((moment) => {
-            if (curMoment.storyID === moment.storyID) {
-              return (
-                <span
-                  key={moment.storyID}
-                  className="grow bg-grey-light h-[2px] rounded-lg"
-                />
-              );
-            } else {
-              return (
-                <span
-                  key={moment.storyID}
-                  className="grow bg-grey h-[2px] rounded-lg"
-                />
-              );
-            }
-          })}
-        </div>
+        {data.length > 1 && (
+          <div className="flex gap-1 p-1">
+            {data.map((moment) => {
+              if (curMoment.storyID === moment.storyID) {
+                return (
+                  <span
+                    key={moment.storyID}
+                    className="grow bg-grey-light h-[2px] rounded-lg"
+                  />
+                );
+              } else {
+                return (
+                  <span
+                    key={moment.storyID}
+                    className="grow bg-grey h-[2px] rounded-lg"
+                  />
+                );
+              }
+            })}
+          </div>
+        )}
+
         <div className="shrink-0 flex items-center justify-between pl-2 pr-4 h-10">
           <div>
             <span className="text-white mr-2">{curMoment.username}</span>
@@ -165,7 +168,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
               className="text-grey text-xs hover:underline"
               onClick={(e) => {
                 e.stopPropagation();
-                rounter.push(`/pullup/${curMoment.markerID}`);
+                router.push(`/pullup/${curMoment.markerID}`);
               }}
             >
               위치 자세히보기
@@ -188,7 +191,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
   }
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden mb-2">
       <div
         className="flex gap-3"
         ref={sliderRef}
@@ -198,6 +201,19 @@ const MomentList = ({ data }: { data: Moment[] }) => {
         onMouseMove={handleMouseMove}
         style={style}
       >
+        <div className="flex flex-col justify-start">
+          <button
+            className="relative shrink-0 bg-rainbow-gradient rounded-full w-12 h-12 bg-[length:200%_200%] animate-gradient-animate"
+            onClick={() => router.push("/moments")}
+          >
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 bg-white dark:bg-black rounded-full
+              border-2 border-solid border-white dark:border-black flex items-center justify-center"
+            >
+              <Plus className="text-grey-dark dark:text-grey" />
+            </div>
+          </button>
+        </div>
         {data.map((moment, i) => (
           <div
             className="flex flex-col justify-center items-center"
