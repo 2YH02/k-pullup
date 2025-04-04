@@ -37,11 +37,10 @@ const Home = async () => {
         <NoticeSlide />
       </Section>
 
-      {!!moment && moment.length > 0 && (
-        <Section className="pb-0">
-          <MomentList data={moment || []} />
-        </Section>
-      )}
+      <Section className="pb-0">
+        <SectionTitle title="모먼트" subTitle="지금 이 순간을 기록해보세요." />
+        <MomentList data={moment || []} />
+      </Section>
 
       <Ads type="feed" />
 
