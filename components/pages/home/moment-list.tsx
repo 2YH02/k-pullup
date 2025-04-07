@@ -176,7 +176,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
           </div>
           <div className="grow relative w-full h-full">
             <Image
-              src={curMoment.photoURL}
+              src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${curMoment.photoURL}`}
               fill
               alt={curMoment.caption}
               className="object-contain z-10"

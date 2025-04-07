@@ -1,12 +1,11 @@
 "use client";
 
 import type { Photo } from "@/types/marker.types";
-import { Carousel, CarouselContent, CarouselItem } from "@common/carousel";
 import Skeleton from "@common/skeleton";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 interface ImageCarouselProps {
   photos?: Photo[];
@@ -30,7 +29,7 @@ const ImageCarousel = ({ photos }: ImageCarouselProps) => {
             <div className="h-full w-full rounded-md overflow-hidden">
               {!loading && <Skeleton className="h-full w-full rounded-md" />}
               <Image
-                src={photo.photoUrl}
+                src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${photo.photoUrl}`}
                 alt="상세"
                 width={0}
                 height={0}

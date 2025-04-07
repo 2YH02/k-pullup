@@ -130,7 +130,11 @@ const AroundMarkerCarousel = () => {
               >
                 <div className="w-[128px] h-[128px] rounded-md overflow-hidden">
                   <Image
-                    src={marker.thumbnail ? marker.thumbnail : "/metaimg.webp"}
+                    src={
+                      marker.thumbnail
+                        ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${marker.thumbnail}`
+                        : "/metaimg.webp"
+                    }
                     alt={"상세"}
                     width={0}
                     height={0}

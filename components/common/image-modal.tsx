@@ -65,7 +65,9 @@ const ImageModal = ({
   return (
     <Dimmed onClose={() => closeModal()} onWheel={handleWheel}>
       <button
-        className={`absolute ${isMobileApp ? "top-14" : "top-3"} right-3 z-40 bg-[rgba(0,0,0,0.7)] rounded-full p-2 `}
+        className={`absolute ${
+          isMobileApp ? "top-14" : "top-3"
+        } right-3 z-40 bg-[rgba(0,0,0,0.7)] rounded-full p-2 `}
         onClick={() => closeModal()}
       >
         <CloseIcon color="white" />
@@ -85,7 +87,7 @@ const ImageModal = ({
               )}
               <Image
                 key={image}
-                src={image}
+                src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${image}`}
                 alt="상세"
                 width={imageSize}
                 height={imageSize}
