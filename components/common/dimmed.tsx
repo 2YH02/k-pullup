@@ -16,6 +16,7 @@ const Dimmed = ({
   className,
 }: DimmedProps) => {
   if (!active) return <div>{children}</div>;
+
   return (
     <div
       className={cn(

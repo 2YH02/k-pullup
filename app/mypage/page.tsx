@@ -80,22 +80,47 @@ const Mypage = async () => {
         <Section>
           <div className="flex justify-center items-center p-4 bg-white shadow-full rounded dark:border dark:border-solid dark:border-grey-dark dark:bg-black">
             <div className="flex flex-col justify-center items-center relative">
-              <div className="w-28 mb-2">
+              <div className="w-28">
                 <img
                   src={getContributionLevelImage(user.contributionLevel)}
                   alt="등급"
                   draggable={false}
                 />
               </div>
-              <div className="mb-2 font-bold text-xl">
+              <Text typography="t4" fontWeight="bold" className="mb-1">
                 {user.contributionLevel}
-              </div>
-              <div>
-                정보 기여 총{" "}
+              </Text>
+              <Text typography="t6">
+                정보 기여 점수{" "}
                 <span className="text-primary font-bold">
                   {user.contributionCount || 0}
                 </span>
-                회
+                점
+              </Text>
+              <div className="text-left w-full">
+                {(user.reportCount || user.markerCount) && (
+                  <div>
+                    {user.reportCount && (
+                      <Text
+                        display="block"
+                        className="text-grey-dark dark:text-grey text-[10px]"
+                      >
+                        정보 수정 제안{" "}
+                        <span className="font-bold">{user.reportCount}</span>회
+                      </Text>
+                    )}
+
+                    {user.markerCount && (
+                      <Text
+                        display="block"
+                        className="text-grey-dark dark:text-grey text-[10px]"
+                      >
+                        등록한 철봉{" "}
+                        <span className="font-bold">{user.markerCount}</span>개
+                      </Text>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

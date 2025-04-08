@@ -1,7 +1,7 @@
 import favorites from "@api/user/favorites";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
-import Text from "@common/text";
+import WarningText from "@common/warning-text";
 import AuthError from "@layout/auth-error";
 import NotFound from "@layout/not-found";
 import getDeviceType from "@lib/get-device-type";
@@ -51,19 +51,11 @@ const RankingPage = async () => {
       referrer={!!referrer}
       deviceType={deviceType}
     >
-      <Section>
-        <Text
-          display="block"
-          textAlign="center"
-          className="text-red select-none"
-        >
-          위치는 총 10개까지 저장이 가능합니다.
-        </Text>
+      <Section className="pb-0">
+        <WarningText>즐겨찾기는 최대 10개까지 추가할 수 있습니다.</WarningText>
       </Section>
 
-      <Section>
-        <BookmarkList data={markers.data} />
-      </Section>
+      <BookmarkList data={markers.data} />
     </SideMain>
   );
 };

@@ -3105,6 +3105,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:5.72.0":
+  version: 5.72.0
+  resolution: "@tanstack/query-core@npm:5.72.0"
+  checksum: 10c0/a22a4536d90069718a8e1d46832ca27d870a5080e98f37021163d4fea4fe2ea499fd7cd3452de340b8805c2378f56f5967bf924eb66105d626f731804500f206
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.72.0":
+  version: 5.72.0
+  resolution: "@tanstack/react-query@npm:5.72.0"
+  dependencies:
+    "@tanstack/query-core": "npm:5.72.0"
+  peerDependencies:
+    react: ^18 || ^19
+  checksum: 10c0/e6b1963bb3a8cd5f68fde8b9a22222450137bf1384fd242c9757ff37feb70abd2627c24763a70d79aa6492f52b4763cff48787bce796662d8359db95e8e33ab9
+  languageName: node
+  linkType: hard
+
 "@testing-library/dom@npm:10.1.0":
   version: 10.1.0
   resolution: "@testing-library/dom@npm:10.1.0"
@@ -10858,6 +10876,7 @@ __metadata:
     "@storybook/nextjs": "npm:^8.2.2"
     "@storybook/react": "npm:^8.2.2"
     "@storybook/test": "npm:^8.2.2"
+    "@tanstack/react-query": "npm:^5.72.0"
     "@types/node": "npm:^20"
     "@types/react": "npm:^18"
     "@types/react-dom": "npm:^18"

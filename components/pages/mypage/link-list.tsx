@@ -41,7 +41,7 @@ const LinkButton = ({
   return (
     <Link
       href={url}
-      className="px-4 py-2 flex items-center bg-transparent dark:text-white text-black active:scale-95 hover:bg-grey-light dark:bg-black active:rounded-md duration-100"
+      className="px-4 py-2 flex items-center bg-transparent dark:text-white text-black active:scale-95 hover:bg-grey-light dark:bg-black dark:hover:bg-grey-dark active:rounded-md duration-100"
     >
       <span className="mr-4 w-8">{icon}</span>
       <Text typography="t6">{children}</Text>
