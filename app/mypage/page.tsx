@@ -97,31 +97,6 @@ const Mypage = async () => {
                 </span>
                 점
               </Text>
-              <div className="text-left w-full">
-                {(user.reportCount || user.markerCount) && (
-                  <div>
-                    {user.reportCount && (
-                      <Text
-                        display="block"
-                        className="text-grey-dark dark:text-grey text-[10px]"
-                      >
-                        정보 수정 제안{" "}
-                        <span className="font-bold">{user.reportCount}</span>회
-                      </Text>
-                    )}
-
-                    {user.markerCount && (
-                      <Text
-                        display="block"
-                        className="text-grey-dark dark:text-grey text-[10px]"
-                      >
-                        등록한 철봉{" "}
-                        <span className="font-bold">{user.markerCount}</span>개
-                      </Text>
-                    )}
-                  </div>
-                )}
-              </div>
             </div>
           </div>
         </Section>
