@@ -1,4 +1,4 @@
-import myInfo from "@api/user/myInfo";
+import myInfo, { type ContributionLevel } from "@api/user/myInfo";
 import Divider from "@common/divider";
 import Section from "@common/section";
 import ShadowBox from "@common/shadow-box";
@@ -10,7 +10,6 @@ import LinkList from "@pages/mypage/link-list";
 import UserInfo from "@pages/mypage/user-info";
 import { cookies, headers } from "next/headers";
 import Link from "next/link";
-// TODO: 마커 등록 갯수, 수정 제안 횟수에 따른 UI 차별
 
 export type Device =
   | "android-mobile-app"
@@ -76,8 +75,58 @@ const Mypage = async () => {
         </ShadowBox>
       </Section>
 
+      {/* 기여 등급 */}
+      {!noUser && (
+        <Section>
+          <div className="flex justify-center items-center p-4 bg-white shadow-full rounded dark:border dark:border-solid dark:border-grey-dark dark:bg-black">
+            <div className="flex flex-col justify-center items-center relative">
+              <div className="w-28 mb-2">
+                <img
+                  src={getContributionLevelImage(user.contributionLevel)}
+                  alt="등급"
+                  draggable={false}
+                />
+              </div>
+              <div className="mb-2 font-bold text-xl">
+                {user.contributionLevel}
+              </div>
+              <div>
+                정보 기여 총{" "}
+                <span className="text-primary font-bold">
+                  {user.contributionCount || 0}
+                </span>
+                회
+              </div>
+            </div>
+          </div>
+        </Section>
+      )}
+
+      {/* 링크 버튼 */}
       {!noUser && <LinkList isAdmin={user.chulbong} />}
     </SideMain>
   );
 };
+
+const getContributionLevelImage = (level?: ContributionLevel) => {
+  switch (level) {
+    case "초보 운동자":
+    case "운동 길잡이":
+      return "/rank1.svg";
+    case "철봉 탐험가":
+    case "스트릿 워리어":
+      return "/rank2.svg";
+    case "피트니스 전도사":
+    case "철봉 레인저":
+      return "/rank3.svg";
+    case "철봉 매버릭":
+    case "거장":
+      return "/rank4.svg";
+    case "명인":
+      return "/rank5.svg";
+    default:
+      return "/rank1.svg";
+  }
+};
+
 export default Mypage;

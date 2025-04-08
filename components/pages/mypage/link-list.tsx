@@ -1,58 +1,55 @@
-import Section from "@common/section";
-import ShadowBox from "@common/shadow-box";
 import Text from "@common/text";
 import Link from "next/link";
+import { BsChevronRight } from "react-icons/bs";
 
 const LinkList = ({ isAdmin }: { isAdmin?: boolean }) => {
   return (
-    <Section className="flex flex-col">
-      <Link href="/mypage/bookmark">
-        <ShadowBox className="flex items-center p-4 mb-4" withAction>
-          <div className="mr-10">
-            <BookmarkIcon />
-          </div>
-          <Text fontWeight="bold">저장한 장소</Text>
-        </ShadowBox>
-      </Link>
+    <>
+      <LinkButton url="/mypage/bookmark" icon={<BookmarkIcon />}>
+        저장한 장소
+      </LinkButton>
 
-      <Link href="/mypage/locate">
-        <ShadowBox className="flex items-center p-4 mb-4" withAction>
-          <div className="mr-10">
-            <MylocateIcon />
-          </div>
-          <Text fontWeight="bold">등록한 장소</Text>
-        </ShadowBox>
-      </Link>
+      <LinkButton url="/mypage/locate" icon={<MylocateIcon />}>
+        등록한 장소
+      </LinkButton>
 
-      <Link href="/mypage/report">
-        <ShadowBox className="flex items-center p-4 mb-4" withAction>
-          <div className="mr-10">
-            <Proposal />
-          </div>
-          <Text fontWeight="bold">내가 요청한 수정 목록</Text>
-        </ShadowBox>
-      </Link>
+      <LinkButton url="/mypage/report" icon={<Proposal size={30} />}>
+        내가 요청한 수정 목록
+      </LinkButton>
 
-      <Link href="/mypage/myreport">
-        <ShadowBox className="flex items-center p-4" withAction>
-          <div className="mr-10">
-            <Received />
-          </div>
-          <Text fontWeight="bold">받은 수정 요청 목록</Text>
-        </ShadowBox>
-      </Link>
+      <LinkButton url="/mypage/myreport" icon={<Received size={30} />}>
+        받은 수정 요청 목록
+      </LinkButton>
 
       {isAdmin && (
-        <Link href="/mypage/report-admin">
-          <ShadowBox className="flex items-center p-4 mt-4" withAction>
-            <div className="mr-10">
-              <AllReportIcon />
-            </div>
-            <Text fontWeight="bold">전체 수정 요청 목록</Text>
-          </ShadowBox>
-        </Link>
+        <LinkButton url="/mypage/report-admin" icon={<AllReportIcon />}>
+          전체 수정 요청 목록
+        </LinkButton>
       )}
-    </Section>
+    </>
+  );
+};
+
+const LinkButton = ({
+  url,
+  icon,
+  children,
+}: React.PropsWithChildren<{
+  url: string;
+  icon: React.ReactNode;
+}>) => {
+  return (
+    <Link
+      href={url}
+      className="px-4 py-2 flex items-center bg-transparent dark:text-white text-black active:scale-95 hover:bg-grey-light dark:bg-black active:rounded-md duration-100"
+    >
+      <span className="mr-4 w-8">{icon}</span>
+      <Text typography="t6">{children}</Text>
+      <div className="grow" />
+      <span>
+        <BsChevronRight className="text-grey-dark dark:text-grey" />
+      </span>
+    </Link>
   );
 };
 
@@ -62,8 +59,8 @@ const MylocateIcon = () => {
       viewBox="0 0 512 512"
       xmlns="http://www.w3.org/2000/svg"
       enableBackground="new 0 0 512 512"
-      width={40}
-      height={40}
+      width={30}
+      height={30}
     >
       <path
         d="M230.5 57.2c12.5-12.5 29.1-19.4 46.8-19.4 17.7 0 34.3 6.9 46.8 19.4 25.8 25.8 25.8 67.8 0 93.6l-46.8 46.8-46.8-46.8c-25.8-25.8-25.8-67.7 0-93.6z"
@@ -112,8 +109,8 @@ const BookmarkIcon = () => {
       version="1.1"
       viewBox="0 0 75 75"
       xmlns="http://www.w3.org/2000/svg"
-      width={40}
-      height={40}
+      width={30}
+      height={30}
     >
       <g>
         <g>
@@ -240,8 +237,8 @@ const AllReportIcon = () => {
       viewBox="0 0 50 50"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width={40}
-      height={40}
+      width={30}
+      height={30}
     >
       <g>
         <path
