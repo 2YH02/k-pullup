@@ -64,6 +64,35 @@ export const BASE_URL = "https://www.k-pullup.com";
 export const ALL_NOTICE: Notice[] = [
   {
     id: 0,
+    category: "일반",
+    title:
+      "[모집] 안드로이드 앱 베타 테스터를 찾습니다! (테스트 후 커피쿠폰 제공☕️)",
+    content: `<br/>안녕하세요, ‘대한민국 철봉 지도’ 개발자입니다.<br/><br/>
+  드디어 안드로이드 앱 출시를 앞두고 있습니다! 🎉<br/>
+  정식 출시 전, 실제 사용자분들의 피드백을 통해 더 나은 서비스를 제공하고자 **테스터 14명**을 모집합니다.<br/>(모집 완료 시 마감)<br/><br/>
+  
+  
+  ✅ **테스터 조건**<br/>
+  - 안드로이드 스마트폰 사용자<br/>
+  (IOS는 이후 따로 출시 예정입니다.)<br/>
+  - 대한민국 철봉 지도 웹사이트를 사용해보신 분<br/><br/>
+  
+  📱 **테스트 내용**<br/>
+  - 앱 설치 후 실제 사용해보기<br/>
+  - 간단한 설문 피드백 제출<br/><br/>
+  
+  🎁 **보상**<br/>
+  - 테스트 완료 후 **스타벅스 기프티콘 제공!**<br/><br/>
+  
+  📌 **참여 방법**<br/>
+  아래 링크를 눌러 신청서를 작성해 주세요.<br/>
+  👉 <a href="https://docs.google.com/forms/d/e/1FAIpQLSfOoEacqoZCA0t5EF2WrLl0odPpeWlW1inDeS84JoTKMu-Jfw/viewform?usp=header" class="notice-link" target="_blank">[테스터 신청서 작성하러 가기]</a><br/><br/>
+  
+  많은 참여 부탁드립니다. 감사합니다! 🙇‍♂️`,
+    createdAt: "2025-04-09",
+  },
+  {
+    id: 1,
     category: "업데이트",
     title: "신규 기능 안내 - 모먼트 추가",
     content: `<br/>
@@ -86,7 +115,7 @@ export const ALL_NOTICE: Notice[] = [
     createdAt: "2024-12-20",
   },
   {
-    id: 1,
+    id: 2,
     category: "일반",
     title: "대한민국 철봉 지도 사용에 감사드립니다!",
     content: `<br/>안녕하세요, ‘대한민국 철봉 지도’ 운영자입니다.<br/><br/>

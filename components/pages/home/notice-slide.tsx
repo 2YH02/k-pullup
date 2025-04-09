@@ -33,7 +33,7 @@ const NoticeSlide = () => {
       <div className="mr-2">
         <BsFillMegaphoneFill className="text-black-light dark:text-grey-light" />
       </div>
-      <div className="grow flex items-center">
+      <div className="grow flex items-center truncate">
         <Text
           fontWeight="bold"
           className={`truncate transition-opacity duration-300 ease-in-out ${

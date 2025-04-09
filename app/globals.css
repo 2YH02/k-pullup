@@ -36,6 +36,11 @@ li {
   list-style: none;
 }
 
+.notice-link {
+  color: rgb(60, 60, 255);
+  text-decoration: underline;
+}
+
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
