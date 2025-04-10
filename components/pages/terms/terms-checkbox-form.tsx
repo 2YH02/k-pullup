@@ -44,7 +44,7 @@ const TermsCheckboxForm = ({ next }: { next: VoidFunction }) => {
           alt={"전체 동의"}
           className="w-5 h-5 mr-2"
         />
-        <label className="font-bold">전체 동의</label>
+        <label className="font-bold dark:text-white">전체 동의</label>
       </div>
 
       <hr className="mb-4" />
@@ -104,7 +104,7 @@ const RequiredConsentList = ({
 
   return (
     <div className="mb-4">
-      <h3 className="font-bold mb-2">필수 동의</h3>
+      <h3 className="font-bold mb-2 dark:text-white">필수 동의</h3>
       <CheckboxItem
         label="이용약관 동의"
         checked={termsChecked}
@@ -157,7 +157,7 @@ const OptionalConsentList = ({
 }: OptionalConsentListProps) => {
   return (
     <div className="mb-4">
-      <h3 className="font-bold mb-2">선택 동의</h3>
+      <h3 className="font-bold mb-2 dark:text-white">선택 동의</h3>
       <CheckboxItem
         label="마케팅 수신 동의"
         checked={marketingChecked}
@@ -204,8 +204,8 @@ const CheckboxItem = ({
         className={cn("w-5 h-5 mr-2", subText ? "mt-[3px]" : "mt-0")}
       />
       <div>
-        <label className="text-sm">{label}</label>
-        {subText && <div className="text-xs text-grey">{subText}</div>}
+        <label className="text-sm dark:text-white">{label}</label>
+        {subText && <div className="text-xs text-grey dark:text-grey">{subText}</div>}
       </div>
 
       <div className="grow" />

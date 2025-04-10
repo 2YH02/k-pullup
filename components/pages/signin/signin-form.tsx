@@ -52,6 +52,20 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
   }, [emailValue.value, passwordValue.value]);
 
   useEffect(() => {
+    const images = [
+      "/allCheckedIcon.svg",
+      "/allCheckIcon.svg",
+      "/checkedIcon.svg",
+      "/checkIcon.svg",
+    ];
+
+    images.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
+  useEffect(() => {
     const onSubmit = async () => {
       setLoading(true);
       const siginData = {
