@@ -98,7 +98,7 @@ export interface ButtonProps {
    * 버튼 비활성화
    */
   disabled?: boolean;
-  onClick: VoidFunction;
+  onClick: (e: React.MouseEvent<Element, MouseEvent>) => void;
   children: React.ReactNode;
 }
 

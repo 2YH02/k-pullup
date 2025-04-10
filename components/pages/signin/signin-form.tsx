@@ -2,6 +2,7 @@
 
 import signin from "@api/auth/signin";
 import myInfo from "@api/user/myInfo";
+import BottomSheet from "@common/bottom-sheet";
 import Button from "@common/button";
 import InputField from "@common/input-field";
 import Text from "@common/text";
@@ -9,10 +10,12 @@ import useInput from "@hooks/useInput";
 import { useToast } from "@hooks/useToast";
 import LoadingIcon from "@icons/loading-icon";
 import { validateSigin } from "@lib/validate";
+import { useBottomSheetStore } from "@store/useBottomSheetStore";
+import useTermsStore from "@store/useTermsStore";
 import useUserStore from "@store/useUserStore";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import TermsCheckboxForm from "../terms/terms-checkbox-form";
 
 interface SigninValue {
   email: string;
@@ -25,6 +28,8 @@ interface SinginFormProps {
 
 const SigninForm = ({ returnUrl }: SinginFormProps) => {
   const router = useRouter();
+  const { show, hide } = useBottomSheetStore();
+  const { setIsTermsAgreed } = useTermsStore();
 
   const { setUser } = useUserStore();
   const { toast } = useToast();
@@ -177,27 +182,41 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
           <Text typography="t6" className="mr-1">
             계정이 없으신가요?
           </Text>
-          <Link
-            href={returnUrl ? `/signup?returnUrl=${returnUrl}` : "/signup"}
-            replace={true}
+          <button
+            onClick={() => {
+              show("terms");
+            }}
           >
             <Text typography="t6" className="text-grey-dark hover:underline">
               이메일로 회원가입 하기
             </Text>
-          </Link>
+          </button>
         </div>
 
         <div>
           <Text typography="t6" className="mr-1">
             비밀번호를 잊어버리셨나요?
           </Text>
-          <Link href="/reset-password">
+          <button onClick={() => router.push("/reset-password")}>
             <Text typography="t6" className="text-grey-dark hover:underline">
               비밀번호 초기화하기
             </Text>
-          </Link>
+          </button>
         </div>
       </div>
+
+      <BottomSheet id="terms" title="약관 동의">
+        <TermsCheckboxForm
+          next={() => {
+            setIsTermsAgreed(true);
+            hide();
+            const url = returnUrl
+              ? `/signup?returnUrl=${returnUrl}`
+              : "/signup";
+            router.push(url);
+          }}
+        />
+      </BottomSheet>
     </div>
   );
 };

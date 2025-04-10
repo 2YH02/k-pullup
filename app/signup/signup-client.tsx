@@ -1,6 +1,7 @@
 "use client";
 
 import signup from "@api/auth/signup";
+import BottomSheet from "@common/bottom-sheet";
 import SideMain from "@common/side-main";
 import EnterPassword from "@pages/signup/enter-password";
 import EnterUsername from "@pages/signup/enter-username";
@@ -8,7 +9,10 @@ import SignupComplete, {
   type SignupStatus,
 } from "@pages/signup/signup-complete";
 import VerifyEmail from "@pages/signup/verify-email";
+import TermsCheckboxForm from "@pages/terms/terms-checkbox-form";
 import useAlertStore from "@store/useAlertStore";
+import { useBottomSheetStore } from "@store/useBottomSheetStore";
+import useTermsStore from "@store/useTermsStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { type Device } from "../mypage/page";
@@ -25,6 +29,8 @@ const SignupClient = ({
   deviceType = "desktop",
 }: SignupClientProps) => {
   const router = useRouter();
+  const { setIsTermsAgreed, isTermsAgreed } = useTermsStore();
+  const { show, hide } = useBottomSheetStore();
 
   const { openAlert } = useAlertStore();
 
@@ -44,6 +50,7 @@ const SignupClient = ({
   }, [signupValue.step]);
 
   useEffect(() => {
+    show("terms-in");
     const images = ["/signup-loading.gif"];
 
     images.forEach((src) => {
@@ -120,6 +127,28 @@ const SignupClient = ({
     }));
   };
 
+  if (!isTermsAgreed) {
+    return (
+      <SideMain
+        headerTitle={headerTitle}
+        prevClick={handlePrev}
+        fullHeight
+        hasBackButton={signupValue.step === 3 ? false : true}
+        referrer={!!referrer}
+        deviceType={deviceType}
+      >
+        <BottomSheet id="terms-in" title="약관 동의">
+          <TermsCheckboxForm
+            next={() => {
+              hide();
+              setIsTermsAgreed(true);
+            }}
+          />
+        </BottomSheet>
+      </SideMain>
+    );
+  }
+
   return (
     <SideMain
       headerTitle={headerTitle}
@@ -128,6 +157,7 @@ const SignupClient = ({
       hasBackButton={signupValue.step === 3 ? false : true}
       referrer={!!referrer}
       deviceType={deviceType}
+      bodyStyle="pb-0"
     >
       {signupValue.step === 0 && <VerifyEmail next={handleEmailChange} />}
       {signupValue.step === 1 && <EnterUsername next={handleUserNameChange} />}
