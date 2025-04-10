@@ -1,8 +1,10 @@
 "use client";
 
+import cn from "@lib/cn";
 import Link from "next/link";
 import { useState } from "react";
 import Dimmed from "./dimmed";
+import Skeleton from "./skeleton";
 
 interface EventPopupProps {
   showDoNotShowToday?: boolean;
@@ -13,6 +15,7 @@ const EventPopup = ({
   onClose,
   showDoNotShowToday = true,
 }: EventPopupProps) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [doNotShowToday, setDoNotShowToday] = useState(false);
 
   const handleClose = () => {
@@ -45,11 +48,17 @@ const EventPopup = ({
             href="https://docs.google.com/forms/d/e/1FAIpQLSfOoEacqoZCA0t5EF2WrLl0odPpeWlW1inDeS84JoTKMu-Jfw/viewform"
             target="_blank"
             rel="noopener noreferrer"
+            className="w-full"
           >
+            {!imageLoaded && <Skeleton className="w-full h-80 " />}
             <img
               src="/popup.png"
               alt="이벤트 이미지"
-              className="rounded-md object-cover w-full"
+              className={cn(
+                "rounded-md object-cover w-full",
+                imageLoaded ? "block" : "hidden"
+              )}
+              onLoad={() => setImageLoaded(true)}
             />
           </Link>
           {/* <p className="text-xs text-grey-dark">
