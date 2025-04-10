@@ -5,7 +5,7 @@ const LocationTermsPage = () => {
   return (
     <SideMain headerTitle="위치정보 이용약관" fullHeight hasBackButton>
       <div className="p-6">
-        <h1 className="text-2xl font-bold mb-6 text-center">
+        <h1 className="text-2xl font-bold mb-6 text-center dark:text-white">
           위치정보 이용약관
         </h1>
 

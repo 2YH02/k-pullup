@@ -5,7 +5,7 @@ const TermsPage = () => {
   return (
     <SideMain headerTitle="이용약관" fullHeight hasBackButton>
       <div className="p-6">
-        <h1 className="text-2xl font-bold mb-6 text-center">이용약관</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center dark:text-white">이용약관</h1>
 
         <Section title="제1조 목적">
           본 이용약관은 <strong>대한민국 철봉 지도</strong>(이하

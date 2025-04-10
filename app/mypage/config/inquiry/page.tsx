@@ -53,7 +53,7 @@ const InquiryPage = () => {
               href="mailto:chulbong.kr@gmail.com"
               className="text-primary font-semibold hover:underline"
             >
-              chulbong.kr@gmail.com
+              support@k-pullup.com
             </a>
             에 연락해 주세요.
           </Text>

@@ -5,7 +5,7 @@ const PrivacyPolicyPage = () => {
   return (
     <SideMain headerTitle="개인정보처리방침" fullHeight hasBackButton>
       <div className="p-6">
-        <h1 className="text-2xl font-bold mb-6 text-center">
+        <h1 className="text-2xl font-bold mb-6 text-center dark:text-white">
           개인정보처리방침
         </h1>
 
