@@ -17,7 +17,6 @@ import localFont from "next/font/local";
 import { headers } from "next/headers";
 import "./globals.css";
 import { Device } from "./mypage/page";
-import PopupProvider from "@/components/provider/popup-provider";
 
 declare global {
   interface Window {
@@ -116,9 +115,7 @@ export default function RootLayout({
               <ImageModalProvider deviceType={deviceType}>
                 <UserProvider>
                   <LoadMarker />
-                  <GeoProvider>
-                    <PopupProvider>{children}</PopupProvider>
-                  </GeoProvider>
+                  <GeoProvider>{children}</GeoProvider>
                   <Roadview deviceType={deviceType} />
                   <Toaster />
                 </UserProvider>
