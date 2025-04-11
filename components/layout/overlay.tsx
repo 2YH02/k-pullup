@@ -1,6 +1,5 @@
+import cn from "@/lib/cn";
 import { Pos } from "@/types/kakao-map.types";
-import ShadowBox from "@common/shadow-box";
-import Text from "@common/text";
 import useMapStore from "@store/useMapStore";
 
 interface OverlayProps {
@@ -9,31 +8,7 @@ interface OverlayProps {
 }
 
 const Overlay = ({ title, position }: OverlayProps) => {
-  // const [address, setAddress] = useState("");
-
   const { map } = useMapStore();
-
-  // useEffect(() => {
-  //   const fetch = async () => {
-  //     const response = await getAddress({ lat: position.Ma, lng: position.La });
-
-  //     if (response.code === -2) {
-  //       setAddress("위치 정보 없음");
-  //       return;
-  //     }
-
-  //     const { address_name, region_2depth_name, region_3depth_name } =
-  //       response.documents[0];
-
-  //     const title =
-  //       region_2depth_name !== "" || region_3depth_name !== ""
-  //         ? `${region_2depth_name} ${region_3depth_name}`
-  //         : address_name;
-
-  //     setAddress(title);
-  //   };
-  //   fetch();
-  // }, []);
 
   const handleClick = () => {
     if (!map) return;
@@ -44,13 +19,41 @@ const Overlay = ({ title, position }: OverlayProps) => {
   };
 
   return (
-    <ShadowBox className="bg-white absolute -bottom-3 -left-10 w-[80px] h-[55px] flex items-center justify-center rounded-[3rem]">
-      <button className="w-full h-full" onClick={handleClick}>
-        {/* {address} */}
-        <Text>{title}</Text>
+    <div
+      className={cn(
+        "opacity-80 absolut -bottom-3 -left-10 w-[60px] h-[60px] flex items-center justify-center rounded-full shadow-full",
+        getTailwindColorClass(convertToNumber(title))
+      )}
+    >
+      <button className="w-full h-full z-10 text-white" onClick={handleClick}>
+        <div>{title}</div>
       </button>
-    </ShadowBox>
+      <span
+        className={cn(
+          "absolute inline-flex h-full w-full animate-ping rounded-full opacity-65",
+          getTailwindColorClass(convertToNumber(title))
+        )}
+      ></span>
+    </div>
   );
+};
+
+const getTailwindColorClass = (count: number): string => {
+  if (count < 100) {
+    return "bg-green";
+  } else if (count < 500) {
+    return "bg-blue";
+  } else if (count < 1000) {
+    return "bg-yellow";
+  } else if (count < 5000) {
+    return "bg-red";
+  } else {
+    return "bg-red";
+  }
+};
+
+const convertToNumber = (str: string): number => {
+  return parseInt(str, 10);
 };
 
 export default Overlay;

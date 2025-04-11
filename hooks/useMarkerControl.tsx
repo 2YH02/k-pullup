@@ -135,7 +135,10 @@ const useMarkerControl = () => {
               group[i].centerLatitude,
               group[i].centerLongitude
             ),
-            title: `${group[i].count} 개`,
+            title:
+              group[i].count < 100
+                ? `${group[i].count}`
+                : `${roundNumber(group[i].count)}+`,
           },
         });
       }
@@ -219,6 +222,21 @@ const getCellSize = (level: number) => {
     default:
       return 1.6;
   }
+};
+
+const roundNumber = (num: number) => {
+  if (num <= 99) return num;
+
+  const strNum = num.toString();
+  const length = strNum.length;
+
+  if (length === 3) {
+    return Math.floor(num / 10) * 10;
+  } else if (length >= 4) {
+    return Math.floor(num / 100) * 100;
+  }
+
+  return num;
 };
 
 export default useMarkerControl;
