@@ -29,10 +29,7 @@ const Social = async () => {
   return (
     <SideMain headerTitle="소셜" withNav fullHeight deviceType={deviceType}>
       <Section className="pb-0">
-        {!!moment && moment.length > 0 && (
-          <SectionTitle title="모먼트" subTitle="당신의 순간을 공유해보세요." />
-        )}
-
+        <SectionTitle title="모먼트" subTitle="당신의 순간을 공유해보세요." />
         <MomentList data={moment || []} />
       </Section>
 
