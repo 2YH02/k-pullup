@@ -89,7 +89,9 @@ const ImageModal = ({
               key={image}
               className="flex items-center justify-center"
             >
-              {!isLoaded && <LoadingIcon className="mx-auto" />}
+              {!isLoaded && (
+                <LoadingIcon className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+              )}
               <Image
                 key={image}
                 src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${image}`}
@@ -98,7 +100,7 @@ const ImageModal = ({
                 height={imageSize}
                 className={cn(
                   `mx-auto transition-opacity duration-500 ease-in-out`,
-                  isLoaded ? "opacity-100 block" : "opacity-0 hidden"
+                  isLoaded ? "opacity-100" : "opacity-0"
                 )}
                 onLoadingComplete={() => setIsLoaded(true)}
                 unoptimized
