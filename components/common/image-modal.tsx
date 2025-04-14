@@ -17,6 +17,8 @@ import Dimmed from "./dimmed";
 import Skeleton from "./skeleton";
 // TODO: 사진 업로드 날짜 표시
 
+const DEFAULT_IMAGE_SIZE = 400;
+
 interface Props {
   open?: boolean;
   imageUrl: string[];
@@ -32,7 +34,7 @@ const ImageModal = ({
 }: Props) => {
   const { closeModal } = useImageModalStore();
 
-  const [imageSize, setImageSize] = useState(400);
+  const [imageSize, setImageSize] = useState(DEFAULT_IMAGE_SIZE);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const zoomIn = () => {
@@ -57,18 +59,23 @@ const ImageModal = ({
     }
   };
 
+  const handleClose = () => {
+    setImageSize(DEFAULT_IMAGE_SIZE);
+    closeModal();
+  };
+
   const isMobileApp =
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
 
   if (!open) return null;
 
   return (
-    <Dimmed onClose={() => closeModal()} onWheel={handleWheel}>
+    <Dimmed onClose={handleClose} onWheel={handleWheel}>
       <button
         className={`absolute ${
           isMobileApp ? "top-14" : "top-3"
         } right-3 z-40 bg-[rgba(0,0,0,0.7)] rounded-full p-2 `}
-        onClick={() => closeModal()}
+        onClick={handleClose}
       >
         <CloseIcon color="white" />
       </button>
