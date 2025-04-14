@@ -6,6 +6,7 @@ import CloseIcon from "@icons/close-icon";
 import useImageModalStore from "@store/useImageModalStore";
 import Image from "next/image";
 import { useState } from "react";
+import LoadingIcon from "../icons/loading-icon";
 import {
   Carousel,
   CarouselContent,
@@ -14,7 +15,6 @@ import {
   CarouselPrevious,
 } from "./carousel";
 import Dimmed from "./dimmed";
-import Skeleton from "./skeleton";
 // TODO: 사진 업로드 날짜 표시
 
 const DEFAULT_IMAGE_SIZE = 400;
@@ -89,9 +89,7 @@ const ImageModal = ({
               key={image}
               className="flex items-center justify-center"
             >
-              {!isLoaded && (
-                <Skeleton className="absolute inset-0 w-full h-full mx-auto rounded-md" />
-              )}
+              {!isLoaded && <LoadingIcon className="mx-auto" />}
               <Image
                 key={image}
                 src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${image}`}
@@ -100,7 +98,7 @@ const ImageModal = ({
                 height={imageSize}
                 className={cn(
                   `mx-auto transition-opacity duration-500 ease-in-out`,
-                  isLoaded ? "opacity-100" : "opacity-0"
+                  isLoaded ? "opacity-100 block" : "opacity-0 hidden"
                 )}
                 onLoadingComplete={() => setIsLoaded(true)}
                 unoptimized
