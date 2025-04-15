@@ -16,6 +16,7 @@ import {
 } from "./carousel";
 import Dimmed from "./dimmed";
 // TODO: 사진 업로드 날짜 표시
+// TODO: 로딩 확인 필요
 
 const DEFAULT_IMAGE_SIZE = 400;
 
@@ -60,6 +61,7 @@ const ImageModal = ({
   };
 
   const handleClose = () => {
+    setIsLoaded(false);
     setImageSize(DEFAULT_IMAGE_SIZE);
     closeModal();
   };

@@ -14,6 +14,9 @@ import ReportCompleted from "@pages/pullup/report/report-completed";
 import UploadImage from "@pages/pullup/upload-image";
 import useAlertStore from "@store/useAlertStore";
 import { useState } from "react";
+// TODO: 리포트 doesExist 확인
+// TODO: 리포트 UI 변경
+// TODO: 리포트 하단 여백 확인
 
 interface ReportClientProps {
   marker: Marker;
