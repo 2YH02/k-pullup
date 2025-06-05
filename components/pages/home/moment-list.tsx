@@ -180,6 +180,12 @@ const MomentList = ({ data }: { data: Moment[] }) => {
               fill
               alt={curMoment.caption}
               className="object-contain z-10"
+              placeholder="blur"
+              blurDataURL={pixelsToDataUrl(
+                decodeBlurhash(curMoment.blurhash, 100, 200),
+                100,
+                200
+              )}
             />
           </div>
           <div className="w-full text-white p-4 text-wrap break-words">
