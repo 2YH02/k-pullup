@@ -35,7 +35,7 @@ const Social = async () => {
 
       <Section>
         <SectionTitle
-          title="지역 채팅"
+          title="지역 채팅 및 오픈 채팅"
           subTitle="다른 사람들과 소통해보세요."
         />
         <ChatCarousel />

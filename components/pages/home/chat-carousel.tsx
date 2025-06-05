@@ -85,6 +85,16 @@ const ChatCarousel = () => {
 
   return (
     <HorizontalScroll className="gap-4 py-1 px-1">
+      <a
+        href="https://open.kakao.com/o/gyOTXHUg"
+        target="_blank"
+        className="text-left flex flex-col shrink-0 w-32 h-32 p-2 rounded-md shadow-full dark:border dark:border-solid dark:border-black-light"
+      >
+        <div className="font-bold text-black dark:text-white">오픈 채팅</div>
+        <div className="mt-2 text-sm text-grey-dark dark:text-grey">
+          카카오톡 오픈 채팅에 참여해보세요! 🎨
+        </div>
+      </a>
       {chatRoomData.map((v) => {
         return (
           <button
@@ -92,7 +102,9 @@ const ChatCarousel = () => {
             onClick={() => handleClick(v.code)}
             className="text-left flex flex-col shrink-0 w-32 h-32 p-2 rounded-md shadow-full dark:border dark:border-solid dark:border-black-light"
           >
-            <div className="font-bold text-black dark:text-white">{v.location} 채팅방</div>
+            <div className="font-bold text-black dark:text-white">
+              {v.location} 채팅방
+            </div>
             <div className="mt-2 text-sm text-grey-dark dark:text-grey">
               {v.message}
             </div>
