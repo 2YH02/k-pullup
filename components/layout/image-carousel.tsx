@@ -1,5 +1,6 @@
 "use client";
 
+import { decodeBlurhash, pixelsToDataUrl } from "@/lib/decode-hash";
 import type { newPicturesRes } from "@api/marker/new-pictures";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -68,6 +69,16 @@ const ImageCarousel = ({
               className="w-full h-full object-cover"
               priority={priority}
               draggable={false}
+              placeholder="blur"
+              blurDataURL={
+                item.blurhash
+                  ? pixelsToDataUrl(
+                      decodeBlurhash(item.blurhash, 100, 200),
+                      100,
+                      200
+                    )
+                  : "/placeholder_image.png"
+              }
             />
           </button>
         </ScrollItem>

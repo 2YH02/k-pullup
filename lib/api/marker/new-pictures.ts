@@ -3,6 +3,7 @@ import fetchData from "@lib/fetchData";
 export interface newPicturesRes {
   markerId: number;
   photoURL: string;
+  blurhash?: string;
 }
 
 const newPictures = async (): Promise<newPicturesRes[]> => {
