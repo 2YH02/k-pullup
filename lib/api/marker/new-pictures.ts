@@ -1,12 +1,15 @@
 import fetchData from "@lib/fetchData";
 
-export interface newPicturesRes {
+export interface NewPictures {
   markerId: number;
   photoURL: string;
   blurhash?: string;
 }
 
-const newPictures = async (): Promise<newPicturesRes[]> => {
+export type NewPicturesError = { error: string };
+export type NewPicturesResponse = NewPictures[] | NewPicturesError;
+
+const newPictures = async (): Promise<NewPicturesResponse> => {
   const response = await fetchData(
     `${process.env.NEXT_PUBLIC_BASE_URL}/markers/new-pictures`,
     {
@@ -22,3 +25,9 @@ const newPictures = async (): Promise<newPicturesRes[]> => {
 };
 
 export default newPictures;
+
+export function isNewPicturesError(
+  res: NewPicturesResponse
+): res is NewPicturesError {
+  return (res as NewPicturesError).error !== undefined;
+}

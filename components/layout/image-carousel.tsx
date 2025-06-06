@@ -1,14 +1,14 @@
 "use client";
 
 import { decodeBlurhash, pixelsToDataUrl } from "@/lib/decode-hash";
-import type { newPicturesRes } from "@api/marker/new-pictures";
+import type { NewPictures } from "@api/marker/new-pictures";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import HorizontalScroll, { ScrollItem } from "../common/horizontal-scroll";
 
 interface ImageCarouselProps {
-  data: newPicturesRes[];
+  data: NewPictures[];
   priority?: boolean;
   withRoute?: boolean;
   onClick?: VoidFunction;
@@ -22,16 +22,14 @@ const ImageCarousel = ({
 }: ImageCarouselProps) => {
   const router = useRouter();
 
-  console.log(data);
-
-  const [validData, setValidData] = useState<newPicturesRes[]>([]);
+  const [validData, setValidData] = useState<NewPictures[]>([]);
 
   useEffect(() => {
     const validateImages = async () => {
       const validatedData = await Promise.all(
         data.map(
           (item) =>
-            new Promise<newPicturesRes | null>((resolve) => {
+            new Promise<NewPictures | null>((resolve) => {
               const img = new window.Image();
               img.src = item.photoURL;
               img.onload = () => resolve(item);
@@ -40,7 +38,7 @@ const ImageCarousel = ({
         )
       );
 
-      setValidData(validatedData.filter(Boolean) as newPicturesRes[]);
+      setValidData(validatedData.filter(Boolean) as NewPictures[]);
     };
 
     validateImages();

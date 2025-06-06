@@ -1,11 +1,11 @@
 "use client";
 
-import { type newPicturesRes } from "@api/marker/new-pictures";
+import { type NewPictures } from "@api/marker/new-pictures";
 import Section, { SectionTitle } from "@common/section";
 import ImageCarousel from "@layout/image-carousel";
 import useImageCountStore from "@store/useImageCountStore";
 
-const NewImageSection = ({ data }: { data: newPicturesRes[] }) => {
+const NewImageSection = ({ data }: { data: NewPictures[] }) => {
   const { count } = useImageCountStore();
 
   if (data.length === 0) return null;

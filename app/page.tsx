@@ -1,4 +1,7 @@
-import newPictures from "@api/marker/new-pictures";
+import newPictures, {
+  isNewPicturesError,
+  type NewPictures,
+} from "@api/marker/new-pictures";
 import getAllMoment from "@api/moment/get-all-moment";
 import Ads from "@common/ads";
 import Section, { SectionTitle } from "@common/section";
@@ -19,7 +22,7 @@ import { type Device } from "./mypage/page";
 const Home = async () => {
   const images = await newPictures();
   const moment = await getAllMoment();
-  
+
   const headersList = headers();
   const userAgent = headersList.get("user-agent");
 
@@ -52,7 +55,9 @@ const Home = async () => {
         <IconLinkList />
       </Section>
 
-      <NewImageSection data={images} />
+      {!isNewPicturesError(images) && (
+        <NewImageSection data={images as NewPictures[]} />
+      )}
 
       <AroundMarkerCarousel />
 
