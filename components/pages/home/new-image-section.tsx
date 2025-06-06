@@ -8,6 +8,8 @@ import useImageCountStore from "@store/useImageCountStore";
 const NewImageSection = ({ data }: { data: newPicturesRes[] }) => {
   const { count } = useImageCountStore();
 
+  if (data.length === 0) return null;
+
   return (
     <Section>
       <SectionTitle

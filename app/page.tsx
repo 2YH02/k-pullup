@@ -19,7 +19,7 @@ import { type Device } from "./mypage/page";
 const Home = async () => {
   const images = await newPictures();
   const moment = await getAllMoment();
-
+  
   const headersList = headers();
   const userAgent = headersList.get("user-agent");
 

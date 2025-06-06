@@ -22,6 +22,8 @@ const ImageCarousel = ({
 }: ImageCarouselProps) => {
   const router = useRouter();
 
+  console.log(data);
+
   const [validData, setValidData] = useState<newPicturesRes[]>([]);
 
   useEffect(() => {
