@@ -1,17 +1,19 @@
 "use client";
 
+import BottomSheet, { BottomSheetItem } from "@/components/common/bottom-sheet";
+import { useBottomSheetStore } from "@/store/useBottomSheetStore";
 import convertWgs from "@api/marker/convert-wgs";
-import Button from "@common/button";
 import IconButton from "@common/icon-button";
-import Text from "@common/text";
 import useGps from "@hooks/useGps";
 import { useToast } from "@hooks/useToast";
-import CloseIcon from "@icons/close-icon";
-import LoadingIcon from "@icons/loading-icon";
 import downloadPdf from "@lib/api/marker/download-pdf";
-import useAlertStore from "@store/useAlertStore";
 import { useState } from "react";
-import { BsFillShareFill } from "react-icons/bs";
+import {
+  BsCloudDownload,
+  BsCopy,
+  BsFillShareFill,
+  BsGeo,
+} from "react-icons/bs";
 
 interface ShareButtonProps {
   markerId: number;
@@ -21,49 +23,7 @@ interface ShareButtonProps {
 }
 
 const ShareButton = ({ markerId, lat, lng, address }: ShareButtonProps) => {
-  const { openAlert, closeAlert } = useAlertStore();
-
-  return (
-    <div className="relative flex-1">
-      <IconButton
-        icon={<BsFillShareFill size={20} className="fill-primary" />}
-        text="공유 / 길찾기"
-        className="w-full"
-        onClick={() => {
-          openAlert({
-            contents: (
-              <ShareContents
-                markerId={markerId}
-                lat={lat}
-                lng={lng}
-                address={address}
-                closeAlert={() => {
-                  closeAlert();
-                }}
-              />
-            ),
-          });
-        }}
-      />
-    </div>
-  );
-};
-
-export default ShareButton;
-
-const ShareContents = ({
-  markerId,
-  lat,
-  lng,
-  address,
-  closeAlert,
-}: {
-  markerId: number;
-  lat: number;
-  lng: number;
-  address: string;
-  closeAlert: VoidFunction;
-}) => {
+  const { show } = useBottomSheetStore();
   const { toast } = useToast();
   const { handleGps } = useGps();
 
@@ -137,56 +97,53 @@ const ShareContents = ({
   };
 
   return (
-    <div>
-      <div className="">
-        <div className="flex justify-center mb-2">
-          <Button
-            onClick={copyTextToClipboard}
-            size="sm"
-            className="w-1/3 h-[30px] flex items-center justify-center text-xs shrink-0 mr-2"
-          >
-            링크 복사
-          </Button>
-          <Button
-            onClick={copyAddress}
-            size="sm"
-            className="w-1/3 h-[30px] flex items-center justify-center text-xs shrink-0"
-          >
-            주소 복사
-          </Button>
-        </div>
-        <div className="flex justify-center">
-          <Button
-            onClick={openLocation}
-            size="sm"
-            className="w-1/3 h-[30px] flex items-center justify-center text-xs shrink-0 mr-2"
-          >
-            길찾기
-          </Button>
-          <Button
-            onClick={downloadMap}
-            size="sm"
-            className="w-1/3 h-[30px] flex items-center justify-center text-xs shrink-0"
-            disabled={downLoading}
-          >
-            {downLoading ? (
-              <LoadingIcon className="m-0 text-white" size="sm" />
-            ) : (
-              "PDF 저장"
-            )}
-          </Button>
-        </div>
+    <>
+      <div className="relative flex-1">
+        <IconButton
+          icon={<BsFillShareFill size={20} className="fill-primary" />}
+          text="공유 / 길찾기"
+          className="w-full"
+          onClick={() => {
+            show(`share-${markerId}`);
+          }}
+        />
       </div>
-      <div className="mt-2">
-        <Text typography="t7">
-          해당 위치를 기반으로 주변의 지도와 철봉 위치를 PDF로 저장할 수
-          있습니다.
-        </Text>
-      </div>
-
-      <button className="absolute top-2 right-2" onClick={closeAlert}>
-        <CloseIcon color="black" size={20} />
-      </button>
-    </div>
+      <BottomSheet
+        title="공유 / 길찾기"
+        id={`share-${markerId}`}
+        className="pb-10"
+      >
+        <BottomSheetItem
+          icon={<BsCopy size={22} />}
+          onClick={copyAddress}
+          // disabled={loading}
+        >
+          주소 복사
+        </BottomSheetItem>
+        <BottomSheetItem
+          icon={<BsCopy size={22} />}
+          onClick={copyTextToClipboard}
+          // disabled={loading}
+        >
+          링크 복사
+        </BottomSheetItem>
+        <BottomSheetItem
+          icon={<BsGeo size={22} />}
+          onClick={openLocation}
+          // disabled={loading}
+        >
+          길찾기
+        </BottomSheetItem>
+        <BottomSheetItem
+          icon={<BsCloudDownload size={22} />}
+          onClick={downloadMap}
+          disabled={downLoading}
+        >
+          PDF 저장
+        </BottomSheetItem>
+      </BottomSheet>
+    </>
   );
 };
+
+export default ShareButton;
