@@ -1,12 +1,13 @@
 "use client";
 
 import { type Device } from "@/app/mypage/page";
+import { useBottomSheetStore } from "@/store/useBottomSheetStore";
 import { type Marker } from "@/types/marker.types";
 import { type FacilitiesRes } from "@api/marker/get-facilities";
 import Ads from "@common/ads";
 import Badge from "@common/badge";
 import Divider from "@common/divider";
-import Section from "@common/section";
+import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import { formatDate } from "@lib/format-date";
@@ -17,7 +18,6 @@ import Description from "@pages/pullup/description";
 import ImageCarousel from "@pages/pullup/image-carousel";
 import ImageList from "@pages/pullup/image-list";
 import MoveMap from "@pages/pullup/move-map";
-import Tabs from "@pages/pullup/tabs";
 import WeatherBadge from "@pages/pullup/weather-badge";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -37,14 +37,10 @@ const PullupClient = ({
   referrer,
 }: PullupClientProps) => {
   const router = useRouter();
+  const { show } = useBottomSheetStore();
 
   const 철봉 = facilities.find((item) => item.facilityId === 1);
   const 평행봉 = facilities.find((item) => item.facilityId === 2);
-
-  const tabData = [
-    { title: "사진", contents: <ImageList photos={marker.photos} /> },
-    { title: "댓글", contents: <Comments markerId={marker.markerId} /> },
-  ];
 
   return (
     <SideMain
@@ -146,7 +142,23 @@ const PullupClient = ({
       <Ads type="feed" />
       <Divider className="h-2" />
 
-      <Tabs tabs={tabData} />
+      <Section>
+        <SectionTitle
+          title="이미지"
+          buttonTitle="정보 수정 요청"
+          onClickButton={() => {}}
+        />
+        <ImageList photos={marker.photos} />
+      </Section>
+      <Divider className="h-2" />
+      <Section>
+        <SectionTitle
+          title="리뷰"
+          buttonTitle="리뷰 작성하기"
+          onClickButton={() => show("write-comments")}
+        />
+        <Comments markerId={marker.markerId} />
+      </Section>
     </SideMain>
   );
 };

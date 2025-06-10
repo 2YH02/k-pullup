@@ -113,25 +113,16 @@ const ShareButton = ({ markerId, lat, lng, address }: ShareButtonProps) => {
         id={`share-${markerId}`}
         className="pb-10"
       >
-        <BottomSheetItem
-          icon={<BsCopy size={22} />}
-          onClick={copyAddress}
-          // disabled={loading}
-        >
+        <BottomSheetItem icon={<BsCopy size={22} />} onClick={copyAddress}>
           주소 복사
         </BottomSheetItem>
         <BottomSheetItem
           icon={<BsCopy size={22} />}
           onClick={copyTextToClipboard}
-          // disabled={loading}
         >
           링크 복사
         </BottomSheetItem>
-        <BottomSheetItem
-          icon={<BsGeo size={22} />}
-          onClick={openLocation}
-          // disabled={loading}
-        >
+        <BottomSheetItem icon={<BsGeo size={22} />} onClick={openLocation}>
           길찾기
         </BottomSheetItem>
         <BottomSheetItem

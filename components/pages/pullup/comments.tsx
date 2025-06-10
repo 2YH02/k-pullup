@@ -1,5 +1,7 @@
 "use client";
 
+import BottomSheet from "@/components/common/bottom-sheet";
+import { useBottomSheetStore } from "@/store/useBottomSheetStore";
 import createComment from "@api/comment/create-comment";
 import deleteComment from "@api/comment/delete-comment";
 import getComments, { type Comment } from "@api/comment/get-comments";
@@ -28,6 +30,7 @@ const Comments = ({ markerId }: CommentsProps) => {
   const { toast } = useToast();
   const { user } = useUserStore();
   const { openAlert } = useAlertStore();
+  const { hide } = useBottomSheetStore();
 
   const commentValue = useInput("");
 
@@ -139,7 +142,7 @@ const Comments = ({ markerId }: CommentsProps) => {
       setCreateLoading(false);
       return;
     }
-    
+
     setComments((prev) => {
       if (data.username !== "k-pullup") {
         const nonKIndex = prev.findIndex(
@@ -177,26 +180,6 @@ const Comments = ({ markerId }: CommentsProps) => {
 
   return (
     <div>
-      <div className="mb-3 border border-solid border-primary rounded-md p-1">
-        <Textarea
-          placeholder="다른 사람에게 불쾌감을 주는 욕설, 혐오, 비하의 표현은 주의해주세요."
-          rows={2}
-          value={commentValue.value}
-          onChange={commentValue.onChange}
-          className="placeholder:text-xs border-none focus:border-none"
-        />
-        <div className="flex items-center justify-between border-t border-solid p-1 pb-0">
-          <span>
-            <Text typography="t6">{commentValue.value.length}</Text>
-            <Text typography="t6">/</Text>
-            <Text typography="t6">40</Text>
-          </span>
-          <Button onClick={handleCreate} size="sm" disabled={createLoading}>
-            등록
-          </Button>
-        </div>
-      </div>
-
       {comments.length <= 0 && !commentsLoading && (
         <div className="flex flex-col items-center justify-center mt-2 mb-4">
           <div className="mb-4">
@@ -291,6 +274,72 @@ const Comments = ({ markerId }: CommentsProps) => {
       {totalPages > currentPage && (
         <div ref={loadMoreRef} className="w-full h-20" />
       )}
+
+      <BottomSheet title="리뷰 작성" id={`write-comments`} className="pb-10">
+        {/* <div className="mb-3 border border-solid border-primary rounded-md p-1">
+          <Textarea
+            placeholder="다른 사람에게 불쾌감을 주는 욕설, 혐오, 비하의 표현은 주의해주세요."
+            rows={2}
+            value={commentValue.value}
+            onChange={commentValue.onChange}
+            className="placeholder:text-xs border-none focus:border-none"
+          />
+          <div className="flex items-center justify-between border-t border-solid p-1 pb-0">
+            <span>
+              <Text typography="t6">{commentValue.value.length}</Text>
+              <Text typography="t6">/</Text>
+              <Text typography="t6">40</Text>
+            </span>
+            <Button onClick={handleCreate} size="sm" disabled={createLoading}>
+              등록
+            </Button>
+          </div>
+        </div> */}
+
+        {!user?.error ? (
+          <div>
+            <Textarea
+              value={commentValue.value}
+              onChange={commentValue.onChange}
+              maxLength={40}
+              placeholder="다른 사람에게 불쾌감을 주는 욕설, 혐오, 비하의 표현은 주의해주세요."
+              className="mb-4"
+            />
+            <div className="flex items-center">
+              <Button
+                className="w-3/4 bg-primary"
+                onClick={handleCreate}
+                disabled={createLoading}
+              >
+                등록하기
+              </Button>
+              <div className="grow" />
+              <div className="mr-2">{commentValue.value.length}/40</div>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div className="text-center mb-5">먼저 로그인을 해주셔야 해요.</div>
+            <Button
+              className="bg-primary"
+              onClick={() => {
+                openAlert({
+                  title: "로그인이 필요합니다.",
+                  description: "로그인 페이지로 이동하시겠습니까?",
+                  onClick: () => {
+                    router.push(`/signin?returnUrl=/pullup/${markerId}`);
+                  },
+                  cancel: true,
+                });
+                hide();
+              }}
+              full
+            >
+              로그인 하러 가기
+            </Button>
+          </div>
+        )}
+      </BottomSheet>
     </div>
   );
 };

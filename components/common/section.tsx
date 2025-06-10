@@ -1,4 +1,5 @@
 import cn from "@/lib/cn";
+import GrowBox from "./grow-box";
 import Text from "./text";
 
 interface SectionProps {
@@ -17,9 +18,13 @@ const Section = ({ className, children }: SectionProps) => {
 export const SectionTitle = ({
   title,
   subTitle,
+  buttonTitle,
+  onClickButton,
 }: {
   title: string;
   subTitle?: string;
+  buttonTitle?: string;
+  onClickButton?: VoidFunction;
 }) => {
   return (
     <Text
@@ -29,6 +34,13 @@ export const SectionTitle = ({
     >
       <p>{title}</p>
       {subTitle && <p className="text-[10px] ml-2 text-grey">{subTitle}</p>}
+      <GrowBox />
+      <button
+        className="text-[10px] text-primary underline font-normal active:text-primary-dark"
+        onClick={onClickButton}
+      >
+        {buttonTitle}
+      </button>
     </Text>
   );
 };
