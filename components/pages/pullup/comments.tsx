@@ -203,32 +203,32 @@ const Comments = ({ markerId }: CommentsProps) => {
       {comments.map((comment, index) => {
         // if (comment.username === "c") {
         //   return (
-            // <ListItem
-            //   key={comment.commentId}
-            //   icon={
-            //     user?.chulbong || user?.userId === comment.userId ? (
-            //       <BsX size={22} color="#777" />
-            //     ) : undefined
-            //   }
-            //   onIconClick={async () => {
-            //     if (
-            //       deleteLoading ||
-            //       !user ||
-            //       (!user.chulbong && user.userId !== comment.userId)
-            //     )
-            //       return;
-            //     await handleDelete(comment.commentId);
-            //   }}
-            // >
-            //   <ListContents
-            //     title={comment.commentText}
-            //     subTitle={formatDate(comment.postedAt)}
-            //   />
+        // <ListItem
+        //   key={comment.commentId}
+        //   icon={
+        //     user?.chulbong || user?.userId === comment.userId ? (
+        //       <BsX size={22} color="#777" />
+        //     ) : undefined
+        //   }
+        //   onIconClick={async () => {
+        //     if (
+        //       deleteLoading ||
+        //       !user ||
+        //       (!user.chulbong && user.userId !== comment.userId)
+        //     )
+        //       return;
+        //     await handleDelete(comment.commentId);
+        //   }}
+        // >
+        //   <ListContents
+        //     title={comment.commentText}
+        //     subTitle={formatDate(comment.postedAt)}
+        //   />
 
-            //   <ListRight>
-            //     <Text typography="t7">{comment.username}</Text>
-            //   </ListRight>
-            // </ListItem>
+        //   <ListRight>
+        //     <Text typography="t7">{comment.username}</Text>
+        //   </ListRight>
+        // </ListItem>
         //   );
         // }
         return (
@@ -306,7 +306,9 @@ const Comments = ({ markerId }: CommentsProps) => {
                 등록하기
               </Button>
               <div className="grow" />
-              <div className="mr-2">{commentValue.value.length}/40</div>
+              <div className="mr-2 text-black dark:text-grey-light">
+                {commentValue.value.length}/40
+              </div>
             </div>
           </div>
         ) : (

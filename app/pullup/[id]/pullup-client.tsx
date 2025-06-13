@@ -207,8 +207,8 @@ const PullupClient = ({
       <Ads type="feed" />
       <Divider className="h-2" />
 
-      <div className="sticky top-0 left-0 bg-white h-11 z-50 flex">
-        {["이미지", "댓글"].map((label, index) => (
+      <div className="sticky top-0 left-0 bg-white dark:bg-black text-black dark:text-grey-light h-11 z-50 flex">
+        {["사진", "댓글"].map((label, index) => (
           <button
             key={index}
             onClick={() => {
@@ -223,7 +223,7 @@ const PullupClient = ({
               border-b-2 transition-colors
               ${
                 activeIndex === index
-                  ? "border-primary-dark text-black"
+                  ? "border-primary-dark text-black dark:text-grey-light"
                   : "border-gray-200 text-gray-500"
               }
             `}
@@ -235,35 +235,37 @@ const PullupClient = ({
 
       {providerInfo.length > 0 && (
         <div className="mt-4 px-4">
-          {providerInfo.map((comment) => {
-            return (
-              <ListItem
-                key={comment.commentId}
-                icon={
-                  user?.chulbong || user?.userId === comment.userId ? (
-                    <BsX size={22} color="#777" />
-                  ) : undefined
-                }
-                onIconClick={async () => {
-                  if (
-                    deleteLoading ||
-                    !user ||
-                    (!user.chulbong && user.userId !== comment.userId)
-                  )
-                    return;
-                  await handleDelete(comment.commentId);
-                }}
-              >
-                <ListContents
-                  title={comment.commentText}
-                  subTitle={formatDate(comment.postedAt)}
-                />
+          {providerInfo.map((comment, index) => {
+            if (index < 3) {
+              return (
+                <ListItem
+                  key={comment.commentId}
+                  icon={
+                    user?.chulbong || user?.userId === comment.userId ? (
+                      <BsX size={22} color="#777" />
+                    ) : undefined
+                  }
+                  onIconClick={async () => {
+                    if (
+                      deleteLoading ||
+                      !user ||
+                      (!user.chulbong && user.userId !== comment.userId)
+                    )
+                      return;
+                    await handleDelete(comment.commentId);
+                  }}
+                >
+                  <ListContents
+                    title={comment.commentText}
+                    subTitle={formatDate(comment.postedAt)}
+                  />
 
-                <ListRight>
-                  <Text typography="t7">{comment.username}</Text>
-                </ListRight>
-              </ListItem>
-            );
+                  <ListRight>
+                    <Text typography="t7">{comment.username}</Text>
+                  </ListRight>
+                </ListItem>
+              );
+            }
           })}
         </div>
       )}
@@ -277,7 +279,7 @@ const PullupClient = ({
       >
         <Section>
           <SectionTitle
-            title="이미지"
+            title="사진"
             buttonTitle="정보 수정 요청"
             onClickButton={() =>
               router.push(`/pullup/${marker.markerId}/report`)
