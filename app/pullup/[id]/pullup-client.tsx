@@ -1,15 +1,17 @@
 "use client";
 
 import { type Device } from "@/app/mypage/page";
-import { useBottomSheetStore } from "@/store/useBottomSheetStore";
 import { type Marker } from "@/types/marker.types";
 import { type FacilitiesRes } from "@api/marker/get-facilities";
 import Ads from "@common/ads";
 import Badge from "@common/badge";
 import Divider from "@common/divider";
+import ListItem, { ListContents, ListRight } from "@common/list-item";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
+import { useToast } from "@hooks/useToast";
+import deleteComment from "@lib/api/comment/delete-comment";
 import { formatDate } from "@lib/format-date";
 import AddressButton from "@pages/pullup/address-button";
 import ButtonList from "@pages/pullup/button-list";
@@ -19,9 +21,13 @@ import ImageCarousel from "@pages/pullup/image-carousel";
 import ImageList from "@pages/pullup/image-list";
 import MoveMap from "@pages/pullup/move-map";
 import WeatherBadge from "@pages/pullup/weather-badge";
+import { useBottomSheetStore } from "@store/useBottomSheetStore";
+import { useProviderStore } from "@store/useProviderStore";
+import useUserStore from "@store/useUserStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { BsHouseDoor } from "react-icons/bs";
+import { useCallback, useRef, useState } from "react";
+import { BsHouseDoor, BsX } from "react-icons/bs";
 
 interface PullupClientProps {
   facilities: FacilitiesRes[];
@@ -38,6 +44,64 @@ const PullupClient = ({
 }: PullupClientProps) => {
   const router = useRouter();
   const { show } = useBottomSheetStore();
+  const { providerInfo, setProviderInfo } = useProviderStore();
+  const { user } = useUserStore();
+  const { toast } = useToast();
+
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const handleDelete = async (commentId: number) => {
+    setDeleteLoading(true);
+    const response = await deleteComment(commentId);
+
+    if (!response.ok) {
+      toast({ description: "잠시 후 다시 시도해주세요" });
+      setDeleteLoading(false);
+      return;
+    }
+
+    const newComment = providerInfo.filter(
+      (comment) => comment.commentId !== commentId
+    );
+    setProviderInfo([...newComment]);
+    setDeleteLoading(false);
+  };
+
+  const onScroll = useCallback(
+    (e: React.UIEvent<HTMLDivElement>) => {
+      const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+      const buffer = 5;
+
+      if (
+        scrollHeight <= clientHeight + buffer ||
+        scrollTop + clientHeight >= scrollHeight - buffer
+      ) {
+        if (activeIndex !== sectionRefs.current.length - 1) {
+          setActiveIndex(sectionRefs.current.length - 1);
+        }
+        return;
+      }
+
+      const scrollPos = scrollTop + 44;
+
+      const tops = sectionRefs.current.map((section) => section!.offsetTop);
+      const nextIndex = tops.findIndex((top) => top > scrollPos);
+      const newIndex =
+        nextIndex === -1
+          ? sectionRefs.current.length - 1
+          : nextIndex === 0
+          ? 0
+          : nextIndex - 1;
+
+      if (newIndex !== activeIndex) {
+        setActiveIndex(newIndex);
+      }
+    },
+    [activeIndex]
+  );
 
   const 철봉 = facilities.find((item) => item.facilityId === 1);
   const 평행봉 = facilities.find((item) => item.facilityId === 2);
@@ -54,6 +118,7 @@ const PullupClient = ({
       headerIconClick={() => {
         router.push("/");
       }}
+      onScroll={(e) => onScroll(e)}
     >
       <MoveMap
         lat={marker.latitude}
@@ -142,23 +207,103 @@ const PullupClient = ({
       <Ads type="feed" />
       <Divider className="h-2" />
 
-      <Section>
-        <SectionTitle
-          title="이미지"
-          buttonTitle="정보 수정 요청"
-          onClickButton={() => {}}
-        />
-        <ImageList photos={marker.photos} />
-      </Section>
+      <div className="sticky top-0 left-0 bg-white h-11 z-50 flex">
+        {["이미지", "댓글"].map((label, index) => (
+          <button
+            key={index}
+            onClick={() => {
+              sectionRefs.current[index]?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+              setActiveIndex(index);
+            }}
+            className={`
+              grow px-4 py-2 whitespace-nowrap
+              border-b-2 transition-colors
+              ${
+                activeIndex === index
+                  ? "border-primary-dark text-black"
+                  : "border-gray-200 text-gray-500"
+              }
+            `}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {providerInfo.length > 0 && (
+        <div className="mt-4 px-4">
+          {providerInfo.map((comment) => {
+            return (
+              <ListItem
+                key={comment.commentId}
+                icon={
+                  user?.chulbong || user?.userId === comment.userId ? (
+                    <BsX size={22} color="#777" />
+                  ) : undefined
+                }
+                onIconClick={async () => {
+                  if (
+                    deleteLoading ||
+                    !user ||
+                    (!user.chulbong && user.userId !== comment.userId)
+                  )
+                    return;
+                  await handleDelete(comment.commentId);
+                }}
+              >
+                <ListContents
+                  title={comment.commentText}
+                  subTitle={formatDate(comment.postedAt)}
+                />
+
+                <ListRight>
+                  <Text typography="t7">{comment.username}</Text>
+                </ListRight>
+              </ListItem>
+            );
+          })}
+        </div>
+      )}
+
+      <div
+        ref={(el) => {
+          sectionRefs.current[0] = el;
+        }}
+        className="scroll-mt-11"
+        id="image-list"
+      >
+        <Section>
+          <SectionTitle
+            title="이미지"
+            buttonTitle="정보 수정 요청"
+            onClickButton={() =>
+              router.push(`/pullup/${marker.markerId}/report`)
+            }
+          />
+          <ImageList photos={marker.photos} />
+        </Section>
+      </div>
+
       <Divider className="h-2" />
-      <Section>
-        <SectionTitle
-          title="리뷰"
-          buttonTitle="리뷰 작성하기"
-          onClickButton={() => show("write-comments")}
-        />
-        <Comments markerId={marker.markerId} />
-      </Section>
+
+      <div
+        ref={(el) => {
+          sectionRefs.current[1] = el;
+        }}
+        id="comment-list"
+      >
+        <Section>
+          <SectionTitle
+            title="리뷰"
+            buttonTitle="리뷰 작성하기"
+            onClickButton={() => show("write-comments")}
+          />
+          <Comments markerId={marker.markerId} />
+        </Section>
+      </div>
     </SideMain>
   );
 };

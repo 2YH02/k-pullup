@@ -1,12 +1,10 @@
 "use client";
 
-import BottomSheet from "@/components/common/bottom-sheet";
-import { useBottomSheetStore } from "@/store/useBottomSheetStore";
 import createComment from "@api/comment/create-comment";
 import deleteComment from "@api/comment/delete-comment";
 import getComments, { type Comment } from "@api/comment/get-comments";
+import BottomSheet from "@common/bottom-sheet";
 import Button from "@common/button";
-import ListItem, { ListContents, ListRight } from "@common/list-item";
 import Skeleton from "@common/skeleton";
 import Text from "@common/text";
 import Textarea from "@common/textarea";
@@ -15,6 +13,8 @@ import { useToast } from "@hooks/useToast";
 import cn from "@lib/cn";
 import { formatDate } from "@lib/format-date";
 import useAlertStore from "@store/useAlertStore";
+import { useBottomSheetStore } from "@store/useBottomSheetStore";
+import { useProviderStore } from "@store/useProviderStore";
 import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -31,6 +31,7 @@ const Comments = ({ markerId }: CommentsProps) => {
   const { user } = useUserStore();
   const { openAlert } = useAlertStore();
   const { hide } = useBottomSheetStore();
+  const { providerInfo, setProviderInfo } = useProviderStore();
 
   const commentValue = useInput("");
 
@@ -75,7 +76,16 @@ const Comments = ({ markerId }: CommentsProps) => {
         return;
       }
 
-      setComments(data.comments);
+      const providerData = data.comments.filter(
+        (comment) => comment.username === "k-pullup"
+      );
+
+      const commentsData = data.comments.filter(
+        (comment) => comment.username !== "k-pullup"
+      );
+
+      setProviderInfo([...providerData]);
+      setComments(commentsData);
       setTotalPages(data.totalPages);
       setCommentsLoading(false);
     };
@@ -153,9 +163,11 @@ const Comments = ({ markerId }: CommentsProps) => {
         }
         return [...prev.slice(0, nonKIndex), data, ...prev.slice(nonKIndex)];
       }
-      return [data, ...prev];
+      setProviderInfo([...providerInfo, data]);
+      return [...prev];
     });
     setCreateLoading(false);
+    hide();
     commentValue.resetValue();
   };
 
@@ -189,36 +201,36 @@ const Comments = ({ markerId }: CommentsProps) => {
         </div>
       )}
       {comments.map((comment, index) => {
-        if (comment.username === "k-pullup") {
-          return (
-            <ListItem
-              key={comment.commentId}
-              icon={
-                user?.chulbong || user?.userId === comment.userId ? (
-                  <BsX size={22} color="#777" />
-                ) : undefined
-              }
-              onIconClick={async () => {
-                if (
-                  deleteLoading ||
-                  !user ||
-                  (!user.chulbong && user.userId !== comment.userId)
-                )
-                  return;
-                await handleDelete(comment.commentId);
-              }}
-            >
-              <ListContents
-                title={comment.commentText}
-                subTitle={formatDate(comment.postedAt)}
-              />
+        // if (comment.username === "c") {
+        //   return (
+            // <ListItem
+            //   key={comment.commentId}
+            //   icon={
+            //     user?.chulbong || user?.userId === comment.userId ? (
+            //       <BsX size={22} color="#777" />
+            //     ) : undefined
+            //   }
+            //   onIconClick={async () => {
+            //     if (
+            //       deleteLoading ||
+            //       !user ||
+            //       (!user.chulbong && user.userId !== comment.userId)
+            //     )
+            //       return;
+            //     await handleDelete(comment.commentId);
+            //   }}
+            // >
+            //   <ListContents
+            //     title={comment.commentText}
+            //     subTitle={formatDate(comment.postedAt)}
+            //   />
 
-              <ListRight>
-                <Text typography="t7">{comment.username}</Text>
-              </ListRight>
-            </ListItem>
-          );
-        }
+            //   <ListRight>
+            //     <Text typography="t7">{comment.username}</Text>
+            //   </ListRight>
+            // </ListItem>
+        //   );
+        // }
         return (
           <div
             key={comment.commentId}
@@ -276,26 +288,6 @@ const Comments = ({ markerId }: CommentsProps) => {
       )}
 
       <BottomSheet title="리뷰 작성" id={`write-comments`} className="pb-10">
-        {/* <div className="mb-3 border border-solid border-primary rounded-md p-1">
-          <Textarea
-            placeholder="다른 사람에게 불쾌감을 주는 욕설, 혐오, 비하의 표현은 주의해주세요."
-            rows={2}
-            value={commentValue.value}
-            onChange={commentValue.onChange}
-            className="placeholder:text-xs border-none focus:border-none"
-          />
-          <div className="flex items-center justify-between border-t border-solid p-1 pb-0">
-            <span>
-              <Text typography="t6">{commentValue.value.length}</Text>
-              <Text typography="t6">/</Text>
-              <Text typography="t6">40</Text>
-            </span>
-            <Button onClick={handleCreate} size="sm" disabled={createLoading}>
-              등록
-            </Button>
-          </div>
-        </div> */}
-
         {!user?.error ? (
           <div>
             <Textarea

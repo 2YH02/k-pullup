@@ -3,19 +3,15 @@
 import { type Device } from "@/app/mypage/page";
 import ArrowLeftIcon from "@icons/arrow-left-icon";
 import ArrowRightIcon from "@icons/arrow-right-icon";
-import ChatBubbleIcon from "@icons/chat-bubble-icon";
-import HomeIcon from "@icons/home-icon";
-import SignIcon from "@icons/sign-icon";
-import UserIcon from "@icons/user-icon";
 import BottomNav from "@layout/bottom-nav";
 import cn from "@lib/cn";
 import useScrollRefStore from "@store/useScrollRefStore";
 import useSheetHeightStore from "@store/useSheetHeightStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { BsBuilding, BsChatDots, BsEmojiWink, BsGeo } from "react-icons/bs";
 import SheetHeightProvider from "../provider/sheet-height-provider";
 import Text from "./text";
-import { BsBuilding, BsChatDots, BsEmojiWink, BsGeo } from "react-icons/bs";
 
 interface SideMainProps {
   withNav?: boolean;
@@ -33,6 +29,7 @@ interface SideMainProps {
   bodyStyle?: string;
   headerIconClick?: VoidFunction;
   prevClick?: VoidFunction;
+  onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
 }
 
 const menus = [
@@ -77,6 +74,7 @@ const SideMain = ({
   children,
   deviceType,
   bodyStyle,
+  onScroll,
   referrer = true,
 }: SideMainProps) => {
   const { sheetHeight, curHeight, setCurHeight } = useSheetHeightStore();
@@ -224,6 +222,7 @@ const SideMain = ({
           onPointerDown={(e) => {
             e.stopPropagation();
           }}
+          onScroll={onScroll}
         >
           {children}
         </div>
