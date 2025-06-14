@@ -313,7 +313,9 @@ const Comments = ({ markerId }: CommentsProps) => {
           </div>
         ) : (
           <div>
-            <div className="text-center mb-5">먼저 로그인을 해주셔야 해요.</div>
+            <div className="text-center mb-5 text-black dark:text-white">
+              먼저 로그인을 해주셔야 해요.
+            </div>
             <Button
               className="bg-primary"
               onClick={() => {
