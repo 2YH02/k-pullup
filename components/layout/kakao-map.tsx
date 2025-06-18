@@ -1,6 +1,7 @@
 "use client";
 
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/app/mypage/page";
+import type { Nullable } from "@/types";
 import getAllMarker from "@api/marker/get-all-marker";
 import Tooltip from "@common/tooltip";
 import useIsMounted from "@hooks/useIsMounted";
@@ -13,7 +14,7 @@ import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
 import { LocateFixedIcon } from "lucide-react";
 import Script from "next/script";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // TODO: 지도 우클릭 기능 추가 (리스트 메뉴 형식, ex-로드뷰)
 
 const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
@@ -21,7 +22,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
 
   const { myLocation, setCurLocation, setGeoLocationError, setMyLocation } =
     useGeolocationStore();
-  const { map, setMap } = useMapStore();
+  const { map, setMap, setMapEl } = useMapStore();
   const { setMarker } = useMarkerStore();
 
   const { setCount } = useImageCountStore();
@@ -29,6 +30,8 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const { openAlert } = useAlertStore();
 
   const [loading, setLoading] = useState(false);
+
+  const mapRef = useRef<Nullable<HTMLDivElement>>(null);
 
   useEffect(() => {
     const fetch = async () => {
@@ -73,6 +76,12 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
       document.removeEventListener("message", handleMessage);
     };
   }, []);
+
+  useEffect(() => {
+    if (!mapRef.current) return;
+
+    setMapEl(mapRef.current);
+  }, [mapRef.current]);
 
   const handleLoadMap = () => {
     window.kakao.maps.load(() => {
@@ -208,7 +217,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
           </div>
         </div>
       )}
-      <div id="map" className="relative w-full h-dvh">
+      <div ref={mapRef} id="map" className="relative w-full h-dvh">
         <Tooltip
           as="button"
           title="내 위치"

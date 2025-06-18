@@ -1,13 +1,16 @@
+import type { Nullable } from "@/types";
 import type { KakaoMap, KakaoMarker } from "@/types/kakao-map.types";
 import { create } from "zustand";
 
 interface MapState {
-  map: KakaoMap | null;
+  map: Nullable<KakaoMap>;
+  mapEl: Nullable<HTMLDivElement>;
   markers: KakaoMarker[];
   overlays: any[];
-  selectedId: number | null;
+  selectedId: Nullable<number>;
   setSelectedId: (selectedId: number | null) => void;
   setMap: (map: KakaoMap) => void;
+  setMapEl: (mapEl: HTMLDivElement) => void;
   setMarkers: (markers: KakaoMarker[]) => void;
   setOverlays: (overlay: any[]) => void;
   deleteAllMarker: () => void;
@@ -16,11 +19,13 @@ interface MapState {
 
 const useMapStore = create<MapState>()((set) => ({
   map: null,
+  mapEl: null,
   markers: [],
   overlays: [],
   selectedId: null,
   setSelectedId: (selectedId: number | null) => set({ selectedId }),
   setMap: (map: KakaoMap) => set({ map }),
+  setMapEl: (mapEl: HTMLDivElement) => set({ mapEl }),
   setMarkers: (markers: KakaoMarker[]) =>
     set((prev) => ({ markers: [...prev.markers, ...markers] })),
   setOverlays: (overlay: any) =>

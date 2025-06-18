@@ -82,6 +82,7 @@ const ReportListItem = ({ data, onDelete }: ReportListItemProps) => {
             size="sm"
             variant="contrast"
             className="mr-4"
+            full
           >
             요청 삭제
           </Button>
@@ -89,6 +90,7 @@ const ReportListItem = ({ data, onDelete }: ReportListItemProps) => {
         <Button
           onClick={() => router.push(`/pullup/${data.markerId}`)}
           size="sm"
+          full
         >
           위치 자세히 보기
         </Button>
@@ -114,6 +116,7 @@ export const StatusBadge = ({ status }: { status: ReportStatus }) => {
     <Badge
       text={badgeText}
       icon={<div className={`w-2 h-2 ${iconBg} rounded-full mr-1`} />}
+      className="border-none"
     />
   );
 };
