@@ -105,6 +105,7 @@ const ReportClient = ({
       fullHeight
       hasBackButton
       deviceType={deviceType}
+      bodyStyle="pb-3"
     >
       <div className="flex flex-col h-full">
         <Section className=" pb-0">

@@ -6,6 +6,7 @@ import LoadingIcon from "@icons/loading-icon";
 import { resizeImage } from "img-toolkit";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { BsPlusLg, BsX } from "react-icons/bs";
 import { v4 } from "uuid";
 
 export interface ImageUploadState {
@@ -32,9 +33,6 @@ const UploadImage = ({
   next,
 }: ImageUploadProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // const [images, setImages] = useState<ImageUploadState[]>([]);
-  const [hover, setHover] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -117,65 +115,50 @@ const UploadImage = ({
           </>
         )}
       </div>
-      <div className="flex flex-col justify-center mb-4">
-        <div>
-          <div
-            className="relative rounded-sm flex items-center justify-center h-14 cursor-pointer m-auto"
-            onClick={handleBoxClick}
-            onMouseEnter={() => {
-              setHover(true);
-            }}
-            onMouseLeave={() => {
-              setHover(false);
-            }}
-            style={{
-              border: hover ? "2px dashed #444" : "1px dashed #444",
-            }}
-          >
-            <ImageIcon
-              className={`${hover ? "fill-primary-dark" : "fill-primary"}`}
-            />
-          </div>
-          <input
-            type="file"
-            onChange={handleImageChange}
-            ref={fileInputRef}
-            data-testid="file-input"
-            className="hidden"
-          />
-        </div>
 
-        <div className="mt-2 flex flex-wrap">
+      <div className="flex flex-col justify-center mb-4">
+        <input
+          type="file"
+          onChange={handleImageChange}
+          ref={fileInputRef}
+          data-testid="file-input"
+          className="hidden"
+        />
+
+        {/* 이미지 미리보기 */}
+        <div className="flex justify-start gap-4 flex-wrap">
           {initPhotos &&
-            initPhotos.map((image, index) => {
+            initPhotos.map((file, i) => {
+              if (!file.previewURL || !file.id) return null;
               return (
-                <div key={index} className="flex flex-col items-center m-2">
-                  <div className="w-[70px] h-[70px]">
-                    <Image
-                      src={image.previewURL as string}
-                      alt="다음"
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <Button
-                    size="sm"
+                <div
+                  key={`${file.previewURL} ${file.file} ${i}`}
+                  className="relative rounded-lg w-16 h-16 shadow-sm dark:border border-solid border-grey-dark"
+                >
+                  <button
+                    className={`absolute -top-2 -right-2 rounded-full w-6 h-6 z-50 flex items-center justify-center bg-primary text-white`}
                     onClick={() => {
                       setErrorMessage("");
-                      deleteInintPhotos(image.id as string);
+                      deleteInintPhotos(file.id as string);
                     }}
-                    className="mt-1"
-                    variant="contrast"
                   >
-                    삭제
-                  </Button>
+                    <BsX size={20} />
+                  </button>
+                  <Image
+                    src={file.previewURL}
+                    alt="report"
+                    className="object-cover rounded-lg"
+                    fill
+                  />
                 </div>
               );
             })}
+
+          {/* 이미지 업로드 버튼 */}
+          <AddImageButton onClick={handleBoxClick} />
         </div>
 
+        {/* 에러 메시지 */}
         <div
           data-testid="file-error"
           className="mt-1 text-center text-sm text-red"
@@ -187,27 +170,6 @@ const UploadImage = ({
       <GrowBox />
 
       {withButton && (
-        // <BottomFixedButton
-        //   onClick={() => {
-        //     if (initPhotos) {
-        //       const imageData = initPhotos.map((image) => image.file as File);
-        //       next(imageData);
-        //     } else {
-        //       next(null);
-        //     }
-        //   }}
-        //   disabled={loading}
-        //   className="flex items-center justify-center h-12"
-        //   containerStyle="px-0"
-        // >
-        //   {loading ? (
-        //     <LoadingIcon size="sm" className="text-white m-0" />
-        //   ) : !initPhotos || initPhotos.length <= 0 ? (
-        //     "이미지 없이 위치 생성하기"
-        //   ) : (
-        //     "위치 생성하기"
-        //   )}
-        // </BottomFixedButton>
         <Button
           onClick={() => {
             if (initPhotos) {
@@ -230,6 +192,17 @@ const UploadImage = ({
         </Button>
       )}
     </Section>
+  );
+};
+
+const AddImageButton = ({ onClick }: { onClick: VoidFunction }) => {
+  return (
+    <div
+      className="relative rounded-lg flex items-center justify-center shrink-0 h-16 w-16 cursor-pointer border-2 border-dashed border-grey-dark"
+      onClick={onClick}
+    >
+      <BsPlusLg size={24} />
+    </div>
   );
 };
 
