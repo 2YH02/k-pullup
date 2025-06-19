@@ -32,6 +32,7 @@ export interface KakaoMarker {
   setMap: (data: KakaoMap | null | number) => void;
   getTitle: () => string;
   setVisible: (visible: boolean) => void;
+  setClickable: (clickable: boolean) => void;
   Gb: string;
 }
 

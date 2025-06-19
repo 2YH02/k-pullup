@@ -30,7 +30,7 @@ const ReportClient = ({
   marker,
   deviceType = "desktop",
 }: ReportClientProps) => {
-  const { map, mapEl } = useMapStore();
+  const { map, mapEl, markers } = useMapStore();
   const { openAlert } = useAlertStore();
   const { toast } = useToast();
 
@@ -52,6 +52,14 @@ const ReportClient = ({
     useState<Nullable<{ lat: number; lng: number }>>(null);
 
   useEffect(() => {
+    if (!markers) return;
+
+    markers.forEach((marker) => {
+      marker.setClickable(false);
+    });
+  }, [markers]);
+
+  useEffect(() => {
     if (!map) return;
     const imageSize = new window.kakao.maps.Size(40, 40);
     const imageOption = { offset: new window.kakao.maps.Point(21, 39) };
@@ -63,6 +71,7 @@ const ReportClient = ({
 
     const marker = new window.kakao.maps.Marker({
       image: markerImage,
+      zIndex: 10,
     });
 
     marker.setMap(map);
@@ -254,7 +263,11 @@ const ReportClient = ({
         lng={marker.longitude}
         markerId={marker.markerId}
       />
-
+      <Section className="pb-0 text-sm">
+        <WarningText>
+          요청된 정보가 부정확한 정보일 경우, 사전 안내 없이 삭제될 수 있습니다.
+        </WarningText>
+      </Section>
       <div className="flex flex-col h-full">
         {/* 설명 수정 */}
         <Section className=" pb-0">
