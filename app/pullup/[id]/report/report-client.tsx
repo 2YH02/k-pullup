@@ -2,6 +2,7 @@
 
 import { type Device } from "@/app/mypage/page";
 import BottomFixedButton from "@/components/common/bottom-fixed-button";
+import MoveMap from "@/components/pages/pullup/move-map";
 import type { Nullable } from "@/types";
 import type { KaKaoMapMouseEvent, KakaoMarker } from "@/types/kakao-map.types";
 import { Marker } from "@/types/marker.types";
@@ -247,6 +248,13 @@ const ReportClient = ({
       deviceType={deviceType}
       bodyStyle="pb-0"
     >
+      {/* 지도 이동 */}
+      <MoveMap
+        lat={marker.latitude}
+        lng={marker.longitude}
+        markerId={marker.markerId}
+      />
+
       <div className="flex flex-col h-full">
         {/* 설명 수정 */}
         <Section className=" pb-0">
