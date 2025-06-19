@@ -22,6 +22,11 @@ const reportMarker = async (multipart: ReportValue) => {
   formData.append("longitude", multipart.longitude.toString());
   formData.append("description", multipart.description);
 
+  if (multipart.newLatitude && multipart.newLongitude) {
+    formData.append("newLatitude", multipart.newLatitude.toString());
+    formData.append("newLongitude", multipart.newLongitude.toString());
+  }
+
   const response = await fetchData(`/api/v1/reports`, {
     method: "POST",
     body: formData,
