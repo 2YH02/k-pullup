@@ -209,7 +209,7 @@ const UploadImage = ({
 const AddImageButton = ({ onClick }: { onClick: VoidFunction }) => {
   return (
     <div
-      className="relative rounded-lg flex items-center justify-center shrink-0 h-16 w-16 cursor-pointer border-2 border-dashed border-grey-dark"
+      className="relative rounded-lg flex items-center justify-center shrink-0 h-16 w-16 cursor-pointer border-2 border-dashed border-grey-dark text-black dark:text-white"
       onClick={onClick}
     >
       <BsPlusLg size={24} />
