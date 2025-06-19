@@ -314,7 +314,7 @@ const ReportClient = ({
         <BottomFixedButton
           onClick={onSubmit}
           disabled={reportValue.photos.length <= 0 || loading}
-          className="z-30"
+          containerStyle="z-30"
         >
           수정 요청
         </BottomFixedButton>
