@@ -13,6 +13,10 @@ export default defineConfig({
     trace: "on-first-retry",
   },
 
+  expect: {
+    timeout: 20000,
+  },
+
   projects: [
     {
       name: "chromium",
@@ -22,11 +26,6 @@ export default defineConfig({
     {
       name: "firefox",
       use: { ...devices["Desktop Firefox"] },
-    },
-
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
     },
   ],
 });

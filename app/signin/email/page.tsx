@@ -11,6 +11,12 @@ interface EmailPageProps {
   };
 }
 
+export const generateMetadata = () => {
+  return {
+    title: "로그인 - 대한민국 철봉 지도",
+  };
+};
+
 const EmailSigninPage = ({ searchParams }: EmailPageProps) => {
   const { returnUrl } = searchParams;
 

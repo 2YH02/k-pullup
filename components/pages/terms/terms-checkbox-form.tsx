@@ -37,14 +37,18 @@ const TermsCheckboxForm = ({ next }: { next: VoidFunction }) => {
       {/* 전체 동의  */}
       <div
         className="flex items-center mb-4 cursor-pointer"
+        role="button"
         onClick={toggleAll}
+        id="agree-all"
       >
         <img
           src={allChecked ? "/allCheckedIcon.svg" : "/allCheckIcon.svg"}
           alt={"전체 동의"}
           className="w-5 h-5 mr-2"
         />
-        <label className="font-bold dark:text-white text-black">전체 동의</label>
+        <label className="font-bold dark:text-white text-black">
+          전체 동의
+        </label>
       </div>
 
       <hr className="mb-4" />
@@ -106,6 +110,7 @@ const RequiredConsentList = ({
     <div className="mb-4">
       <h3 className="font-bold mb-2 dark:text-white text-black">필수 동의</h3>
       <CheckboxItem
+        id="agree-terms"
         label="이용약관 동의"
         checked={termsChecked}
         onToggle={toggleTerms}
@@ -116,6 +121,7 @@ const RequiredConsentList = ({
         }}
       />
       <CheckboxItem
+        id="agree-age"
         label="14세 이용 동의"
         checked={ageChecked}
         onToggle={toggleAge}
@@ -123,6 +129,7 @@ const RequiredConsentList = ({
         uncheckedIcon="/checkIcon.svg"
       />
       <CheckboxItem
+        id="agree-privacy"
         label="개인정보 수집 및 이용 동의"
         checked={privacyChecked}
         onToggle={togglePrivacy}
@@ -133,6 +140,7 @@ const RequiredConsentList = ({
         }}
       />
       <CheckboxItem
+        id="agree-location"
         label="위치정보 이용약관 동의"
         checked={locationChecked}
         onToggle={toggleLocation}
@@ -159,6 +167,7 @@ const OptionalConsentList = ({
     <div className="mb-4">
       <h3 className="font-bold mb-2 dark:text-white text-black">선택 동의</h3>
       <CheckboxItem
+        id="agree-marketing"
         label="마케팅 수신 동의"
         checked={marketingChecked}
         onToggle={toggleMarketing}
@@ -178,6 +187,7 @@ interface CheckboxItemProps {
   uncheckedIcon: string;
   linkClick?: VoidFunction;
   subText?: string;
+  id: string;
 }
 
 const CheckboxItem = ({
@@ -188,6 +198,7 @@ const CheckboxItem = ({
   uncheckedIcon,
   linkClick,
   subText,
+  id,
 }: CheckboxItemProps) => {
   return (
     <div
@@ -197,6 +208,8 @@ const CheckboxItem = ({
         subText ? "items-start" : "items-center"
       )}
       onClick={onToggle}
+      role="button"
+      id={id}
     >
       <img
         src={checked ? checkedIcon : uncheckedIcon}
@@ -205,7 +218,9 @@ const CheckboxItem = ({
       />
       <div>
         <label className="text-sm dark:text-white text-black">{label}</label>
-        {subText && <div className="text-xs text-grey dark:text-grey">{subText}</div>}
+        {subText && (
+          <div className="text-xs text-grey dark:text-grey">{subText}</div>
+        )}
       </div>
 
       <div className="grow" />

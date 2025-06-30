@@ -47,9 +47,11 @@ const InputField = forwardRef<HTMLInputElement, Props>(
     return (
       <div>
         {label && (
-          <Text typography="t6" className={cn("mb-1", labelColor)}>
-            {label}
-          </Text>
+          <label htmlFor={label as string}>
+            <Text typography="t6" className={cn("mb-1", labelColor)}>
+              {label}
+            </Text>
+          </label>
         )}
 
         <Input
@@ -57,6 +59,7 @@ const InputField = forwardRef<HTMLInputElement, Props>(
           onFocus={handleFocus}
           onBlur={handleBlue}
           isInvalid={isError || false}
+          id={label as string}
           {...props}
         />
 
