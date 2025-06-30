@@ -1,5 +1,4 @@
 import myInfo, { type ContributionLevel } from "@api/user/myInfo";
-import Ads from "@common/ads";
 import Divider from "@common/divider";
 import Footer from "@common/footer";
 import GrowBox from "@common/grow-box";
@@ -83,8 +82,6 @@ const Mypage = async () => {
           </Link>
         </ShadowBox>
       </Section>
-
-      {noUser && <Ads />}
 
       {/* 기여 등급 */}
       {!noUser && (
