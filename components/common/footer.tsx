@@ -8,14 +8,14 @@ const Footer = () => {
         <Link
           href="https://buymeacoffee.com/seokwon"
           target="_blank"
-          className="hover:text-blue transition dark:text-grey-light"
+          className="hover:text-blue transition text-black dark:text-grey-light"
         >
           ☕ 커피 한잔 후원하기
         </Link>
 
         <a
           href="mailto:support@k-pullup.com"
-          className="hover:text-green transition dark:text-grey-light"
+          className="hover:text-green transition text-black dark:text-grey-light"
         >
           📧 문의: support@k-pullup.com
         </a>

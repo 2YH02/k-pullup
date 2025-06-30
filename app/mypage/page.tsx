@@ -1,6 +1,8 @@
 import myInfo, { type ContributionLevel } from "@api/user/myInfo";
+import Ads from "@common/ads";
 import Divider from "@common/divider";
 import Footer from "@common/footer";
+import GrowBox from "@common/grow-box";
 import Section from "@common/section";
 import ShadowBox from "@common/shadow-box";
 import SideMain from "@common/side-main";
@@ -44,7 +46,7 @@ const Mypage = async () => {
       fullHeight
       withNav
       deviceType={deviceType}
-      bodyStyle="pb-0"
+      bodyStyle="pb-0 flex flex-col"
     >
       <Section>
         {noUser ? (
@@ -82,6 +84,8 @@ const Mypage = async () => {
         </ShadowBox>
       </Section>
 
+      {noUser && <Ads />}
+
       {/* 기여 등급 */}
       {!noUser && (
         <Section>
@@ -112,6 +116,7 @@ const Mypage = async () => {
       {/* 링크 버튼 */}
       {!noUser && <LinkList isAdmin={user.chulbong} />}
 
+      <GrowBox />
       <Footer />
     </SideMain>
   );
