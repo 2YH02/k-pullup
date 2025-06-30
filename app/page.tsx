@@ -4,6 +4,7 @@ import newPictures, {
 } from "@api/marker/new-pictures";
 import getAllMoment from "@api/moment/get-all-moment";
 import Ads from "@common/ads";
+import Footer from "@common/footer";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import getDeviceType from "@lib/get-device-type";
@@ -29,7 +30,7 @@ const Home = async () => {
   const deviceType: Device = getDeviceType(userAgent as string);
 
   return (
-    <SideMain withNav deviceType={deviceType}>
+    <SideMain withNav deviceType={deviceType} bodyStyle="pb-0">
       <Section className="flex items-center justify-center web:pb-0">
         <LocationBadge />
       </Section>
@@ -68,6 +69,8 @@ const Home = async () => {
         />
         <ChatCarousel />
       </Section>
+
+      <Footer />
     </SideMain>
   );
 };

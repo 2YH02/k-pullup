@@ -18,6 +18,7 @@ const InquiryPage = () => {
       fullHeight
       hasBackButton
       deviceType={deviceType}
+      className="select-auto"
     >
       <Section>
         <ShadowBox className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md space-y-4">
@@ -50,7 +51,7 @@ const InquiryPage = () => {
           <Text display="block" typography="t6">
             문의 사항이 있으시면 언제든지
             <a
-              href="mailto:chulbong.kr@gmail.com"
+              href="mailto:support@k-pullup.com"
               className="text-primary font-semibold hover:underline"
             >
               support@k-pullup.com

@@ -1,5 +1,6 @@
 import myInfo, { type ContributionLevel } from "@api/user/myInfo";
 import Divider from "@common/divider";
+import Footer from "@common/footer";
 import Section from "@common/section";
 import ShadowBox from "@common/shadow-box";
 import SideMain from "@common/side-main";
@@ -38,7 +39,13 @@ const Mypage = async () => {
   const noUser = !user || user.error;
 
   return (
-    <SideMain headerTitle="내 정보" fullHeight withNav deviceType={deviceType}>
+    <SideMain
+      headerTitle="내 정보"
+      fullHeight
+      withNav
+      deviceType={deviceType}
+      bodyStyle="pb-0"
+    >
       <Section>
         {noUser ? (
           <>
@@ -104,6 +111,8 @@ const Mypage = async () => {
 
       {/* 링크 버튼 */}
       {!noUser && <LinkList isAdmin={user.chulbong} />}
+
+      <Footer />
     </SideMain>
   );
 };

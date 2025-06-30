@@ -1,6 +1,7 @@
 import markerRanking from "@api/marker/marker-ranking";
 import getAllMoment from "@api/moment/get-all-moment";
 import Ads from "@common/ads";
+import Footer from "@common/footer";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import getDeviceType from "@lib/get-device-type";
@@ -27,7 +28,7 @@ const Social = async () => {
   const deviceType: Device = getDeviceType(userAgent as string);
 
   return (
-    <SideMain headerTitle="소셜" withNav fullHeight deviceType={deviceType}>
+    <SideMain headerTitle="소셜" withNav fullHeight deviceType={deviceType} bodyStyle="pb-0">
       <Section className="pb-0">
         <SectionTitle title="모먼트" subTitle="당신의 순간을 공유해보세요." />
         <MomentList data={moment || []} />
@@ -47,6 +48,8 @@ const Social = async () => {
         <SectionTitle title="인기 많은 철봉" />
         <MarkerRankingList allRanking={rankingData} />
       </Section>
+
+      <Footer />
     </SideMain>
   );
 };
