@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BsXLg } from "react-icons/bs";
 import { type Device } from "../mypage/page";
+import cn from "@/lib/cn";
 
 export interface SearchData {
   address: string;
@@ -42,6 +43,8 @@ const SearchClient = ({
 
   const [result, setResult] = useState<SearchData[]>([]);
   const [kakaoSearchData, setKakaoSearchData] = useState<KakaoPlace[]>([]);
+
+  const [active, setActive] = useState(false);
 
   const isMobileApp =
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
@@ -103,8 +106,17 @@ const SearchClient = ({
     };
   }, [searchValue.value]);
 
+  const clickActive = () => {
+    setActive(true);
+    setTimeout(() => {
+      setActive(false);
+    }, 100);
+  };
+
   return (
-    <SideMain fullHeight className={isMobileApp ? "pt-12" : ""}>
+    <SideMain
+      className={cn(isMobileApp ? "pt-12" : "", active ? "duration-150" : "")}
+    >
       <SearchHeader
         value={searchValue.value}
         onChange={searchValue.onChange}
@@ -113,7 +125,12 @@ const SearchClient = ({
       />
 
       {result && searchValue.value.length > 0 ? (
-        <SearchList result={result} kakaoSearchResult={kakaoSearchData} />
+        <SearchList
+          result={result}
+          kakaoSearchResult={kakaoSearchData}
+          active={active}
+          clickActive={clickActive}
+        />
       ) : (
         <>
           <Section>

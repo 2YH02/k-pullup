@@ -34,7 +34,6 @@ const SearchResult = ({
       <SideMain
         headerTitle={address}
         hasBackButton
-        fullHeight
         deviceType={deviceType}
       >
         <Text

@@ -40,14 +40,14 @@ const MarkerSearchResult = ({ address, markerId }: MarkerSearchResultProps) => {
 
   if (loading) {
     return (
-      <SideMain headerTitle={address} hasBackButton fullHeight>
+      <SideMain headerTitle={address} hasBackButton>
         <Skeleton className="h-[112px] m-4" />
       </SideMain>
     );
   }
 
   return (
-    <SideMain headerTitle={address} hasBackButton fullHeight>
+    <SideMain headerTitle={address} hasBackButton>
       {error ? (
         <Text display="block" textAlign="center" className="text-red">
           잠시 후 다시 시도해주세요

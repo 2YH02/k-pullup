@@ -21,7 +21,7 @@ const SearchHeader = ({
   const router = useRouter();
 
   return (
-    <div className="sticky top-0 left-0 flex items-center justify-center bg-white dark:bg-black py-3">
+    <div className="mo:fixed sticky top-0 left-0 flex items-center justify-center w-full h-14 bg-white dark:bg-black py-3">
       <button
         className="px-3"
         onClick={referrer ? () => router.push("/") : () => router.push("/")}

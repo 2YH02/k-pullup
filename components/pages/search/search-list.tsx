@@ -8,6 +8,7 @@ import useMapControl from "@hooks/useMapControl";
 import PinIcon from "@icons/pin-icon";
 import { type KakaoPlace } from "@layout/move-map-input";
 import useSearchStore from "@store/useSearchStore";
+import useSheetHeightStore from "@store/useSheetHeightStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { BsPinMapFill } from "react-icons/bs";
@@ -15,13 +16,21 @@ import { BsPinMapFill } from "react-icons/bs";
 interface SearchResultProps {
   result: SearchData[];
   kakaoSearchResult: KakaoPlace[];
+  active: boolean;
+  clickActive: VoidFunction;
 }
 
-const SearchList = ({ result, kakaoSearchResult }: SearchResultProps) => {
+const SearchList = ({
+  result,
+  kakaoSearchResult,
+  active,
+  clickActive,
+}: SearchResultProps) => {
   const router = useRouter();
 
   const { addSearch } = useSearchStore();
   const { move } = useMapControl();
+  const { sheetHeight, setCurHeight } = useSheetHeightStore();
 
   if (result.length === 0 && kakaoSearchResult.length === 0) {
     return (
@@ -101,6 +110,7 @@ const SearchList = ({ result, kakaoSearchResult }: SearchResultProps) => {
             <button
               className="flex items-center p-2 px-4 text-left w-full h-full"
               onClick={() => {
+                clickActive();
                 move({
                   lat: Number(item.y),
                   lng: Number(item.x),
@@ -111,13 +121,17 @@ const SearchList = ({ result, kakaoSearchResult }: SearchResultProps) => {
                   lat: item.y || null,
                   lng: item.x || null,
                 });
+                setCurHeight(sheetHeight.STEP_1.height);
               }}
             >
               <div className="w-[90%] flex flex-col">
                 <Text typography="t6" className="break-all">
                   {item.address_name}
                 </Text>
-                <Text typography="t7" className="break-all text-grey dark:text-grey">
+                <Text
+                  typography="t7"
+                  className="break-all text-grey dark:text-grey"
+                >
                   {item.place_name}
                 </Text>
               </div>
