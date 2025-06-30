@@ -135,21 +135,21 @@ const PullupClient = ({
             (철봉.quantity <= 0 && 평행봉.quantity <= 0 && (
               <Badge
                 text={`기구 개수 정보 없음`}
-                className="flex items-center justify-center mr-2 mb-2 h-7 border-none shadow-full"
+                className="flex items-center justify-center mr-2 mb-2 h-7 border-none shadow-full dark:shadow-[rgba(255,255,255,0.1)]"
                 textStyle="leading-3"
               />
             ))}
           {철봉 && 철봉.quantity > 0 && (
             <Badge
               text={`철봉 ${철봉?.quantity}개`}
-              className="flex items-center justify-center mr-2 mb-2 h-7 border-none shadow-full"
+              className="flex items-center justify-center mr-2 mb-2 h-7 border-none shadow-full dark:shadow-[rgba(255,255,255,0.1)]"
               textStyle="leading-3"
             />
           )}
           {평행봉 && 평행봉.quantity > 0 && (
             <Badge
               text={`평행봉 ${평행봉?.quantity}개`}
-              className="flex items-center justify-center mr-2 mb-2 h-7 border-none shadow-full"
+              className="flex items-center justify-center mr-2 mb-2 h-7 border-none shadow-full dark:shadow-[rgba(255,255,255,0.1)]"
               textStyle="leading-3"
             />
           )}

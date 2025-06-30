@@ -37,7 +37,7 @@ const WeatherBadge = ({ lat, lng }: WeatherBadgeProps) => {
     <Badge
       icon={<img src={weather.iconImage} className="w-5" />}
       text={`${weather.temperature} °C`}
-      className="flex items-center justify-center h-7 mr-2 mb-2 border-none shadow-full"
+      className="flex items-center justify-center h-7 mr-2 mb-2 border-none shadow-full dark:shadow-[rgba(255,255,255,0.1)]"
       textStyle="leading-3"
     />
   );
