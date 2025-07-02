@@ -12,11 +12,15 @@ import { BsStar, BsStarFill } from "react-icons/bs";
 interface BookmarkButtonProps {
   markerId: number;
   favorited?: boolean;
+  increaseFavCount: VoidFunction;
+  decreaseFavCount: VoidFunction;
 }
 
 const BookmarkButton = ({
   favorited = false,
   markerId,
+  increaseFavCount,
+  decreaseFavCount,
 }: BookmarkButtonProps) => {
   const router = useRouter();
 
@@ -68,6 +72,11 @@ const BookmarkButton = ({
 
     closeAlert();
 
+    if (isActive) {
+      decreaseFavCount();
+    } else {
+      increaseFavCount();
+    }
     setIsActive((prev) => !prev);
   };
 
@@ -91,7 +100,7 @@ const BookmarkButton = ({
         )
       }
       text="즐겨찾기"
-      className="flex-1"
+      className="w-full"
       onClick={handleClick}
     />
   );
