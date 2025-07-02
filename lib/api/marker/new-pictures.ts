@@ -11,7 +11,7 @@ export type NewPicturesResponse = NewPictures[] | NewPicturesError;
 
 const newPictures = async (): Promise<NewPicturesResponse> => {
   const response = await fetchData(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/markers/new-pictures`,
+    `https://api.k-pullup.com/api/v1/markers/new-pictures`,
     {
       next: {
         revalidate: 3600,
