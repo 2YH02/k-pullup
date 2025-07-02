@@ -34,7 +34,7 @@ const ButtonList = ({ marker }: ButtonListProps) => {
           decreaseFavCount={decreaseFavCount}
         />
         {favCount > 0 && (
-          <div className="absolute top-1 right-3 text-[10px] w-4 h-4 flex items-center justify-center bg-red rounded-full text-white">
+          <div className="absolute top-1 right-4 text-[10px] w-4 h-4 flex items-center justify-center bg-red rounded-full text-white">
             {favCount}
           </div>
         )}
