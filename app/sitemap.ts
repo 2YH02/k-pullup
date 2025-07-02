@@ -3,7 +3,7 @@ import { BASE_URL } from "@constant/index";
 import { MetadataRoute } from "next";
 
 const getAllMarker = async (): Promise<MarkerRes[]> => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/markers`);
+  const response = await fetch(`https://api.k-pullup.com/api/v1/markers`);
 
   const data = await response.json();
   return data;
