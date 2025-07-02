@@ -6,7 +6,7 @@ const LinkList = ({ isAdmin }: { isAdmin?: boolean }) => {
   return (
     <>
       <LinkButton url="/mypage/bookmark" icon={<BookmarkIcon />}>
-        저장한 장소
+        즐겨찾기
       </LinkButton>
 
       <LinkButton url="/mypage/locate" icon={<MylocateIcon />}>

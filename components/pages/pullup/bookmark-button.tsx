@@ -7,7 +7,7 @@ import setFavorite from "@lib/api/favorite/set-favorite";
 import useAlertStore from "@store/useAlertStore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
+import { BsStar, BsStarFill } from "react-icons/bs";
 
 interface BookmarkButtonProps {
   markerId: number;
@@ -49,7 +49,7 @@ const BookmarkButton = ({
       } else if (response.status === 403) {
         openAlert({
           title: "개수 초과",
-          description: "북마크는 최대 10개까지 가능합니다.",
+          description: "즐겨찾기는 최대 10개까지 가능합니다.",
           onClick: () => {},
         });
       } else {
@@ -73,7 +73,7 @@ const BookmarkButton = ({
 
   const handleClick = () => {
     openAlert({
-      title: isActive ? "북마크 삭제" : "북마크 추가",
+      title: isActive ? "즐겨찾기 삭제" : "즐겨찾기 추가",
       description: isActive
         ? "위치를 삭제하시겠습니까?"
         : "위치를 저장하시겠습니까?",
@@ -85,12 +85,12 @@ const BookmarkButton = ({
     <IconButton
       icon={
         isActive ? (
-          <BsBookmarkFill size={20} className="fill-primary" />
+          <BsStarFill size={20} className="fill-primary" />
         ) : (
-          <BsBookmark size={20} className="fill-primary" />
+          <BsStar size={20} className="fill-primary" />
         )
       }
-      text="북마크"
+      text="즐겨찾기"
       className="flex-1"
       onClick={handleClick}
     />

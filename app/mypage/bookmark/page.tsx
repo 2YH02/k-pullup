@@ -24,7 +24,7 @@ const RankingPage = async () => {
   if (markers.error === "No authorization token provided") {
     return (
       <AuthError
-        headerTitle="저장한 장소"
+        headerTitle="즐겨찾기"
         hasBackButton
         errorTitle="로그인 후 위치를 저장하고 관리해보세요!"
         returnUrl="/mypage/bookmark"
@@ -36,7 +36,7 @@ const RankingPage = async () => {
   if (!markers.data || markers.data.length <= 0) {
     return (
       <NotFound
-        headerTitle="저장한 장소"
+        headerTitle="즐겨찾기"
         hasBackButton
         errorTitle="저장된 위치가 없습니다."
         deviceType={deviceType}
@@ -46,7 +46,7 @@ const RankingPage = async () => {
 
   return (
     <SideMain
-      headerTitle="저장한 장소"
+      headerTitle="즐겨찾기"
       hasBackButton
       referrer={!!referrer}
       deviceType={deviceType}
