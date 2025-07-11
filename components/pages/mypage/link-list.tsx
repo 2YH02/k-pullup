@@ -22,7 +22,7 @@ const LinkList = ({ isAdmin }: { isAdmin?: boolean }) => {
       </LinkButton>
 
       {isAdmin && (
-        <LinkButton url="/admin" icon={<AllReportIcon />}>
+        <LinkButton target="_blank" url="/admin" icon={<AllReportIcon />}>
           수정 요청 관리 (어드민)
         </LinkButton>
       )}
@@ -33,14 +33,17 @@ const LinkList = ({ isAdmin }: { isAdmin?: boolean }) => {
 const LinkButton = ({
   url,
   icon,
+  target,
   children,
 }: React.PropsWithChildren<{
   url: string;
   icon: React.ReactNode;
+  target?: string;
 }>) => {
   return (
     <Link
       href={url}
+      target={target}
       className="px-4 py-2 flex items-center bg-transparent dark:text-white text-black active:scale-95 hover:bg-grey-light dark:bg-black dark:hover:bg-grey-dark active:rounded-md duration-100"
     >
       <span className="mr-4 w-8">{icon}</span>

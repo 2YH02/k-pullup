@@ -240,7 +240,10 @@ const AdminClient = ({ data }: { data: AllReportRes }) => {
       <Container>
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-black">
+            <h1
+              className="text-3xl font-bold text-black hover:underline cursor-pointer"
+              onClick={() => router.push("/")}
+            >
               대한민국 철봉 지도
             </h1>
             <p className="text-grey-dark mt-1">위치 수정 요청 관리 시스템</p>

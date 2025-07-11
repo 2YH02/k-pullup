@@ -12,6 +12,14 @@ const AdminPage = async () => {
 
   const noUser = !user || user.error;
 
+  if (noUser) {
+    return (
+      <h1 className="text-xl font-bold text-center mt-14">
+        접근 권한이 없습니다.
+      </h1>
+    );
+  }
+
   return <AdminClient data={data} />;
 };
 
