@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: "selector",
+  darkMode: ["selector", "class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,7 +11,9 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        mo: { max: "484px" },
+        mo: {
+          max: "484px",
+        },
         web: "485px",
       },
       boxShadow: {
@@ -52,21 +54,43 @@ const config: Config = {
       },
       keyframes: {
         grow: {
-          "0%": { transform: "scale(0.2)" },
-          "100%": { transform: "scale(1)" },
+          "0%": {
+            transform: "scale(0.2)",
+          },
+          "100%": {
+            transform: "scale(1)",
+          },
         },
         ripple: {
-          "0%": { width: "0", height: "0", opacity: "0.8" },
-          "100%": { width: "100px", height: "100px", opacity: "0" },
+          "0%": {
+            width: "0",
+            height: "0",
+            opacity: "0.8",
+          },
+          "100%": {
+            width: "100px",
+            height: "100px",
+            opacity: "0",
+          },
         },
         transparent: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
+          "0%": {
+            opacity: "0",
+          },
+          "100%": {
+            opacity: "1",
+          },
         },
         "gradient-animate": {
-          "0%": { "background-position": "0% 50%" },
-          "50%": { "background-position": "100% 50%" },
-          "100%": { "background-position": "0% 50%" },
+          "0%": {
+            "background-position": "0% 50%",
+          },
+          "50%": {
+            "background-position": "100% 50%",
+          },
+          "100%": {
+            "background-position": "0% 50%",
+          },
         },
       },
       animation: {
@@ -77,6 +101,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
 export default config;

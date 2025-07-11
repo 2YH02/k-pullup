@@ -15,7 +15,7 @@ const LoadMarker = () => {
   const { reloadMarkers } = useMarkerControl();
 
   useEffect(() => {
-    if (!map) return;
+    if (!map || pathname === "/admin") return;
 
     const handleIdle = () => {
       if (selectedId) {
@@ -33,7 +33,8 @@ const LoadMarker = () => {
   }, [map, marker, selectedId]);
 
   useEffect(() => {
-    if (!map || !!pathname.startsWith("/pullup")) return;
+    if (!map || !!pathname.startsWith("/pullup") || pathname === "/admin")
+      return;
 
     reloadMarkers({ map, options: { maxLevel: 6 } });
   }, [marker, pathname]);

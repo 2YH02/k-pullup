@@ -1,6 +1,12 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import Script from "next/script";
 
 const GoogleAdsense = () => {
+  const pathname = usePathname();
+
+  if (pathname === "/admin") return null;
   return (
     <Script
       async

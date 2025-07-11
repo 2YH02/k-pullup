@@ -13,12 +13,14 @@ import useImageCountStore from "@store/useImageCountStore";
 import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
 import { LocateFixedIcon } from "lucide-react";
+import { usePathname } from "next/navigation";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 // TODO: 지도 우클릭 기능 추가 (리스트 메뉴 형식, ex-로드뷰)
 
 const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const isMounted = useIsMounted();
+  const pathname = usePathname();
 
   const { myLocation, setCurLocation, setGeoLocationError, setMyLocation } =
     useGeolocationStore();
@@ -193,6 +195,8 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const style = isMobileApp
     ? "mo:top-[100px] active:bg-grey-light active:dark:bg-grey-dark"
     : "hover:bg-grey-light hover:dark:bg-grey-dark";
+
+  if (pathname === "/admin") return null;
 
   if (!isMounted) {
     return (

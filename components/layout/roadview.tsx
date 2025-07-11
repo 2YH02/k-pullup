@@ -7,9 +7,12 @@ import { useToast } from "@hooks/useToast";
 import MapWalker from "@lib/map-walker";
 import useMapStore from "@store/useMapStore";
 import useRoadviewStore from "@store/useRoadviewStore";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const Roadview = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
+  const pathname = usePathname();
+
   const { lat, lng, open, closeModal } = useRoadviewStore();
   const { map } = useMapStore();
   const { toast } = useToast();
@@ -118,7 +121,7 @@ const Roadview = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const isMobileApp =
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
 
-  if (!open) return null;
+  if (!open || pathname === "/admin") return null;
 
   return (
     <div ref={mapWrapper}>

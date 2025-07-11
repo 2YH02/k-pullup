@@ -22,8 +22,8 @@ const LinkList = ({ isAdmin }: { isAdmin?: boolean }) => {
       </LinkButton>
 
       {isAdmin && (
-        <LinkButton url="/mypage/report-admin" icon={<AllReportIcon />}>
-          전체 수정 요청 목록
+        <LinkButton url="/admin" icon={<AllReportIcon />}>
+          수정 요청 관리 (어드민)
         </LinkButton>
       )}
     </>
