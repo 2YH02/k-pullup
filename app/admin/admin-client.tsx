@@ -300,10 +300,10 @@ const AdminClient = ({ data }: { data: AllReportRes }) => {
             />
           </div>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-full sm:w-48">
+            <SelectTrigger className="w-full sm:w-48 text-black">
               <SelectValue placeholder="상태 필터" />
             </SelectTrigger>
-            <SelectContent className="bg-white">
+            <SelectContent className="bg-white text-black">
               <SelectItem value="all">모든 상태</SelectItem>
               <SelectItem value="pending">대기중</SelectItem>
               <SelectItem value="approved">승인됨</SelectItem>
@@ -312,7 +312,7 @@ const AdminClient = ({ data }: { data: AllReportRes }) => {
           </Select>
         </div>
         {/* Reports Table */}
-        <div className="rounded-md border">
+        <div className="rounded-md border text-black">
           <Table>
             <TableHeader>
               <TableRow>
@@ -367,13 +367,13 @@ const AdminClient = ({ data }: { data: AllReportRes }) => {
                   </TableCell>
                   <TableCell>{getStatusBadge(report.status)}</TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 text-black">
                       <Dialog>
                         <DialogTrigger asChild>
                           <Button
                             size="sm"
                             onClick={() => setSelectedReport(report)}
-                            className="bg-white border"
+                            className="bg-white border dark:bg-white dark:border"
                           >
                             <FileText className="h-4 w-4 text-grey-dark" />
                           </Button>
@@ -468,14 +468,14 @@ const AdminClient = ({ data }: { data: AllReportRes }) => {
                           <Button
                             size="sm"
                             onClick={() => handleApprove(report.reportId)}
-                            className="bg-green"
+                            className="bg-green dark:bg-green"
                           >
                             <Check className="h-4 w-4" />
                           </Button>
                           <Button
                             size="sm"
                             onClick={() => handleReject(report.reportId)}
-                            className="bg-red"
+                            className="bg-red dark:bg-red"
                           >
                             <X className="h-4 w-4" />
                           </Button>
