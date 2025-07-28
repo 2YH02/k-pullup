@@ -92,6 +92,26 @@ export const ALL_NOTICE: Notice[] = [
   // },
   {
     id: 0,
+    category: "업데이트",
+    title: "신규 기능 안내 - 소셜 로그인 닉네임 변경 지원",
+    content: `<br/>
+안녕하세요, 대한민국 철봉 지도 팀입니다.
+<br/><br/>
+그동안 소셜 로그인(네이버, 카카오, 구글)으로 가입하신 분들은<br/>
+자동으로 실명이 닉네임으로 설정되고 변경이 불가능했는데요,
+<br/><br/>
+이제는 소셜 로그인 유저도 <strong>랜덤 닉네임</strong>이 자동으로 부여되며,<br/>
+<strong>마이페이지 → 내 정보 관리</strong>에서 자유롭게 닉네임을 수정하실 수 있습니다!
+<br/><br/>
+닉네임을 통해 더 개성 있게 활동하고, 커뮤니티에서 소통해보세요 😊
+<br/><br/>
+※ 이메일 회원가입 유저도 기존과 동일하게 닉네임 변경이 가능합니다.
+<br/><br/>
+앞으로도 더 나은 사용 경험을 위해 계속 개선해나가겠습니다. 감사합니다!`,
+    createdAt: "2025-07-28",
+  },
+  {
+    id: 1,
     category: "일반",
     title: "오픈채팅방을 소개합니다!",
     content: `<br/>
@@ -117,7 +137,7 @@ export const ALL_NOTICE: Notice[] = [
     createdAt: "2025-06-05",
   },
   {
-    id: 1,
+    id: 2,
     category: "업데이트",
     title: "신규 기능 안내 - 모먼트 추가",
     content: `<br/>
@@ -140,7 +160,7 @@ export const ALL_NOTICE: Notice[] = [
     createdAt: "2024-12-20",
   },
   {
-    id: 2,
+    id: 3,
     category: "일반",
     title: "대한민국 철봉 지도 사용에 감사드립니다!",
     content: `<br/>안녕하세요, ‘대한민국 철봉 지도’ 운영자입니다.<br/><br/>

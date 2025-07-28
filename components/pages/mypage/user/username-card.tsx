@@ -93,11 +93,10 @@ const UsernameCard = ({ user }: UsernameCardProps) => {
           ) : (
             <>
               <Text className="mr-3">{usernameValue}</Text>
-              {user.provider === "website" && (
-                <button onClick={() => setEdit(true)}>
-                  <EditIcon size={17} color="black" />
-                </button>
-              )}
+
+              <button onClick={() => setEdit(true)}>
+                <EditIcon size={17} color="black" />
+              </button>
             </>
           )}
         </div>
