@@ -13,6 +13,8 @@ import LoadingIcon from "@icons/loading-icon";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+const MIN_USERNAME_LENGTH = 3;
+
 interface UsernameCardProps {
   user: User;
 }
@@ -32,6 +34,12 @@ const UsernameCard = ({ user }: UsernameCardProps) => {
     setLoading(true);
     if (username.value === user.username) {
       setEditError("현재 사용 중인 이름과 동일한 이름입니다.");
+      setLoading(false);
+      return;
+    }
+
+    if (username.value.length < MIN_USERNAME_LENGTH) {
+      setEditError("사용자 이름은 최소 3자 이상이어야 합니다.");
       setLoading(false);
       return;
     }
@@ -80,7 +88,7 @@ const UsernameCard = ({ user }: UsernameCardProps) => {
                 <Button
                   onClick={changeUsername}
                   className="text-sm w-14 h-8 p-0 flex items-center justify-center"
-                  disabled={username.value.length < 2 || loading}
+                  disabled={loading}
                 >
                   {loading ? (
                     <LoadingIcon size="sm" className="text-white m-0" />
