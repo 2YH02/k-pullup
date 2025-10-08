@@ -161,7 +161,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
         </div>
         <div className="flex flex-col w-full h-full" onClick={handleClickNext}>
           <div className="flex flex-col items-center h-12">
-            <div className="h-6 w-full text-grey-light text-center text-sm text-wrap break-words">
+            <div className="h-12 w-3/4 text-grey-light text-center text-sm text-wrap break-words flex items-center justify-center">
               {curMoment.address}
             </div>
             <button
