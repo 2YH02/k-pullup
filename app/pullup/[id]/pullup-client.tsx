@@ -191,9 +191,15 @@ const PullupClient = ({
               <span className="mr-1 mb-[3px]">
                 <StarIcon />
               </span>
-              <Text typography="t7" className="">
-                정보 제공자: {marker.username}
-              </Text>
+              <button
+                onClick={() => {
+                  router.push(`/user-info/${marker.username}`);
+                }}
+              >
+                <Text typography="t7" className="">
+                  정보 제공자: {marker.username}
+                </Text>
+              </button>
             </div>
           )}
         </div>
