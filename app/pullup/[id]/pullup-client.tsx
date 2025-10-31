@@ -245,32 +245,42 @@ const PullupClient = ({
           {providerInfo.map((comment, index) => {
             if (index < 3) {
               return (
-                <ListItem
+                <div
                   key={comment.commentId}
-                  icon={
-                    user?.chulbong || user?.userId === comment.userId ? (
-                      <BsX size={22} color="#777" />
-                    ) : undefined
-                  }
-                  onIconClick={async () => {
-                    if (
-                      deleteLoading ||
-                      !user ||
-                      (!user.chulbong && user.userId !== comment.userId)
-                    )
-                      return;
-                    await handleDelete(comment.commentId);
-                  }}
+                  className="relative bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded-r-lg mb-4"
                 >
-                  <ListContents
-                    title={comment.commentText}
-                    subTitle={formatDate(comment.postedAt)}
-                  />
-
-                  <ListRight>
-                    <Text typography="t7">{comment.username}</Text>
-                  </ListRight>
-                </ListItem>
+                  {(user?.chulbong || user?.userId === comment.userId) && (
+                    <button
+                      className="absolute top-2 right-2"
+                      onClick={async () => {
+                        if (
+                          deleteLoading ||
+                          !user ||
+                          (!user.chulbong && user.userId !== comment.userId)
+                        )
+                          return;
+                        await handleDelete(comment.commentId);
+                      }}
+                    >
+                      <BsX size={22} color="#777" />
+                    </button>
+                  )}
+                  <div className="flex flex-col select-none pr-6">
+                    <Text
+                      fontWeight="bold"
+                      typography="t5"
+                      className="text-black-light dark:text-white text-center mb-1"
+                    >
+                      {comment.commentText.replace('🔉 ', '')}
+                    </Text>
+                    <Text
+                      typography="t7"
+                      className="text-grey-dark dark:text-grey text-right"
+                    >
+                      - {formatDate(comment.postedAt)}
+                    </Text>
+                  </div>
+                </div>
               );
             }
           })}
