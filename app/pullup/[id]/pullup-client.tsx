@@ -188,16 +188,17 @@ const PullupClient = ({
 
           {marker.username && (
             <div className="flex items-center max-w-[50%]">
-              <span className="mr-1 mb-[3px]">
+              <span className="mr-1 mb-[3px] shrink-0">
                 <StarIcon />
               </span>
               <button
                 onClick={() => {
                   router.push(`/user-info/${marker.username}`);
                 }}
+                className="text-left min-w-0"
               >
-                <Text typography="t7" className="break-all">
-                  정보 제공자: {marker.username}
+                <Text typography="t7" className="truncate block">
+                  {marker.username.length > 10 ? marker.username : `정보 제공자: ${marker.username}`}
                 </Text>
               </button>
             </div>
