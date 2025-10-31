@@ -24,8 +24,11 @@ export interface CommentsRes {
 }
 
 const getComments = async ({ id, pageParam }: Props): Promise<CommentsRes> => {
+  const isServer = typeof window === "undefined";
+  const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
+
   const response = await fetchData(
-    `/api/v1/comments/${id}/comments?page=${pageParam}&pageSize=10`
+    `${url}/comments/${id}/comments?page=${pageParam}&pageSize=10`
   );
 
   const data = await response.json();

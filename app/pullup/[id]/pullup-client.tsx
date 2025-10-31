@@ -2,6 +2,7 @@
 
 import { type Device } from "@/app/mypage/page";
 import { type Marker } from "@/types/marker.types";
+import { type CommentsRes } from "@api/comment/get-comments";
 import { type FacilitiesRes } from "@api/marker/get-facilities";
 import Ads from "@common/ads";
 import Badge from "@common/badge";
@@ -34,6 +35,7 @@ interface PullupClientProps {
   marker: Marker;
   deviceType: Device;
   referrer: string | null;
+  initialComments: CommentsRes;
 }
 
 const PullupClient = ({
@@ -41,6 +43,7 @@ const PullupClient = ({
   marker,
   deviceType,
   referrer,
+  initialComments,
 }: PullupClientProps) => {
   const router = useRouter();
   const { show } = useBottomSheetStore();
@@ -320,7 +323,7 @@ const PullupClient = ({
             buttonTitle="리뷰 작성하기"
             onClickButton={() => show("write-comments")}
           />
-          <Comments markerId={marker.markerId} />
+          <Comments markerId={marker.markerId} initialComments={initialComments} />
         </Section>
       </div>
     </SideMain>

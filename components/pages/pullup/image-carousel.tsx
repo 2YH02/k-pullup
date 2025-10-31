@@ -24,7 +24,7 @@ const ImageCarousel = ({ photos }: ImageCarouselProps) => {
   return (
     <div className="rounded-md overflow-hidden embla" ref={emblaRef}>
       <div className="embla__container">
-        {photos.map((photo) => (
+        {photos.map((photo, index) => (
           <div key={photo.photoId} className="h-44 w-full embla__slide mt-2 px-2">
             <div className="h-full w-full rounded-md overflow-hidden">
               {!loading && <Skeleton className="h-full w-full rounded-md" />}
@@ -38,6 +38,7 @@ const ImageCarousel = ({ photos }: ImageCarouselProps) => {
                   !loading ? "invisible" : "visible"
                 }`}
                 onLoad={() => setLoading(true)}
+                priority={index === 0}
               />
             </div>
           </div>

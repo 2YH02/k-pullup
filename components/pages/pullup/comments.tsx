@@ -22,9 +22,10 @@ import { BsX } from "react-icons/bs";
 
 interface CommentsProps {
   markerId: number;
+  initialComments: import("@api/comment/get-comments").CommentsRes;
 }
 
-const Comments = ({ markerId }: CommentsProps) => {
+const Comments = ({ markerId, initialComments }: CommentsProps) => {
   const router = useRouter();
 
   const { toast } = useToast();
@@ -64,33 +65,28 @@ const Comments = ({ markerId }: CommentsProps) => {
     setCurrentPage(newData.currentPage);
 
     setCommentsLoading(false);
-  }, [currentPage, commentsLoading, totalPages]);
+  }, [currentPage, commentsLoading, totalPages, markerId]);
 
   useEffect(() => {
-    const fetch = async () => {
-      setCommentsLoading(true);
-      const data = await getComments({ id: markerId, pageParam: currentPage });
-
-      if (data.error) {
-        setCommentsLoading(false);
-        return;
-      }
-
-      const providerData = data.comments.filter(
-        (comment) => comment.username === "k-pullup"
-      );
-
-      const commentsData = data.comments.filter(
-        (comment) => comment.username !== "k-pullup"
-      );
-
-      setProviderInfo([...providerData]);
-      setComments(commentsData);
-      setTotalPages(data.totalPages);
+    // Use server-provided initial data instead of fetching on mount
+    if (initialComments.error) {
       setCommentsLoading(false);
-    };
-    fetch();
-  }, []);
+      return;
+    }
+
+    const providerData = initialComments.comments.filter(
+      (comment) => comment.username === "k-pullup"
+    );
+
+    const commentsData = initialComments.comments.filter(
+      (comment) => comment.username !== "k-pullup"
+    );
+
+    setProviderInfo([...providerData]);
+    setComments(commentsData);
+    setTotalPages(initialComments.totalPages);
+    setCommentsLoading(false);
+  }, [initialComments]);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
