@@ -132,7 +132,7 @@ const AroundMarkerCarousel = () => {
                   <Image
                     src={
                       marker.thumbnail
-                        ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${marker.thumbnail}`
+                        ? marker.thumbnail
                         : "/metaimg.webp"
                     }
                     alt={"상세"}

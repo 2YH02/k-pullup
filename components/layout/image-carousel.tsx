@@ -61,7 +61,7 @@ const ImageCarousel = ({
             }
           >
             <Image
-              src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${item.photoURL}`}
+              src={item.photoURL}
               alt={`${item.markerId} 상세`}
               width={0}
               height={0}

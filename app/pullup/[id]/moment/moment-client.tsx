@@ -9,6 +9,11 @@ import SideMain from "@common/side-main";
 import Text from "@common/text";
 import AddMomentPage from "@pages/pullup/moment/add-moment-page";
 import MomentItem from "@pages/pullup/moment/moment-item";
+import {
+  optimizeImage,
+  OPTIMIZATION_PRESETS,
+  ImageValidationError,
+} from "@lib/optimize-image";
 import useAlertStore from "@store/useAlertStore";
 import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
@@ -52,38 +57,35 @@ const MomentClient = ({
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true);
-    const suppertedFormats = [
-      "image/jpeg",
-      "image/png",
-      "image/svg+xml",
-      "image/webp",
-    ];
 
-    if (!e.target.files) {
+    if (!e.target.files || !e.target.files[0]) {
       setLoading(false);
       return;
     }
 
-    if (!suppertedFormats.includes(e.target.files[0]?.type)) {
-      setErrorMessage(
-        "지원되지 않은 이미지 형식입니다. JPEG, PNG, webp형식의 이미지를 업로드해주세요."
+    const selectedFileRaw = e.target.files[0];
+
+    try {
+      // Optimize image using the moment preset (optimized for portrait/story format)
+      const optimizedFile = await optimizeImage(
+        selectedFileRaw,
+        OPTIMIZATION_PRESETS.moment
       );
-      setLoading(false);
-      return;
-    }
 
-    let file = e.target.files[0];
-
-    if (file) {
-      setSelectedFile(file);
-      const url = URL.createObjectURL(file);
+      setSelectedFile(optimizedFile);
+      const url = URL.createObjectURL(optimizedFile);
       setPreviewURL(url);
+      setErrorMessage("");
+    } catch (error) {
+      if (error instanceof ImageValidationError) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage("이미지 처리 중 오류가 발생했습니다. 다시 시도해주세요.");
+      }
+    } finally {
+      e.target.value = "";
+      setLoading(false);
     }
-
-    setErrorMessage("");
-
-    e.target.value = "";
-    setLoading(false);
   };
 
   const handleBoxClick = () => {

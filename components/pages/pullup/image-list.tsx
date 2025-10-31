@@ -38,7 +38,7 @@ const ImageList = ({ photos }: Props) => {
                   }}
                 >
                   <ImageWrap
-                    src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${photo.photoUrl}`}
+                    src={photo.photoUrl}
                     w={230}
                     h={230}
                     alt="상세"
@@ -60,7 +60,7 @@ const ImageList = ({ photos }: Props) => {
                   }}
                 >
                   <ImageWrap
-                    src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${photo.photoUrl}`}
+                    src={photo.photoUrl}
                     w={230}
                     h={230}
                     alt="상세"

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -H local.k-pullup.com -p 5173 --experimental-https",
+    "dev:simple": "next dev -p 5173",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

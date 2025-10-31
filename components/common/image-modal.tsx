@@ -96,7 +96,7 @@ const ImageModal = ({
               )}
               <Image
                 key={image}
-                src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${image}`}
+                src={image}
                 alt="상세"
                 width={imageSize}
                 height={imageSize}

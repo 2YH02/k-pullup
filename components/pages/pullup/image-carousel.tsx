@@ -29,7 +29,7 @@ const ImageCarousel = ({ photos }: ImageCarouselProps) => {
             <div className="h-full w-full rounded-md overflow-hidden">
               {!loading && <Skeleton className="h-full w-full rounded-md" />}
               <Image
-                src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${photo.photoUrl}`}
+                src={photo.photoUrl}
                 alt="상세"
                 width={0}
                 height={0}
