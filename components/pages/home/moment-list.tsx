@@ -7,7 +7,7 @@ import { decodeBlurhash, pixelsToDataUrl } from "@lib/decode-hash";
 import { Plus, XIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { MouseEvent, useMemo, useRef, useState } from "react";
 
 const getCity = (address: string): string => {
   if (!address) return "";
@@ -27,7 +27,16 @@ const MomentList = ({ data }: { data: Moment[] }) => {
   const [viewMoment, setViewMoment] = useState(false);
   const [curMoment, setCurMoment] = useState<Moment | null>(null);
 
-  const [imageSrc, setImageSrc] = useState<string[]>([]);
+  // Memoize CPU-intensive blurhash decoding
+  const imageSrc = useMemo(() => {
+    const width = 100;
+    const height = 100;
+
+    return data.map((moment) => {
+      const pixels = decodeBlurhash(moment.blurhash, width, height);
+      return pixelsToDataUrl(pixels, width, height);
+    });
+  }, [data]);
 
   let animationFrameId: number;
 
@@ -103,22 +112,6 @@ const MomentList = ({ data }: { data: Moment[] }) => {
       nextMoment();
     }
   };
-
-  useEffect(() => {
-    const width = 100;
-    const height = 100;
-
-    const pixelsMap = data.map((moment) => {
-      return decodeBlurhash(moment.blurhash, width, height);
-    });
-
-    if (!pixelsMap) return;
-    const urlMap = pixelsMap.map((pixels) => {
-      return pixelsToDataUrl(pixels, width, height);
-    });
-
-    setImageSrc(urlMap);
-  }, [data]);
 
   if (viewMoment && curMoment) {
     const { hours, minutes } = minutesAgo(curMoment.createdAt);

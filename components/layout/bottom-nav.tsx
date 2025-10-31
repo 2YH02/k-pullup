@@ -5,7 +5,7 @@ import Text from "@common/text";
 import cn from "@lib/cn";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 
 export interface Menu {
   name: string;
@@ -77,7 +77,7 @@ const BottomNav = ({
   );
 };
 
-const NavLink = ({
+const NavLink = memo(({
   title,
   icon,
   url,
@@ -109,6 +109,8 @@ const NavLink = ({
       </Link>
     </li>
   );
-};
+});
+
+NavLink.displayName = "NavLink";
 
 export default BottomNav;

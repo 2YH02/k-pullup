@@ -15,7 +15,7 @@ import useMarkerStore from "@store/useMarkerStore";
 import { LocateFixedIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 // TODO: 지도 우클릭 기능 추가 (리스트 메뉴 형식, ex-로드뷰)
 
 const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
@@ -49,7 +49,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
     };
 
     fetch();
-  }, []);
+  }, [setCount, setMarker]);
 
   useEffect(() => {
     if (!window.ReactNativeWebView || !map) return;
@@ -77,15 +77,15 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
       window.removeEventListener("message", handleMessage);
       document.removeEventListener("message", handleMessage);
     };
-  }, []);
+  }, [map, setMyLocation, setCurLocation]);
 
   useEffect(() => {
     if (!mapRef.current) return;
 
     setMapEl(mapRef.current);
-  }, [mapRef.current]);
+  }, [setMapEl]);
 
-  const handleLoadMap = () => {
+  const handleLoadMap = useCallback(() => {
     window.kakao.maps.load(() => {
       const mapContainer = document.getElementById("map");
       const mapOption = {
@@ -106,9 +106,9 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
 
       window.kakao.maps.event.addListener(map, "dragend", handleDrag);
     });
-  };
+  }, [setMap, setCurLocation]);
 
-  const handleGps = () => {
+  const handleGps = useCallback(() => {
     setLoading(true);
     if (window.ReactNativeWebView) {
       window.ReactNativeWebView.postMessage("gps-permission");
@@ -187,7 +187,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
 
     map.setCenter(latLng);
     setLoading(false);
-  };
+  }, [myLocation, map, deviceType, setCurLocation, setMyLocation, setGeoLocationError, openAlert]);
 
   const isMobileApp =
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";

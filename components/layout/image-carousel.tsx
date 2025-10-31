@@ -4,7 +4,7 @@ import { decodeBlurhash, pixelsToDataUrl } from "@/lib/decode-hash";
 import type { NewPictures } from "@api/marker/new-pictures";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useMemo } from "react";
 import HorizontalScroll, { ScrollItem } from "../common/horizontal-scroll";
 
 interface ImageCarouselProps {
@@ -22,41 +22,43 @@ const ImageCarousel = ({
 }: ImageCarouselProps) => {
   const router = useRouter();
 
-  const [validData, setValidData] = useState<NewPictures[]>([]);
+  // Memoize onClick handler to avoid recreating on every render
+  const handleImageClick = useCallback(
+    (markerId: number) => {
+      if (onClick) {
+        onClick();
+      } else if (withRoute) {
+        router.push(`/pullup/${markerId}`);
+      }
+    },
+    [onClick, withRoute, router]
+  );
 
-  useEffect(() => {
-    const validateImages = async () => {
-      const validatedData = await Promise.all(
-        data.map(
-          (item) =>
-            new Promise<NewPictures | null>((resolve) => {
-              const img = new window.Image();
-              img.src = item.photoURL;
-              img.onload = () => resolve(item);
-              img.onerror = () => resolve(null);
-            })
-        )
-      );
-
-      setValidData(validatedData.filter(Boolean) as NewPictures[]);
-    };
-
-    validateImages();
-  }, [data]);
+  // Memoize blurhash decoding (CPU-intensive operation)
+  const itemsWithBlur = useMemo(
+    () =>
+      data.map((item) => ({
+        ...item,
+        blurDataURL: item.blurhash
+          ? pixelsToDataUrl(
+              decodeBlurhash(item.blurhash, 100, 200),
+              100,
+              200
+            )
+          : "/placeholder_image.png",
+      })),
+    [data]
+  );
 
   return (
     <HorizontalScroll>
-      {validData.map((item) => (
+      {itemsWithBlur.map((item) => (
         <ScrollItem key={item.markerId + item.photoURL} className="h-32 w-32">
           <button
             className="w-full h-full overflow-hidden rounded-lg"
             onClick={
-              onClick
-                ? onClick
-                : withRoute
-                ? () => {
-                    router.push(`/pullup/${item.markerId}`);
-                  }
+              onClick || withRoute
+                ? () => handleImageClick(item.markerId)
                 : undefined
             }
           >
@@ -70,15 +72,7 @@ const ImageCarousel = ({
               priority={priority}
               draggable={false}
               placeholder="blur"
-              blurDataURL={
-                item.blurhash
-                  ? pixelsToDataUrl(
-                      decodeBlurhash(item.blurhash, 100, 200),
-                      100,
-                      200
-                    )
-                  : "/placeholder_image.png"
-              }
+              blurDataURL={item.blurDataURL}
             />
           </button>
         </ScrollItem>
