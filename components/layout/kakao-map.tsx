@@ -12,11 +12,12 @@ import useGeolocationStore from "@store/useGeolocationStore";
 import useImageCountStore from "@store/useImageCountStore";
 import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
+import useRoadviewStore from "@store/useRoadviewStore";
 import { LocateFixedIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
 import { useCallback, useEffect, useRef, useState } from "react";
-// TODO: 지도 우클릭 기능 추가 (리스트 메뉴 형식, ex-로드뷰)
+import MapContextMenu from "./map-context-menu";
 
 const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const isMounted = useIsMounted();
@@ -30,10 +31,21 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const { setCount } = useImageCountStore();
 
   const { openAlert } = useAlertStore();
+  const { openRoadview } = useRoadviewStore();
 
   const [loading, setLoading] = useState(false);
 
+  // Context menu state
+  const [contextMenu, setContextMenu] = useState<{
+    visible: boolean;
+    x: number;
+    y: number;
+    lat: number;
+    lng: number;
+  } | null>(null);
+
   const mapRef = useRef<Nullable<HTMLDivElement>>(null);
+  const longPressTimer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const fetch = async () => {
@@ -85,6 +97,68 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
     setMapEl(mapRef.current);
   }, [setMapEl]);
 
+  // Long-press event for mobile
+  useEffect(() => {
+    if (!map) return;
+
+    const mapContainer = mapRef.current;
+    if (!mapContainer) return;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0];
+
+      longPressTimer.current = setTimeout(() => {
+        // Convert screen coordinates to map coordinates
+        const x = touch.clientX;
+        const y = touch.clientY;
+
+        const projection = map.getProjection();
+        const point = new window.kakao.maps.Point(x, y);
+        const latLng = projection.coordsFromContainerPoint(point);
+
+        setContextMenu({
+          visible: true,
+          x,
+          y,
+          lat: latLng.getLat(),
+          lng: latLng.getLng(),
+        });
+
+        // Haptic feedback for mobile (if available)
+        if (window.navigator.vibrate) {
+          window.navigator.vibrate(50);
+        }
+      }, 500); // 500ms long-press threshold
+    };
+
+    const handleTouchEnd = () => {
+      if (longPressTimer.current) {
+        clearTimeout(longPressTimer.current);
+        longPressTimer.current = null;
+      }
+    };
+
+    const handleTouchMove = () => {
+      if (longPressTimer.current) {
+        clearTimeout(longPressTimer.current);
+        longPressTimer.current = null;
+      }
+    };
+
+    mapContainer.addEventListener("touchstart", handleTouchStart);
+    mapContainer.addEventListener("touchend", handleTouchEnd);
+    mapContainer.addEventListener("touchmove", handleTouchMove);
+
+    return () => {
+      mapContainer.removeEventListener("touchstart", handleTouchStart);
+      mapContainer.removeEventListener("touchend", handleTouchEnd);
+      mapContainer.removeEventListener("touchmove", handleTouchMove);
+      if (longPressTimer.current) {
+        clearTimeout(longPressTimer.current);
+      }
+    };
+  }, [map]);
+
   const handleLoadMap = useCallback(() => {
     window.kakao.maps.load(() => {
       const mapContainer = document.getElementById("map");
@@ -105,8 +179,39 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
       };
 
       window.kakao.maps.event.addListener(map, "dragend", handleDrag);
+
+      // Right-click event for PC
+      window.kakao.maps.event.addListener(
+        map,
+        "rightclick",
+        (mouseEvent: any) => {
+          const latLng = mouseEvent.latLng;
+          const containerPoint = map.getProjection().containerPointFromCoords(latLng);
+
+          setContextMenu({
+            visible: true,
+            x: containerPoint.x,
+            y: containerPoint.y,
+            lat: latLng.getLat(),
+            lng: latLng.getLng(),
+          });
+        }
+      );
     });
   }, [setMap, setCurLocation]);
+
+  const handleCloseContextMenu = useCallback(() => {
+    setContextMenu(null);
+  }, []);
+
+  const handleOpenRoadview = useCallback(() => {
+    if (!contextMenu) return;
+
+    openRoadview({
+      lat: contextMenu.lat,
+      lng: contextMenu.lng,
+    });
+  }, [contextMenu, openRoadview]);
 
   const handleGps = useCallback(() => {
     setLoading(true);
@@ -236,6 +341,16 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
         </Tooltip>
         {/* <MoveMapInput deviceType={deviceType} /> */}
       </div>
+
+      {/* Context Menu for right-click / long-press */}
+      {contextMenu?.visible && (
+        <MapContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          onRoadview={handleOpenRoadview}
+          onClose={handleCloseContextMenu}
+        />
+      )}
     </>
   );
 };
