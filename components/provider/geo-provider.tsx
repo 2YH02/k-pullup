@@ -1,13 +1,10 @@
 "use client";
 
-import type { CustomOverlay } from "@/types/custom-overlay.types";
 import getAddress from "@api/common/get-address";
-import MyLocateOverlay from "@layout/my-locate-overlay";
 import useGeolocationStore from "@store/useGeolocationStore";
 import useMapStore from "@store/useMapStore";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { createRoot } from "react-dom/client";
 
 interface GeoProviderProps {
   children: React.ReactNode;
@@ -25,10 +22,6 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
   const pathname = usePathname();
 
   const { map } = useMapStore();
-
-  const [myLocateOverlay, setMyLocateOverlay] = useState<CustomOverlay | null>(
-    null
-  );
 
   const [locationMove, setLocationMove] = useState(true);
 
@@ -93,32 +86,6 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
       }
     }
   }, [myLocation, map, locationMove]);
-
-  useEffect(() => {
-    if (!map || !myLocation) return;
-
-    if (myLocateOverlay) {
-      myLocateOverlay.setMap(null);
-    }
-
-    const moveLatLon = new window.kakao.maps.LatLng(
-      myLocation.lat,
-      myLocation.lng
-    );
-
-    const overlayDiv = document.createElement("div");
-    const root = createRoot(overlayDiv);
-    root.render(<MyLocateOverlay />);
-
-    const customOverlay = new window.kakao.maps.CustomOverlay({
-      position: moveLatLon,
-      content: overlayDiv,
-      zIndex: 10,
-    });
-
-    customOverlay.setMap(map);
-    setMyLocateOverlay(customOverlay);
-  }, [map, myLocation]);
 
   useEffect(() => {
     if (!curLocation) return;

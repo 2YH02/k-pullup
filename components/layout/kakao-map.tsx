@@ -4,16 +4,17 @@ import type { Device } from "@/app/mypage/page";
 import type { Nullable } from "@/types";
 import getAllMarker from "@api/marker/get-all-marker";
 import Tooltip from "@common/tooltip";
+import useGpsTracking from "@hooks/useGpsTracking";
 import useIsMounted from "@hooks/useIsMounted";
+import { useToast } from "@hooks/useToast";
 import LoadingIcon from "@icons/loading-icon";
 import cn from "@lib/cn";
-import useAlertStore from "@store/useAlertStore";
 import useGeolocationStore from "@store/useGeolocationStore";
 import useImageCountStore from "@store/useImageCountStore";
 import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
 import useRoadviewStore from "@store/useRoadviewStore";
-import { LocateFixedIcon } from "lucide-react";
+import { Loader2, Navigation } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -23,17 +24,23 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const isMounted = useIsMounted();
   const pathname = usePathname();
 
-  const { myLocation, setCurLocation, setGeoLocationError, setMyLocation } =
-    useGeolocationStore();
+  const { setCurLocation, setMyLocation } = useGeolocationStore();
   const { map, setMap, setMapEl } = useMapStore();
   const { setMarker } = useMarkerStore();
 
   const { setCount } = useImageCountStore();
 
-  const { openAlert } = useAlertStore();
   const { openRoadview } = useRoadviewStore();
+  const { toast } = useToast();
 
   const [loading, setLoading] = useState(false);
+
+  // Use GPS tracking hook
+  const { gpsState, handleGps } = useGpsTracking({
+    deviceType,
+    onSuccess: (message) => toast({ description: message }),
+    onError: (message) => toast({ description: message, variant: "destructive" }),
+  });
 
   // Context menu state
   const [contextMenu, setContextMenu] = useState<{
@@ -213,94 +220,6 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
     });
   }, [contextMenu, openRoadview]);
 
-  const handleGps = useCallback(() => {
-    setLoading(true);
-    if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage("gps-permission");
-      if (myLocation && map) {
-        const latLng = new window.kakao.maps.LatLng(
-          myLocation.lat,
-          myLocation.lng
-        );
-
-        setCurLocation({ lat: myLocation.lat, lng: myLocation.lng });
-
-        map.setCenter(latLng);
-      }
-
-      setLoading(false);
-      return;
-    }
-    if (!map || !myLocation) {
-      const setPosition = (position: GeolocationPosition) => {
-        setMyLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      };
-
-      if (navigator.geolocation) {
-        const watchId = navigator.geolocation.watchPosition(
-          (position) => {
-            setPosition(position);
-          },
-          (err) => {
-            console.error(err);
-            if (
-              deviceType === "ios-mobile-app" ||
-              deviceType === "android-mobile-app"
-            ) {
-              openAlert({
-                title: "위치 서비스 사용",
-                description:
-                  '위치 서비스를 사용할 수 없습니다. "기기의 설정 > 개인 정보 보호" 에서 위치서비스를 켜주세요.',
-                onClick: () => {
-                  if (window.ReactNativeWebView) {
-                    window.ReactNativeWebView.postMessage("open-settings");
-                  }
-                },
-                cancel: true,
-                buttonLabel: "설정 가기",
-              });
-            } else {
-              openAlert({
-                title: "위치 서비스 사용",
-                description:
-                  "위치 서비스를 사용할 수 없습니다. 브라우저 설정에서 위치서비스를 켜주세요.",
-                onClick: () => {},
-              });
-            }
-            setGeoLocationError("위치 정보 제공 안됨");
-          }
-        );
-        setLoading(false);
-
-        return () => {
-          navigator.geolocation.clearWatch(watchId);
-        };
-      } else {
-        setGeoLocationError("위치 정보 제공 안됨");
-      }
-
-      setLoading(false);
-      return;
-    }
-
-    const latLng = new window.kakao.maps.LatLng(myLocation.lat, myLocation.lng);
-
-    setCurLocation({ lat: myLocation.lat, lng: myLocation.lng });
-
-    map.setCenter(latLng);
-    setLoading(false);
-  }, [myLocation, map, deviceType, setCurLocation, setMyLocation, setGeoLocationError, openAlert]);
-
-  const isMobileApp =
-    deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
-
-  const style = isMobileApp
-    ? "mo:top-[100px] active:bg-grey-light active:dark:bg-grey-dark"
-    : "hover:bg-grey-light hover:dark:bg-grey-dark";
-
   if (pathname === "/admin") return null;
 
   if (!isMounted) {
@@ -327,17 +246,39 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
         </div>
       )}
       <div ref={mapRef} id="map" className="relative w-full h-dvh">
+        {/* GPS FAB for Desktop only */}
         <Tooltip
           as="button"
-          title="내 위치"
+          title={gpsState === "locating" ? "위치 찾는 중..." : "내 위치"}
           className={cn(
-            "absolute top-16 right-5 p-1 rounded-md z-[28] mo:z-[4] mo:top-16 bg-white shadow-simple dark:bg-black",
-            style
+            "absolute bottom-20 right-5 z-[28]",
+            "w-14 h-14 rounded-full",
+            "bg-white dark:bg-black",
+            "shadow-[0_4px_12px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_12px_rgba(255,255,255,0.1)]",
+            "flex items-center justify-center",
+            "transition-all duration-200",
+            "mo:hidden",
+            gpsState === "idle" && "hover:shadow-[0_6px_16px_rgba(0,0,0,0.2)] hover:dark:shadow-[0_6px_16px_rgba(255,255,255,0.15)] hover:scale-105",
+            gpsState === "locating" && "cursor-wait",
+            gpsState === "success" && "bg-green-50 dark:bg-green-900/20 scale-110",
+            gpsState === "error" && "bg-red-50 dark:bg-red-900/20 animate-shake"
           )}
           position="left"
           onClick={handleGps}
+          disabled={gpsState === "locating"}
         >
-          <LocateFixedIcon className="dark:stroke-white stroke-black" />
+          {gpsState === "locating" ? (
+            <Loader2 className="dark:stroke-white stroke-black animate-spin" size={24} />
+          ) : (
+            <Navigation
+              className={cn(
+                "dark:fill-white fill-black dark:stroke-white stroke-black",
+                gpsState === "success" && "fill-green-600 stroke-green-600 dark:fill-green-400 dark:stroke-green-400",
+                gpsState === "error" && "fill-red-600 stroke-red-600 dark:fill-red-400 dark:stroke-red-400"
+              )}
+              size={24}
+            />
+          )}
         </Tooltip>
         {/* <MoveMapInput deviceType={deviceType} /> */}
       </div>
