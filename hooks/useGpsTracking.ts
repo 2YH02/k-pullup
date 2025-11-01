@@ -3,6 +3,7 @@ import useGeolocationStore from "@store/useGeolocationStore";
 import useMapStore from "@store/useMapStore";
 import useAlertStore from "@store/useAlertStore";
 import createUserLocationMarker from "@lib/create-user-location-marker";
+import useCompass from "@hooks/useCompass";
 
 export type GpsState = "idle" | "locating" | "success" | "error";
 
@@ -47,9 +48,12 @@ const useGpsTracking = ({
 
   const [gpsState, setGpsState] = useState<GpsState>("idle");
 
+  // Get compass heading (works even when stationary)
+  const compassHeading = useCompass();
+
   // Create or update user location marker
   const updateUserLocationMarker = useCallback(
-    (lat: number, lng: number) => {
+    (lat: number, lng: number, heading?: number | null) => {
       if (!map) return;
 
       // Get current marker from store to avoid stale closure
@@ -60,8 +64,8 @@ const useGpsTracking = ({
         currentMarker.setMap(null);
       }
 
-      // Create new marker at new position
-      const newMarker = createUserLocationMarker(map, lat, lng);
+      // Create new marker at new position with optional heading
+      const newMarker = createUserLocationMarker(map, lat, lng, heading);
       setUserLocationMarker(newMarker);
     },
     [map, setUserLocationMarker]
@@ -186,6 +190,15 @@ const useGpsTracking = ({
             lng: position.coords.longitude,
           };
 
+          // Extract heading from GPS (available when moving)
+          // heading: 0-360 degrees, where 0 = North, 90 = East, 180 = South, 270 = West
+          // Returns null if device is stationary
+          const gpsHeading = position.coords.heading;
+
+          // Use GPS heading when moving, fallback to compass when stationary
+          // GPS heading is more accurate when moving, compass works when stationary
+          const heading = gpsHeading !== null ? gpsHeading : compassHeading;
+
           setMyLocation(location);
 
           if (map) {
@@ -203,7 +216,8 @@ const useGpsTracking = ({
               setIsTrackingLocation(true);
             }
 
-            updateUserLocationMarker(location.lat, location.lng);
+            // Update marker with heading (shows arrow from GPS or compass)
+            updateUserLocationMarker(location.lat, location.lng, heading);
           }
 
           // Transition to success state only on first location update
@@ -264,6 +278,17 @@ const useGpsTracking = ({
     setGpsWatchId,
     setIsTrackingLocation,
   ]);
+
+  // Update marker rotation when compass heading changes (stationary device)
+  useEffect(() => {
+    // Only update if we're tracking and have a location
+    const { isTrackingLocation } = useMapStore.getState();
+    if (isTrackingLocation && myLocation && map && compassHeading !== null) {
+      // Check if GPS heading is unavailable (device is stationary)
+      // If so, update marker with compass heading
+      updateUserLocationMarker(myLocation.lat, myLocation.lng, compassHeading);
+    }
+  }, [compassHeading, myLocation, map, updateUserLocationMarker]);
 
   // Cleanup: Stop tracking location when component unmounts
   useEffect(() => {
