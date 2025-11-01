@@ -7,7 +7,13 @@ import createUserLocationMarker from "@lib/create-user-location-marker";
 export type GpsState = "idle" | "locating" | "success" | "error";
 
 interface UseGpsTrackingOptions {
-  deviceType?: "desktop" | "mobile" | "ios-mobile-app" | "android-mobile-app";
+  deviceType?:
+    | "desktop"
+    | "mobile"
+    | "android-mobile-app"
+    | "ios-mobile-app"
+    | "android-mobile-web"
+    | "ios-mobile-web";
   onSuccess?: (message: string) => void;
   onError?: (message: string) => void;
 }
@@ -65,6 +71,8 @@ const useGpsTracking = ({
     // Prevent multiple simultaneous requests
     if (gpsState === "locating") return;
 
+    // Desktop uses getCurrentPosition (one-time)
+    // All mobile devices (app + web) use watchPosition (continuous)
     const isMobile = deviceType !== "desktop";
 
     // Check if already tracking (prevent duplicate sessions)
@@ -198,7 +206,9 @@ const useGpsTracking = ({
             updateUserLocationMarker(location.lat, location.lng);
           }
 
-          if (gpsState === "locating") {
+          // Transition to success state only on first location update
+          // (gpsState will be "locating" only on first callback due to closure)
+          if (gpsState === "locating" as GpsState) {
             setGpsState("success");
             setTimeout(() => setGpsState("idle"), 2000);
           }

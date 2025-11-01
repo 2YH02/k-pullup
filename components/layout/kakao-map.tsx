@@ -265,7 +265,6 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
           )}
           position="left"
           onClick={handleGps}
-          disabled={gpsState === "locating"}
         >
           {gpsState === "locating" ? (
             <Loader2 className="dark:stroke-white stroke-black animate-spin" size={24} />
