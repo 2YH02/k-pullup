@@ -27,8 +27,11 @@ const MomentList = ({ data }: { data: Moment[] }) => {
   const [viewMoment, setViewMoment] = useState(false);
   const [curMoment, setCurMoment] = useState<Moment | null>(null);
 
-  // Memoize CPU-intensive blurhash decoding
+  // Memoize CPU-intensive blurhash decoding (client-side only)
   const imageSrc = useMemo(() => {
+    // Skip on server-side rendering
+    if (typeof window === "undefined") return [];
+
     const width = 100;
     const height = 100;
 

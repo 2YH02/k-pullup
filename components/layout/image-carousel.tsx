@@ -34,18 +34,19 @@ const ImageCarousel = ({
     [onClick, withRoute, router]
   );
 
-  // Memoize blurhash decoding (CPU-intensive operation)
+  // Memoize blurhash decoding (CPU-intensive operation, client-side only)
   const itemsWithBlur = useMemo(
     () =>
       data.map((item) => ({
         ...item,
-        blurDataURL: item.blurhash
-          ? pixelsToDataUrl(
-              decodeBlurhash(item.blurhash, 100, 200),
-              100,
-              200
-            )
-          : "/placeholder_image.png",
+        blurDataURL:
+          item.blurhash && typeof window !== "undefined"
+            ? pixelsToDataUrl(
+                decodeBlurhash(item.blurhash, 100, 200),
+                100,
+                200
+              )
+            : "/placeholder_image.png",
       })),
     [data]
   );
