@@ -1,13 +1,15 @@
 "use client";
 
+import cn from "@/lib/cn";
 import search from "@api/search/search";
-import Button from "@common/button";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import useInput from "@hooks/useInput";
 import useMapControl from "@hooks/useMapControl";
-import type { KakaoPagination, KakaoPlace } from "@layout/move-map-input";
+import ArrowRightIcon from "@icons/arrow-right-icon";
+import LocationIcon from "@icons/location-icon";
+import type { KakaoPlace } from "@layout/move-map-input";
 import SearchHeader from "@pages/search/search-header";
 import SearchList, {
   extractMarkedText,
@@ -19,9 +21,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BsXLg } from "react-icons/bs";
 import { type Device } from "../mypage/page";
-import cn from "@/lib/cn";
-import LocationIcon from "@icons/location-icon";
-import ArrowRightIcon from "@icons/arrow-right-icon";
 
 export interface SearchData {
   address: string;

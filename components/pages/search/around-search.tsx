@@ -1,17 +1,15 @@
 "use client";
 
+import cn from "@/lib/cn";
 import closeMarker, { type CloseMarker } from "@api/marker/close-marker";
-import Button from "@common/button";
-import Section, { SectionTitle } from "@common/section";
+import Section from "@common/section";
 import Skeleton from "@common/skeleton";
 import Text from "@common/text";
-import PinIcon from "@icons/pin-icon";
 import LocationIcon from "@icons/location-icon";
+import PinIcon from "@icons/pin-icon";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import cn from "@/lib/cn";
-import Image from "next/image";
-import useMapStore from "@store/useMapStore";
 
 interface AroundSearchProps {
   address: string;

@@ -15,7 +15,6 @@ interface SearchHeaderProps {
 
 const SearchHeader = ({
   value,
-  referrer = true,
   onChange,
   clearFn,
   onEnter,
