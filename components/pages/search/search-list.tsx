@@ -16,16 +16,12 @@ import { BsPinMapFill } from "react-icons/bs";
 interface SearchResultProps {
   result: SearchData[];
   kakaoSearchResult: KakaoPlace[];
-  active: boolean;
-  clickActive: VoidFunction;
   isSearching?: boolean;
 }
 
 const SearchList = ({
   result,
   kakaoSearchResult,
-  active,
-  clickActive,
   isSearching = false,
 }: SearchResultProps) => {
   const router = useRouter();
@@ -140,7 +136,6 @@ const SearchList = ({
               <button
                 className="flex items-center p-2 px-4 text-left w-full h-full"
                 onClick={() => {
-                  clickActive();
                   move({
                     lat: Number(item.y),
                     lng: Number(item.x),

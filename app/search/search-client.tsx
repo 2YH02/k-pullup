@@ -46,8 +46,6 @@ const SearchClient = ({
   const [kakaoSearchData, setKakaoSearchData] = useState<KakaoPlace[]>([]);
   const [isSearching, setIsSearching] = useState(false);
 
-  const [active, setActive] = useState(false);
-
   const isMobileApp =
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
 
@@ -136,13 +134,6 @@ const SearchClient = ({
     };
   }, [searchValue.value]);
 
-  const clickActive = () => {
-    setActive(true);
-    setTimeout(() => {
-      setActive(false);
-    }, 100);
-  };
-
   const handleEnterKey = () => {
     // Navigate to first result on Enter key
     if (result.length > 0) {
@@ -156,7 +147,6 @@ const SearchClient = ({
       }
     } else if (kakaoSearchData.length > 0) {
       const firstKakao = kakaoSearchData[0];
-      clickActive();
       move({
         lat: Number(firstKakao.y),
         lng: Number(firstKakao.x),
@@ -165,9 +155,7 @@ const SearchClient = ({
   };
 
   return (
-    <SideMain
-      className={cn(isMobileApp ? "pt-12" : "", active ? "duration-150" : "")}
-    >
+    <SideMain className={cn(isMobileApp ? "pt-12" : "")}>
       <SearchHeader
         value={searchValue.value}
         onChange={searchValue.onChange}
@@ -180,8 +168,6 @@ const SearchClient = ({
         <SearchList
           result={result}
           kakaoSearchResult={kakaoSearchData}
-          active={active}
-          clickActive={clickActive}
           isSearching={isSearching}
         />
       ) : (
