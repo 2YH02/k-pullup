@@ -18,6 +18,7 @@ interface SearchResultProps {
   kakaoSearchResult: KakaoPlace[];
   active: boolean;
   clickActive: VoidFunction;
+  isSearching?: boolean;
 }
 
 const SearchList = ({
@@ -25,6 +26,7 @@ const SearchList = ({
   kakaoSearchResult,
   active,
   clickActive,
+  isSearching = false,
 }: SearchResultProps) => {
   const router = useRouter();
 
@@ -32,6 +34,26 @@ const SearchList = ({
   const { move } = useMapControl();
   const { sheetHeight, setCurHeight } = useSheetHeightStore();
 
+  // Show loading skeleton
+  if (isSearching) {
+    return (
+      <Section>
+        <div className="space-y-2 animate-pulse">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="flex items-center gap-3 p-2 px-4">
+              <div className="flex-1 space-y-2">
+                <div className="h-4 bg-grey-light dark:bg-grey-dark rounded w-3/4"></div>
+                <div className="h-3 bg-grey-light dark:bg-grey-dark rounded w-1/2"></div>
+              </div>
+              <div className="w-6 h-6 bg-grey-light dark:bg-grey-dark rounded-full"></div>
+            </div>
+          ))}
+        </div>
+      </Section>
+    );
+  }
+
+  // Show empty state
   if (result.length === 0 && kakaoSearchResult.length === 0) {
     return (
       <Section className="flex flex-col items-center">
@@ -49,13 +71,21 @@ const SearchList = ({
     );
   }
 
+  const totalResults = result.length + kakaoSearchResult.length;
+
   return (
-    <ul>
-      {result.length > 0 && (
-        <Text fontWeight="bold" className="px-4">
-          철봉 위치
+    <>
+      <Section className="pt-2 pb-1">
+        <Text typography="t6" className="text-grey dark:text-grey">
+          총 {totalResults}개의 검색 결과
         </Text>
-      )}
+      </Section>
+      <ul>
+        {result.length > 0 && (
+          <Text fontWeight="bold" className="px-4 pb-2">
+            철봉 위치
+          </Text>
+        )}
 
       {result.map((item, index) => {
         return (
@@ -144,6 +174,7 @@ const SearchList = ({
         );
       })}
     </ul>
+    </>
   );
 };
 
@@ -167,20 +198,31 @@ export const highlightText = (
   text: string,
   highlights: string[]
 ): React.ReactNode => {
-  const regex = new RegExp(`(${highlights.join("|")})`, "gi");
+  if (!highlights || highlights.length === 0) return text;
+
+  // Escape special regex characters and create pattern
+  const escapedHighlights = highlights
+    .filter(h => h && h.trim())
+    .map(h => h.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+
+  if (escapedHighlights.length === 0) return text;
+
+  const regex = new RegExp(`(${escapedHighlights.join("|")})`, "gi");
   const parts = text.split(regex);
 
-  return parts.map((part, index) =>
-    highlights.some(
-      (highlight) => part.toLowerCase() === highlight.toLowerCase()
-    ) ? (
+  // Pre-compute lowercase highlights for faster comparison
+  const lowerHighlights = highlights.map(h => h.toLowerCase());
+
+  return parts.map((part, index) => {
+    const isHighlight = lowerHighlights.includes(part.toLowerCase());
+    return isHighlight ? (
       <span key={index} className="text-primary-dark dark:text-primary-dark">
         {part}
       </span>
     ) : (
       part
-    )
-  );
+    );
+  });
 };
 
 export const removeMarkTags = (input: string): string => {

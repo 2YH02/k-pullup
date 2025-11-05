@@ -20,6 +20,8 @@ import { useEffect, useState } from "react";
 import { BsXLg } from "react-icons/bs";
 import { type Device } from "../mypage/page";
 import cn from "@/lib/cn";
+import LocationIcon from "@icons/location-icon";
+import ArrowRightIcon from "@icons/arrow-right-icon";
 
 export interface SearchData {
   address: string;
@@ -43,6 +45,7 @@ const SearchClient = ({
 
   const [result, setResult] = useState<SearchData[]>([]);
   const [kakaoSearchData, setKakaoSearchData] = useState<KakaoPlace[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
 
   const [active, setActive] = useState(false);
 
@@ -59,50 +62,74 @@ const SearchClient = ({
   }, []);
 
   useEffect(() => {
+    // Clear results immediately when search is empty
     if (searchValue.value === "") {
       setResult([]);
-      return;
-    }
-    const handler = setTimeout(async () => {
-      const markerSearch = await search(searchValue.value);
-
-      if (markerSearch.error || markerSearch.message) {
-        setResult([]);
-        return;
-      }
-
-      setResult([...markerSearch.markers]);
-    }, 300);
-
-    // 카카오 주소 검색
-    if (searchValue.value === "") {
-      setResult([]);
+      setKakaoSearchData([]);
+      setIsSearching(false);
       return;
     }
 
-    let ps = new window.kakao.maps.services.Places();
+    setIsSearching(true);
 
-    const placesSearchCB = (
-      data: KakaoPlace[],
-      status: string,
-      _: KakaoPagination
-    ) => {
-      if (status === window.kakao.maps.services.Status.OK) {
-        setKakaoSearchData([...data]);
-      } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
-        return;
-      } else if (status === window.kakao.maps.services.Status.ERROR) {
-        return;
+    // Create AbortController to cancel previous requests
+    const abortController = new AbortController();
+
+    // Debounce both searches together
+    const searchHandler = setTimeout(async () => {
+      try {
+        // Run both searches in parallel
+        const [markerSearchResult, kakaoSearchResult] = await Promise.allSettled([
+          // Marker search
+          search(searchValue.value),
+          // Kakao places search
+          new Promise<KakaoPlace[]>((resolve, reject) => {
+            const ps = new window.kakao.maps.services.Places();
+            ps.keywordSearch(searchValue.value, (data: KakaoPlace[], status: string) => {
+              if (status === window.kakao.maps.services.Status.OK) {
+                resolve(data);
+              } else {
+                resolve([]);
+              }
+            });
+          })
+        ]);
+
+        // Only update state if not aborted
+        if (!abortController.signal.aborted) {
+          // Handle marker search results
+          if (markerSearchResult.status === "fulfilled") {
+            const markerData = markerSearchResult.value;
+            if (!markerData.error && !markerData.message) {
+              setResult(markerData.markers || []);
+            } else {
+              setResult([]);
+            }
+          } else {
+            setResult([]);
+          }
+
+          // Handle Kakao search results
+          if (kakaoSearchResult.status === "fulfilled") {
+            setKakaoSearchData(kakaoSearchResult.value);
+          } else {
+            setKakaoSearchData([]);
+          }
+
+          setIsSearching(false);
+        }
+      } catch (error) {
+        if (!abortController.signal.aborted) {
+          setResult([]);
+          setKakaoSearchData([]);
+          setIsSearching(false);
+        }
       }
-    };
-
-    const kakaoSearchHandler = setTimeout(async () => {
-      ps.keywordSearch(searchValue.value, placesSearchCB);
     }, 300);
 
     return () => {
-      clearTimeout(kakaoSearchHandler);
-      clearTimeout(handler);
+      clearTimeout(searchHandler);
+      abortController.abort(); // Cancel pending operations
     };
   }, [searchValue.value]);
 
@@ -111,6 +138,27 @@ const SearchClient = ({
     setTimeout(() => {
       setActive(false);
     }, 100);
+  };
+
+  const handleEnterKey = () => {
+    // Navigate to first result on Enter key
+    if (result.length > 0) {
+      const firstResult = result[0];
+      if (firstResult.markerId) {
+        router.push(`/pullup/${firstResult.markerId}`);
+      } else if (firstResult.position) {
+        router.push(
+          `/search?addr=${firstResult.address}&lat=${firstResult.position.lat}&lng=${firstResult.position.lng}`
+        );
+      }
+    } else if (kakaoSearchData.length > 0) {
+      const firstKakao = kakaoSearchData[0];
+      clickActive();
+      move({
+        lat: Number(firstKakao.y),
+        lng: Number(firstKakao.x),
+      });
+    }
   };
 
   return (
@@ -122,39 +170,63 @@ const SearchClient = ({
         onChange={searchValue.onChange}
         referrer={!!referrer}
         clearFn={() => searchValue.resetValue()}
+        onEnter={handleEnterKey}
       />
 
-      {result && searchValue.value.length > 0 ? (
+      {searchValue.value.length > 0 ? (
         <SearchList
           result={result}
           kakaoSearchResult={kakaoSearchData}
           active={active}
           clickActive={clickActive}
+          isSearching={isSearching}
         />
       ) : (
         <>
           <Section>
             <Text
-              className="mb-2"
+              className="mb-4"
               typography="t5"
               display="block"
               fontWeight="bold"
             >
               원하는 주소에 철봉이 있는지 확인해 보세요.
             </Text>
-            <Text typography="t6" display="block">
-              철봉이 없을 경우, 주변 지역을 검색하여 철봉 위치를 확인할 수
-              있습니다.
-            </Text>
-            <Button
-              className="mt-2"
-              size="sm"
+
+            {/* Around Search Card */}
+            <button
               onClick={() => router.push("/search/around")}
+              className={cn(
+                "w-full p-4 rounded-lg border-2 border-grey-light dark:border-grey-dark",
+                "bg-gradient-to-br from-primary/5 to-transparent dark:from-primary-dark/10",
+                "hover:border-primary dark:hover:border-primary-dark",
+                "hover:shadow-md transition-all duration-200",
+                "flex items-center gap-3 text-left group"
+              )}
             >
-              주변 검색
-            </Button>
+              <div className="shrink-0 w-12 h-12 rounded-full bg-primary/10 dark:bg-primary-dark/20 flex items-center justify-center group-hover:bg-primary/20 dark:group-hover:bg-primary-dark/30 transition-colors">
+                <LocationIcon size={24} color="primary" />
+              </div>
+              <div className="flex-1">
+                <Text
+                  typography="t5"
+                  fontWeight="bold"
+                  display="block"
+                  className="mb-1"
+                >
+                  주변 검색
+                </Text>
+                <Text typography="t7" className="text-grey dark:text-grey">
+                  지도를 움직여 원하는 위치 주변의 철봉을 찾아보세요
+                </Text>
+              </div>
+              <div className="shrink-0 text-primary dark:text-primary-dark group-hover:translate-x-1 transition-transform">
+                <ArrowRightIcon className="fill-primary dark:fill-primary-dark" />
+              </div>
+            </button>
           </Section>
-          {searches.length > 0 && (
+
+          {searches.length > 0 ? (
             <Section>
               <div className="flex justify-between items-center">
                 <SectionTitle title="최근 검색" />
@@ -177,7 +249,6 @@ const SearchClient = ({
                           if (search.d) {
                             router.push(`/pullup/${search.d}`);
                           } else {
-                            console.log(search);
                             move({
                               lat: Number(search.lat),
                               lng: Number(search.lng),
@@ -206,12 +277,42 @@ const SearchClient = ({
                         className="ml-2"
                         onClick={() => removeItem(search.addr as string)}
                       >
-                        <BsXLg color="#333" />
+                        <BsXLg className="fill-black dark:fill-white" />
                       </button>
                     </li>
                   );
                 })}
               </ul>
+            </Section>
+          ) : (
+            <Section>
+              <SectionTitle title="검색 팁" />
+              <div className="space-y-3 mt-3">
+                <div className="flex gap-2">
+                  <Text typography="t6" className="text-primary dark:text-primary-dark font-bold">
+                    •
+                  </Text>
+                  <Text typography="t6" className="text-grey dark:text-grey">
+                    동, 구, 시 단위로 검색하면 더 정확한 결과를 얻을 수 있어요
+                  </Text>
+                </div>
+                <div className="flex gap-2">
+                  <Text typography="t6" className="text-primary dark:text-primary-dark font-bold">
+                    •
+                  </Text>
+                  <Text typography="t6" className="text-grey dark:text-grey">
+                    건물명이나 공원 이름으로도 검색할 수 있어요
+                  </Text>
+                </div>
+                <div className="flex gap-2">
+                  <Text typography="t6" className="text-primary dark:text-primary-dark font-bold">
+                    •
+                  </Text>
+                  <Text typography="t6" className="text-grey dark:text-grey">
+                    원하는 위치에 철봉이 없다면 주변 검색을 이용해보세요
+                  </Text>
+                </div>
+              </div>
             </Section>
           )}
         </>
