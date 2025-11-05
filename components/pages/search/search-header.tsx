@@ -30,10 +30,7 @@ const SearchHeader = ({
 
   return (
     <div className="mo:fixed sticky top-0 left-0 flex items-center justify-center w-full h-14 bg-white dark:bg-black py-3">
-      <button
-        className="px-3"
-        onClick={() => router.push("/")}
-      >
+      <button className="px-3" onClick={() => router.push("/")}>
         <ArrowLeftIcon className="fill-black dark:fill-white" />
       </button>
       <div className="grow pr-4">
@@ -45,7 +42,7 @@ const SearchHeader = ({
           onKeyDown={handleKeyDown}
           placeholder="철봉 위치 주소로 검색"
           isFocus
-          icon={<CloseIcon size={20}/>}
+          icon={<CloseIcon size={20} />}
           onIconClick={clearFn}
         />
       </div>

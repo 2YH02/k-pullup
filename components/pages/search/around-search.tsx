@@ -160,7 +160,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
 
     // Add center marker
     const markerPosition = new window.kakao.maps.LatLng(Number(lat), Number(lng));
-    const marker = new window.kakao.maps.Marker({
+    new window.kakao.maps.Marker({
       position: markerPosition,
       map: miniMap,
     });

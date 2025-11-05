@@ -78,21 +78,25 @@ const SearchClient = ({
     const searchHandler = setTimeout(async () => {
       try {
         // Run both searches in parallel
-        const [markerSearchResult, kakaoSearchResult] = await Promise.allSettled([
-          // Marker search
-          search(searchValue.value),
-          // Kakao places search
-          new Promise<KakaoPlace[]>((resolve, reject) => {
-            const ps = new window.kakao.maps.services.Places();
-            ps.keywordSearch(searchValue.value, (data: KakaoPlace[], status: string) => {
-              if (status === window.kakao.maps.services.Status.OK) {
-                resolve(data);
-              } else {
-                resolve([]);
-              }
-            });
-          })
-        ]);
+        const [markerSearchResult, kakaoSearchResult] =
+          await Promise.allSettled([
+            // Marker search
+            search(searchValue.value),
+            // Kakao places search
+            new Promise<KakaoPlace[]>((resolve, reject) => {
+              const ps = new window.kakao.maps.services.Places();
+              ps.keywordSearch(
+                searchValue.value,
+                (data: KakaoPlace[], status: string) => {
+                  if (status === window.kakao.maps.services.Status.OK) {
+                    resolve(data);
+                  } else {
+                    resolve([]);
+                  }
+                }
+              );
+            }),
+          ]);
 
         // Only update state if not aborted
         if (!abortController.signal.aborted) {
@@ -288,7 +292,10 @@ const SearchClient = ({
               <SectionTitle title="검색 팁" />
               <div className="space-y-3 mt-3">
                 <div className="flex gap-2">
-                  <Text typography="t6" className="text-primary dark:text-primary-dark font-bold">
+                  <Text
+                    typography="t6"
+                    className="text-primary dark:text-primary-dark font-bold"
+                  >
                     •
                   </Text>
                   <Text typography="t6" className="text-grey dark:text-grey">
@@ -296,7 +303,10 @@ const SearchClient = ({
                   </Text>
                 </div>
                 <div className="flex gap-2">
-                  <Text typography="t6" className="text-primary dark:text-primary-dark font-bold">
+                  <Text
+                    typography="t6"
+                    className="text-primary dark:text-primary-dark font-bold"
+                  >
                     •
                   </Text>
                   <Text typography="t6" className="text-grey dark:text-grey">
@@ -304,7 +314,10 @@ const SearchClient = ({
                   </Text>
                 </div>
                 <div className="flex gap-2">
-                  <Text typography="t6" className="text-primary dark:text-primary-dark font-bold">
+                  <Text
+                    typography="t6"
+                    className="text-primary dark:text-primary-dark font-bold"
+                  >
                     •
                   </Text>
                   <Text typography="t6" className="text-grey dark:text-grey">

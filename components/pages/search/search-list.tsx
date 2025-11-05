@@ -87,93 +87,93 @@ const SearchList = ({
           </Text>
         )}
 
-      {result.map((item, index) => {
-        return (
-          <li
-            key={`${item.markerId ? item.markerId : item.address}-${index}`}
-            className="border-b border-solid dark:border-grey-dark"
-          >
-            <button
-              className="flex items-center p-2 px-4 text-left w-full h-full"
-              onClick={() => {
-                addSearch({
-                  addr: item.address,
-                  d: item.markerId || null,
-                  lat: item.position?.lat || null,
-                  lng: item.position?.lng || null,
-                });
-                const url = !!item.markerId
-                  ? `/pullup/${item.markerId}`
-                  : `/search?addr=${item.address}&lat=${item.position?.lat}&lng=${item.position?.lng}`;
-                router.push(url);
-              }}
+        {result.map((item, index) => {
+          return (
+            <li
+              key={`${item.markerId ? item.markerId : item.address}-${index}`}
+              className="border-b border-solid dark:border-grey-dark"
             >
-              <div className="w-[90%]">
-                <Text typography="t6" className="break-all">
-                  {highlightText(
-                    removeMarkTags(item.address),
-                    extractMarkedText(item.address).marked
-                  )}
-                </Text>
-              </div>
-              <GrowBox />
-              <div className="shrink-0 w-[10%] flex items-center justify-center">
-                <PinIcon />
-              </div>
-            </button>
-          </li>
-        );
-      })}
+              <button
+                className="flex items-center p-2 px-4 text-left w-full h-full"
+                onClick={() => {
+                  addSearch({
+                    addr: item.address,
+                    d: item.markerId || null,
+                    lat: item.position?.lat || null,
+                    lng: item.position?.lng || null,
+                  });
+                  const url = !!item.markerId
+                    ? `/pullup/${item.markerId}`
+                    : `/search?addr=${item.address}&lat=${item.position?.lat}&lng=${item.position?.lng}`;
+                  router.push(url);
+                }}
+              >
+                <div className="w-[90%]">
+                  <Text typography="t6" className="break-all">
+                    {highlightText(
+                      removeMarkTags(item.address),
+                      extractMarkedText(item.address).marked
+                    )}
+                  </Text>
+                </div>
+                <GrowBox />
+                <div className="shrink-0 w-[10%] flex items-center justify-center">
+                  <PinIcon />
+                </div>
+              </button>
+            </li>
+          );
+        })}
 
-      {kakaoSearchResult.length > 0 && (
-        <Text fontWeight="bold" className="px-4 pt-4">
-          지도 이동
-        </Text>
-      )}
+        {kakaoSearchResult.length > 0 && (
+          <Text fontWeight="bold" className="px-4 pt-4">
+            지도 이동
+          </Text>
+        )}
 
-      {kakaoSearchResult.map((item) => {
-        return (
-          <li
-            key={item.id}
-            className="border-b border-solid dark:border-grey-dark"
-          >
-            <button
-              className="flex items-center p-2 px-4 text-left w-full h-full"
-              onClick={() => {
-                clickActive();
-                move({
-                  lat: Number(item.y),
-                  lng: Number(item.x),
-                });
-                addSearch({
-                  addr: item.address_name,
-                  place: item.place_name,
-                  lat: item.y || null,
-                  lng: item.x || null,
-                });
-                setCurHeight(sheetHeight.STEP_1.height);
-              }}
+        {kakaoSearchResult.map((item) => {
+          return (
+            <li
+              key={item.id}
+              className="border-b border-solid dark:border-grey-dark"
             >
-              <div className="w-[90%] flex flex-col">
-                <Text typography="t6" className="break-all">
-                  {item.address_name}
-                </Text>
-                <Text
-                  typography="t7"
-                  className="break-all text-grey dark:text-grey"
-                >
-                  {item.place_name}
-                </Text>
-              </div>
-              <GrowBox />
-              <div className="shrink-0 w-[10%] flex items-center justify-center">
-                <BsPinMapFill className="fill-primary" />
-              </div>
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+              <button
+                className="flex items-center p-2 px-4 text-left w-full h-full"
+                onClick={() => {
+                  clickActive();
+                  move({
+                    lat: Number(item.y),
+                    lng: Number(item.x),
+                  });
+                  addSearch({
+                    addr: item.address_name,
+                    place: item.place_name,
+                    lat: item.y || null,
+                    lng: item.x || null,
+                  });
+                  setCurHeight(sheetHeight.STEP_1.height);
+                }}
+              >
+                <div className="w-[90%] flex flex-col">
+                  <Text typography="t6" className="break-all">
+                    {item.address_name}
+                  </Text>
+                  <Text
+                    typography="t7"
+                    className="break-all text-grey dark:text-grey"
+                  >
+                    {item.place_name}
+                  </Text>
+                </div>
+                <GrowBox />
+                <div className="shrink-0 w-[10%] flex items-center justify-center">
+                  <BsPinMapFill className="fill-primary" />
+                </div>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
     </>
   );
 };
@@ -202,8 +202,8 @@ export const highlightText = (
 
   // Escape special regex characters and create pattern
   const escapedHighlights = highlights
-    .filter(h => h && h.trim())
-    .map(h => h.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    .filter((h) => h && h.trim())
+    .map((h) => h.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
 
   if (escapedHighlights.length === 0) return text;
 
@@ -211,7 +211,7 @@ export const highlightText = (
   const parts = text.split(regex);
 
   // Pre-compute lowercase highlights for faster comparison
-  const lowerHighlights = highlights.map(h => h.toLowerCase());
+  const lowerHighlights = highlights.map((h) => h.toLowerCase());
 
   return parts.map((part, index) => {
     const isHighlight = lowerHighlights.includes(part.toLowerCase());
