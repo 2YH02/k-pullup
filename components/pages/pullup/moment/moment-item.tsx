@@ -57,7 +57,7 @@ const MomentItem = ({ moment, filterMoment }: MomentItem) => {
       </div>
       <div className="relative w-full h-96">
         <Image
-          src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${moment.photoURL}`}
+          src={moment.photoURL}
           fill
           alt={moment.caption}
           className="object-cover"

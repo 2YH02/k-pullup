@@ -2,6 +2,7 @@
 
 import { type Device } from "@/app/mypage/page";
 import { type Marker } from "@/types/marker.types";
+import { type CommentsRes } from "@api/comment/get-comments";
 import { type FacilitiesRes } from "@api/marker/get-facilities";
 import Ads from "@common/ads";
 import Badge from "@common/badge";
@@ -34,6 +35,7 @@ interface PullupClientProps {
   marker: Marker;
   deviceType: Device;
   referrer: string | null;
+  initialComments: CommentsRes;
 }
 
 const PullupClient = ({
@@ -41,6 +43,7 @@ const PullupClient = ({
   marker,
   deviceType,
   referrer,
+  initialComments,
 }: PullupClientProps) => {
   const router = useRouter();
   const { show } = useBottomSheetStore();
@@ -188,16 +191,17 @@ const PullupClient = ({
 
           {marker.username && (
             <div className="flex items-center max-w-[50%]">
-              <span className="mr-1 mb-[3px]">
+              <span className="mr-1 mb-[3px] shrink-0">
                 <StarIcon />
               </span>
               <button
                 onClick={() => {
                   router.push(`/user-info/${marker.username}`);
                 }}
+                className="text-left min-w-0"
               >
-                <Text typography="t7" className="break-all">
-                  정보 제공자: {marker.username}
+                <Text typography="t7" className="truncate block">
+                  {marker.username.length > 10 ? marker.username : `정보 제공자: ${marker.username}`}
                 </Text>
               </button>
             </div>
@@ -244,32 +248,42 @@ const PullupClient = ({
           {providerInfo.map((comment, index) => {
             if (index < 3) {
               return (
-                <ListItem
+                <div
                   key={comment.commentId}
-                  icon={
-                    user?.chulbong || user?.userId === comment.userId ? (
-                      <BsX size={22} color="#777" />
-                    ) : undefined
-                  }
-                  onIconClick={async () => {
-                    if (
-                      deleteLoading ||
-                      !user ||
-                      (!user.chulbong && user.userId !== comment.userId)
-                    )
-                      return;
-                    await handleDelete(comment.commentId);
-                  }}
+                  className="relative bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded-r-lg mb-4"
                 >
-                  <ListContents
-                    title={comment.commentText}
-                    subTitle={formatDate(comment.postedAt)}
-                  />
-
-                  <ListRight>
-                    <Text typography="t7">{comment.username}</Text>
-                  </ListRight>
-                </ListItem>
+                  {(user?.chulbong || user?.userId === comment.userId) && (
+                    <button
+                      className="absolute top-2 right-2"
+                      onClick={async () => {
+                        if (
+                          deleteLoading ||
+                          !user ||
+                          (!user.chulbong && user.userId !== comment.userId)
+                        )
+                          return;
+                        await handleDelete(comment.commentId);
+                      }}
+                    >
+                      <BsX size={22} color="#777" />
+                    </button>
+                  )}
+                  <div className="flex flex-col select-none pr-6">
+                    <Text
+                      fontWeight="bold"
+                      typography="t5"
+                      className="text-black-light dark:text-white text-center mb-1"
+                    >
+                      {comment.commentText.replace('🔉 ', '')}
+                    </Text>
+                    <Text
+                      typography="t7"
+                      className="text-grey-dark dark:text-grey text-right"
+                    >
+                      - {formatDate(comment.postedAt)}
+                    </Text>
+                  </div>
+                </div>
               );
             }
           })}
@@ -309,7 +323,7 @@ const PullupClient = ({
             buttonTitle="리뷰 작성하기"
             onClickButton={() => show("write-comments")}
           />
-          <Comments markerId={marker.markerId} />
+          <Comments markerId={marker.markerId} initialComments={initialComments} />
         </Section>
       </div>
     </SideMain>

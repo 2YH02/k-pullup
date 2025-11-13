@@ -10,9 +10,10 @@ import downloadPdf from "@lib/api/marker/download-pdf";
 import { useState } from "react";
 import {
   BsCloudDownload,
-  BsCopy,
   BsFillShareFill,
   BsGeo,
+  BsGeoAlt,
+  BsLink45Deg,
 } from "react-icons/bs";
 
 interface ShareButtonProps {
@@ -113,14 +114,14 @@ const ShareButton = ({ markerId, lat, lng, address }: ShareButtonProps) => {
         id={`share-${markerId}`}
         className="pb-10"
       >
-        <BottomSheetItem icon={<BsCopy size={22} />} onClick={copyAddress}>
+        <BottomSheetItem icon={<BsGeoAlt size={22} />} onClick={copyAddress}>
           주소 복사
         </BottomSheetItem>
         <BottomSheetItem
-          icon={<BsCopy size={22} />}
+          icon={<BsLink45Deg size={22} />}
           onClick={copyTextToClipboard}
         >
-          링크 복사
+          철봉 링크 복사
         </BottomSheetItem>
         <BottomSheetItem icon={<BsGeo size={22} />} onClick={openLocation}>
           길찾기

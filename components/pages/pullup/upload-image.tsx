@@ -3,7 +3,11 @@ import GrowBox from "@common/grow-box";
 import Section from "@common/section";
 import Text from "@common/text";
 import LoadingIcon from "@icons/loading-icon";
-import { resizeImage } from "img-toolkit";
+import {
+  optimizeImage,
+  OPTIMIZATION_PRESETS,
+  ImageValidationError,
+} from "@lib/optimize-image";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { BsPlusLg, BsX } from "react-icons/bs";
@@ -48,63 +52,54 @@ const UploadImage = ({
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true);
     setLoadingTrue();
-    const suppertedFormats = [
-      "image/jpeg",
-      "image/png",
-      "image/svg+xml",
-      "image/webp",
-    ];
 
-    if (!e.target.files) {
+    if (!e.target.files || !e.target.files[0]) {
       setLoading(false);
       setLoadingFalse();
       return;
     }
 
-    if (!suppertedFormats.includes(e.target.files[0]?.type)) {
-      setErrorMessage(
-        "지원되지 않은 이미지 형식입니다. JPEG, PNG, webp형식의 이미지를 업로드해주세요."
-      );
-      setLoading(false);
-      setLoadingFalse();
-      return;
-    }
+    const selectedFile = e.target.files[0];
 
-    if (images.length + e.target.files.length > 5) {
+    // Check max file count
+    if (images.length >= 5) {
       setErrorMessage("최대 5개 까지 등록 가능합니다!");
       setLoading(false);
       setLoadingFalse();
       return;
     }
 
-    let file: File = await resizeImage(e.target.files[0], {
-      format: "webp",
-      quality: 0.8,
-    });
-    let reader = new FileReader();
+    try {
+      // Optimize image using the new utility with marker preset
+      const optimizedFile = await optimizeImage(
+        selectedFile,
+        OPTIMIZATION_PRESETS.marker
+      );
 
-    reader.onloadend = () => {
-      const imageData = {
-        file: file,
-        previewURL: reader.result as string,
-        id: v4(),
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const imageData = {
+          file: optimizedFile,
+          previewURL: reader.result as string,
+          id: v4(),
+        };
+        setImages((prev) => [...prev, imageData]);
+        setErrorMessage("");
       };
-      setImages((prev) => [...prev, imageData]);
-    };
 
-    // if (file.size / (1024 * 1024) > 10) {
-    //   setErrorMessage("이미지는 최대 10MB까지 가능합니다.");
-    //   setLoading(false);
-    //   return;
-    // }
-
-    setErrorMessage("");
-
-    reader.readAsDataURL(file);
-
-    e.target.value = "";
-    setLoading(false);
-    setLoadingFalse();
+      reader.readAsDataURL(optimizedFile);
+    } catch (error) {
+      if (error instanceof ImageValidationError) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage("이미지 처리 중 오류가 발생했습니다. 다시 시도해주세요.");
+      }
+    } finally {
+      e.target.value = "";
+      setLoading(false);
+      setLoadingFalse();
+    }
   };
 
   const handleBoxClick = () => {

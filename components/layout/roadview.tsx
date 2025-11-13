@@ -2,6 +2,7 @@
 
 import { type Device } from "@/app/mypage/page";
 import { KakaoMap } from "@/types/kakao-map.types";
+import getRoadviewDate from "@api/marker/get-roadview-date";
 import Button from "@common/button";
 import { useToast } from "@hooks/useToast";
 import MapWalker from "@lib/map-walker";
@@ -9,6 +10,14 @@ import useMapStore from "@store/useMapStore";
 import useRoadviewStore from "@store/useRoadviewStore";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+
+const formatRoadviewDate = (isoDate: string): string => {
+  const date = new Date(isoDate);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
 
 const Roadview = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const pathname = usePathname();
@@ -19,10 +28,13 @@ const Roadview = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
 
   const [mapHover, setMapHover] = useState(false);
   const [mapData, setMapData] = useState<KakaoMap | null>(null);
+  const [roadviewDate, setRoadviewDate] = useState<string | null>(null);
+  const [showDate, setShowDate] = useState(false);
 
   const roadviewContainer = useRef<HTMLDivElement>(null);
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapWrapper = useRef<HTMLDivElement>(null);
+  const dateTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (!map || !open || !lat || !lng) return;
@@ -118,6 +130,43 @@ const Roadview = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
     else mapData.addOverlayMapTypeId(window.kakao.maps.MapTypeId.ROADMAP);
   }, [mapHover]);
 
+  // Fetch and display roadview date for 5 seconds
+  useEffect(() => {
+    if (!open || !lat || !lng) {
+      // Clear date when roadview closes
+      setRoadviewDate(null);
+      setShowDate(false);
+      if (dateTimerRef.current) {
+        clearTimeout(dateTimerRef.current);
+        dateTimerRef.current = null;
+      }
+      return;
+    }
+
+    const fetchDate = async () => {
+      const result = await getRoadviewDate(lat, lng);
+
+      if (result?.shot_date) {
+        setRoadviewDate(result.shot_date);
+        setShowDate(true);
+
+        // Hide after 10 seconds
+        dateTimerRef.current = setTimeout(() => {
+          setShowDate(false);
+        }, 10000);
+      }
+    };
+
+    fetchDate();
+
+    return () => {
+      if (dateTimerRef.current) {
+        clearTimeout(dateTimerRef.current);
+        dateTimerRef.current = null;
+      }
+    };
+  }, [open, lat, lng]);
+
   const isMobileApp =
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
 
@@ -145,6 +194,19 @@ const Roadview = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
       >
         닫기
       </Button>
+
+      {/* Roadview Date Badge */}
+      {showDate && roadviewDate && (
+        <div
+          className={`absolute ${
+            isMobileApp ? "top-14" : "top-2"
+          } left-2 z-[99] bg-black/80 dark:bg-white/80 text-white dark:text-black px-3 py-2 rounded-lg shadow-lg backdrop-blur-sm transition-opacity duration-300`}
+        >
+          <span className="text-sm font-medium">
+            로드뷰 날짜: {formatRoadviewDate(roadviewDate)}
+          </span>
+        </div>
+      )}
     </div>
   );
 };

@@ -19,7 +19,7 @@ const Tabs = ({ tabs }: TabsProps) => {
 
   const tabContents = useMemo(() => {
     return tabs.find((tab) => tab.title === curTab)?.contents;
-  }, [curTab]);
+  }, [curTab, tabs]);
 
   return (
     <div>

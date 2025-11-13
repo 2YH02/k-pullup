@@ -7,7 +7,7 @@ import { decodeBlurhash, pixelsToDataUrl } from "@lib/decode-hash";
 import { Plus, XIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { MouseEvent, useMemo, useRef, useState } from "react";
 
 const getCity = (address: string): string => {
   if (!address) return "";
@@ -27,7 +27,19 @@ const MomentList = ({ data }: { data: Moment[] }) => {
   const [viewMoment, setViewMoment] = useState(false);
   const [curMoment, setCurMoment] = useState<Moment | null>(null);
 
-  const [imageSrc, setImageSrc] = useState<string[]>([]);
+  // Memoize CPU-intensive blurhash decoding (client-side only)
+  const imageSrc = useMemo(() => {
+    // Skip on server-side rendering
+    if (typeof window === "undefined") return [];
+
+    const width = 100;
+    const height = 100;
+
+    return data.map((moment) => {
+      const pixels = decodeBlurhash(moment.blurhash, width, height);
+      return pixelsToDataUrl(pixels, width, height);
+    });
+  }, [data]);
 
   let animationFrameId: number;
 
@@ -104,22 +116,6 @@ const MomentList = ({ data }: { data: Moment[] }) => {
     }
   };
 
-  useEffect(() => {
-    const width = 100;
-    const height = 100;
-
-    const pixelsMap = data.map((moment) => {
-      return decodeBlurhash(moment.blurhash, width, height);
-    });
-
-    if (!pixelsMap) return;
-    const urlMap = pixelsMap.map((pixels) => {
-      return pixelsToDataUrl(pixels, width, height);
-    });
-
-    setImageSrc(urlMap);
-  }, [data]);
-
   if (viewMoment && curMoment) {
     const { hours, minutes } = minutesAgo(curMoment.createdAt);
 
@@ -176,7 +172,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
           </div>
           <div className="grow relative w-full h-full">
             <Image
-              src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${curMoment.photoURL}`}
+              src={curMoment.photoURL}
               fill
               alt={curMoment.caption}
               className="object-contain z-10"
