@@ -9,7 +9,7 @@ import useScrollRefStore from "@store/useScrollRefStore";
 import useSheetHeightStore from "@store/useSheetHeightStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { BsBuilding, BsChatDots, BsEmojiWink, BsGeo } from "react-icons/bs";
+import { BsHouseDoorFill, BsChatDots, BsPersonCircle, BsGeoAlt } from "react-icons/bs";
 import SheetHeightProvider from "../provider/sheet-height-provider";
 import Text from "./text";
 
@@ -35,8 +35,8 @@ interface SideMainProps {
 const menus = [
   {
     name: "홈",
-    icon: <BsBuilding size={22} className="fill-grey" />,
-    iconActive: <BsBuilding size={22} className="fill-primary" />,
+    icon: <BsHouseDoorFill size={22} className="fill-grey" />,
+    iconActive: <BsHouseDoorFill size={22} className="fill-primary" />,
     path: "/",
   },
   {
@@ -47,14 +47,14 @@ const menus = [
   },
   {
     name: "등록",
-    icon: <BsGeo size={22} className="fill-grey" />,
-    iconActive: <BsGeo size={22} className="fill-primary" />,
+    icon: <BsGeoAlt size={22} className="fill-grey" />,
+    iconActive: <BsGeoAlt size={22} className="fill-primary" />,
     path: "/register",
   },
   {
     name: "내 정보",
-    icon: <BsEmojiWink size={22} className="fill-grey" />,
-    iconActive: <BsEmojiWink size={22} className="fill-primary" />,
+    icon: <BsPersonCircle size={22} className="fill-grey" />,
+    iconActive: <BsPersonCircle size={22} className="fill-primary" />,
     path: "/mypage",
   },
 ];
