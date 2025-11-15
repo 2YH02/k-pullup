@@ -53,6 +53,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
 
   const mapRef = useRef<Nullable<HTMLDivElement>>(null);
   const longPressTimer = useRef<NodeJS.Timeout | null>(null);
+  const touchStartPos = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     const fetch = async () => {
@@ -114,6 +115,12 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
     const handleTouchStart = (e: TouchEvent) => {
       const touch = e.touches[0];
 
+      // Store initial touch position
+      touchStartPos.current = {
+        x: touch.clientX,
+        y: touch.clientY,
+      };
+
       longPressTimer.current = setTimeout(() => {
         // Convert screen coordinates to map coordinates
         const x = touch.clientX;
@@ -143,12 +150,23 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
         clearTimeout(longPressTimer.current);
         longPressTimer.current = null;
       }
+      touchStartPos.current = null;
     };
 
-    const handleTouchMove = () => {
-      if (longPressTimer.current) {
-        clearTimeout(longPressTimer.current);
-        longPressTimer.current = null;
+    const handleTouchMove = (e: TouchEvent) => {
+      if (longPressTimer.current && touchStartPos.current) {
+        const touch = e.touches[0];
+        const moveDistance = Math.sqrt(
+          Math.pow(touch.clientX - touchStartPos.current.x, 2) +
+          Math.pow(touch.clientY - touchStartPos.current.y, 2)
+        );
+
+        // Cancel long-press if moved more than 10 pixels (indicates drag/pan intent)
+        if (moveDistance > 10) {
+          clearTimeout(longPressTimer.current);
+          longPressTimer.current = null;
+          touchStartPos.current = null;
+        }
       }
     };
 
