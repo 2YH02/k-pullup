@@ -177,7 +177,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
       setMap(map);
 
-      const handleDrag = () => {
+      const handleCenterChange = () => {
         const latlng = map.getCenter();
         setCurLocation({
           lat: latlng.getLat(),
@@ -185,7 +185,8 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
         });
       };
 
-      window.kakao.maps.event.addListener(map, "dragend", handleDrag);
+      // Use 'idle' instead of 'dragend' to wait for animations/zoom to settle
+      window.kakao.maps.event.addListener(map, "idle", handleCenterChange);
 
       // Right-click event for PC
       window.kakao.maps.event.addListener(

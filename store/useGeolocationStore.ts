@@ -17,10 +17,12 @@ interface Region {
 
 interface GeolocationState {
   region: Region | null;
+  regionLoading: boolean;
   myLocation: Location | null;
   curLocation: Location;
   geoLocationError: null | string;
   setRegion: (region: Region) => void;
+  setRegionLoading: (loading: boolean) => void;
   setMyLocation: (myLocation: Location) => void;
   setCurLocation: (curLocation: Location) => void;
   setGeoLocationError: (error: string | null) => void;
@@ -28,6 +30,7 @@ interface GeolocationState {
 
 const useGeolocationStore = create<GeolocationState>()((set) => ({
   region: null,
+  regionLoading: false,
   /**
    * 현재 유저 위치
    */
@@ -40,6 +43,7 @@ const useGeolocationStore = create<GeolocationState>()((set) => ({
   setMyLocation: (myLocation) => set({ myLocation }),
   setCurLocation: (curLocation) => set({ curLocation }),
   setRegion: (region: Region) => set({ region }),
+  setRegionLoading: (regionLoading: boolean) => set({ regionLoading }),
   setGeoLocationError: (error) => set({ geoLocationError: error }),
 }));
 
