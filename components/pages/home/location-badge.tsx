@@ -9,7 +9,7 @@ import { Loader2, Navigation } from "lucide-react";
 
 const LocationBadge = () => {
   // TODO: 주소 가져오기 이후 훅 분리 필요 (search/around-client 에서 사용 중)
-  const { region, geoLocationError } = useGeolocationStore();
+  const { region, regionLoading, geoLocationError } = useGeolocationStore();
   const { toast } = useToast();
 
   // Use GPS tracking hook for mobile
@@ -61,11 +61,16 @@ const LocationBadge = () => {
 
   return (
     <div className="flex items-center w-full web:justify-center mo:justify-between">
-      <Badge
-        text={title as string}
-        icon={<LocationIcon size={18} className="fill-primary" />}
-        className="pl-[5px] border-none"
-      />
+      <div className="flex items-center gap-1.5">
+        <Badge
+          text={title as string}
+          icon={<LocationIcon size={18} className="fill-primary" />}
+          className="pl-[5px] border-none"
+        />
+        {regionLoading && (
+          <Loader2 size={16} className="stroke-primary animate-spin" />
+        )}
+      </div>
       {/* Mobile GPS button - right aligned */}
       <button
         onClick={handleGps}
