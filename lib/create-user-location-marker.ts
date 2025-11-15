@@ -116,11 +116,11 @@ const createUserLocationMarker = (
     style.textContent = `
       @keyframes pulse {
         0% {
-          transform: scale(1);
+          transform: translate(-50%, -50%) scale(1);
           opacity: 0.6;
         }
         100% {
-          transform: scale(2);
+          transform: translate(-50%, -50%) scale(2);
           opacity: 0;
         }
       }
