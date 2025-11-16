@@ -53,6 +53,7 @@ const PullupClient = ({
 
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [markerPhotos, setMarkerPhotos] = useState(marker.photos || []);
 
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -71,6 +72,12 @@ const PullupClient = ({
     );
     setProviderInfo([...newComment]);
     setDeleteLoading(false);
+  };
+
+  const handlePhotoDeleted = (photoId: number) => {
+    setMarkerPhotos((prevPhotos) =>
+      prevPhotos.filter((photo) => photo.photoId !== photoId)
+    );
   };
 
   const onScroll = useCallback(
@@ -129,7 +136,7 @@ const PullupClient = ({
         markerId={marker.markerId}
       />
 
-      <ImageCarousel photos={marker.photos} />
+      <ImageCarousel photos={markerPhotos} />
 
       <Section className="py-0">
         <div className="flex items-center mt-2 flex-wrap">
@@ -305,7 +312,13 @@ const PullupClient = ({
               router.push(`/pullup/${marker.markerId}/report`)
             }
           />
-          <ImageList photos={marker.photos} />
+          <ImageList
+            photos={markerPhotos}
+            markerId={marker.markerId}
+            markerUserId={marker.userId}
+            isAdmin={marker.isChulbong || false}
+            onPhotoDeleted={handlePhotoDeleted}
+          />
         </Section>
       </div>
 

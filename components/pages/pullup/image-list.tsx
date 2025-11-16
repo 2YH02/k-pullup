@@ -3,15 +3,40 @@
 import ImageWrap from "@/app/article/2/image-wrap";
 import type { Photo } from "@/types/marker.types";
 import Text from "@common/text";
+import { useToast } from "@hooks/useToast";
+import deleteMarkerPhoto from "@lib/api/marker/delete-marker-photo";
+import useAlertStore from "@store/useAlertStore";
 import useImageModalStore from "@store/useImageModalStore";
-import { useEffect, useMemo } from "react";
+import useUserStore from "@store/useUserStore";
+import { useEffect, useMemo, useState } from "react";
+import { BsX } from "react-icons/bs";
 
 type Props = {
   photos?: Photo[];
+  markerId: number;
+  markerUserId: number | null;
+  isAdmin: boolean;
+  onPhotoDeleted?: (photoId: number) => void;
 };
 
-const ImageList = ({ photos }: Props) => {
+const ImageList = ({
+  photos,
+  markerId,
+  markerUserId,
+  isAdmin,
+  onPhotoDeleted,
+}: Props) => {
   const { openModal, closeModal } = useImageModalStore();
+  const { openAlert, closeAlert } = useAlertStore();
+  const { user } = useUserStore();
+  const { toast } = useToast();
+  const [deletingPhotoId, setDeletingPhotoId] = useState<number | null>(null);
+
+  const isOwnerOrAdmin = useMemo(() => {
+    if (isAdmin) return true;
+    if (!user || !markerUserId) return false;
+    return user.userId === markerUserId;
+  }, [user, markerUserId, isAdmin]);
 
   const images = useMemo(() => {
     if (!photos) return null;
@@ -22,6 +47,58 @@ const ImageList = ({ photos }: Props) => {
     return () => closeModal();
   }, []);
 
+  const handleDeletePhoto = async (photoId: number) => {
+    setDeletingPhotoId(photoId);
+
+    try {
+      const response = await deleteMarkerPhoto(markerId, photoId);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+
+        if (response.status === 403) {
+          toast({ description: "사진을 삭제할 권한이 없습니다" });
+        } else if (response.status === 400) {
+          toast({ description: "잘못된 요청입니다" });
+        } else {
+          toast({ description: "잠시 후 다시 시도해주세요" });
+        }
+        return;
+      }
+
+      const data = await response.json();
+
+      // Handle both success and idempotent cases
+      if (data.message) {
+        toast({
+          description: data.message.includes("already")
+            ? "이미 삭제된 사진입니다"
+            : "사진이 삭제되었습니다"
+        });
+
+        // Notify parent component to update state
+        onPhotoDeleted?.(photoId);
+      }
+
+      closeAlert();
+    } catch (error) {
+      toast({ description: "사진 삭제 중 오류가 발생했습니다" });
+    } finally {
+      setDeletingPhotoId(null);
+    }
+  };
+
+  const handleDeleteClick = (photoId: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    openAlert({
+      title: "사진을 삭제하시겠습니까?",
+      description: "삭제된 사진은 복구할 수 없습니다.",
+      onClickAsync: () => handleDeletePhoto(photoId),
+      cancel: true,
+    });
+  };
+
   return (
     <div className="flex">
       {photos && images ? (
@@ -30,21 +107,32 @@ const ImageList = ({ photos }: Props) => {
             {photos.map((photo, i) => {
               if (i % 2 === 1) return;
               return (
-                <button
-                  key={photo.photoId}
-                  className="w-full"
-                  onClick={() => {
-                    openModal({ images, curIndex: i });
-                  }}
-                >
-                  <ImageWrap
-                    src={photo.photoUrl}
-                    w={230}
-                    h={230}
-                    alt="상세"
-                    className="rounded-md"
-                  />
-                </button>
+                <div key={photo.photoId} className="relative w-full mb-2">
+                  <button
+                    className="w-full"
+                    onClick={() => {
+                      openModal({ images, curIndex: i });
+                    }}
+                  >
+                    <ImageWrap
+                      src={photo.photoUrl}
+                      w={230}
+                      h={230}
+                      alt="상세"
+                      className="rounded-md"
+                    />
+                  </button>
+                  {isOwnerOrAdmin && (
+                    <button
+                      onClick={(e) => handleDeleteClick(photo.photoId, e)}
+                      disabled={deletingPhotoId === photo.photoId}
+                      className="absolute top-2 right-2 bg-black/50 hover:bg-black/70 rounded-full p-1.5 transition-colors disabled:opacity-50"
+                      aria-label="사진 삭제"
+                    >
+                      <BsX size={20} className="text-white" />
+                    </button>
+                  )}
+                </div>
               );
             })}
           </div>
@@ -52,21 +140,32 @@ const ImageList = ({ photos }: Props) => {
             {photos.map((photo, i) => {
               if (i % 2 !== 1) return;
               return (
-                <button
-                  key={photo.photoId}
-                  className="w-full"
-                  onClick={() => {
-                    openModal({ images, curIndex: i });
-                  }}
-                >
-                  <ImageWrap
-                    src={photo.photoUrl}
-                    w={230}
-                    h={230}
-                    alt="상세"
-                    className="rounded-md"
-                  />
-                </button>
+                <div key={photo.photoId} className="relative w-full mb-2">
+                  <button
+                    className="w-full"
+                    onClick={() => {
+                      openModal({ images, curIndex: i });
+                    }}
+                  >
+                    <ImageWrap
+                      src={photo.photoUrl}
+                      w={230}
+                      h={230}
+                      alt="상세"
+                      className="rounded-md"
+                    />
+                  </button>
+                  {isOwnerOrAdmin && (
+                    <button
+                      onClick={(e) => handleDeleteClick(photo.photoId, e)}
+                      disabled={deletingPhotoId === photo.photoId}
+                      className="absolute top-2 right-2 bg-black/50 hover:bg-black/70 rounded-full p-1.5 transition-colors disabled:opacity-50"
+                      aria-label="사진 삭제"
+                    >
+                      <BsX size={20} className="text-white" />
+                    </button>
+                  )}
+                </div>
               );
             })}
           </div>
