@@ -1,6 +1,6 @@
 "use client";
 
-import getAddress from "@api/common/get-address";
+import { useAddressResolver } from "@hooks/useAddressResolver";
 import useGeolocationStore from "@store/useGeolocationStore";
 import useMapStore from "@store/useMapStore";
 import { usePathname } from "next/navigation";
@@ -15,6 +15,7 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
     myLocation,
     curLocation,
     setRegion,
+    setRegionLoading,
     setMyLocation,
     setCurLocation,
     setGeoLocationError,
@@ -22,6 +23,7 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
   const pathname = usePathname();
 
   const { map } = useMapStore();
+  const { resolve } = useAddressResolver();
 
   const [locationMove, setLocationMove] = useState(true);
 
@@ -91,41 +93,34 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
     if (!curLocation) return;
 
     const fetchRegion = async () => {
-      const response = await getAddress({
-        lat: curLocation.lat,
-        lng: curLocation.lng,
-      });
+      setRegionLoading(true);
 
-      if (response.code === -2) {
-        setGeoLocationError("위치 정보 없음");
+      const result = await resolve(curLocation.lat, curLocation.lng);
+
+      if (!result.success) {
+        setGeoLocationError(result.error || "위치 정보 없음");
+        setRegionLoading(false);
         return;
       }
 
-      setGeoLocationError(null);
+      if (result.data) {
+        setGeoLocationError(null);
+        setRegion({
+          address_name: result.data.address_name,
+          code: result.data.code,
+          region_1depth_name: result.data.region_1depth_name,
+          region_2depth_name: result.data.region_2depth_name,
+          region_3depth_name: result.data.region_3depth_name,
+          region_4depth_name: result.data.region_4depth_name,
+          region_type: result.data.region_type,
+        });
+      }
 
-      const {
-        address_name,
-        code,
-        region_1depth_name,
-        region_2depth_name,
-        region_3depth_name,
-        region_4depth_name,
-        region_type,
-      } = response.documents[0];
-
-      setRegion({
-        address_name,
-        code,
-        region_1depth_name,
-        region_2depth_name,
-        region_3depth_name,
-        region_4depth_name,
-        region_type,
-      });
+      setRegionLoading(false);
     };
 
     fetchRegion();
-  }, [curLocation, setGeoLocationError, setRegion]);
+  }, [curLocation, resolve, setGeoLocationError, setRegion, setRegionLoading]);
 
   return <>{children}</>;
 };
