@@ -147,7 +147,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
           <div>
             <span className="text-white mr-2">{curMoment.username}</span>
             <span className="text-grey text-xs">
-              {hours > 0 && `${hours}시간`}
+              {hours > 0 && `${hours}시간`}{` `}
               {`${minutes}분 전`}
             </span>
           </div>
