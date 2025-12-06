@@ -29,10 +29,10 @@ export interface SearchData {
 }
 
 const SearchClient = ({
-  referrer,
+  isInternal,
   deviceType = "desktop",
 }: {
-  referrer?: boolean;
+  isInternal?: boolean;
   deviceType?: Device;
 }) => {
   const router = useRouter();
@@ -159,7 +159,7 @@ const SearchClient = ({
       <SearchHeader
         value={searchValue.value}
         onChange={searchValue.onChange}
-        referrer={!!referrer}
+        isInternal={!!isInternal}
         clearFn={() => searchValue.resetValue()}
         onEnter={handleEnterKey}
       />

@@ -52,7 +52,7 @@ const SearchPage = ({ searchParams }: PageProps) => {
 
   return (
     <>
-      <SearchClient referrer={!!referrer} deviceType={deviceType} />
+      <SearchClient isInternal={referrer?.includes(headersList.get("host") || "")} deviceType={deviceType} />
     </>
   );
 };

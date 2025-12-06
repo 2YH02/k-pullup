@@ -3,11 +3,12 @@
 import CloseIcon from "@/components/icons/close-icon";
 import Input from "@common/input";
 import ArrowLeftIcon from "@icons/arrow-left-icon";
+import HomeIcon from "@icons/home-icon";
 import { useRouter } from "next/navigation";
 
 interface SearchHeaderProps {
   value: string;
-  referrer?: boolean;
+  isInternal?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   clearFn: VoidFunction;
   onEnter?: VoidFunction;
@@ -15,6 +16,7 @@ interface SearchHeaderProps {
 
 const SearchHeader = ({
   value,
+  isInternal,
   onChange,
   clearFn,
   onEnter,
@@ -30,8 +32,15 @@ const SearchHeader = ({
 
   return (
     <div className="mo:fixed sticky top-0 left-0 flex items-center justify-center w-full h-14 bg-white dark:bg-black py-3">
-      <button className="px-3" onClick={() => router.push("/")}>
-        <ArrowLeftIcon className="fill-black dark:fill-white" />
+      <button
+        className="px-3"
+        onClick={() => (isInternal ? router.back() : router.push("/"))}
+      >
+        {isInternal ? (
+          <ArrowLeftIcon className="fill-black dark:fill-white" />
+        ) : (
+          <HomeIcon className="fill-black dark:fill-white" />
+        )}
       </button>
       <div className="grow pr-4">
         <Input
