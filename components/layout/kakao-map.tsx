@@ -38,7 +38,6 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   // Use GPS tracking hook
   const { gpsState, handleGps } = useGpsTracking({
     deviceType,
-    onSuccess: (message) => toast({ description: message }),
     onError: (message) => toast({ description: message, variant: "destructive" }),
   });
 
