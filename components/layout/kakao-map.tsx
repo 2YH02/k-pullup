@@ -113,6 +113,15 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
     if (!mapContainer) return;
 
     const handleTouchStart = (e: TouchEvent) => {
+      // Cancel if multi-touch (pinch zoom)
+      if (e.touches.length > 1) {
+        if (longPressTimer.current) {
+          clearTimeout(longPressTimer.current);
+          longPressTimer.current = null;
+        }
+        return;
+      }
+
       const touch = e.touches[0];
 
       // Store initial touch position
@@ -122,6 +131,9 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
       };
 
       longPressTimer.current = setTimeout(() => {
+        // Prevent default context menu (image save menu)
+        e.preventDefault();
+
         // Convert screen coordinates to map coordinates
         const x = touch.clientX;
         const y = touch.clientY;
@@ -154,6 +166,16 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
+      // Cancel if multi-touch (pinch zoom)
+      if (e.touches.length > 1) {
+        if (longPressTimer.current) {
+          clearTimeout(longPressTimer.current);
+          longPressTimer.current = null;
+          touchStartPos.current = null;
+        }
+        return;
+      }
+
       if (longPressTimer.current && touchStartPos.current) {
         const touch = e.touches[0];
         const moveDistance = Math.sqrt(
@@ -170,14 +192,21 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
       }
     };
 
+    // Prevent default context menu on long-press
+    const handleContextMenu = (e: Event) => {
+      e.preventDefault();
+    };
+
     mapContainer.addEventListener("touchstart", handleTouchStart);
     mapContainer.addEventListener("touchend", handleTouchEnd);
     mapContainer.addEventListener("touchmove", handleTouchMove);
+    mapContainer.addEventListener("contextmenu", handleContextMenu);
 
     return () => {
       mapContainer.removeEventListener("touchstart", handleTouchStart);
       mapContainer.removeEventListener("touchend", handleTouchEnd);
       mapContainer.removeEventListener("touchmove", handleTouchMove);
+      mapContainer.removeEventListener("contextmenu", handleContextMenu);
       if (longPressTimer.current) {
         clearTimeout(longPressTimer.current);
       }
