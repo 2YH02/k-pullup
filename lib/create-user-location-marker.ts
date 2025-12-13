@@ -89,7 +89,7 @@ const createUserLocationMarker = (
       height: 24px;
       border: 2px solid #3b82f6;
       border-radius: 50%;
-      animation: pulse 2s ease-out infinite;
+      animation: pulse-directional 1.5s ease-out infinite;
       opacity: 0.6;
       z-index: 1;
     `;
@@ -97,14 +97,16 @@ const createUserLocationMarker = (
     // Pulse around the static dot
     pulse.style.cssText = `
       position: absolute;
-      top: -3px;
-      left: -3px;
-      right: -3px;
-      bottom: -3px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 26px;
+      height: 26px;
       border: 2px solid #3b82f6;
       border-radius: 50%;
-      animation: pulse 2s ease-out infinite;
+      animation: pulse-static 1.5s ease-out infinite;
       opacity: 0.6;
+      z-index: 0;
     `;
   }
   content.appendChild(pulse);
@@ -114,7 +116,17 @@ const createUserLocationMarker = (
     const style = document.createElement("style");
     style.id = "pulse-animation";
     style.textContent = `
-      @keyframes pulse {
+      @keyframes pulse-directional {
+        0% {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0.6;
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(2);
+          opacity: 0;
+        }
+      }
+      @keyframes pulse-static {
         0% {
           transform: translate(-50%, -50%) scale(1);
           opacity: 0.6;
