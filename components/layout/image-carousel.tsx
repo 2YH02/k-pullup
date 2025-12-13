@@ -1,6 +1,5 @@
 "use client";
 
-import { decodeBlurhash, pixelsToDataUrl } from "@/lib/decode-hash";
 import type { NewPictures } from "@api/marker/new-pictures";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -37,17 +36,15 @@ const ImageCarousel = ({
   // Memoize blurhash decoding (CPU-intensive operation, client-side only)
   const itemsWithBlur = useMemo(
     () =>
-      data.map((item) => ({
-        ...item,
-        blurDataURL:
-          item.blurhash && typeof window !== "undefined"
-            ? pixelsToDataUrl(
-                decodeBlurhash(item.blurhash, 100, 200),
-                100,
-                200
-              )
-            : "/placeholder_image.png",
-      })),
+      data.map((item) => {
+        // Always use placeholder for SSR to avoid hydration mismatch
+        const blurDataURL = "/placeholder_image.png";
+
+        return {
+          ...item,
+          blurDataURL,
+        };
+      }),
     [data]
   );
 

@@ -272,29 +272,38 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
           className={cn(
             "absolute bottom-20 right-5 z-[28]",
             "w-14 h-14 rounded-full",
-            "bg-white dark:bg-black",
-            "shadow-[0_4px_12px_rgba(0,0,0,0.15)] dark:shadow-[0_4px_12px_rgba(255,255,255,0.1)]",
+            "bg-white dark:bg-black-light",
+            "border border-grey-light dark:border-grey-dark",
+            "shadow-lg dark:shadow-[0_4px_20px_rgba(0,0,0,0.4)]",
             "flex items-center justify-center",
-            "transition-all duration-200",
+            "transition-all duration-300 ease-out",
             "mo:hidden",
-            gpsState === "idle" && "hover:shadow-[0_6px_16px_rgba(0,0,0,0.2)] hover:dark:shadow-[0_6px_16px_rgba(255,255,255,0.15)] hover:scale-105",
-            gpsState === "locating" && "cursor-wait",
-            gpsState === "success" && "bg-green-50 dark:bg-green-900/20 scale-110",
-            gpsState === "error" && "bg-red-50 dark:bg-red-900/20 animate-shake"
+            gpsState === "idle" && "hover:shadow-xl hover:scale-110 hover:border-primary dark:hover:border-primary active:scale-95",
+            gpsState === "locating" && "cursor-wait animate-pulse disabled:opacity-70",
+            gpsState === "success" && "bg-green-50 dark:bg-green-900/30 border-green-500 dark:border-green-400 shadow-[0_0_20px_rgba(34,197,94,0.3)] scale-110",
+            gpsState === "error" && "bg-red-50 dark:bg-red-900/30 border-red-500 dark:border-red-400 shadow-[0_0_20px_rgba(239,68,68,0.3)] animate-shake"
           )}
           position="left"
-          onClick={handleGps}
+          onClick={gpsState === "locating" ? undefined : handleGps}
         >
           {gpsState === "locating" ? (
-            <Loader2 className="dark:stroke-white stroke-black animate-spin" size={24} />
+            <Loader2 className="stroke-primary animate-spin" size={26} />
           ) : (
             <Navigation
-              className={cn(
-                "dark:fill-white fill-black dark:stroke-white stroke-black",
-                gpsState === "success" && "fill-green-600 stroke-green-600 dark:fill-green-400 dark:stroke-green-400",
-                gpsState === "error" && "fill-red-600 stroke-red-600 dark:fill-red-400 dark:stroke-red-400"
-              )}
-              size={24}
+              size={26}
+              style={{
+                fill: gpsState === "success"
+                  ? "#22c55e"
+                  : gpsState === "error"
+                  ? "#ef4444"
+                  : "#f9b4ab",
+                stroke: gpsState === "success"
+                  ? "#22c55e"
+                  : gpsState === "error"
+                  ? "#ef4444"
+                  : "#f9b4ab",
+                transition: "all 0.3s ease-out",
+              }}
             />
           )}
         </Tooltip>

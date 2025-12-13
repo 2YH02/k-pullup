@@ -7,7 +7,7 @@ import { decodeBlurhash, pixelsToDataUrl } from "@lib/decode-hash";
 import { Plus, XIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { MouseEvent, useMemo, useRef, useState } from "react";
+import { MouseEvent, useEffect, useMemo, useRef, useState } from "react";
 
 const getCity = (address: string): string => {
   if (!address) return "";
@@ -26,20 +26,31 @@ const MomentList = ({ data }: { data: Moment[] }) => {
   const [style, setStyle] = useState({ transform: "translateX(0px)" });
   const [viewMoment, setViewMoment] = useState(false);
   const [curMoment, setCurMoment] = useState<Moment | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Memoize CPU-intensive blurhash decoding (client-side only)
+  // Mount detection to avoid hydration mismatch
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Decode blurhash after component mounts (client-side only)
   const imageSrc = useMemo(() => {
-    // Skip on server-side rendering
-    if (typeof window === "undefined") return [];
+    if (!isMounted) {
+      return data.map(() => "/placeholder_image.png");
+    }
 
     const width = 100;
     const height = 100;
 
     return data.map((moment) => {
-      const pixels = decodeBlurhash(moment.blurhash, width, height);
-      return pixelsToDataUrl(pixels, width, height);
+      try {
+        const pixels = decodeBlurhash(moment.blurhash, width, height);
+        return pixelsToDataUrl(pixels, width, height);
+      } catch {
+        return "/placeholder_image.png";
+      }
     });
-  }, [data]);
+  }, [data, isMounted]);
 
   let animationFrameId: number;
 
@@ -177,11 +188,15 @@ const MomentList = ({ data }: { data: Moment[] }) => {
               alt={curMoment.caption}
               className="object-contain z-10"
               placeholder="blur"
-              blurDataURL={pixelsToDataUrl(
-                decodeBlurhash(curMoment.blurhash, 100, 200),
-                100,
-                200
-              )}
+              blurDataURL={
+                isMounted
+                  ? pixelsToDataUrl(
+                      decodeBlurhash(curMoment.blurhash, 100, 200),
+                      100,
+                      200
+                    )
+                  : "/placeholder_image.png"
+              }
             />
           </div>
           <div className="w-full text-white p-4 text-wrap break-words">
