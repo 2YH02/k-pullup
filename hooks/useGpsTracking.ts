@@ -295,8 +295,17 @@ const useGpsTracking = ({
   }, [compassHeading, myLocation, map, updateUserLocationMarker]);
 
   // Cleanup: Stop tracking location when component unmounts
+  // Only clean up if map is being destroyed (not just navigating between pages)
   useEffect(() => {
     return () => {
+      // Don't clean up if map still exists (just navigation)
+      // Map will persist across page navigations
+      if (map) {
+        // Map still exists, keep tracking and marker
+        return;
+      }
+
+      // Map is being destroyed, clean up everything
       const currentWatchId = useMapStore.getState().gpsWatchId;
       const currentMarker = useMapStore.getState().userLocationMarker;
 
@@ -312,7 +321,7 @@ const useGpsTracking = ({
 
       setIsTrackingLocation(false);
     };
-  }, [setGpsWatchId, setUserLocationMarker, setIsTrackingLocation]);
+  }, [map, setGpsWatchId, setUserLocationMarker, setIsTrackingLocation]);
 
   return {
     gpsState,
