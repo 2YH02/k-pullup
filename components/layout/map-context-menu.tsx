@@ -30,7 +30,7 @@ const MapContextMenu = memo(({ x, y, onRoadview, onClose }: MapContextMenuProps)
 
       {/* Context Menu */}
       <div
-        className="fixed z-[61] bg-white dark:bg-black-light rounded-lg shadow-lg border border-grey-light dark:border-grey-dark overflow-hidden min-w-[160px]"
+        className="fixed select-none z-[61] bg-white dark:bg-black-light rounded-lg shadow-lg border border-grey-light dark:border-grey-dark overflow-hidden min-w-[160px]"
         style={{
           left: `${x}px`,
           top: `${y}px`,
