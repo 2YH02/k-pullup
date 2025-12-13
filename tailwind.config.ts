@@ -103,6 +103,27 @@ const config: Config = {
             transform: "translateX(2px)",
           },
         },
+        "pulse-focus": {
+          "0%": {
+            boxShadow: "0 0 0 0 rgba(59, 130, 246, 0.7)",
+          },
+          "70%": {
+            boxShadow: "0 0 0 10px rgba(59, 130, 246, 0)",
+          },
+          "100%": {
+            boxShadow: "0 0 0 0 rgba(59, 130, 246, 0)",
+          },
+        },
+        "fade-in": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(-10px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
       },
       animation: {
         grow: "grow 0.1s ease-in-out forwards",
@@ -110,6 +131,8 @@ const config: Config = {
         transparent: "transparent .8s ease-in-out forwards",
         "gradient-animate": "gradient-animate 5s ease infinite",
         shake: "shake 0.5s ease-in-out",
+        "pulse-focus": "pulse-focus 2s ease-out",
+        "fade-in": "fade-in 0.3s ease-out",
       },
     },
   },
