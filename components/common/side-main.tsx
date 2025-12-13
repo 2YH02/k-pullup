@@ -170,7 +170,6 @@ const SideMain = ({
           className
         )}
         style={{ height: isMobile && !fullHeight ? `${curHeight}%` : "" }}
-        onPointerDown={dragStart}
       >
         <button
           className="absolute top-3 -right-12 flex items-center justify-center 
@@ -193,17 +192,15 @@ const SideMain = ({
           />
         )}
 
-        {!fullHeight && (
+        {!fullHeight && dragable && (
           <div
-            className="sticky top-0 py-3 bg-white dark:bg-black z-20 rounded-t-3xl web:hidden"
-            data-type="scoroll-status-bar"
+            className="sticky top-0 py-3 bg-white dark:bg-black z-20 rounded-t-3xl web:hidden cursor-grab active:cursor-grabbing"
+            onPointerDown={dragStart}
+            role="button"
+            aria-label="드로워 높이 조절"
+            tabIndex={0}
           >
-            <div
-              className={`w-1/6 h-1 mx-auto rounded-lg ${
-                !dragable ? "bg-white dark:bg-black" : "bg-grey"
-              }`}
-              data-type="scoroll-status-bar"
-            />
+            <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />
           </div>
         )}
 
@@ -219,9 +216,6 @@ const SideMain = ({
             deviceType === "ios-mobile-app" ? "pb-20" : "",
             bodyStyle
           )}
-          onPointerDown={(e) => {
-            e.stopPropagation();
-          }}
           onScroll={onScroll}
         >
           {children}
