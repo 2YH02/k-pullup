@@ -83,13 +83,18 @@ const LocationBadge = () => {
             ) : (
               <Navigation
                 size={20}
-                className={
-                  gpsState === "success"
-                    ? "fill-green-600 stroke-green-600"
+                style={{
+                  fill: gpsState === "success"
+                    ? "#62c466"
                     : gpsState === "error"
-                    ? "fill-red-600 stroke-red-600"
-                    : "fill-primary stroke-primary"
-                }
+                    ? "#f55656"
+                    : "#f9b4ab",
+                  stroke: gpsState === "success"
+                    ? "#62c466"
+                    : gpsState === "error"
+                    ? "#f55656"
+                    : "#f9b4ab",
+                }}
               />
             )}
           </button>
@@ -137,13 +142,18 @@ const LocationBadge = () => {
           ) : (
             <Navigation
               size={20}
-              className={
-                gpsState === "success"
-                  ? "fill-green-600 stroke-green-600"
+              style={{
+                fill: gpsState === "success"
+                  ? "#62c466"
                   : gpsState === "error"
-                  ? "fill-red-600 stroke-red-600"
-                  : "fill-primary stroke-primary"
-              }
+                  ? "#f55656"
+                  : "#f9b4ab",
+                stroke: gpsState === "success"
+                  ? "#62c466"
+                  : gpsState === "error"
+                  ? "#f55656"
+                  : "#f9b4ab",
+              }}
             />
           )}
         </button>

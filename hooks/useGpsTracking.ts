@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import useGeolocationStore from "@store/useGeolocationStore";
 import useMapStore from "@store/useMapStore";
 import useAlertStore from "@store/useAlertStore";
@@ -47,6 +47,7 @@ const useGpsTracking = ({
   const { openAlert } = useAlertStore();
 
   const [gpsState, setGpsState] = useState<GpsState>("idle");
+  const hasReceivedFirstLocation = useRef(false);
 
   // Get compass heading (works even when stationary)
   const compassHeading = useCompass();
@@ -95,6 +96,7 @@ const useGpsTracking = ({
     }
 
     setGpsState("locating");
+    hasReceivedFirstLocation.current = false;
 
     // Handle React Native WebView
     if (window.ReactNativeWebView) {
@@ -221,10 +223,12 @@ const useGpsTracking = ({
           }
 
           // Transition to success state only on first location update
-          // (gpsState will be "locating" only on first callback due to closure)
-          if (gpsState === "locating" as GpsState) {
+          if (!hasReceivedFirstLocation.current) {
+            hasReceivedFirstLocation.current = true;
             setGpsState("success");
-            setTimeout(() => setGpsState("idle"), 2000);
+            setTimeout(() => {
+              setGpsState("idle");
+            }, 2000);
           }
         },
         (error) => {
