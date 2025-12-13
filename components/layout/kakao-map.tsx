@@ -130,9 +130,6 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
       };
 
       longPressTimer.current = setTimeout(() => {
-        // Prevent default context menu (image save menu)
-        e.preventDefault();
-
         // Convert screen coordinates to map coordinates
         const x = touch.clientX;
         const y = touch.clientY;
@@ -292,7 +289,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
           </div>
         </div>
       )}
-      <div ref={mapRef} id="map" className="relative w-full h-dvh">
+      <div ref={mapRef} id="map" className="relative w-full h-dvh [touch-action:pan-x_pan-y] [-webkit-touch-callout:none]">
         {/* GPS FAB for Desktop only */}
         <Tooltip
           as="button"
