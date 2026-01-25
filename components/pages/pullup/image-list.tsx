@@ -32,6 +32,7 @@ const ImageList = ({
   const { toast } = useToast();
   const [deletingPhotoId, setDeletingPhotoId] = useState<number | null>(null);
   const [visibleDeleteBtn, setVisibleDeleteBtn] = useState<number | null>(null);
+  const [isEditMode, setIsEditMode] = useState(false);
   const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseEnter = useCallback((photoId: number) => {
@@ -121,9 +122,24 @@ const ImageList = ({
   };
 
   return (
-    <div className="flex">
+    <div>
       {photos && images ? (
         <>
+          {isOwnerOrAdmin && (
+            <div className="flex justify-end mb-3 md:hidden">
+              <button
+                onClick={() => setIsEditMode((prev) => !prev)}
+                className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
+                  isEditMode
+                    ? "bg-primary text-white dark:bg-primary-dark"
+                    : "bg-grey-light text-grey-dark dark:bg-grey-dark dark:text-grey-light"
+                }`}
+              >
+                {isEditMode ? "완료" : "사진 편집"}
+              </button>
+            </div>
+          )}
+          <div className="flex">
           <div className="w-1/2 mr-1">
             {photos.map((photo, i) => {
               if (i % 2 === 1) return;
@@ -153,7 +169,7 @@ const ImageList = ({
                       onClick={(e) => handleDeleteClick(photo.photoId, e)}
                       disabled={deletingPhotoId === photo.photoId}
                       className={`absolute top-2 right-2 bg-black/50 hover:bg-black/70 rounded-full p-1.5 transition-all duration-300 disabled:opacity-50 ${
-                        visibleDeleteBtn === photo.photoId
+                        isEditMode || visibleDeleteBtn === photo.photoId
                           ? "opacity-100"
                           : "opacity-0 pointer-events-none"
                       }`}
@@ -195,7 +211,7 @@ const ImageList = ({
                       onClick={(e) => handleDeleteClick(photo.photoId, e)}
                       disabled={deletingPhotoId === photo.photoId}
                       className={`absolute top-2 right-2 bg-black/50 hover:bg-black/70 rounded-full p-1.5 transition-all duration-300 disabled:opacity-50 ${
-                        visibleDeleteBtn === photo.photoId
+                        isEditMode || visibleDeleteBtn === photo.photoId
                           ? "opacity-100"
                           : "opacity-0 pointer-events-none"
                       }`}
@@ -207,6 +223,7 @@ const ImageList = ({
                 </div>
               );
             })}
+          </div>
           </div>
         </>
       ) : (
