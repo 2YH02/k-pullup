@@ -8,7 +8,7 @@ import deleteMarkerPhoto from "@lib/api/marker/delete-marker-photo";
 import useAlertStore from "@store/useAlertStore";
 import useImageModalStore from "@store/useImageModalStore";
 import useUserStore from "@store/useUserStore";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BsX } from "react-icons/bs";
 
 type Props = {
@@ -31,6 +31,22 @@ const ImageList = ({
   const { user } = useUserStore();
   const { toast } = useToast();
   const [deletingPhotoId, setDeletingPhotoId] = useState<number | null>(null);
+  const [visibleDeleteBtn, setVisibleDeleteBtn] = useState<number | null>(null);
+  const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = useCallback((photoId: number) => {
+    hoverTimerRef.current = setTimeout(() => {
+      setVisibleDeleteBtn(photoId);
+    }, 1000);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+      hoverTimerRef.current = null;
+    }
+    setVisibleDeleteBtn(null);
+  }, []);
 
   const isOwnerOrAdmin = useMemo(() => {
     if (isAdmin) return true;
@@ -44,7 +60,12 @@ const ImageList = ({
   }, [photos]);
 
   useEffect(() => {
-    return () => closeModal();
+    return () => {
+      closeModal();
+      if (hoverTimerRef.current) {
+        clearTimeout(hoverTimerRef.current);
+      }
+    };
   }, []);
 
   const handleDeletePhoto = async (photoId: number) => {
@@ -107,7 +128,12 @@ const ImageList = ({
             {photos.map((photo, i) => {
               if (i % 2 === 1) return;
               return (
-                <div key={photo.photoId} className="relative w-full mb-2">
+                <div
+                  key={photo.photoId}
+                  className="relative w-full mb-2"
+                  onMouseEnter={() => handleMouseEnter(photo.photoId)}
+                  onMouseLeave={handleMouseLeave}
+                >
                   <button
                     className="w-full"
                     onClick={() => {
@@ -126,7 +152,11 @@ const ImageList = ({
                     <button
                       onClick={(e) => handleDeleteClick(photo.photoId, e)}
                       disabled={deletingPhotoId === photo.photoId}
-                      className="absolute top-2 right-2 bg-black/50 hover:bg-black/70 rounded-full p-1.5 transition-colors disabled:opacity-50"
+                      className={`absolute top-2 right-2 bg-black/50 hover:bg-black/70 rounded-full p-1.5 transition-all duration-300 disabled:opacity-50 ${
+                        visibleDeleteBtn === photo.photoId
+                          ? "opacity-100"
+                          : "opacity-0 pointer-events-none"
+                      }`}
                       aria-label="사진 삭제"
                     >
                       <BsX size={20} className="text-white" />
@@ -140,7 +170,12 @@ const ImageList = ({
             {photos.map((photo, i) => {
               if (i % 2 !== 1) return;
               return (
-                <div key={photo.photoId} className="relative w-full mb-2">
+                <div
+                  key={photo.photoId}
+                  className="relative w-full mb-2"
+                  onMouseEnter={() => handleMouseEnter(photo.photoId)}
+                  onMouseLeave={handleMouseLeave}
+                >
                   <button
                     className="w-full"
                     onClick={() => {
@@ -159,7 +194,11 @@ const ImageList = ({
                     <button
                       onClick={(e) => handleDeleteClick(photo.photoId, e)}
                       disabled={deletingPhotoId === photo.photoId}
-                      className="absolute top-2 right-2 bg-black/50 hover:bg-black/70 rounded-full p-1.5 transition-colors disabled:opacity-50"
+                      className={`absolute top-2 right-2 bg-black/50 hover:bg-black/70 rounded-full p-1.5 transition-all duration-300 disabled:opacity-50 ${
+                        visibleDeleteBtn === photo.photoId
+                          ? "opacity-100"
+                          : "opacity-0 pointer-events-none"
+                      }`}
                       aria-label="사진 삭제"
                     >
                       <BsX size={20} className="text-white" />
