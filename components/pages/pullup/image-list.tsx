@@ -123,7 +123,7 @@ const ImageList = ({
 
   return (
     <div>
-      {photos && images ? (
+      {photos && images && photos.length > 0 ? (
         <>
           {isOwnerOrAdmin && (
             <div className="flex justify-end mb-3 md:hidden">
