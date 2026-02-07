@@ -57,10 +57,11 @@ const Description = ({ description, markerId, isAdmin }: DescriptionProps) => {
   if (edit) {
     return (
       <div className="mt-2">
-        <Input
-          isInvalid={false}
-          className="rounded-md h-8"
+        <textarea
+          className="border border-primary bg-white dark:bg-black dark:text-white text-black w-full p-2 rounded resize-none focus:outline-none"
           maxLength={40}
+          rows={4}
+          placeholder="해당 위치에 대한 설명을 40자 이내로 작성해주세요."
           value={descriptionInput.value}
           onChange={descriptionInput.onChange}
         />
