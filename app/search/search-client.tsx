@@ -45,6 +45,7 @@ const SearchClient = ({
   const [result, setResult] = useState<SearchData[]>([]);
   const [kakaoSearchData, setKakaoSearchData] = useState<KakaoPlace[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(10);
 
   const isMobileApp =
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
@@ -226,7 +227,7 @@ const SearchClient = ({
                 </button>
               </div>
               <ul>
-                {searches.map((search, index) => {
+                {searches.slice(0, visibleCount).map((search, index) => {
                   return (
                     <li
                       key={`${search}-${index}`}
@@ -272,6 +273,16 @@ const SearchClient = ({
                   );
                 })}
               </ul>
+              {searches.length > visibleCount && (
+                <button
+                  onClick={() => setVisibleCount((prev) => prev + 10)}
+                  className="w-full mt-3 py-2.5 rounded-lg bg-grey-light dark:bg-grey-dark hover:bg-grey-light/70 dark:hover:bg-grey-dark/70 transition-colors"
+                >
+                  <Text typography="t6" className="text-grey-dark dark:text-grey-light">
+                    더보기
+                  </Text>
+                </button>
+              )}
             </Section>
           ) : (
             <Section>

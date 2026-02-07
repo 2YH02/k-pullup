@@ -22,6 +22,7 @@ const useSearchStore = create<SearchState>()(
       searches: [],
       addSearch: (data: SearchData) =>
         set((state) => {
+          const MAX_SEARCHES = 50;
           const item = state.searches.findIndex((search) => {
             return search.addr === data.addr;
           });
@@ -30,9 +31,9 @@ const useSearchStore = create<SearchState>()(
             const newSearch = [...state.searches].filter((search) => {
               return search.addr !== data.addr;
             });
-            return { searches: [data, ...newSearch] };
+            return { searches: [data, ...newSearch].slice(0, MAX_SEARCHES) };
           }
-          return { searches: [data, ...state.searches] };
+          return { searches: [data, ...state.searches].slice(0, MAX_SEARCHES) };
         }),
       removeItem: (addr: string) =>
         set((state) => {
