@@ -32,8 +32,10 @@ const ImageList = ({
   const { toast } = useToast();
   const [deletingPhotoId, setDeletingPhotoId] = useState<number | null>(null);
   const [visibleDeleteBtn, setVisibleDeleteBtn] = useState<number | null>(null);
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [showMobileDeleteBtn, setShowMobileDeleteBtn] = useState(false);
   const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const viewportTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseEnter = useCallback((photoId: number) => {
     hoverTimerRef.current = setTimeout(() => {
@@ -59,6 +61,39 @@ const ImageList = ({
     if (!photos) return null;
     return photos.map((photo) => photo.photoUrl);
   }, [photos]);
+
+  useEffect(() => {
+    if (!isOwnerOrAdmin || !containerRef.current) return;
+
+    // 데스크탑(768px 이상)에서는 호버로만 표시
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (!isMobile) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          viewportTimerRef.current = setTimeout(() => {
+            setShowMobileDeleteBtn(true);
+          }, 3000);
+        } else {
+          if (viewportTimerRef.current) {
+            clearTimeout(viewportTimerRef.current);
+            viewportTimerRef.current = null;
+          }
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(containerRef.current);
+
+    return () => {
+      observer.disconnect();
+      if (viewportTimerRef.current) {
+        clearTimeout(viewportTimerRef.current);
+      }
+    };
+  }, [isOwnerOrAdmin]);
 
   useEffect(() => {
     return () => {
@@ -122,24 +157,10 @@ const ImageList = ({
   };
 
   return (
-    <div>
+    <div ref={containerRef}>
       {photos && images && photos.length > 0 ? (
         <>
-          {isOwnerOrAdmin && (
-            <div className="flex justify-end mb-3 md:hidden">
-              <button
-                onClick={() => setIsEditMode((prev) => !prev)}
-                className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
-                  isEditMode
-                    ? "bg-primary text-white dark:bg-primary-dark"
-                    : "bg-grey-light text-grey-dark dark:bg-grey-dark dark:text-grey-light"
-                }`}
-              >
-                {isEditMode ? "완료" : "사진 편집"}
-              </button>
-            </div>
-          )}
-          <div className="flex">
+                    <div className="flex">
           <div className="w-1/2 mr-1">
             {photos.map((photo, i) => {
               if (i % 2 === 1) return;
@@ -169,7 +190,7 @@ const ImageList = ({
                       onClick={(e) => handleDeleteClick(photo.photoId, e)}
                       disabled={deletingPhotoId === photo.photoId}
                       className={`absolute top-2 right-2 bg-black/50 hover:bg-black/70 rounded-full p-1.5 transition-all duration-300 disabled:opacity-50 ${
-                        isEditMode || visibleDeleteBtn === photo.photoId
+                        showMobileDeleteBtn || visibleDeleteBtn === photo.photoId
                           ? "opacity-100"
                           : "opacity-0 pointer-events-none"
                       }`}
@@ -211,7 +232,7 @@ const ImageList = ({
                       onClick={(e) => handleDeleteClick(photo.photoId, e)}
                       disabled={deletingPhotoId === photo.photoId}
                       className={`absolute top-2 right-2 bg-black/50 hover:bg-black/70 rounded-full p-1.5 transition-all duration-300 disabled:opacity-50 ${
-                        isEditMode || visibleDeleteBtn === photo.photoId
+                        showMobileDeleteBtn || visibleDeleteBtn === photo.photoId
                           ? "opacity-100"
                           : "opacity-0 pointer-events-none"
                       }`}
