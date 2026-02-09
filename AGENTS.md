@@ -1,0 +1,95 @@
+# AGENTS.md
+
+이 문서는 이 저장소에서 작업하는 코딩 에이전트를 위한 실행 규칙입니다.
+
+## 1) 목표와 원칙
+
+- 목표: 기능 추가보다 먼저 안정성, 일관성, 회귀 방지를 우선한다.
+- 원칙:
+  - 작은 변경으로 끝까지 동작 확인한다.
+  - 변경 이유가 없는 리팩터링은 하지 않는다.
+  - 기존 UI/흐름을 임의로 바꾸지 않는다.
+
+## 2) 프로젝트 기본 정보
+
+- 프레임워크: Next.js 14 (App Router), TypeScript, Tailwind
+- 상태관리: Zustand (`/store`)
+- 패키지 매니저: Yarn Berry (`yarn@4`)
+- 지도: Kakao Maps SDK
+
+주요 실행 명령어:
+
+```bash
+yarn dev:simple
+yarn lint
+yarn build
+yarn test:e2e
+```
+
+## 3) 작업 전 체크
+
+- 관련 파일을 먼저 읽고 기존 패턴을 따른다.
+- 변경 범위가 API, 지도, 인증, 상태관리이면 영향 파일을 함께 확인한다.
+- 새 규칙이 필요하면 이 문서에 짧게 추가한다.
+
+## 4) API 호출 규칙 (중요)
+
+- 기본 원칙: 가능한 한 `"/api/v1/*"` 경로를 사용한다.
+  - `next.config.mjs` rewrite를 통해 백엔드로 전달된다.
+- 서버 컴포넌트/서버 실행 컨텍스트에서만 필요한 경우에 한해 `NEXT_PUBLIC_BASE_URL` 직접 사용을 허용한다.
+- 한 기능 내부에서 rewrite 방식과 direct base URL 방식을 혼용하지 않는다.
+- 모든 API 함수는 `lib/fetchData.ts`를 우선 사용하고, 실패 케이스(`!response.ok`)를 명시적으로 처리한다.
+
+## 5) fetchData 규칙 (중요)
+
+- `lib/fetchData.ts`는 서버/클라이언트 공용이다.
+- 브라우저 전용 API(`alert`, `window`, `localStorage`)는 직접 호출하지 않는다.
+- 공통 에러 처리는 "throw + 호출부 처리" 또는 "일관된 에러 객체 반환" 중 하나로 통일한다.
+
+## 6) Zustand 상태관리 규칙
+
+- store setter는 의도를 명확히 구분한다.
+  - append용 setter
+  - replace/reset용 setter
+- 지도 마커/오버레이처럼 반복 렌더링되는 데이터는 반드시 clear/reset 경로를 포함한다.
+- `any` 사용을 피하고 최소한의 타입 별칭이라도 정의한다.
+
+## 7) React Hook 규칙
+
+- `useEffect`, `useMemo`, `useCallback`의 dependency를 임의로 생략하지 않는다.
+- ESLint 경고를 없애기 위해 주석으로 룰을 끄기보다, 함수 안정화(`useCallback`)나 로직 분리로 해결한다.
+- mount-only effect가 필요하면 그 이유를 짧게 주석으로 남긴다.
+
+## 8) Kakao Map 관련 규칙
+
+- 이벤트 등록 시 반드시 cleanup에서 제거한다.
+- map/marker/overlay 인스턴스는 store와 실제 지도 상태가 불일치하지 않게 관리한다.
+- 대량 재로딩 로직에서는 성능(중복 생성, 메모리 누수)을 먼저 점검한다.
+
+## 9) UI/성능 규칙
+
+- 가능한 경우 Next `Image`를 사용한다.
+- 정당한 이유 없이 `img`를 추가하지 않는다.
+- LCP 영향을 주는 변경은 최소 1회 `yarn build`로 확인한다.
+
+## 10) 검증 규칙
+
+- 코드 변경 후 기본 검증:
+  1. `yarn lint`
+  2. 영향 큰 변경이면 `yarn build`
+  3. 사용자 플로우 변경이면 관련 e2e 1개 이상 실행
+- 실행하지 못한 검증이 있으면 PR/결과 메시지에 명시한다.
+
+## 11) 변경 범위 규칙
+
+- 요청과 무관한 파일은 수정하지 않는다.
+- 대규모 포맷 변경/정렬 변경은 피한다.
+- TODO는 "무엇을, 왜, 언제"가 드러나게 구체적으로 남긴다.
+
+## 12) 권장 작업 순서
+
+1. 맥락 파악 (`app`, `components`, `lib/api`, `store`)
+2. 최소 수정 구현
+3. 로컬 검증
+4. 변경 요약 + 리스크/후속 작업 정리
+
