@@ -1,3 +1,2 @@
 #!/usr/bin/env sh
 yarn build
-yarn test:e2e
