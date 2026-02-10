@@ -99,3 +99,13 @@ yarn test:e2e
 - 커밋 전 `git status`와 `git diff --stat`로 변경 범위를 확인한다.
 - 검증 명령(`yarn lint`, `yarn build`, 필요 시 `yarn test:e2e`) 실행 후 로그를 확인한다.
 - 경고/실패가 남아 있으면 커밋 메시지 또는 결과 보고에 명시한다.
+
+## 14) PR 작성 규칙
+
+- PR 생성 요청을 받으면 에이전트가 제목/본문 초안을 먼저 제안한다.
+- PR 본문은 `.github/pull_request_template.md` 형식을 기본으로 따른다.
+- 본문에 최소한 다음 내용을 포함한다:
+  - 개요
+  - 주요 변경사항
+  - 영향 범위/리스크
+  - 검증 결과(`lint/build/test`)와 미실행 항목
