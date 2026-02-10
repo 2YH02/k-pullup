@@ -58,6 +58,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-next", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:14.2.5"],\
           ["eslint-plugin-storybook", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:0.8.0"],\
           ["framer-motion", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:11.3.19"],\
+          ["husky", "npm:9.1.7"],\
           ["img-toolkit", "npm:1.0.2"],\
           ["lucide-react", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:0.525.0"],\
           ["next", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:14.2.5"],\
@@ -11708,6 +11709,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["husky", [\
+      ["npm:9.1.7", {\
+        "packageLocation": "../../.yarn/berry/cache/husky-npm-9.1.7-5b02eaabc4-10c0.zip/node_modules/husky/",\
+        "packageDependencies": [\
+          ["husky", "npm:9.1.7"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["iconv-lite", [\
       ["npm:0.4.24", {\
         "packageLocation": "../../.yarn/berry/cache/iconv-lite-npm-0.4.24-c5c4ac6695-10c0.zip/node_modules/iconv-lite/",\
@@ -15388,6 +15398,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-config-next", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:14.2.5"],\
           ["eslint-plugin-storybook", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:0.8.0"],\
           ["framer-motion", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:11.3.19"],\
+          ["husky", "npm:9.1.7"],\
           ["img-toolkit", "npm:1.0.2"],\
           ["lucide-react", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:0.525.0"],\
           ["next", "virtual:d468d1ddb6d96635a3b90a71e031e0a63e7668730c7a27de2a8c0f4e780f41d6e0fd349d8b0d4cb15075a319c0681a137c48966c050ceeec6fd8b6ee33cdf6a8#npm:14.2.5"],\

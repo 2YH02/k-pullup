@@ -12,7 +12,8 @@
     "build-storybook": "storybook build",
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",
-    "test:e2e:ci": "playwright test --reporter=dot,html"
+    "test:e2e:ci": "playwright test --reporter=dot,html",
+    "prepare": "husky"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.14",
@@ -64,6 +65,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "eslint-plugin-storybook": "^0.8.0",
+    "husky": "^9.1.7",
     "postcss": "^8",
     "storybook": "^8.2.2",
     "tailwindcss": "^4.1.18",
