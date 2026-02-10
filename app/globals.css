@@ -37,6 +37,19 @@
   --background-image-gradient-conic: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
   --background-size-50: 50%;
 
+  /* z-index scale used across overlays/FAB/context menu/toast */
+  --z-index-2: 2;
+  --z-index-10: 10;
+  --z-index-20: 20;
+  --z-index-28: 28;
+  --z-index-30: 30;
+  --z-index-40: 40;
+  --z-index-50: 50;
+  --z-index-60: 60;
+  --z-index-61: 61;
+  --z-index-99: 99;
+  --z-index-100: 100;
+
   --animate-grow: grow 0.1s ease-in-out forwards;
   --animate-ripple: ripple 1.5s infinite;
   --animate-transparent: transparent 0.8s ease-in-out forwards;
