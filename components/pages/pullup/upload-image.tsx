@@ -144,7 +144,7 @@ const UploadImage = ({
             return (
               <div
                 key={`${file.previewURL} ${file.file} ${i}`}
-                className="relative rounded-lg w-16 h-16 shadow-sm dark:border border-solid border-grey-dark"
+                className="relative rounded-lg w-16 h-16 shadow-xs dark:border border-solid border-grey-dark"
               >
                 <button
                   className={`absolute -top-2 -right-2 rounded-full w-6 h-6 z-50 flex items-center justify-center bg-primary text-white`}

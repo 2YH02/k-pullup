@@ -43,7 +43,7 @@ const ListItem = ({
 
         {icon && (
           <div
-            className={`flex-shrink-0 ${onIconClick ? "cursor-pointer" : ""}`}
+            className={`shrink-0 ${onIconClick ? "cursor-pointer" : ""}`}
             onClick={
               onIconClick
                 ? (e) => {
@@ -93,12 +93,12 @@ export const ListContents = ({
 };
 
 export const ListLeft = ({ children }: { children: React.ReactNode }) => {
-  return <div className="flex flex-shrink-0 mr-3 select-none">{children}</div>;
+  return <div className="flex shrink-0 mr-3 select-none">{children}</div>;
 };
 
 export const ListRight = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex flex-shrink-0 mr-2 text-sm select-none">
+    <div className="flex shrink-0 mr-2 text-sm select-none">
       {children}
     </div>
   );

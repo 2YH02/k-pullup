@@ -267,7 +267,7 @@ const MainHeader = ({
   return (
     <div
       className={cn(
-        `shrink-0 web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 shadow-sm z-20 bg-white 
+        `shrink-0 web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 shadow-xs z-20 bg-white 
         dark:bg-black dark:border-b dark:border-solid dark:border-grey-dark web:rounded-t-lg`,
         getHeaderPosition(),
         style

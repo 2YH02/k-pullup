@@ -27,7 +27,7 @@ const NoticeSlide = () => {
 
   return (
     <button
-      className="w-full flex items-center text-left px-2 py-2 border border-solid border-primary-light dark:border-grey rounded-md shadow"
+      className="w-full flex items-center text-left px-2 py-2 border border-solid border-primary-light dark:border-grey rounded-md shadow-sm"
       onClick={() => router.push("/notice")}
     >
       <div className="mr-2">

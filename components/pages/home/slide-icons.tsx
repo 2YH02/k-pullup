@@ -128,7 +128,7 @@ export const PullupProsIcon = ({ size = 64 }: { size?: number }) => {
       height={size}
       className="block"
     >
-      <g data-name="Filled outline" id="Filled_outline">
+      <g data-name="Filled outline-solid" id="Filled_outline">
         <path
           d="M17,53H51a0,0,0,0,1,0,0v8a0,0,0,0,1,0,0H17a4,4,0,0,1-4-4v0a4,4,0,0,1,4-4Z"
           className="fill-[#dbdabd]"
@@ -201,7 +201,7 @@ export const PullupRankingIcon = ({ size = 64 }: { size?: number }) => {
       height={size}
       className="block"
     >
-      <g data-name="Filled outline" id="Filled_outline">
+      <g data-name="Filled outline-solid" id="Filled_outline">
         <path
           d="M52,61a4,4,0,0,1-4-4V53H12V7H56V57A4,4,0,0,1,52,61Z"
           className="fill-[#fef9e1]"

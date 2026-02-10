@@ -188,7 +188,7 @@ const SearchClient = ({
               onClick={() => router.push("/search/around")}
               className={cn(
                 "w-full p-4 rounded-lg border-2 border-grey-light dark:border-grey-dark",
-                "bg-gradient-to-br from-primary/5 to-transparent dark:from-primary-dark/10",
+                "bg-linear-to-br from-primary/5 to-transparent dark:from-primary-dark/10",
                 "hover:border-primary dark:hover:border-primary-dark",
                 "hover:shadow-md transition-all duration-200",
                 "flex items-center gap-3 text-left group"

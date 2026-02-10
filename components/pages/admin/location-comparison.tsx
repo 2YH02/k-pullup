@@ -43,7 +43,7 @@ const LocationComparison = ({
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-[1fr,auto,1fr] gap-4 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-center">
         {/* Old Location */}
         <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
           <div className="text-xs font-medium text-gray-500 mb-1">현재 위치</div>

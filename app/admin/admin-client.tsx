@@ -305,7 +305,7 @@ const AdminClient = ({ data }: { data: AllReportRes }) => {
             {paginatedReports.map((report) => (
               <div key={report.reportId} className="relative">
                 {processingIds.has(report.reportId) && (
-                  <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 rounded-xl flex items-center justify-center">
+                  <div className="absolute inset-0 bg-white/80 backdrop-blur-xs z-10 rounded-xl flex items-center justify-center">
                     <Loader2 className="h-8 w-8 animate-spin text-blue" />
                   </div>
                 )}
@@ -341,7 +341,7 @@ const Container = ({
   className?: React.ComponentProps<"div">["className"];
 }>) => {
   return (
-    <div className={cn("bg-white rounded-lg shadow-sm border p-4 md:p-6", className)}>
+    <div className={cn("bg-white rounded-lg shadow-xs border p-4 md:p-6", className)}>
       {children}
     </div>
   );

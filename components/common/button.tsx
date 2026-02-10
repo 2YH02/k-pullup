@@ -123,8 +123,8 @@ const Button = ({
     colorClass,
     sizeClass,
     fullClass,
-    "rounded",
-    "focus:outline-none select-none",
+    "rounded-sm",
+    "focus:outline-hidden select-none",
     !disabled && "active:bg-opacity-75"
   );
 

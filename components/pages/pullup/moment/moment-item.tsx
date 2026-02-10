@@ -53,7 +53,7 @@ const MomentItem = ({ moment, filterMoment }: MomentItem) => {
         )}
       </div>
       <div className="w-full flex flex-col justify-center px-2">
-        <Text className="text-wrap break-words">{moment.caption}</Text>
+        <Text className="text-wrap wrap-break-word">{moment.caption}</Text>
       </div>
       <div className="relative w-full h-96">
         <Image

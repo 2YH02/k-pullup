@@ -23,7 +23,7 @@ const SearchInput = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
         placeholder="철봉 주소 검색"
         icon={<BsSearch size={20} className="fill-[#555] dark:fill-grey-light" />}
         isSearchButton
-        className="shadow border-grey-light"
+        className="shadow-sm border-grey-light"
       />
     </Section>
   );

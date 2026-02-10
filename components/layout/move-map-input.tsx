@@ -98,7 +98,7 @@ const MoveMapInput = ({ deviceType }: { deviceType: Device }) => {
     return (
       <Tooltip
         title="검색으로 지도 이동"
-        className={`absolute right-5 mo:right-14 top-5 ${style} p-1 rounded-md z-[30] mo:z-[2] bg-white shadow-simple dark:bg-black hover:bg-grey-light hover:dark:bg-grey-dark`}
+        className={`absolute right-5 mo:right-14 top-5 ${style} p-1 rounded-md z-30 mo:z-2 bg-white shadow-simple dark:bg-black hover:bg-grey-light dark:hover:bg-grey-dark`}
         position="left"
         as="button"
         onClick={() => setActive(true)}
@@ -112,7 +112,7 @@ const MoveMapInput = ({ deviceType }: { deviceType: Device }) => {
     <Dimmed active={mobile} onClose={() => setActive(false)}>
       <div
         className={cn(
-          "absolute top-5 mo:top-16 right-5 mo:right-1/2 mo:translate-x-1/2 z-[30] w-96 mo:w-full mo:px-4",
+          "absolute top-5 mo:top-16 right-5 mo:right-1/2 mo:translate-x-1/2 z-30 w-96 mo:w-full mo:px-4",
           inputStyle
         )}
       >

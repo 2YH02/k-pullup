@@ -81,7 +81,7 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
               </button>
 
               {/* Image Counter */}
-              <div className="absolute top-4 left-4 z-50 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm">
+              <div className="absolute top-4 left-4 z-50 px-3 py-1 rounded-full bg-white/10 backdrop-blur-xs">
                 <span className="text-sm text-white font-medium">
                   {selectedIndex + 1} / {images.length}
                 </span>
@@ -120,7 +120,7 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
 
               {/* Thumbnail Strip */}
               {images.length > 1 && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-2 p-2 rounded-lg bg-white/10 backdrop-blur-sm">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-2 p-2 rounded-lg bg-white/10 backdrop-blur-xs">
                   {images.map((url, index) => (
                     <button
                       key={index}

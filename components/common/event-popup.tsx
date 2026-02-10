@@ -74,7 +74,7 @@ const EventPopup = ({
                 type="checkbox"
                 checked={doNotShowToday}
                 onChange={(e) => setDoNotShowToday(e.target.checked)}
-                className="h-4 w-4 text-blue-600 rounded border-gray-300"
+                className="h-4 w-4 text-blue-600 rounded-sm border-gray-300"
               />
               <label
                 htmlFor="do-not-show"

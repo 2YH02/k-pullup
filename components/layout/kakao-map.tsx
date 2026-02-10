@@ -283,7 +283,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
         onLoad={handleLoadMap}
       />
       {loading && (
-        <div className="z-[60] absolute top-0 left-0 w-dvw h-dvh bg-[#ffffffb2] flex items-center justify-center">
+        <div className="z-60 absolute top-0 left-0 w-dvw h-dvh bg-[#ffffffb2] flex items-center justify-center">
           <div>
             <LoadingIcon className="m-0" />
           </div>
@@ -295,7 +295,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
           as="button"
           title={gpsState === "locating" ? "위치 찾는 중..." : "내 위치"}
           className={cn(
-            "absolute bottom-20 right-5 z-[28]",
+            "absolute bottom-20 right-5 z-28",
             "w-14 h-14 rounded-full",
             "bg-white dark:bg-black-light",
             "border border-grey-light dark:border-grey-dark",

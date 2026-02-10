@@ -241,7 +241,7 @@ const MessageBubble = ({
     <>
       {message.userId === cid ? (
         <div className="flex flex-col items-end w-full p-2">
-          <div className="max-w-[90%] px-5 py-1 flex items-center justify-start rounded-3xl bg-primary dark:bg-primary-dark shadow-sm">
+          <div className="max-w-[90%] px-5 py-1 flex items-center justify-start rounded-3xl bg-primary dark:bg-primary-dark shadow-xs">
             <div className="text-white text-sm">{message.message}</div>
           </div>
           <div className="text-xs">
@@ -252,7 +252,7 @@ const MessageBubble = ({
         </div>
       ) : (
         <div className="flex flex-col items-start w-full p-2">
-          <div className="max-w-[90%] px-5 py-1 flex items-center justify-start rounded-3xl bg-grey-light text-black-light dark:bg-grey dark:text-white shadow-sm">
+          <div className="max-w-[90%] px-5 py-1 flex items-center justify-start rounded-3xl bg-grey-light text-black-light dark:bg-grey dark:text-white shadow-xs">
             <div className="text-sm">{message.message}</div>
           </div>
           <div className="text-xs">

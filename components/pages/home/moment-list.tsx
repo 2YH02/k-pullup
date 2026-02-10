@@ -168,7 +168,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
         </div>
         <div className="flex flex-col w-full h-full" onClick={handleClickNext}>
           <div className="flex flex-col items-center h-12">
-            <div className="h-12 w-3/4 text-grey-light text-center text-sm text-wrap break-words flex items-center justify-center">
+            <div className="h-12 w-3/4 text-grey-light text-center text-sm text-wrap wrap-break-word flex items-center justify-center">
               {curMoment.address}
             </div>
             <button
@@ -199,7 +199,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
               }
             />
           </div>
-          <div className="w-full text-white p-4 text-wrap break-words">
+          <div className="w-full text-white p-4 text-wrap wrap-break-word">
             {curMoment.caption}
           </div>
         </div>
@@ -220,7 +220,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
       >
         <div className="flex flex-col justify-start">
           <button
-            className="relative shrink-0 bg-rainbow-gradient rounded-full w-12 h-12 bg-[length:200%_200%] animate-gradient-animate"
+            className="relative shrink-0 bg-rainbow-gradient rounded-full w-12 h-12 bg-size-[200%_200%] animate-gradient-animate"
             onClick={() => router.push("/moments")}
           >
             <div
@@ -237,7 +237,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
             key={`${moment.caption} ${moment.createdAt}`}
           >
             <button
-              className="relative shrink-0 bg-rainbow-gradient rounded-full w-12 h-12 bg-[length:200%_200%] animate-gradient-animate"
+              className="relative shrink-0 bg-rainbow-gradient rounded-full w-12 h-12 bg-size-[200%_200%] animate-gradient-animate"
               onClick={() => handleViewMoment(moment)}
             >
               <div

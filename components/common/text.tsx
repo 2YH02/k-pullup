@@ -5,9 +5,9 @@ const typographyMap = {
   t2: "text-[26px] leading-[1.34]",
   t3: "text-[22px] leading-[1.4]",
   t4: "text-[20px] leading-[1.45]",
-  t5: "text-[16px] leading-[1.5]",
-  t6: "text-[14px] leading-[1.5]",
-  t7: "text-[12px] leading-[1.5]",
+  t5: "text-[16px] leading-normal",
+  t6: "text-[14px] leading-normal",
+  t7: "text-[12px] leading-normal",
 };
 
 export type Typography = keyof typeof typographyMap;
