@@ -18,7 +18,7 @@ const RankingClient = ({ data }: RankingClientProps) => {
 
   return (
     <>
-      <div className="bg-[url('/ranking.webp')] h-40 bg-center bg-50%">
+      <div className="bg-[url('/ranking.webp')] h-40 bg-center bg-size-50">
         <div className="w-full h-full flex flex-col justify-center items-center bg-[rgba(0,0,0,0.4)]">
           <div className="text-white text-lg font-bold mb-3">
             많이 찾는 철봉 위치

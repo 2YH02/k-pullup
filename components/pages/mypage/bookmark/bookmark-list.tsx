@@ -94,8 +94,8 @@ const ListItem = ({
             </div>
           )}
           <div className="shrink-0 max-w-[80%] flex flex-col">
-            <Text className="text-sm font-bold break-words">{title}</Text>
-            <Text className="text-xs text-grey dark:text-grey break-words">
+            <Text className="text-sm font-bold wrap-break-word">{title}</Text>
+            <Text className="text-xs text-grey dark:text-grey wrap-break-word">
               {subTitle}
             </Text>
           </div>

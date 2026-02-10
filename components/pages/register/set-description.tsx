@@ -25,7 +25,7 @@ const SetDescription = ({
       </div>
       <div>
         <textarea
-          className="border border-primary bg-white dark:bg-black dark:text-white text-black w-full p-2 rounded resize-none focus:outline-none"
+          className="border border-primary bg-white dark:bg-black dark:text-white text-black w-full p-2 rounded-sm resize-none focus:outline-hidden"
           maxLength={40}
           rows={4}
           placeholder="해당 위치에 대한 설명을 40자 이내로 작성해주세요."

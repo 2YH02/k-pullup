@@ -69,14 +69,14 @@ const Mypage = async () => {
         <ShadowBox className="flex justify-between ">
           <Link
             href={noUser ? "/signin?returnUrl=/mypage" : "/mypage/user"}
-            className="w-1/2 rounded-lg p-1 text-center web:hover:bg-grey-light web:hover:dark:bg-grey-dark"
+            className="w-1/2 rounded-lg p-1 text-center web:hover:bg-grey-light web:dark:hover:bg-grey-dark"
           >
             <Text>내 정보 관리</Text>
           </Link>
           <Divider orientation="vertical" className="w-[0.5px] mx-3" />
           <Link
             href="mypage/config"
-            className="w-1/2 rounded-lg p-1 text-center web:hover:bg-grey-light web:hover:dark:bg-grey-dark"
+            className="w-1/2 rounded-lg p-1 text-center web:hover:bg-grey-light web:dark:hover:bg-grey-dark"
           >
             <Text>설정</Text>
           </Link>
@@ -86,7 +86,7 @@ const Mypage = async () => {
       {/* 기여 등급 */}
       {!noUser && (
         <Section>
-          <div className="flex justify-center items-center p-4 bg-white shadow-full rounded dark:border dark:border-solid dark:border-grey-dark dark:bg-black">
+          <div className="flex justify-center items-center p-4 bg-white shadow-full rounded-sm dark:border dark:border-solid dark:border-grey-dark dark:bg-black">
             <div className="flex flex-col justify-center items-center relative">
               <div className="w-28">
                 <img

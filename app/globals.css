@@ -1,151 +1,322 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
 
-:root {
-  --background: white;
-  --color: #232323;
-  --color-primary: #fab4ab;
-}
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant mo (@media (max-width: 484px));
+@custom-variant web (@media (min-width: 485px));
 
-body {
-  color: var(--color);
-  background: var(--background);
+@theme {
+  --color-primary: #f9b4ab;
+  --color-primary-dark: #f29992;
+  --color-primary-light: #facec8;
+  --color-white: #fff;
+  --color-black: #232323;
+  --color-black-light: #333;
+  --color-grey-light: #eee;
+  --color-grey: #9e9e9e;
+  --color-grey-dark: #5a5a5a;
+  --color-red: #f55656;
+  --color-blue: #2196f3;
+  --color-green: #62c466;
+  --color-coral: #f9b4ab;
+  --color-coral-dark: #f29992;
+  --color-beige: #fdebd3;
+  --color-dark-teel: #264e70;
+  --color-grayish-teel: #679186;
+  --color-pale-mint: #679186;
+  --color-yellow: #e5b700;
+  --color-yellow-dark: #fff200;
 
-  position: fixed;
-  top: 0;
-  left: 0;
+  --shadow-full:
+    rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
+    rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+  --shadow-inner-full: rgba(0, 0, 0, 0.1) 0px 2px 8px 0px inset;
 
-  width: 100dvw;
-  height: 100dvh;
-  /* overflow: hidden; */
-}
+  --background-image-rainbow-gradient: linear-gradient(30deg, #ffd200, #ff7e00, #d60000);
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
+  --background-size-50: 50%;
 
-div,
-main,
-nav {
-  box-sizing: border-box;
-}
+  /* z-index scale used across overlays/FAB/context menu/toast */
+  --z-index-2: 2;
+  --z-index-10: 10;
+  --z-index-20: 20;
+  --z-index-28: 28;
+  --z-index-30: 30;
+  --z-index-40: 40;
+  --z-index-50: 50;
+  --z-index-60: 60;
+  --z-index-61: 61;
+  --z-index-99: 99;
+  --z-index-100: 100;
 
-a {
-  user-select: none;
-  display: inline-block;
-}
-
-li {
-  list-style: none;
-}
-
-.notice-link {
-  color: rgb(60, 60, 255);
-  text-decoration: underline;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background-color: #e0e0e0;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid #d3d3d3;
-}
-
-input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  background-color: #e0e0e0;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid #d3d3d3;
+  --animate-grow: grow 0.1s ease-in-out forwards;
+  --animate-ripple: ripple 1.5s infinite;
+  --animate-transparent: transparent 0.8s ease-in-out forwards;
+  --animate-gradient-animate: gradient-animate 5s ease infinite;
+  --animate-shake: shake 0.5s ease-in-out;
+  --animate-pulse-focus: pulse-focus 2s ease-out;
+  --animate-fade-in: fade-in 0.3s ease-out;
 }
 
-input[type="range"]::-ms-thumb {
-  width: 20px;
-  height: 20px;
-  background-color: #e0e0e0;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid #d3d3d3;
-}
-
-ins.adsbygoogle[data-ad-status="unfilled"] {
-  display: none !important;
-}
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hide {
-  -ms-overflow-style: none;
-}
-.scrollbar-hide {
-  scrollbar-width: none;
-}
-
-.embla {
-  overflow: hidden;
-}
-.embla__container {
-  display: flex;
-}
-.embla__slide {
-  flex: 0 0 100%;
-  min-width: 0;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #232323;
-    --color: white;
+@keyframes grow {
+  0% {
+    transform: scale(0.2);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@keyframes ripple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.8;
   }
+  100% {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+  }
+}
 
-  .shadow-dark {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+@keyframes transparent {
+  0% {
+    opacity: 0;
   }
-  .shadow-simple {
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  100% {
+    opacity: 1;
   }
-  .shadow-dark-primary {
-    box-shadow: rgba(249, 180, 171, 0.8) 0px 3px 8px;
-  }
-  .shadow-simple-primary {
-    box-shadow: rgba(249, 180, 171, 0.6) 0px 1px 4px;
-  }
+}
 
-  .no-touch {
-    touch-action: none;
-    -ms-touch-action: none;
+@keyframes gradient-animate {
+  0% {
+    background-position: 0% 50%;
   }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
-  .scrollbar-hidden::-webkit-scrollbar {
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-2px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes pulse-focus {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility shadow-dark {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+@utility shadow-simple {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+@utility shadow-dark-primary {
+  box-shadow: rgba(249, 180, 171, 0.8) 0px 3px 8px;
+}
+
+@utility shadow-simple-primary {
+  box-shadow: rgba(249, 180, 171, 0.6) 0px 1px 4px;
+}
+
+@utility no-touch {
+  touch-action: none;
+  -ms-touch-action: none;
+}
+
+@utility scrollbar-hidden {
+  &::-webkit-scrollbar {
     display: none;
   }
+}
 
-  .scrollbar-thin::-webkit-scrollbar {
+@utility scrollbar-thin {
+  &::-webkit-scrollbar {
     width: 5px;
     height: 5px;
   }
 
-  .scrollbar-thin::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar-thumb {
     background-color: rgba(100, 100, 100, 0.5);
     border-radius: 10px;
   }
 
-  .scrollbar-thin::-webkit-scrollbar-track {
+  &::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
   }
+}
 
-  .bg-muted {
-    background-color: #ccc;
+@utility bg-muted {
+  background-color: #ccc;
+}
+
+@utility bg-black-transparent {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+@layer utilities {
+  :root {
+    --background: white;
+    --color: #232323;
+  }
+
+  body {
+    color: var(--color);
+    background: var(--background);
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100dvw;
+    height: 100dvh;
+    /* overflow: hidden; */
+  }
+
+  div,
+  main,
+  nav {
+    box-sizing: border-box;
+  }
+
+  a {
+    user-select: none;
+    display: inline-block;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  .notice-link {
+    color: rgb(60, 60, 255);
+    text-decoration: underline;
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #d3d3d3;
+  }
+
+  input[type='range']::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #d3d3d3;
+  }
+
+  input[type='range']::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #d3d3d3;
+  }
+
+  ins.adsbygoogle[data-ad-status='unfilled'] {
+    display: none !important;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+  }
+  .scrollbar-hide {
+    scrollbar-width: none;
+  }
+
+  .embla {
+    overflow: hidden;
+  }
+  .embla__container {
+    display: flex;
+  }
+  .embla__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #232323;
+      --color: white;
+    }
   }
 }
 

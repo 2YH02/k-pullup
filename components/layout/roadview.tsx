@@ -181,7 +181,7 @@ const Roadview = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
 
       <div
         ref={mapContainer}
-        className="absolute bottom-5 left-5 z-50 w-80 h-52 rounded-sm mo:h-[220px] mo:w-full mo:bottom-0 mo:left-0"
+        className="absolute bottom-5 left-5 z-50 w-80 h-52 rounded-xs mo:h-[220px] mo:w-full mo:bottom-0 mo:left-0"
         onMouseEnter={() => setMapHover(true)}
         onMouseLeave={() => setMapHover(false)}
       />
@@ -190,7 +190,7 @@ const Roadview = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
         onClick={closeModal}
         className={`absolute ${
           isMobileApp ? "top-14" : "top-2"
-        } right-2 z-[99]`}
+        } right-2 z-99`}
       >
         닫기
       </Button>
@@ -200,7 +200,7 @@ const Roadview = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
         <div
           className={`absolute ${
             isMobileApp ? "top-14" : "top-2"
-          } left-2 z-[99] bg-black/80 dark:bg-white/80 text-white dark:text-black px-3 py-2 rounded-lg shadow-lg backdrop-blur-sm transition-opacity duration-300`}
+          } left-2 z-99 bg-black/80 dark:bg-white/80 text-white dark:text-black px-3 py-2 rounded-lg shadow-lg backdrop-blur-xs transition-opacity duration-300`}
         >
           <span className="text-sm font-medium">
             로드뷰 날짜: {formatRoadviewDate(roadviewDate)}

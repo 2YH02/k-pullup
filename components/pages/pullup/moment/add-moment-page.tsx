@@ -92,7 +92,7 @@ const AddMomentPage = ({
                 value={textValue.value}
                 onChange={textValue.onChange}
                 maxLength={30}
-                className="w-full bg-grey-dark rounded-md  outline-none p-2"
+                className="w-full bg-grey-dark rounded-md  outline-hidden p-2"
                 placeholder="오운완 🦾"
               />
             </div>

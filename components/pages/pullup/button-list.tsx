@@ -39,9 +39,9 @@ const ButtonList = ({ marker }: ButtonListProps) => {
           </div>
         )}
       </div>
-      <Divider className="w-[1px] my-2" />
+      <Divider className="w-px my-2" />
       <RoadviewButton lat={marker.latitude} lng={marker.longitude} />
-      <Divider className="w-[1px] my-2" />
+      <Divider className="w-px my-2" />
       <div className="relative flex-1">
         <IconButton
           icon={<BsPersonBoundingBox size={20} className="fill-primary" />}
@@ -50,7 +50,7 @@ const ButtonList = ({ marker }: ButtonListProps) => {
           onClick={() => router.push(`/pullup/${marker.markerId}/moment`)}
         />
       </div>
-      <Divider className="w-[1px] my-2" />
+      <Divider className="w-px my-2" />
       <ShareButton
         markerId={marker.markerId}
         lat={marker.latitude}
@@ -59,7 +59,7 @@ const ButtonList = ({ marker }: ButtonListProps) => {
       />
       {marker.isChulbong && (
         <>
-          <Divider className="w-[1px] my-2" />
+          <Divider className="w-px my-2" />
           <DeleteButton markerId={marker.markerId} />
         </>
       )}

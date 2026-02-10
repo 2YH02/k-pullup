@@ -43,7 +43,7 @@ const AroundClient = ({ deviceType }: Props) => {
           <div
             className={cn(
               "p-6 rounded-lg border-2 border-grey-light dark:border-grey-dark",
-              "bg-gradient-to-br from-grey-light/30 to-transparent dark:from-grey-dark/30",
+              "bg-linear-to-br from-grey-light/30 to-transparent dark:from-grey-dark/30",
               "flex flex-col items-center text-center mt-6"
             )}
           >

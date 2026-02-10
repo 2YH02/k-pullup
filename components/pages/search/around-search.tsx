@@ -287,7 +287,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
       {/* Current Location Card */}
       <div className={cn(
         "p-4 rounded-lg border border-grey-light dark:border-grey-dark",
-        "bg-gradient-to-br from-primary/5 to-transparent dark:from-primary-dark/10",
+        "bg-linear-to-br from-primary/5 to-transparent dark:from-primary-dark/10",
         "mb-6"
       )}>
         <div className="flex items-center gap-3">
@@ -324,7 +324,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
             className="w-full h-full"
           />
           {/* Distance overlay badge */}
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-white/95 dark:bg-black/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg border border-grey-light dark:border-grey-dark">
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-white/95 dark:bg-black/95 backdrop-blur-xs px-3 py-1.5 rounded-full shadow-lg border border-grey-light dark:border-grey-dark">
             <Text typography="t7" fontWeight="bold" className="text-primary dark:text-primary-dark">
               {formatDistance(distance)} 반경
             </Text>

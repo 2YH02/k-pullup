@@ -20,7 +20,7 @@ const Textarea = ({
   return (
     <textarea
       className={cn(
-        "dark:text-white text-black w-full p-4 shadow-inner-full rounded-xl dark:border dark:border-solid dark:border-grey-dark resize-none focus:outline-none",
+        "dark:text-white text-black w-full p-4 shadow-inner-full rounded-xl dark:border dark:border-solid dark:border-grey-dark resize-none focus:outline-hidden",
         className
       )}
       maxLength={maxLength}

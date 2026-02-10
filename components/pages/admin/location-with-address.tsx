@@ -40,7 +40,7 @@ const LocationWithAddress = ({
 
   return (
     <div className={`flex items-center gap-2 text-xs text-gray-500 ${className}`}>
-      <MapPin className="h-3 w-3 flex-shrink-0" />
+      <MapPin className="h-3 w-3 shrink-0" />
       <span className="font-mono">
         {lat.toFixed(4)}, {lng.toFixed(4)}
       </span>

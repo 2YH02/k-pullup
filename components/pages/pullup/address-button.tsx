@@ -16,7 +16,7 @@ const AddressButton = ({ lat, lng, address }: AddressButtonProps) => {
     <div onClick={() => move({ lat, lng })}>
       <Text
         typography="t4"
-        className="w-full break-words select-text hover:underline"
+        className="w-full wrap-break-word select-text hover:underline"
       >
         {address}
       </Text>
