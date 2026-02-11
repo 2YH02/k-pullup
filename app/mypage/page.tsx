@@ -52,7 +52,7 @@ const Mypage = async () => {
           <>
             <Link
               href="/signin?returnUrl=/mypage"
-              className="flex items-center justify-between p-2 hover:bg-primary hover:bg-opacity-20 rounded-md"
+              className="flex items-center justify-between p-2 rounded-md hover:bg-primary/20"
             >
               <Text fontWeight="bold" className="text-primary">
                 로그인 및 회원가입하기
