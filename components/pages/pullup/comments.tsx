@@ -86,7 +86,7 @@ const Comments = ({ markerId, initialComments }: CommentsProps) => {
     setComments(commentsData);
     setTotalPages(initialComments.totalPages);
     setCommentsLoading(false);
-  }, [initialComments]);
+  }, [initialComments, setProviderInfo]);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(

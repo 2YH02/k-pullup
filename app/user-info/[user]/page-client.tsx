@@ -41,7 +41,7 @@ const PageClient = ({ data, userName }: Props) => {
     setCurrentPage(newData.currentPage);
 
     setIsLoading(false);
-  }, [currentPage, isLoading, data.totalPages]);
+  }, [userName, currentPage, isLoading, data.totalPages]);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(

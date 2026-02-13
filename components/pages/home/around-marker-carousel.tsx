@@ -51,7 +51,7 @@ const AroundMarkerCarousel = () => {
     return (
       <Section>
         <SectionTitle title="내 주변 철봉" />
-        <div className="flex h-[160px]">
+        <div className="flex h-40">
           <div className="flex flex-col">
             <Skeleton className="mr-2 w-32 h-32 p-1 mb-2" />
             <Skeleton className="mr-2 w-20 h-4 p-1 mb-2" />
@@ -69,7 +69,7 @@ const AroundMarkerCarousel = () => {
     return (
       <Section>
         <SectionTitle title="내 주변 철봉" />
-        <div className="flex flex-col justify-around h-[100px]">
+        <div className="flex flex-col justify-around h-25">
           <div className="mb-2">
             <Text display="block" typography="t6">
               현재 위치 정보가 제공되고 있지 않습니다.
@@ -96,7 +96,7 @@ const AroundMarkerCarousel = () => {
     <Section>
       <SectionTitle title="내 주변 철봉" />
       {!data ? (
-        <div className="flex flex-col justify-around h-[160px]">
+        <div className="flex flex-col justify-around h-40">
           <div className="mb-2">
             <Text display="block" typography="t6">
               현재 위치 주변에 2,000m 내에 철봉이 없습니다.
@@ -119,7 +119,7 @@ const AroundMarkerCarousel = () => {
         <HorizontalScroll>
           {data.map((marker, index) => (
             <ScrollItem
-              className="p-0 w-32 h-[160px]"
+              className="p-0 w-32 h-40"
               key={`${marker.markerId}-${index}`}
             >
               <button
@@ -128,7 +128,7 @@ const AroundMarkerCarousel = () => {
                   router.push(`/pullup/${marker.markerId}`);
                 }}
               >
-                <div className="w-[128px] h-[128px] rounded-md overflow-hidden">
+                <div className="w-32 h-32 rounded-md overflow-hidden">
                   <Image
                     src={
                       marker.thumbnail
@@ -143,7 +143,7 @@ const AroundMarkerCarousel = () => {
                     draggable={false}
                   />
                 </div>
-                <div className="flex items-center w-[120px] overflow-hidden whitespace-nowrap">
+                <div className="flex items-center w-30 overflow-hidden whitespace-nowrap">
                   <Text className="truncate" typography="t6">
                     {splitAddress(marker.address)}
                   </Text>

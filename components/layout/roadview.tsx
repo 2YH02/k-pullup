@@ -120,7 +120,7 @@ const Roadview = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
         miniMap.setCenter(position);
       });
     });
-  }, [map, open, lng, lat, toast]);
+  }, [map, open, lng, lat, toast, closeModal]);
 
   useEffect(() => {
     if (!mapData) return;
@@ -128,7 +128,7 @@ const Roadview = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
     if (mapHover)
       mapData.addOverlayMapTypeId(window.kakao.maps.MapTypeId.ROADVIEW);
     else mapData.addOverlayMapTypeId(window.kakao.maps.MapTypeId.ROADMAP);
-  }, [mapHover]);
+  }, [mapHover, mapData]);
 
   // Fetch and display roadview date for 5 seconds
   useEffect(() => {
@@ -181,7 +181,7 @@ const Roadview = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
 
       <div
         ref={mapContainer}
-        className="absolute bottom-5 left-5 z-50 w-80 h-52 rounded-xs mo:h-[220px] mo:w-full mo:bottom-0 mo:left-0"
+        className="absolute bottom-5 left-5 z-50 w-80 h-52 rounded-xs mo:h-55 mo:w-full mo:bottom-0 mo:left-0"
         onMouseEnter={() => setMapHover(true)}
         onMouseLeave={() => setMapHover(false)}
       />

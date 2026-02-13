@@ -53,7 +53,7 @@ const Input = ({
     if (!inputRef.current || !isFocus) return;
 
     inputRef.current.focus();
-  }, [inputRef.current]);
+  }, [isFocus]);
 
   const handleClick = () => {
     if (isSearchButton) {

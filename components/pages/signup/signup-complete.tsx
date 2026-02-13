@@ -21,7 +21,7 @@ const SignupComplete = ({ status, returnUrl }: SignupCompleteProps) => {
 
   return (
     <Section className="w-full h-full flex flex-col items-center justify-center">
-      <div className="w-[220px]">
+      <div className="w-55">
         <Image
           src="/signup-loading.gif"
           alt="회원가입 로딩"

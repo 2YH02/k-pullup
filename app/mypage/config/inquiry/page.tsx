@@ -60,7 +60,7 @@ const InquiryPage = () => {
           </Text>
 
           <div>
-            <div className="w-full h-[416px]">
+            <div className="w-full h-104">
               <ImageWrap
                 src="/hand.gif"
                 alt="운동"

@@ -2,6 +2,7 @@
 
 import Button from "@common/button";
 import cn from "@lib/cn";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { BsChevronRight } from "react-icons/bs";
@@ -41,10 +42,12 @@ const TermsCheckboxForm = ({ next }: { next: VoidFunction }) => {
         onClick={toggleAll}
         id="agree-all"
       >
-        <img
+        <Image
           src={allChecked ? "/allCheckedIcon.svg" : "/allCheckIcon.svg"}
-          alt={"전체 동의"}
+          alt="전체 동의"
           className="w-5 h-5 mr-2"
+          width={20}
+          height={20}
         />
         <label className="font-bold dark:text-white text-black">
           전체 동의
@@ -211,10 +214,12 @@ const CheckboxItem = ({
       role="button"
       id={id}
     >
-      <img
+      <Image
         src={checked ? checkedIcon : uncheckedIcon}
         alt={checked ? `${label} 동의됨` : `${label} 동의`}
-        className={cn("w-5 h-5 mr-2", subText ? "mt-[3px]" : "mt-0")}
+        className={cn("w-5 h-5 mr-2", subText ? "mt-0.75" : "mt-0")}
+        width={20}
+        height={20}
       />
       <div>
         <label className="text-sm dark:text-white text-black">{label}</label>

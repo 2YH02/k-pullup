@@ -3,7 +3,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-gray-100 dark:bg-[#333] py-6 px-4 mt-12">
+    <footer className="w-full bg-gray-100 dark:bg-black-light py-6 px-4 mt-12">
       <div className="max-w-(--breakpoint-xl) mx-auto flex flex-col justify-between items-center text-sm space-y-2 mo:space-y-4">
         <Link
           href="https://buymeacoffee.com/seokwon"

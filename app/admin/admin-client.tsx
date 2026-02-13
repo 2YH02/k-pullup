@@ -219,7 +219,7 @@ const AdminClient = ({ data }: { data: AllReportRes }) => {
   };
 
   return (
-    <div className="flex flex-col gap-6 max-w-[1400px] mx-auto">
+    <div className="flex flex-col gap-6 max-w-350 mx-auto">
       {/* Header */}
       <Container>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">

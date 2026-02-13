@@ -102,7 +102,7 @@ const ImageList = ({
         clearTimeout(hoverTimerRef.current);
       }
     };
-  }, []);
+  }, [closeModal]);
 
   const handleDeletePhoto = async (photoId: number) => {
     setDeletingPhotoId(photoId);

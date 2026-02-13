@@ -245,7 +245,7 @@ const MessageBubble = ({
             <div className="text-white text-sm">{message.message}</div>
           </div>
           <div className="text-xs">
-            <div className="text-[10px] mt-[2px] text-black dark:text-white">
+            <div className="text-[10px] mt-0.5 text-black dark:text-white">
               {message.userNickname}
             </div>
           </div>
@@ -256,7 +256,7 @@ const MessageBubble = ({
             <div className="text-sm">{message.message}</div>
           </div>
           <div className="text-xs">
-            <div className="text-[10px] mt-[2px] text-black dark:text-white">
+            <div className="text-[10px] mt-0.5 text-black dark:text-white">
               {message.userNickname}
             </div>
           </div>

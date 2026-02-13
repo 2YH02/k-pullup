@@ -18,7 +18,7 @@ const IconButton = forwardRef(
     return (
       <button
         className={cn(
-          "w-[55px] h-[55px] flex flex-col items-center justify-center rounded-md gap-1",
+          "h-13.75 w-13.75 flex flex-col items-center justify-center rounded-md gap-1",
           className
         )}
         onClick={onClick}

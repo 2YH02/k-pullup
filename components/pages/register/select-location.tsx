@@ -59,7 +59,7 @@ const SelectLocation = ({
     return () => {
       window.kakao.maps.event.removeListener(map, "click", handleMapClick);
     };
-  }, [map, marker]);
+  }, [map, marker, setCurHeight, sheetHeight, setPosition]);
 
   const handleClick = () => {
     if (position.lat && position.lng) {
@@ -102,7 +102,7 @@ const SelectLocation = ({
     <Section className="h-full pb-0 flex flex-col pt-0">
       <div className="flex flex-col  items-center web:mt-10">
         {position.lat && position.lng ? (
-          <div className="w-[130px] h-[130px] translate-y-5 select-none">
+          <div className="w-32.5 h-32.5 translate-y-5 select-none">
             <Image
               src="/gopher.gif"
               alt="다음"
@@ -129,7 +129,7 @@ const SelectLocation = ({
           {position.lat && position.lng ? "다시 선택하기" : "위치 선택하기"}
         </Button>
         <div className="w-full flex items-start mt-3">
-          <div className="mr-2 mt-[2px]">
+          <div className="mr-2 mt-0.5">
             <AlertTriangleIcon size={14} color="#ffc65c" />
           </div>
           <Text typography="t7" className="text-[#ffc65c]">

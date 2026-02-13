@@ -32,7 +32,7 @@ const ArticleItemPage = () => {
           </Text>
         </div>
 
-        <div className="h-[2px] w-full bg-grey-light dark:bg-grey-dark my-2" />
+        <div className="h-0.5 w-full bg-grey-light dark:bg-grey-dark my-2" />
 
         <div>
           <Text
@@ -111,7 +111,7 @@ const ArticleItemPage = () => {
           </div>
         </div>
 
-        <div className="h-[2px] w-full bg-grey-light dark:bg-grey-dark my-2" />
+        <div className="h-0.5 w-full bg-grey-light dark:bg-grey-dark my-2" />
 
         <div className="relative mb-4">
           <ImageWrap src={"/pullup1.jpg"} w={600} h={600} alt="상세" />
@@ -157,7 +157,7 @@ const ArticleItemPage = () => {
           </div>
         </div>
 
-        <div className="h-[2px] w-full bg-grey-light dark:bg-grey-dark my-2" />
+        <div className="h-0.5 w-full bg-grey-light dark:bg-grey-dark my-2" />
 
         <Text typography="t5" className="mb-3">
           철봉 운동을 꾸준히 하면 상체 근력 발달과 통증 완화에 큰 도움이 됩니다.

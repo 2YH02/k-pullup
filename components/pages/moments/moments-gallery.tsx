@@ -1,4 +1,5 @@
 import Text from "@common/text";
+import Image from "next/image";
 import React from "react";
 
 const MomentsGallery = () => {
@@ -11,19 +12,73 @@ const MomentsGallery = () => {
       </div>
       <div className="flex gap-1">
         <div className="w-1/3 flex flex-col gap-1">
-          <img className="w-full object-cover" src="/pullup1.jpg" alt="" />
-          <img className="w-full object-cover" src="/pullup3.jpg" alt="" />
-          <img className="w-full object-cover" src="/pullup2.jpg" alt="" />
+          <Image
+            className="h-auto w-full object-cover"
+            src="/pullup1.jpg"
+            alt=""
+            width={400}
+            height={400}
+          />
+          <Image
+            className="h-auto w-full object-cover"
+            src="/pullup3.jpg"
+            alt=""
+            width={400}
+            height={400}
+          />
+          <Image
+            className="h-auto w-full object-cover"
+            src="/pullup2.jpg"
+            alt=""
+            width={400}
+            height={400}
+          />
         </div>
         <div className="w-1/3 flex flex-col gap-1">
-          <img className="w-full object-cover" src="/pullup2.jpg" alt="" />
-          <img className="w-full object-cover" src="/pullup1.jpg" alt="" />
-          <img className="w-full object-cover" src="/pullup3.jpg" alt="" />
+          <Image
+            className="h-auto w-full object-cover"
+            src="/pullup2.jpg"
+            alt=""
+            width={400}
+            height={400}
+          />
+          <Image
+            className="h-auto w-full object-cover"
+            src="/pullup1.jpg"
+            alt=""
+            width={400}
+            height={400}
+          />
+          <Image
+            className="h-auto w-full object-cover"
+            src="/pullup3.jpg"
+            alt=""
+            width={400}
+            height={400}
+          />
         </div>
         <div className="w-1/3 flex flex-col gap-1">
-          <img className="w-full object-cover" src="/pullup3.jpg" alt="" />
-          <img className="w-full object-cover" src="/pullup2.jpg" alt="" />
-          <img className="w-full object-cover" src="/pullup1.jpg" alt="" />
+          <Image
+            className="h-auto w-full object-cover"
+            src="/pullup3.jpg"
+            alt=""
+            width={400}
+            height={400}
+          />
+          <Image
+            className="h-auto w-full object-cover"
+            src="/pullup2.jpg"
+            alt=""
+            width={400}
+            height={400}
+          />
+          <Image
+            className="h-auto w-full object-cover"
+            src="/pullup1.jpg"
+            alt=""
+            width={400}
+            height={400}
+          />
         </div>
       </div>
     </div>

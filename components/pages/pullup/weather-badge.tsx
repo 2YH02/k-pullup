@@ -3,6 +3,7 @@
 import getWeather, { type WeatherRes } from "@api/marker/get-weather";
 import Badge from "@common/badge";
 import Skeleton from "@common/skeleton";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 interface WeatherBadgeProps {
@@ -25,7 +26,7 @@ const WeatherBadge = ({ lat, lng }: WeatherBadgeProps) => {
     };
 
     fetch();
-  }, []);
+  }, [lat, lng]);
 
   if (loading) {
     return <Skeleton className="w-28 h-7 rounded-3xl mr-2 mb-2" />;
@@ -35,7 +36,15 @@ const WeatherBadge = ({ lat, lng }: WeatherBadgeProps) => {
 
   return (
     <Badge
-      icon={<img src={weather.iconImage} className="w-5" alt="weatherIcon" />}
+      icon={
+        <Image
+          src={weather.iconImage}
+          className="h-5 w-5"
+          alt="weatherIcon"
+          width={20}
+          height={20}
+        />
+      }
       text={`${weather.temperature} °C`}
       className="flex items-center justify-center h-7 mr-2 mb-2 border-none shadow-full dark:shadow-[rgba(255,255,255,0.1)]"
       textStyle="leading-3"

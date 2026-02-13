@@ -87,7 +87,7 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
         setLocationMove(false);
       }
     }
-  }, [myLocation, map, locationMove]);
+  }, [myLocation, map, locationMove, setCurLocation, pathname]);
 
   useEffect(() => {
     if (!curLocation) return;

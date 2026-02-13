@@ -113,7 +113,7 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [errors]);
+  }, [errors, emailValue.value, passwordValue.value, router, returnUrl, setUser, toast]);
 
   const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     setViewInputError((prev) => ({

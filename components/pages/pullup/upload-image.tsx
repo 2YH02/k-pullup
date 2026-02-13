@@ -47,7 +47,7 @@ const UploadImage = ({
       return image.file;
     });
     next(files as File[]);
-  }, [images]);
+  }, [images, next, withButton]);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true);

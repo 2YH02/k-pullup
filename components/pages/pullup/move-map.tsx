@@ -16,8 +16,9 @@ const MoveMap = ({
   markerId: number;
 }) => {
   const { move } = useMapControl();
-  const { map, setSelectedId } = useMapStore();
-  const { marker } = useMarkerStore();
+  const map = useMapStore((state) => state.map);
+  const setSelectedId = useMapStore((state) => state.setSelectedId);
+  const marker = useMarkerStore((state) => state.marker);
   const { reloadMarkers } = useMarkerControl();
 
   useEffect(() => {
@@ -25,12 +26,12 @@ const MoveMap = ({
 
     setSelectedId(markerId);
     move({ lat, lng });
-  }, [map, lat, lng]);
+  }, [lat, lng, map, markerId, move, setSelectedId]);
 
   useEffect(() => {
     if (!map || !marker) return;
     reloadMarkers({ map, options: { maxLevel: 6, selectId: markerId } });
-  }, [marker]);
+  }, [map, marker, markerId, reloadMarkers]);
 
   return null;
 };

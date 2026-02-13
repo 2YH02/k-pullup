@@ -11,6 +11,7 @@ import getDeviceType from "@lib/get-device-type";
 import LinkList from "@pages/mypage/link-list";
 import UserInfo from "@pages/mypage/user-info";
 import { cookies, headers } from "next/headers";
+import Image from "next/image";
 import Link from "next/link";
 
 export type Device =
@@ -88,13 +89,13 @@ const Mypage = async () => {
         <Section>
           <div className="flex justify-center items-center p-4 bg-white shadow-full rounded-sm dark:border dark:border-solid dark:border-grey-dark dark:bg-black">
             <div className="flex flex-col justify-center items-center relative">
-              <div className="w-28">
-                <img
-                  src={getContributionLevelImage(user.contributionLevel)}
-                  alt="등급"
-                  draggable={false}
-                />
-              </div>
+              <Image
+                src={getContributionLevelImage(user.contributionLevel)}
+                alt="등급"
+                draggable={false}
+                width={112}
+                height={112}
+              />
               <Text typography="t4" fontWeight="bold" className="mb-1">
                 {user.contributionLevel}
               </Text>

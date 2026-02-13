@@ -281,6 +281,7 @@ const useGpsTracking = ({
     updateUserLocationMarker,
     setGpsWatchId,
     setIsTrackingLocation,
+    compassHeading,
   ]);
 
   // Update marker rotation when compass heading changes (stationary device)

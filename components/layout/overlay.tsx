@@ -21,7 +21,7 @@ const Overlay = ({ title, position }: OverlayProps) => {
   return (
     <div
       className={cn(
-        "opacity-80 absolut -bottom-3 -left-10 w-[60px] h-[60px] flex items-center justify-center rounded-full shadow-full",
+        "opacity-80 absolut -bottom-3 -left-10 w-15 h-15 flex items-center justify-center rounded-full shadow-full",
         getTailwindColorClass(convertToNumber(title))
       )}
     >

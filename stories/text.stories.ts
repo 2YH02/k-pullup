@@ -39,43 +39,43 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const t1: Story = {
+export const T1: Story = {
   args: {
     typography: "t1",
   },
 };
 
-export const t2: Story = {
+export const T2: Story = {
   args: {
     typography: "t2",
   },
 };
 
-export const t3: Story = {
+export const T3: Story = {
   args: {
     typography: "t3",
   },
 };
 
-export const t4: Story = {
+export const T4: Story = {
   args: {
     typography: "t4",
   },
 };
 
-export const t5: Story = {
+export const T5: Story = {
   args: {
     typography: "t5",
   },
 };
 
-export const t6: Story = {
+export const T6: Story = {
   args: {
     typography: "t6",
   },
 };
 
-export const t7: Story = {
+export const T7: Story = {
   args: {
     typography: "t7",
   },

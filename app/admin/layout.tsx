@@ -44,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={`light ${pretendard.className} w-dvh h-dvh bg-gray-50 text-gray-900 p-4 overflow-auto`} style={{ color: '#111827', colorScheme: 'light' }} data-theme="light">
+    <div className={`light ${pretendard.className} w-dvw h-dvh bg-gray-50 text-gray-900 p-4 overflow-auto`} style={{ color: '#111827', colorScheme: 'light' }} data-theme="light">
       <ThemeProvider
         attribute="class"
         defaultTheme="light"

@@ -57,7 +57,7 @@ const SignupClient = ({
       const img = new Image();
       img.src = src;
     });
-  }, []);
+  }, [show]);
 
   useEffect(() => {
     const fetchSignup = async () => {

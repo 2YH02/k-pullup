@@ -16,7 +16,7 @@ const ReportCompleted = () => {
       hasBackButton
     >
       <Section className="w-full h-full flex flex-col items-center justify-center">
-        <div className="w-[140px]">
+        <div className="w-35">
           <Image
             src={"/congratulations.gif"}
             alt="요청 완료"

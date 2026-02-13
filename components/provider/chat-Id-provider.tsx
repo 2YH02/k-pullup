@@ -32,7 +32,7 @@ const ChatIdProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       window.removeEventListener("storage", handleStorage);
     };
-  }, []);
+  }, [pathname]);
 
   return <>{children}</>;
 };

@@ -28,7 +28,7 @@ const SheetHeightProvider = ({
 
       setSheetHeight(sheetHeight);
     }
-  }, [deviceType, setCurHeight]);
+  }, [deviceType, setCurHeight, setCurStyle, setSheetHeight]);
 
   return <>{children}</>;
 };

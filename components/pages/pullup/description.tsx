@@ -32,7 +32,7 @@ const Description = ({ description, markerId, isAdmin }: DescriptionProps) => {
 
   useEffect(() => {
     return () => setSelectedId(null);
-  }, []);
+  }, [setSelectedId]);
 
   const handleClick = async () => {
     if (description === descriptionInput.value) return;

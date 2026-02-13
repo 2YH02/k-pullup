@@ -32,7 +32,7 @@ const UploadComplete = ({
 
   return (
     <Section className="w-full h-full flex flex-col items-center justify-center">
-      <div className="w-[140px]">
+      <div className="w-35">
         <Image
           src={
             status === "complete"

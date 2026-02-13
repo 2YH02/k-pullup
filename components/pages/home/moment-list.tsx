@@ -139,14 +139,14 @@ const MomentList = ({ data }: { data: Moment[] }) => {
                 return (
                   <span
                     key={moment.storyID}
-                    className="grow bg-grey-light h-[2px] rounded-lg"
+                    className="grow bg-grey-light h-0.5 rounded-lg"
                   />
                 );
               } else {
                 return (
                   <span
                     key={moment.storyID}
-                    className="grow bg-grey h-[2px] rounded-lg"
+                    className="grow bg-grey h-0.5 rounded-lg"
                   />
                 );
               }

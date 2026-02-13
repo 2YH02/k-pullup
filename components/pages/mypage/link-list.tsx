@@ -519,14 +519,14 @@ export const Proposal = ({ size = 40 }: { size?: number }) => {
         points="130.36 48.91 10.73 80.71 10.73 451.09 130.36 419.29 130.36 48.91"
       />
       <line
-        className="fill-[#fff] stroke-black stroke-linecap-round stroke-linejoin-round stroke-[20px]"
+        className="fill-white stroke-black stroke-linecap-round stroke-linejoin-round stroke-[20px]"
         x1="82.67"
         x2="48.1"
         y1="138.55"
         y2="173.12"
       />
       <line
-        className="fill-[#fff] stroke-black stroke-linecap-round stroke-linejoin-round stroke-[20px]"
+        className="fill-white stroke-black stroke-linecap-round stroke-linejoin-round stroke-[20px]"
         x1="82.67"
         x2="48.1"
         y1="173.12"
@@ -551,14 +551,14 @@ export const Proposal = ({ size = 40 }: { size?: number }) => {
         y2="331.27"
       />
       <line
-        className="fill-[#fff] stroke-black stroke-linecap-round stroke-linejoin-round stroke-[20px]"
+        className="fill-white stroke-black stroke-linecap-round stroke-linejoin-round stroke-[20px]"
         x1="445.66"
         x2="411.1"
         y1="313.98"
         y2="348.55"
       />
       <line
-        className="fill-[#fff] stroke-black stroke-linecap-round stroke-linejoin-round stroke-[20px]"
+        className="fill-white stroke-black stroke-linecap-round stroke-linejoin-round stroke-[20px]"
         x1="445.66"
         x2="411.1"
         y1="348.55"

@@ -1,8 +1,10 @@
 "use client";
 
 import cn from "@lib/cn";
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Dimmed from "./dimmed";
 import Skeleton from "./skeleton";
 
@@ -17,12 +19,19 @@ const EventPopup = ({
 }: EventPopupProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [doNotShowToday, setDoNotShowToday] = useState(false);
+  const [portalEl, setPortalEl] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setPortalEl(document.getElementById("portal"));
+  }, []);
 
   const handleClose = () => {
     onClose(doNotShowToday);
   };
 
-  return (
+  if (!portalEl) return null;
+
+  return createPortal(
     <Dimmed onClose={handleClose}>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-black rounded-lg shadow-lg p-4 max-w-md w-full">
         <div className="flex justify-between items-center mb-2">
@@ -51,12 +60,15 @@ const EventPopup = ({
             className="w-full"
           >
             {!imageLoaded && <Skeleton className="w-full h-80 " />}
-            <img
+            <Image
               src="/popup.png"
               alt="이벤트 이미지"
+              width={640}
+              height={960}
+              priority
               className={cn(
-                "rounded-md object-cover w-full",
-                imageLoaded ? "block" : "hidden"
+                "rounded-md object-cover w-full h-auto transition-opacity",
+                imageLoaded ? "opacity-100" : "opacity-0"
               )}
               onLoad={() => setImageLoaded(true)}
             />
@@ -103,7 +115,8 @@ const EventPopup = ({
           </div>
         </div>
       </div>
-    </Dimmed>
+    </Dimmed>,
+    portalEl
   );
 };
 

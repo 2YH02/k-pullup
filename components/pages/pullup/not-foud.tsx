@@ -16,7 +16,7 @@ const NotFoud = ({ addr }: { addr?: string }) => {
     if (addr) {
       removeItem(addr);
     }
-  }, [addr]);
+  }, [addr, removeItem]);
 
   return (
     <SideMain

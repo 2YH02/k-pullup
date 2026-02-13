@@ -198,7 +198,7 @@ const PullupClient = ({
 
           {marker.username && (
             <div className="flex items-center max-w-[50%]">
-              <span className="mr-1 mb-[3px] shrink-0">
+              <span className="mr-1 mb-0.75 shrink-0">
                 <StarIcon />
               </span>
               <button

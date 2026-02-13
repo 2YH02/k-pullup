@@ -1,13 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const useEventPopup = (popupId = "event-popup") => {
   const [showPopup, setShowPopup] = useState(false);
 
-  useEffect(() => {
-    checkIfShouldShowPopup();
-  }, []);
-
-  const checkIfShouldShowPopup = () => {
+  const checkIfShouldShowPopup = useCallback(() => {
     if (typeof window !== "undefined") {
       const storageKey = `${popupId}-expiry`;
       const expiryDate = localStorage.getItem(storageKey);
@@ -17,7 +13,11 @@ const useEventPopup = (popupId = "event-popup") => {
         setShowPopup(true);
       }
     }
-  };
+  }, [popupId]);
+
+  useEffect(() => {
+    checkIfShouldShowPopup();
+  }, [checkIfShouldShowPopup]);
 
   const closePopup = (doNotShowToday = false) => {
     if (doNotShowToday) {

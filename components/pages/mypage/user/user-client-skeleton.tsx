@@ -6,8 +6,8 @@ const UserClientSkeleton = () => {
   return (
     <SideMain headerTitle="내 정보 관리" fullHeight hasBackButton>
       <Section>
-        <Skeleton className="w-full h-[86px] mb-16" />
-        <Skeleton className="w-full h-[126px]" />
+        <Skeleton className="w-full h-21.5 mb-16" />
+        <Skeleton className="w-full h-31.5" />
       </Section>
     </SideMain>
   );

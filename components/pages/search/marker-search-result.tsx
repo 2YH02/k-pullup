@@ -36,12 +36,12 @@ const MarkerSearchResult = ({ address, markerId }: MarkerSearchResultProps) => {
     };
 
     fetch();
-  }, []);
+  }, [marker?.error, markerId]);
 
   if (loading) {
     return (
       <SideMain headerTitle={address} hasBackButton>
-        <Skeleton className="h-[112px] m-4" />
+        <Skeleton className="h-28 m-4" />
       </SideMain>
     );
   }

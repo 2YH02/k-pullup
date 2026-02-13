@@ -121,7 +121,7 @@ const LocationBadge = () => {
         <Badge
           text={title as string}
           icon={<LocationIcon size={18} className="fill-primary" />}
-          className="pl-[5px] border-none"
+          className="pl-1.25 border-none"
         />
         {regionLoading && (
           <Loader2 size={16} className="stroke-primary animate-spin" />

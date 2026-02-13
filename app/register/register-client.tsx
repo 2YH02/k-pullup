@@ -206,12 +206,17 @@ const RegisterClient = ({
       fetch();
     }
   }, [
+    setUser,
+    setMarkerToStore,
     registerValue.step,
     registerValue.description,
     registerValue.latitude,
     registerValue.longitude,
     registerValue.photos,
-    setUser,
+    registerValue.facilities,
+    map, 
+    marker,
+    uploadStatus,
   ]);
 
   useEffect(() => {

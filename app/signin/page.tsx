@@ -42,9 +42,8 @@ const SigninPage = ({ searchParams }: PageProps) => {
           <Image
             src="/logo.png"
             alt="로그인"
-            width={0}
-            height={0}
-            sizes="100vw"
+            width={144}
+            height={144}
             className="w-full h-full object-cover"
           />
         </div>
@@ -56,23 +55,23 @@ const SigninPage = ({ searchParams }: PageProps) => {
 
         <Link
           href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/naver`}
-          className="w-[90%] min-w-[300px] h-12 rounded-lg bg-[#1FBB64] flex items-center justify-center
+          className="w-[90%] min-w-75 h-12 rounded-lg bg-[#1FBB64] flex items-center justify-center
           web:text-lg text-white mb-4"
         >
-          <div className="absolute left-10 flex items-center justify-center w-12 h-12 shrink-0">
-            <img src="/naver-logo.svg" alt="네이버 로고" className="" />
+          <div className="absolute left-10 flex items-center justify-center shrink-0">
+            <Image src="/naver-logo.svg" alt="네이버 로고" width={48} height={48} />
           </div>
           <div className="w-full text-center text-white">네이버 로그인</div>
         </Link>
 
         <Link
           href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/google`}
-          className="w-[90%] min-w-[300px] h-12 rounded-lg bg-white flex items-center justify-center
+          className="w-[90%] min-w-75 h-12 rounded-lg bg-white flex items-center justify-center
           web:text-lg border border-solid border-grey"
           replace
         >
-          <div className="absolute left-10 flex items-center justify-center w-12 h-12 shrink-0">
-            <img src="/google-logo.svg" alt="구글 로고" className="" />
+          <div className="absolute left-10 flex items-center justify-center shrink-0">
+            <Image src="/google-logo.svg" alt="구글 로고" width={48} height={48} />
           </div>
           <div className="w-full text-center text-black">구글 로그인</div>
         </Link>

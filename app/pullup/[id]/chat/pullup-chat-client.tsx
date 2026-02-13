@@ -234,7 +234,7 @@ const PullupChatClient = ({
                   <Fragment key={message.mid}>
                     {message.userid === cid ? (
                       <div className="flex flex-col items-end w-full py-2">
-                        <div className="max-w-[170px] px-5 py-1 flex items-center justify-start rounded-3xl bg-primary-dark dark:bg-slate-700 shadow-xs">
+                        <div className="max-w-42.5 px-5 py-1 flex items-center justify-start rounded-3xl bg-primary-dark dark:bg-slate-700 shadow-xs">
                           <Text className="text-white break-all max-w-1/2">
                             {message.msg}
                           </Text>
@@ -248,7 +248,7 @@ const PullupChatClient = ({
                       </div>
                     ) : (
                       <div className="flex flex-col items-start w-full py-2">
-                        <div className="max-w-[170px] px-5 py-1 flex items-center justify-start rounded-3xl bg-primary dark:bg-slate-600 shadow-xs">
+                        <div className="max-w-42.5 px-5 py-1 flex items-center justify-start rounded-3xl bg-primary dark:bg-slate-600 shadow-xs">
                           <Text className="text-white break-all max-w-1/2">
                             {message.msg}
                           </Text>

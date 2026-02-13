@@ -156,7 +156,7 @@ const ReportClient = ({
     return () => {
       window.kakao.maps.event.removeListener(map, "click", handleMapClick);
     };
-  }, [mapMarker, map]);
+  }, [mapMarker, map, mapEl]);
 
   const handleImageChange = (photos?: File[] | null) => {
     if (!photos) return;

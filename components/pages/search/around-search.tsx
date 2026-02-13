@@ -318,7 +318,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
         "mb-6"
       )}>
         {/* Kakao Map with Radius Overlay */}
-        <div className="relative w-full aspect-square max-w-[280px] mx-auto mb-6 rounded-lg overflow-hidden">
+        <div className="relative w-full aspect-square max-w-70 mx-auto mb-6 rounded-lg overflow-hidden">
           <div
             ref={miniMapRef}
             className="w-full h-full"
