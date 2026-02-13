@@ -12,7 +12,7 @@ import LoadMarker from "@provider/load-marker";
 import ThemeProvider from "@provider/theme-provider";
 import { Toaster } from "@provider/toaster";
 import UserProvider from "@provider/user-provider";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { headers } from "next/headers";
 import "./globals.css";
@@ -60,8 +60,7 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  viewport:
-    "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
+  metadataBase: new URL("https://www.k-pullup.com"),
   title: "대한민국 철봉 지도",
   keywords: "철봉지도,위치등록,철봉정보,채팅,위치검색,관리,철봉찾기",
   description:
@@ -85,6 +84,13 @@ export const metadata: Metadata = {
     google: "xsTAtA1ny-_9QoSKUsxC7zk_LljW5KBbcWULaNl2gt8",
     other: { naver: "d1ba940a668490789711101918c8b1f7e221a178" },
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
