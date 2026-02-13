@@ -6,9 +6,9 @@
 @custom-variant web (@media (min-width: 485px));
 
 @theme {
-  --color-primary: #f9b4ab;
-  --color-primary-dark: #f29992;
-  --color-primary-light: #facec8;
+  --color-primary: #6c705e;
+  --color-primary-dark: #404038;
+  --color-primary-light: #a5a58f;
   --color-white: #fff;
   --color-black: #232323;
   --color-black-light: #333;
@@ -18,9 +18,18 @@
   --color-red: #f55656;
   --color-blue: #2196f3;
   --color-green: #62c466;
-  --color-coral: #f9b4ab;
-  --color-coral-dark: #f29992;
-  --color-beige: #fdebd3;
+  --color-coral: #c6815e;
+  --color-coral-dark: #9b5f40;
+  --color-beige: #ede2d6;
+  --color-surface: #f3ede5;
+  --color-surface-soft: #ede2d6;
+  --color-surface-muted: #ddd2c6;
+  --color-earth: #c6815e;
+  --color-earth-dark: #8f5a3f;
+  --color-sage: #a5a58f;
+  --color-sage-dark: #6c705e;
+  --color-ink: #404038;
+  --color-stone: #7f7f70;
   --color-dark-teel: #264e70;
   --color-grayish-teel: #679186;
   --color-pale-mint: #679186;
@@ -217,6 +226,10 @@
 
 @utility bg-black-transparent {
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+@utility bg-side-main {
+  background-color: var(--color-surface);
 }
 
 @layer utilities {

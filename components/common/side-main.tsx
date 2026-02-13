@@ -146,7 +146,7 @@ const SideMain = ({
   if (hide) {
     return (
       <button
-        className="absolute top-10 left-10 flex items-center justify-center rounded-full shadow-dark w-20 h-10 bg-white dark:bg-black z-50"
+        className="absolute top-10 left-10 flex items-center justify-center rounded-full shadow-dark w-20 h-10 bg-side-main dark:bg-black z-50"
         onClick={() => setHide(false)}
       >
         <MapIcon />
@@ -165,7 +165,7 @@ const SideMain = ({
           fullHeight ? "mo:h-full" : isMobileApp ? "mo:h-[80%]" : "mo:h-[85%]"
         } select-none`,
           background === "white"
-            ? "bg-white dark:bg-black"
+            ? "bg-side-main dark:bg-black"
             : "bg-grey-light dark:bg-black",
           className
         )}
@@ -173,7 +173,7 @@ const SideMain = ({
       >
         <button
           className="absolute top-3 -right-12 flex items-center justify-center 
-        rounded-r-2xl shadow-simple w-12 h-10 bg-white dark:bg-black z-50 mo:hidden"
+        rounded-r-2xl shadow-simple w-12 h-10 bg-side-main dark:bg-black z-50 mo:hidden"
           onClick={() => setHide(true)}
         >
           <ArrowLeftIcon size={24} />
@@ -194,7 +194,7 @@ const SideMain = ({
 
         {!fullHeight && dragable && (
           <div
-            className="sticky top-0 py-3 bg-white dark:bg-black z-20 rounded-t-3xl web:hidden cursor-grab active:cursor-grabbing"
+            className="sticky top-0 py-3 bg-side-main dark:bg-black z-20 rounded-t-3xl web:hidden cursor-grab active:cursor-grabbing"
             onPointerDown={dragStart}
             role="button"
             aria-label="드로워 높이 조절"
@@ -267,7 +267,7 @@ const MainHeader = ({
   return (
     <div
       className={cn(
-        `shrink-0 web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 shadow-xs z-20 bg-white 
+        `shrink-0 web:sticky mo:fixed top-0 left-0 flex items-center w-full h-10 shadow-xs z-20 bg-side-main 
         dark:bg-black dark:border-b dark:border-solid dark:border-grey-dark web:rounded-t-lg`,
         getHeaderPosition(),
         style
