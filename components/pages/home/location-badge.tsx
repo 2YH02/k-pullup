@@ -27,10 +27,18 @@ const GPS_LOCATING_STROKE_CLASS_NAME =
 const BADGE_ICON_CLASS_NAME =
   "fill-location-badge-text dark:fill-location-badge-text-dark";
 
-const getGpsIconColor = (gpsState: GpsState) => {
-  if (gpsState === "success") return "var(--color-green)";
-  if (gpsState === "error") return "var(--color-red)";
-  return "var(--color-location-badge-text)";
+const GPS_ICON_COLOR_BY_STATE: Record<GpsState, string> = {
+  idle: "var(--color-location-badge-text)",
+  locating: "var(--color-location-badge-text)",
+  success: "var(--color-green)",
+  error: "var(--color-red)",
+};
+
+const GPS_ARIA_LABEL_BY_STATE: Record<GpsState, string> = {
+  idle: "내 위치로 이동",
+  locating: "위치 찾는 중...",
+  success: "내 위치로 이동",
+  error: "내 위치로 이동",
 };
 
 interface GpsActionButtonProps {
@@ -41,7 +49,7 @@ interface GpsActionButtonProps {
 
 const GpsActionButton = ({ gpsState, showGuide, onClick }: GpsActionButtonProps) => {
   const isGpsLocating = gpsState === "locating";
-  const gpsIconColor = getGpsIconColor(gpsState);
+  const gpsIconColor = GPS_ICON_COLOR_BY_STATE[gpsState];
 
   return (
     <button
@@ -52,7 +60,7 @@ const GpsActionButton = ({ gpsState, showGuide, onClick }: GpsActionButtonProps)
         "web:hidden",
         showGuide && "animate-pulse-focus"
       )}
-      aria-label={isGpsLocating ? "위치 찾는 중..." : "내 위치로 이동"}
+      aria-label={GPS_ARIA_LABEL_BY_STATE[gpsState]}
     >
       {isGpsLocating ? (
         <Loader2 size={16} className={GPS_LOCATING_STROKE_CLASS_NAME} />
