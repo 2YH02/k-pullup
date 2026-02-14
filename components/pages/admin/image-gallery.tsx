@@ -1,12 +1,21 @@
 "use client";
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { ChevronLeft, ChevronRight, ImageIcon, X } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { ArrowUpRight, ChevronLeft, ChevronRight, ImageIcon, X } from "lucide-react";
+import cn from "@lib/cn";
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
+import { useCallback, useMemo, useRef, useState } from "react";
+
+export interface GalleryImageItem {
+  url: string;
+  markerId?: number;
+}
+
+type ImageGalleryItem = string | GalleryImageItem;
 
 interface ImageGalleryProps {
-  images: string[];
+  images: ImageGalleryItem[];
   className?: string;
 }
 
@@ -15,48 +24,100 @@ interface ImageGalleryProps {
  */
 const ImageGallery = ({ images, className }: ImageGalleryProps) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const touchStartXRef = useRef<number | null>(null);
+  const SWIPE_THRESHOLD = 40;
+  const normalizedImages = useMemo<GalleryImageItem[]>(
+    () =>
+      images.map((item) =>
+        typeof item === "string"
+          ? { url: item }
+          : { url: item.url, markerId: item.markerId }
+      ),
+    [images]
+  );
 
-  if (!images || images.length === 0) {
+  const handleClose = useCallback(() => {
+    setSelectedIndex(null);
+  }, []);
+
+  const handleSelect = useCallback((index: number) => {
+    setSelectedIndex(index);
+  }, []);
+
+  const handlePrevious = useCallback(() => {
+    setSelectedIndex((prev) => {
+      if (prev === null) return prev;
+      return (prev - 1 + normalizedImages.length) % normalizedImages.length;
+    });
+  }, [normalizedImages.length]);
+
+  const handleNext = useCallback(() => {
+    setSelectedIndex((prev) => {
+      if (prev === null) return prev;
+      return (prev + 1) % normalizedImages.length;
+    });
+  }, [normalizedImages.length]);
+
+  const handleTouchStart = useCallback((event: React.TouchEvent<HTMLDivElement>) => {
+    touchStartXRef.current = event.changedTouches[0]?.clientX ?? null;
+  }, []);
+
+  const handleTouchEnd = useCallback((event: React.TouchEvent<HTMLDivElement>) => {
+    const startX = touchStartXRef.current;
+    const endX = event.changedTouches[0]?.clientX;
+    touchStartXRef.current = null;
+
+    if (startX === null || endX === undefined) return;
+
+    const deltaX = endX - startX;
+    if (Math.abs(deltaX) < SWIPE_THRESHOLD) return;
+
+    if (deltaX < 0) {
+      handleNext();
+      return;
+    }
+
+    handlePrevious();
+  }, [handleNext, handlePrevious]);
+
+  if (!normalizedImages || normalizedImages.length === 0) {
     return null;
   }
 
-  const handlePrevious = () => {
-    if (selectedIndex === null) return;
-    setSelectedIndex((selectedIndex - 1 + images.length) % images.length);
-  };
-
-  const handleNext = () => {
-    if (selectedIndex === null) return;
-    setSelectedIndex((selectedIndex + 1) % images.length);
-  };
+  const selectedImage = selectedIndex !== null ? normalizedImages[selectedIndex] : null;
+  const selectedMarkerId = selectedImage?.markerId;
 
   return (
     <>
       {/* Thumbnail Grid */}
       <div className={className}>
-        <div className="flex items-center gap-2 mb-2">
-          <ImageIcon className="h-4 w-4 text-blue" />
-          <span className="text-sm font-medium text-gray-700">
-            첨부 사진 ({images.length})
+        <div className="mb-3 flex items-center justify-between px-0.5">
+          <p className="text-xs font-medium text-text-on-surface-muted">첨부 사진</p>
+          <span className="rounded-full bg-primary/8 px-2.5 py-1 text-xs font-semibold text-text-on-surface">
+            {normalizedImages.length}
           </span>
         </div>
-        <div className="grid grid-cols-3 gap-2">
-          {images.map((url, index) => (
+        <div className="columns-2 gap-3 [column-fill:balance]">
+          {normalizedImages.map((item, index) => (
             <button
-              key={index}
-              onClick={() => setSelectedIndex(index)}
-              className="relative aspect-square rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue transition-colors cursor-pointer group"
+              key={`${item.url}-${index}`}
+              onClick={() => handleSelect(index)}
+              type="button"
+              className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-2xl border border-primary/12 bg-side-main shadow-[0_1px_6px_rgba(64,64,56,0.08)] transition-all duration-300 web:hover:-translate-y-0.5 web:hover:shadow-[0_10px_18px_rgba(64,64,56,0.16)] active:scale-[0.99] active:border-primary/35 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
             >
               <Image
-                src={url}
+                src={item.url}
                 alt={`Report photo ${index + 1}`}
-                fill
-                className="object-cover group-hover:scale-110 transition-transform duration-200"
+                width={1200}
+                height={800}
+                sizes="(max-width: 768px) 50vw, 50vw"
+                className="h-auto w-full object-cover transition-transform duration-300 web:group-hover:scale-[1.03] group-active:scale-[1.02]"
                 unoptimized
+                loading="lazy"
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-full p-2">
-                  <ImageIcon className="h-4 w-4 text-gray-700" />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 web:group-hover:bg-black/12 group-active:bg-black/10">
+                <div className="opacity-0 transition-opacity duration-300 web:group-hover:opacity-100 group-active:opacity-100 rounded-full bg-white/85 p-2">
+                  <ImageIcon className="h-4 w-4 text-text-on-surface" />
                 </div>
               </div>
             </button>
@@ -67,79 +128,119 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
       {/* Lightbox Modal */}
       <Dialog
         open={selectedIndex !== null}
-        onOpenChange={(open) => !open && setSelectedIndex(null)}
+        onOpenChange={(open) => !open && handleClose()}
       >
-        <DialogContent className="max-w-5xl w-full h-[90vh] p-0 bg-black/95 border-none">
+        <DialogContent
+          showCloseButton={false}
+          className="h-[min(92dvh,860px)] w-[min(100vw-1rem,1040px)] overflow-hidden rounded-2xl border border-white/10 bg-black/90 p-0 shadow-[0_24px_60px_rgba(0,0,0,0.45)] mo:left-0 mo:top-0 mo:h-dvh mo:w-dvw mo:max-w-none mo:translate-x-0 mo:translate-y-0 mo:rounded-none mo:border-none"
+        >
+          <DialogTitle className="sr-only">이미지 갤러리</DialogTitle>
           {selectedIndex !== null && (
-            <div className="relative w-full h-full flex items-center justify-center">
+            <div className="relative flex h-full w-full items-center justify-center">
+              <div className="pointer-events-none absolute inset-x-0 top-0 z-40 h-24 bg-linear-to-b from-black/55 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-40 h-36 bg-linear-to-t from-black/60 to-transparent" />
+
               {/* Close Button */}
               <button
-                onClick={() => setSelectedIndex(null)}
-                className="absolute top-4 right-4 z-50 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                onClick={handleClose}
+                type="button"
+                className="absolute right-3 top-3 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white transition-colors hover:bg-black/55 mo:h-11 mo:w-11"
+                aria-label="닫기"
               >
-                <X className="h-6 w-6 text-white" />
+                <X className="h-5 w-5 text-white" />
               </button>
 
               {/* Image Counter */}
-              <div className="absolute top-4 left-4 z-50 px-3 py-1 rounded-full bg-white/10 backdrop-blur-xs">
-                <span className="text-sm text-white font-medium">
-                  {selectedIndex + 1} / {images.length}
+              <div className="absolute left-3 top-3 z-50 rounded-full border border-white/15 bg-black/35 px-3 py-1.5 backdrop-blur-xs">
+                <span className="text-xs font-semibold tracking-wide text-white/95">
+                  {selectedIndex + 1} / {normalizedImages.length}
                 </span>
               </div>
 
               {/* Previous Button */}
-              {images.length > 1 && (
+              {normalizedImages.length > 1 && (
                 <button
                   onClick={handlePrevious}
-                  className="absolute left-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                  type="button"
+                  className="absolute left-3 z-50 hidden h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/35 transition-colors hover:bg-black/55 web:flex"
+                  aria-label="이전 이미지"
                 >
-                  <ChevronLeft className="h-6 w-6 text-white" />
+                  <ChevronLeft className="h-5 w-5 text-white" />
                 </button>
               )}
 
               {/* Main Image */}
-              <div className="relative w-full h-full flex items-center justify-center p-16">
+              <div
+                className="relative flex h-full w-full items-center justify-center p-3 sm:p-10"
+                onTouchStart={
+                  normalizedImages.length > 1 ? handleTouchStart : undefined
+                }
+                onTouchEnd={
+                  normalizedImages.length > 1 ? handleTouchEnd : undefined
+                }
+              >
                 <Image
-                  src={images[selectedIndex]}
+                  src={selectedImage?.url || ""}
                   alt={`Report photo ${selectedIndex + 1}`}
                   fill
+                  sizes="100vw"
+                  priority
                   className="object-contain"
                   unoptimized
                 />
               </div>
 
+              {selectedMarkerId !== undefined && (
+                <Link
+                  href={`/pullup/${selectedMarkerId}`}
+                  onClick={handleClose}
+                  className="absolute bottom-24 right-3 z-50 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/45 px-3 py-2 text-xs font-semibold text-white transition-colors web:hover:bg-black/60 active:bg-black/65"
+                >
+                  상세 보기
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </Link>
+              )}
+
               {/* Next Button */}
-              {images.length > 1 && (
+              {normalizedImages.length > 1 && (
                 <button
                   onClick={handleNext}
-                  className="absolute right-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                  type="button"
+                  className="absolute right-3 z-50 hidden h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/35 transition-colors hover:bg-black/55 web:flex"
+                  aria-label="다음 이미지"
                 >
-                  <ChevronRight className="h-6 w-6 text-white" />
+                  <ChevronRight className="h-5 w-5 text-white" />
                 </button>
               )}
 
               {/* Thumbnail Strip */}
-              {images.length > 1 && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-2 p-2 rounded-lg bg-white/10 backdrop-blur-xs">
-                  {images.map((url, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedIndex(index)}
-                      className={`relative w-16 h-16 rounded overflow-hidden border-2 transition-all ${
-                        index === selectedIndex
-                          ? "border-white scale-110"
-                          : "border-white/30 hover:border-white/60"
-                      }`}
-                    >
-                      <Image
-                        src={url}
-                        alt={`Thumbnail ${index + 1}`}
-                        fill
-                        className="object-cover"
-                        unoptimized
-                      />
-                    </button>
-                  ))}
+              {normalizedImages.length > 1 && (
+                <div className="absolute inset-x-0 bottom-0 z-50 px-3 pb-3 pt-2">
+                  <div className="mx-auto flex h-20 w-full gap-2 overflow-x-auto rounded-xl border border-white/10 bg-black/35 p-2 backdrop-blur-xs scrollbar-hidden">
+                    {normalizedImages.map((item, index) => (
+                      <button
+                        key={`${item.url}-thumb-${index}`}
+                        onClick={() => handleSelect(index)}
+                        type="button"
+                        className={cn(
+                          "relative h-16 w-16 shrink-0 overflow-hidden rounded-md border-2 transition-all",
+                          index === selectedIndex
+                            ? "scale-105 border-white"
+                            : "border-white/25 web:hover:border-white/55 active:border-white/70"
+                        )}
+                      >
+                        <Image
+                          src={item.url}
+                          alt={`Thumbnail ${index + 1}`}
+                          fill
+                          sizes="64px"
+                          className="object-cover"
+                          unoptimized
+                          loading="lazy"
+                        />
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>

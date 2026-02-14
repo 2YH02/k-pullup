@@ -35,6 +35,12 @@ const Home = async () => {
 
       <SearchInput deviceType={deviceType} />
 
+      <Section className="pb-0">
+        <SectionTitle title="모먼트" subTitle="지금 이 순간을 기록해보세요." />
+        <MomentList data={moment || []} />
+      </Section>
+
+
       {/* <Section className="py-1">
         <NoticeSlide />
       </Section> */}
@@ -49,11 +55,12 @@ const Home = async () => {
         <IconLinkList />
       </Section> */}
 
+      <AroundMarkerCarousel />
+
       {!isNewPicturesError(images) && (
         <NewImageSection data={images as NewPictures[]} />
       )}
 
-      <AroundMarkerCarousel />
 
       {/* <Section>
         <SectionTitle
@@ -62,13 +69,6 @@ const Home = async () => {
         />
         <ChatCarousel />
       </Section> */}
-
-
-      <Section className="pb-0">
-        <SectionTitle title="모먼트" subTitle="지금 이 순간을 기록해보세요." />
-        <MomentList data={moment || []} />
-      </Section>
-
 
       <Footer />
     </SideMain>

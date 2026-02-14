@@ -2,8 +2,8 @@
 
 import { type NewPictures } from "@api/marker/new-pictures";
 import Section, { SectionTitle } from "@common/section";
-import ImageCarousel from "@layout/image-carousel";
 import useImageCountStore from "@store/useImageCountStore";
+import ImageGallery from "../admin/image-gallery";
 
 const NewImageSection = ({ data }: { data: NewPictures[] }) => {
   const { count } = useImageCountStore();
@@ -16,7 +16,12 @@ const NewImageSection = ({ data }: { data: NewPictures[] }) => {
         title="최근 추가된 이미지"
         subTitle={count ? `총 등록된 이미지 ${count}개` : ""}
       />
-      <ImageCarousel data={data} priority={true} withRoute />
+      <ImageGallery
+        images={data.map((item) => ({
+          url: item.photoURL,
+          markerId: item.markerId,
+        }))}
+      />
     </Section>
   );
 };

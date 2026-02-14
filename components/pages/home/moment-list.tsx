@@ -131,22 +131,22 @@ const MomentList = ({ data }: { data: Moment[] }) => {
     const { hours, minutes } = minutesAgo(curMoment.createdAt);
 
     return (
-      <div className="absolute mo:fixed top-0 left-0 flex flex-col w-full h-full bg-black z-50 web:rounded-lg">
+      <div className="absolute mo:fixed top-0 left-0 z-50 flex h-full w-full flex-col bg-black/95 web:rounded-lg">
         {data.length > 1 && (
-          <div className="flex gap-1 p-1">
+          <div className="flex gap-1 px-2 pt-2">
             {data.map((moment) => {
               if (curMoment.storyID === moment.storyID) {
                 return (
                   <span
                     key={moment.storyID}
-                    className="grow bg-grey-light h-0.5 rounded-lg"
+                    className="h-0.5 grow rounded-lg bg-white/85"
                   />
                 );
               } else {
                 return (
                   <span
                     key={moment.storyID}
-                    className="grow bg-grey h-0.5 rounded-lg"
+                    className="h-0.5 grow rounded-lg bg-white/25"
                   />
                 );
               }
@@ -154,34 +154,40 @@ const MomentList = ({ data }: { data: Moment[] }) => {
           </div>
         )}
 
-        <div className="shrink-0 flex items-center justify-between pl-2 pr-4 h-10">
-          <div>
-            <span className="text-white mr-2">{curMoment.username}</span>
-            <span className="text-grey text-xs">
+        <div className="shrink-0 flex h-11 items-center justify-between px-3">
+          <div className="truncate">
+            <span className="mr-2 text-sm font-semibold text-white">{curMoment.username}</span>
+            <span className="text-xs text-white/65">
               {hours > 0 && `${hours}시간`}{` `}
               {`${minutes}분 전`}
             </span>
           </div>
-          <button onClick={() => setViewMoment(false)}>
-            <XIcon color="white" />
+          <button
+            type="button"
+            onClick={() => setViewMoment(false)}
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-black/35 text-white transition-colors active:bg-black/60 web:hover:bg-black/55"
+            aria-label="모먼트 닫기"
+          >
+            <XIcon size={16} color="white" />
           </button>
         </div>
-        <div className="flex flex-col w-full h-full" onClick={handleClickNext}>
-          <div className="flex flex-col items-center h-12">
-            <div className="h-12 w-3/4 text-grey-light text-center text-sm text-wrap wrap-break-word flex items-center justify-center">
+        <div className="flex h-full w-full flex-col" onClick={handleClickNext}>
+          <div className="flex h-14 flex-col items-center justify-center px-4">
+            <div className="line-clamp-1 text-center text-sm text-white/85">
               {curMoment.address}
             </div>
             <button
-              className="text-grey text-xs hover:underline"
+              className="text-xs text-white/65 underline-offset-2 transition-colors active:text-white web:hover:underline web:hover:text-white/90"
               onClick={(e) => {
                 e.stopPropagation();
                 router.push(`/pullup/${curMoment.markerID}`);
               }}
+              type="button"
             >
               위치 자세히보기
             </button>
           </div>
-          <div className="grow relative w-full h-full">
+          <div className="relative h-full w-full grow">
             <Image
               src={curMoment.photoURL}
               fill
@@ -199,7 +205,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
               }
             />
           </div>
-          <div className="w-full text-white p-4 text-wrap wrap-break-word">
+          <div className="w-full p-4 text-sm leading-relaxed text-white/95">
             {curMoment.caption}
           </div>
         </div>
@@ -208,7 +214,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
   }
 
   return (
-    <div className="overflow-hidden mb-2">
+    <div className="mb-2 overflow-hidden">
       <div
         className="flex gap-3"
         ref={sliderRef}
@@ -220,14 +226,15 @@ const MomentList = ({ data }: { data: Moment[] }) => {
       >
         <div className="flex flex-col justify-start">
           <button
-            className="relative shrink-0 bg-rainbow-gradient rounded-full w-12 h-12 bg-size-[200%_200%] animate-gradient-animate"
+            className="group relative h-12 w-12 shrink-0 rounded-full border border-primary/20 bg-side-main transition-all duration-200 active:scale-[0.97] web:hover:border-primary/40"
             onClick={() => router.push("/moments")}
+            type="button"
+            aria-label="모먼트 페이지로 이동"
           >
             <div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 bg-white dark:bg-black rounded-full
-              border-2 border-solid border-white dark:border-black flex items-center justify-center"
+              className="absolute top-1/2 left-1/2 flex h-10.5 w-10.5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-primary/12 bg-white dark:bg-black"
             >
-              <Plus className="text-grey-dark dark:text-grey" />
+              <Plus className="text-text-on-surface-muted dark:text-grey-light" size={18} />
             </div>
           </button>
         </div>
@@ -237,20 +244,26 @@ const MomentList = ({ data }: { data: Moment[] }) => {
             key={`${moment.caption} ${moment.createdAt}`}
           >
             <button
-              className="relative shrink-0 bg-rainbow-gradient rounded-full w-12 h-12 bg-size-[200%_200%] animate-gradient-animate"
+              className="group relative h-12 w-12 shrink-0 rounded-full border border-primary/20 bg-side-main transition-all duration-200 active:scale-[0.97] web:hover:border-primary/40"
               onClick={() => handleViewMoment(moment)}
+              type="button"
+              aria-label={`${getCity(moment.address)} 모먼트 보기`}
             >
               <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 bg-white rounded-full
-              border-2 border-solid border-white dark:border-black"
+                className="absolute top-1/2 left-1/2 h-10.5 w-10.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/90 dark:border-black"
                 style={{
                   backgroundImage: `url(${imageSrc[i]})`,
                   backgroundSize: "cover",
-                  backgroundPosition: "",
+                  backgroundPosition: "center",
                 }}
-              ></div>
+              />
             </button>
-            <Text display="block" textAlign="center" typography="t7">
+            <Text
+              display="block"
+              textAlign="center"
+              typography="t7"
+              className="mt-1 text-text-on-surface-muted"
+            >
               {getCity(moment.address)}
             </Text>
           </div>
