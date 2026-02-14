@@ -11,7 +11,7 @@ import { Loader2, Navigation } from "lucide-react";
 const GPS_GUIDE_KEY = "gps-guide-shown";
 const BADGE_CLASS_NAME = cn(
   "flex items-center gap-2",
-  "pl-3 pr-2 py-2 rounded-full",
+  "px-3 py-2 rounded-full",
   "bg-location-badge-bg dark:bg-location-badge-bg-dark"
 );
 const BADGE_TEXT_CLASS_NAME = cn(
