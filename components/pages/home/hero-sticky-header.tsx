@@ -38,42 +38,41 @@ const HeroStickyHeader = () => {
   return (
     <Section
       className={cn(
-        "web:pb-0",
-        "mo:sticky mo:top-0 mo:z-20",
-        "mo:backdrop-blur-sm mo:bg-[rgb(243_237_229/0.92)] mo:dark:bg-[rgb(0_0_0/0.55)]",
-        "mo:transition-[background-color,backdrop-filter] mo:duration-300 mo:ease-out"
+        "web:py-4 mo:py-2",
+        "web:sticky web:top-0 web:z-20 mo:sticky mo:top-0 mo:z-20",
+        "web:backdrop-blur-sm web:bg-surface/92 web:dark:bg-black/55 mo:backdrop-blur-sm mo:bg-surface/92 mo:dark:bg-black/55",
+        "web:transition-[background-color,backdrop-filter] web:duration-300 web:ease-out mo:transition-[background-color,backdrop-filter] mo:duration-300 mo:ease-out"
       )}
     >
       <div
         className={cn(
-          "flex items-center mo:min-h-10",
+          "flex h-10 items-center overflow-hidden",
           "web:justify-center",
-          "mo:transition-all mo:duration-300 mo:ease-out",
           isCompact ? "mo:justify-center" : "mo:justify-between",
           "max-[384px]:justify-center"
         )}
       >
         <div
           className={cn(
-            "flex flex-col grow overflow-hidden mo:origin-left max-[384px]:hidden",
-            "mo:transition-all mo:duration-300 mo:ease-out",
-            isCompact && "mo:grow-0 mo:max-w-0 mo:max-h-0 mo:opacity-0 mo:-translate-y-1 mo:pointer-events-none"
+            "flex flex-col grow overflow-hidden web:origin-left web:max-w-90 web:pr-4 mo:origin-left mo:max-w-[68%] mo:pr-3",
+            "web:transition-[max-width,opacity,transform,padding] web:duration-250 web:ease-out mo:transition-[max-width,opacity,transform,padding] mo:duration-250 mo:ease-out",
+            isCompact && "web:grow-0 web:max-w-0 web:pr-0 web:opacity-0 web:-translate-y-0.5 web:pointer-events-none mo:grow-0 mo:max-w-0 mo:pr-0 mo:opacity-0 mo:-translate-y-0.5 mo:pointer-events-none"
           )}
         >
-          <Text fontWeight="bold" typography="t5" className="text-text-on-surface">
-            Find your rhythm
+          <Text fontWeight="bold" typography="t5" className="text-text-on-surface whitespace-nowrap">
+            가까운 철봉 찾기
           </Text>
-          <Text typography="t6" className="text-text-on-surface-muted">
-            Start your routine nearby.
+          <Text typography="t6" className="text-text-on-surface-muted whitespace-nowrap max-[370px]:hidden">
+            내 주변에서 바로 시작
           </Text>
         </div>
 
         <div
           className={cn(
             "shrink-0",
-            "mo:transition-all mo:duration-300 mo:ease-out",
-            isCompact && "mo:mx-auto",
-            "max-[384px]:mx-auto"
+            "web:transition-transform web:duration-250 web:ease-out mo:transition-transform mo:duration-250 mo:ease-out",
+            isCompact && "mo:mx-auto web:mx-auto",
+            "max-[370px]:mx-auto"
           )}
         >
           <LocationBadge />
