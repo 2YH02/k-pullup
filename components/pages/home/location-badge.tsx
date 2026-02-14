@@ -1,14 +1,29 @@
 "use client";
 
-import Badge from "@common/badge";
 import useGpsTracking from "@hooks/useGpsTracking";
 import { useToast } from "@hooks/useToast";
 import LocationIcon from "@icons/location-icon";
 import useGeolocationStore from "@store/useGeolocationStore";
+import cn from "@lib/cn";
 import { Loader2, Navigation } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const GPS_GUIDE_KEY = "gps-guide-shown";
+const WRAPPER_CLASS_NAME =
+  "flex items-center";
+const BADGE_CLASS_NAME = cn(
+  "flex items-center gap-2",
+  "pl-3 pr-2 py-2 rounded-full",
+  "bg-location-badge-bg dark:bg-location-badge-bg-dark"
+);
+const BADGE_TEXT_CLASS_NAME = cn(
+  "text-[14px] font-bold leading-none whitespace-nowrap",
+  "text-location-badge-text dark:text-location-badge-text-dark"
+);
+const GPS_BUTTON_BASE_CLASS_NAME =
+  "w-7 h-7 rounded-full border border-location-badge-text/15 dark:border-location-badge-text-dark/25 bg-white/70 dark:bg-black/35 flex items-center justify-center transition-colors active:bg-grey-light dark:active:bg-grey-dark disabled:opacity-60";
+const GUIDE_BUBBLE_CLASS_NAME =
+  "absolute -bottom-12 right-0 bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap animate-fade-in pointer-events-none z-50";
 
 const LocationBadge = () => {
   // TODO: 주소 가져오기 이후 훅 분리 필요 (search/around-client 에서 사용 중)
@@ -59,106 +74,56 @@ const LocationBadge = () => {
     }
     handleGps();
   };
+  const hasRegion = !!region && !geoLocationError;
+  const title = hasRegion
+    ? region.region_2depth_name !== "" || region.region_3depth_name !== ""
+      ? `${region.region_2depth_name} ${region.region_3depth_name}`
+      : region.address_name
+    : "위치 정보 없음";
+  const iconClassName = "fill-location-badge-text dark:fill-location-badge-text-dark";
+  const iconElement = hasRegion && regionLoading
+    ? <Loader2 size={17} className="stroke-location-badge-text dark:stroke-location-badge-text-dark animate-spin" />
+    : <LocationIcon size={17} className={iconClassName} />;
 
-  if (!region || geoLocationError) {
-    return (
-      <div className="flex items-center w-full web:justify-center mo:justify-between">
-        <Badge
-          text="위치 정보 없음"
-          icon={<LocationIcon size={18} className="fill-primary" />}
-          className="border-none"
-        />
-        {/* Mobile GPS button - right aligned */}
-        <div className="relative web:hidden">
+  return (
+    <div className={WRAPPER_CLASS_NAME}>
+      <div className="relative">
+        <div className={BADGE_CLASS_NAME}>
+          {iconElement}
+          <span className={BADGE_TEXT_CLASS_NAME}>{title}</span>
           <button
             onClick={handleGpsClick}
             disabled={gpsState === "locating"}
-            className={`p-1.5 rounded-md active:bg-grey-light dark:active:bg-grey-dark transition-colors disabled:opacity-50 ${
-              showGuide ? "animate-pulse-focus" : ""
-            }`}
+            className={cn(
+              GPS_BUTTON_BASE_CLASS_NAME,
+              "web:hidden",
+              showGuide && "animate-pulse-focus"
+            )}
             aria-label={gpsState === "locating" ? "위치 찾는 중..." : "내 위치로 이동"}
           >
             {gpsState === "locating" ? (
-              <Loader2 size={20} className="stroke-primary animate-spin" />
+              <Loader2 size={16} className="stroke-location-badge-text dark:stroke-location-badge-text-dark animate-spin" />
             ) : (
               <Navigation
-                size={20}
+                size={16}
                 style={{
                   fill: gpsState === "success"
-                    ? "#62c466"
+                    ? "var(--color-green)"
                     : gpsState === "error"
-                    ? "#f55656"
-                    : "#f9b4ab",
+                      ? "var(--color-red)"
+                      : "var(--color-location-badge-text)",
                   stroke: gpsState === "success"
-                    ? "#62c466"
+                    ? "var(--color-green)"
                     : gpsState === "error"
-                    ? "#f55656"
-                    : "#f9b4ab",
+                      ? "var(--color-red)"
+                      : "var(--color-location-badge-text)",
                 }}
               />
             )}
           </button>
-          {showGuide && (
-            <div className="absolute -bottom-12 right-0 bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap animate-fade-in pointer-events-none">
-              실시간 위치 추적 시작
-              <div className="absolute -top-1 right-4 w-2 h-2 bg-black/80 rotate-45" />
-            </div>
-          )}
         </div>
-      </div>
-    );
-  }
-
-  const { region_2depth_name, region_3depth_name, address_name } = region;
-  const title =
-    region_2depth_name !== "" || region_3depth_name !== ""
-      ? `${region_2depth_name} ${region_3depth_name}`
-      : address_name;
-
-  return (
-    <div className="flex items-center w-full web:justify-center mo:justify-between">
-      <div className="flex items-center gap-1.5">
-        <Badge
-          text={title as string}
-          icon={<LocationIcon size={18} className="fill-primary" />}
-          className="pl-1.25 border-none"
-        />
-        {regionLoading && (
-          <Loader2 size={16} className="stroke-primary animate-spin" />
-        )}
-      </div>
-      {/* Mobile GPS button - right aligned */}
-      <div className="relative web:hidden">
-        <button
-          onClick={handleGpsClick}
-          disabled={gpsState === "locating"}
-          className={`p-1.5 rounded-md active:bg-grey-light dark:active:bg-grey-dark transition-colors disabled:opacity-50 ${
-            showGuide ? "animate-pulse-focus" : ""
-          }`}
-          aria-label={gpsState === "locating" ? "위치 찾는 중..." : "내 위치로 이동"}
-        >
-          {gpsState === "locating" ? (
-            <Loader2 size={20} className="stroke-primary animate-spin" />
-          ) : (
-            <Navigation
-              size={20}
-              style={{
-                fill: gpsState === "success"
-                  ? "#62c466"
-                  : gpsState === "error"
-                  ? "#f55656"
-                  : "#f9b4ab",
-                stroke: gpsState === "success"
-                  ? "#62c466"
-                  : gpsState === "error"
-                  ? "#f55656"
-                  : "#f9b4ab",
-              }}
-            />
-          )}
-        </button>
         {showGuide && (
-          <div className="absolute -bottom-12 right-0 bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap animate-fade-in pointer-events-none z-50">
+          <div className={cn(GUIDE_BUBBLE_CLASS_NAME, "web:hidden")}>
             실시간 위치 추적 시작
             <div className="absolute -top-1 right-4 w-2 h-2 bg-black/80 rotate-45" />
           </div>

@@ -160,7 +160,7 @@ const SideMain = ({
       <main
         className={cn(
           `flex flex-col fixed mo:bottom-0 web:top-1/2 web:-translate-y-1/2 web:h-[90%] web:left-6 web:max-w-96 w-full web:rounded-lg z-10
-        shadow-dark web:max-h-185 ${fullHeight ? "" : "mo:rounded-t-2xl"}
+        shadow-dark web:max-h-185 ${fullHeight ? "" : "mo:rounded-t-4xl"}
         mo:bottom-0 mo:no-touch ${
           fullHeight ? "mo:h-full" : isMobileApp ? "mo:h-[80%]" : "mo:h-[85%]"
         } select-none`,

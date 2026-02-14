@@ -9,7 +9,7 @@ interface SectionProps {
 
 const Section = ({ className, children }: SectionProps) => {
   return (
-    <section className={cn("p-4 bg-side-main dark:bg-black", className)}>
+    <section className={cn("py-4 px-6 bg-side-main dark:bg-black", className)}>
       {children}
     </section>
   );
@@ -32,8 +32,8 @@ export const SectionTitle = ({
       typography="t5"
       fontWeight="bold"
     >
-      <p>{title}</p>
-      {subTitle && <p className="text-[10px] ml-2 text-grey">{subTitle}</p>}
+      <p className="text-text-on-surface">{title}</p>
+      {subTitle && <p className="text-[10px] ml-2 text-text-on-surface-muted">{subTitle}</p>}
       <GrowBox />
       <button
         className="text-[10px] text-primary underline font-normal active:text-primary-dark"
