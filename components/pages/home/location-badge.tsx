@@ -1,12 +1,12 @@
 "use client";
 
 import useGpsTracking from "@hooks/useGpsTracking";
+import useGpsGuide from "@hooks/useGpsGuide";
 import { useToast } from "@hooks/useToast";
 import LocationIcon from "@icons/location-icon";
 import useGeolocationStore from "@store/useGeolocationStore";
 import cn from "@lib/cn";
 import { Loader2, Navigation } from "lucide-react";
-import { useEffect, useState } from "react";
 
 const GPS_GUIDE_KEY = "gps-guide-shown";
 const BADGE_CLASS_NAME = cn(
@@ -37,7 +37,7 @@ const LocationBadge = () => {
   // TODO: 주소 가져오기 이후 훅 분리 필요 (search/around-client 에서 사용 중)
   const { region, regionLoading, geoLocationError } = useGeolocationStore();
   const { toast } = useToast();
-  const [showGuide, setShowGuide] = useState(false);
+  const { showGuide, dismissGuide } = useGpsGuide({ storageKey: GPS_GUIDE_KEY });
 
   // Use GPS tracking hook for mobile
   const { gpsState, handleGps } = useGpsTracking({
@@ -46,39 +46,10 @@ const LocationBadge = () => {
     onError: (message) => toast({ description: message, variant: "destructive" }),
   });
 
-  // Check if guide should be shown (first visit on mobile)
-  useEffect(() => {
-    // Only show on mobile
-    const isMobile = window.innerWidth < 768;
-    if (!isMobile) return;
-
-    // Check if guide was already shown
-    const guideShown = sessionStorage.getItem(GPS_GUIDE_KEY);
-    if (!guideShown) {
-      // Show guide after a short delay
-      const showTimer = setTimeout(() => {
-        setShowGuide(true);
-      }, 1000);
-
-      // Auto hide after 3 seconds
-      const hideTimer = setTimeout(() => {
-        setShowGuide(false);
-        sessionStorage.setItem(GPS_GUIDE_KEY, "true");
-      }, 3000);
-
-      return () => {
-        clearTimeout(showTimer);
-        clearTimeout(hideTimer);
-      };
-    }
-  }, []);
-
   // Handle GPS button click
   const handleGpsClick = () => {
-    // Mark guide as shown
     if (showGuide) {
-      sessionStorage.setItem(GPS_GUIDE_KEY, "true");
-      setShowGuide(false);
+      dismissGuide();
     }
     handleGps();
   };
