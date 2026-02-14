@@ -1,6 +1,6 @@
 "use client";
 
-import useGpsTracking from "@hooks/useGpsTracking";
+import useGpsTracking, { type GpsState } from "@hooks/useGpsTracking";
 import useGpsGuide from "@hooks/useGpsGuide";
 import { useToast } from "@hooks/useToast";
 import LocationIcon from "@icons/location-icon";
@@ -27,10 +27,46 @@ const GPS_LOCATING_STROKE_CLASS_NAME =
 const BADGE_ICON_CLASS_NAME =
   "fill-location-badge-text dark:fill-location-badge-text-dark";
 
-const getGpsIconColor = (gpsState: "idle" | "locating" | "success" | "error") => {
+const getGpsIconColor = (gpsState: GpsState) => {
   if (gpsState === "success") return "var(--color-green)";
   if (gpsState === "error") return "var(--color-red)";
   return "var(--color-location-badge-text)";
+};
+
+interface GpsActionButtonProps {
+  gpsState: GpsState;
+  showGuide: boolean;
+  onClick: () => void;
+}
+
+const GpsActionButton = ({ gpsState, showGuide, onClick }: GpsActionButtonProps) => {
+  const isGpsLocating = gpsState === "locating";
+  const gpsIconColor = getGpsIconColor(gpsState);
+
+  return (
+    <button
+      onClick={onClick}
+      disabled={isGpsLocating}
+      className={cn(
+        GPS_BUTTON_BASE_CLASS_NAME,
+        "web:hidden",
+        showGuide && "animate-pulse-focus"
+      )}
+      aria-label={isGpsLocating ? "위치 찾는 중..." : "내 위치로 이동"}
+    >
+      {isGpsLocating ? (
+        <Loader2 size={16} className={GPS_LOCATING_STROKE_CLASS_NAME} />
+      ) : (
+        <Navigation
+          size={16}
+          style={{
+            fill: gpsIconColor,
+            stroke: gpsIconColor,
+          }}
+        />
+      )}
+    </button>
+  );
 };
 
 const LocationBadge = () => {
@@ -59,8 +95,6 @@ const LocationBadge = () => {
       ? `${region.region_2depth_name} ${region.region_3depth_name}`
       : region.address_name
     : "위치 정보 없음";
-  const isGpsLocating = gpsState === "locating";
-  const gpsIconColor = getGpsIconColor(gpsState);
   const iconElement = hasRegion && regionLoading
     ? <Loader2 size={17} className={GPS_LOCATING_STROKE_CLASS_NAME} />
     : <LocationIcon size={17} className={BADGE_ICON_CLASS_NAME} />;
@@ -71,28 +105,11 @@ const LocationBadge = () => {
         <div className={BADGE_CLASS_NAME}>
           {iconElement}
           <span className={BADGE_TEXT_CLASS_NAME}>{title}</span>
-          <button
+          <GpsActionButton
+            gpsState={gpsState}
+            showGuide={showGuide}
             onClick={handleGpsClick}
-            disabled={isGpsLocating}
-            className={cn(
-              GPS_BUTTON_BASE_CLASS_NAME,
-              "web:hidden",
-              showGuide && "animate-pulse-focus"
-            )}
-            aria-label={isGpsLocating ? "위치 찾는 중..." : "내 위치로 이동"}
-          >
-            {isGpsLocating ? (
-              <Loader2 size={16} className={GPS_LOCATING_STROKE_CLASS_NAME} />
-            ) : (
-              <Navigation
-                size={16}
-                style={{
-                  fill: gpsIconColor,
-                  stroke: gpsIconColor,
-                }}
-              />
-            )}
-          </button>
+          />
         </div>
         {showGuide && (
           <div className={cn(GUIDE_BUBBLE_CLASS_NAME, "web:hidden")}>
