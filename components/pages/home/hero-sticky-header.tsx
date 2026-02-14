@@ -49,12 +49,13 @@ const HeroStickyHeader = () => {
           "flex items-center mo:min-h-10",
           "web:justify-center",
           "mo:transition-all mo:duration-300 mo:ease-out",
-          isCompact ? "mo:justify-center" : "mo:justify-between"
+          isCompact ? "mo:justify-center" : "mo:justify-between",
+          "max-[384px]:justify-center"
         )}
       >
         <div
           className={cn(
-            "flex flex-col grow overflow-hidden mo:origin-left",
+            "flex flex-col grow overflow-hidden mo:origin-left max-[384px]:hidden",
             "mo:transition-all mo:duration-300 mo:ease-out",
             isCompact && "mo:grow-0 mo:max-w-0 mo:max-h-0 mo:opacity-0 mo:-translate-y-1 mo:pointer-events-none"
           )}
@@ -71,7 +72,8 @@ const HeroStickyHeader = () => {
           className={cn(
             "shrink-0",
             "mo:transition-all mo:duration-300 mo:ease-out",
-            isCompact && "mo:mx-auto"
+            isCompact && "mo:mx-auto",
+            "max-[384px]:mx-auto"
           )}
         >
           <LocationBadge />
