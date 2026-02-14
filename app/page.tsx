@@ -11,15 +11,14 @@ import getDeviceType from "@lib/get-device-type";
 import AroundMarkerCarousel from "@pages/home/around-marker-carousel";
 import ArticleCarousel from "@pages/home/article-carousel";
 import ChatCarousel from "@pages/home/chat-carousel";
+import HeroStickyHeader from "@pages/home/hero-sticky-header";
 import IconLinkList from "@pages/home/icon-link-list";
-import LocationBadge from "@pages/home/location-badge";
 import MomentList from "@pages/home/moment-list";
 import NewImageSection from "@pages/home/new-image-section";
 import NoticeSlide from "@pages/home/notice-slide";
 import SearchInput from "@pages/home/search-input";
 import { headers } from "next/headers";
 import { type Device } from "./mypage/page";
-import Text from "@/components/common/text";
 
 const Home = async () => {
   const images = await newPictures();
@@ -32,13 +31,7 @@ const Home = async () => {
 
   return (
     <SideMain withNav deviceType={deviceType} bodyStyle="pb-0">
-      <Section className="flex items-center justify-center web:pb-0">
-        <div className="flex flex-col grow">
-          <Text fontWeight="bold" typography="t5" className="text-text-on-surface">Find your rhythm</Text>
-          <Text typography="t6" className="text-text-on-surface-muted">Start your routine nearby.</Text>
-        </div>
-        <LocationBadge />
-      </Section>
+      <HeroStickyHeader />
 
       <SearchInput deviceType={deviceType} />
 
