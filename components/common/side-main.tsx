@@ -7,9 +7,9 @@ import BottomNav from "@layout/bottom-nav";
 import cn from "@lib/cn";
 import useScrollRefStore from "@store/useScrollRefStore";
 import useSheetHeightStore from "@store/useSheetHeightStore";
+import { House, MessageCircle, Plus, Trophy, UserRound } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { BsHouseDoorFill, BsChatDots, BsPersonCircle, BsGeoAlt } from "react-icons/bs";
 import SheetHeightProvider from "../provider/sheet-height-provider";
 import Text from "./text";
 
@@ -35,26 +35,33 @@ interface SideMainProps {
 const menus = [
   {
     name: "홈",
-    icon: <BsHouseDoorFill size={22} className="fill-grey" />,
-    iconActive: <BsHouseDoorFill size={22} className="fill-primary" />,
+    icon: <House size={20} strokeWidth={2} className="text-text-on-surface-muted dark:text-grey" />,
+    iconActive: <House size={20} strokeWidth={2.2} className="text-primary dark:text-primary-light" />,
     path: "/",
   },
   {
     name: "소셜",
-    icon: <BsChatDots size={22} className="fill-grey" />,
-    iconActive: <BsChatDots size={22} className="fill-primary" />,
+    icon: <MessageCircle size={20} strokeWidth={2} className="text-text-on-surface-muted dark:text-grey" />,
+    iconActive: <MessageCircle size={20} strokeWidth={2.2} className="text-primary dark:text-primary-light" />,
     path: "/social",
   },
   {
     name: "등록",
-    icon: <BsGeoAlt size={22} className="fill-grey" />,
-    iconActive: <BsGeoAlt size={22} className="fill-primary" />,
+    icon: <Plus size={28} strokeWidth={2.4} className="text-white" />,
+    iconActive: <Plus size={28} strokeWidth={2.6} className="text-white" />,
     path: "/register",
+    isPrimary: true,
+  },
+  {
+    name: "챌린지",
+    icon: <Trophy size={20} strokeWidth={2} className="text-text-on-surface-muted dark:text-grey" />,
+    iconActive: <Trophy size={20} strokeWidth={2.2} className="text-primary dark:text-primary-light" />,
+    path: "/ranking",
   },
   {
     name: "내 정보",
-    icon: <BsPersonCircle size={22} className="fill-grey" />,
-    iconActive: <BsPersonCircle size={22} className="fill-primary" />,
+    icon: <UserRound size={20} strokeWidth={2} className="text-text-on-surface-muted dark:text-grey" />,
+    iconActive: <UserRound size={20} strokeWidth={2.2} className="text-primary dark:text-primary-light" />,
     path: "/mypage",
   },
 ];
@@ -207,13 +214,14 @@ const SideMain = ({
         <div
           ref={containerRef}
           className={cn(
-            "grow pb-12 overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
+            "grow overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
+            withNav ? "pb-20 mo:pb-24" : "pb-12",
             headerTitle && fullHeight
               ? isMobileApp
                 ? "mo:pt-24"
                 : "mo:pt-10"
               : "",
-            deviceType === "ios-mobile-app" ? "pb-20" : "",
+            deviceType === "ios-mobile-app" && withNav ? "pb-28" : "",
             bodyStyle
           )}
           onScroll={onScroll}
@@ -222,7 +230,7 @@ const SideMain = ({
         </div>
 
         {withNav && (
-          <div className="shrink-0 overflow-hidden web:rounded-lg border-t border-solid dark:border-grey-dark">
+          <div className="shrink-0 overflow-visible web:rounded-lg border-t border-solid dark:border-grey-dark">
             <BottomNav menus={menus} width={"full"} deviceType={deviceType} />
           </div>
         )}
