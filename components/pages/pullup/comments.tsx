@@ -189,11 +189,13 @@ const Comments = ({ markerId, initialComments }: CommentsProps) => {
   return (
     <div>
       {comments.length <= 0 && !commentsLoading && (
-        <div className="flex flex-col items-center justify-center mt-2 mb-4">
-          <div className="mb-4">
+        <div className="mt-2 mb-4 flex flex-col items-center justify-center rounded-xl border border-grey-light/75 bg-search-input-bg/40 px-4 py-6 dark:border-grey-dark/80 dark:bg-black/30">
+          <div className="mb-3">
             <CommentIcon />
           </div>
-          <Text typography="t6">우와, 댓글이 하나도 없네요 ㅜㅜ</Text>
+          <Text typography="t6" className="text-text-on-surface dark:text-grey-light">
+            우와, 댓글이 하나도 없네요 ㅜㅜ
+          </Text>
         </div>
       )}
       {comments.map((comment, index) => {
@@ -231,17 +233,23 @@ const Comments = ({ markerId, initialComments }: CommentsProps) => {
           <div
             key={comment.commentId}
             className={cn("p-2", {
-              "border-b border-solid border-[#ddd]":
+              "border-b border-solid border-grey-light/85 dark:border-grey-dark/85":
                 index !== comments.length - 1,
             })}
           >
             <div className="flex justify-between items-center mb-1">
-              <Text typography="t6" fontWeight="bold">
+              <Text
+                typography="t6"
+                fontWeight="bold"
+                className="text-text-on-surface dark:text-grey-light"
+              >
                 {comment.username}
               </Text>
 
               {(user?.chulbong || user?.userId === comment.userId) && (
                 <button
+                  type="button"
+                  className="rounded-full p-0.5 text-grey-dark transition-colors duration-150 active:bg-black/5 active:text-black focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:text-grey dark:active:bg-white/10 dark:active:text-white"
                   onClick={() => {
                     if (
                       deleteLoading ||
@@ -259,18 +267,19 @@ const Comments = ({ markerId, initialComments }: CommentsProps) => {
                       cancel: true,
                     });
                   }}
+                  aria-label="댓글 삭제"
                 >
-                  <BsX size={22} color="#777" />
+                  <BsX size={22} />
                 </button>
               )}
             </div>
             <div>
-              <Text className="break-all text-[15px]">
+              <Text className="break-all text-[15px] text-text-on-surface dark:text-grey-light">
                 {comment.commentText}
               </Text>
             </div>
             <div>
-              <Text typography="t7" className="text-grey">
+              <Text typography="t7" className="text-grey dark:text-grey">
                 {formatDate(comment.postedAt)}
               </Text>
             </div>
@@ -295,7 +304,7 @@ const Comments = ({ markerId, initialComments }: CommentsProps) => {
             />
             <div className="flex items-center">
               <Button
-                className="w-3/4 bg-primary"
+                className="w-3/4 bg-primary dark:bg-primary-dark"
                 onClick={handleCreate}
                 disabled={createLoading}
               >

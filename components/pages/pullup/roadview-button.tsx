@@ -21,7 +21,7 @@ const RoadviewButton = ({ lat, lng }: RoadviewButtonProps) => {
     <IconButton
       icon={<BsFillPinMapFill size={20} className="fill-primary" />}
       text="거리뷰"
-      className="flex-1"
+      className="flex-1 active:bg-black/5 dark:active:bg-white/10"
       onClick={open}
     />
   );

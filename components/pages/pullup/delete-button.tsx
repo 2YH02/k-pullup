@@ -42,7 +42,7 @@ const DeleteButton = ({ markerId }: DeleteButtonProps) => {
     <IconButton
       icon={<BsTrash size={20} className="fill-primary" />}
       text="삭제"
-      className="flex-1"
+      className="flex-1 active:bg-black/5 dark:active:bg-white/10"
       onClick={handleClick}
     />
   );

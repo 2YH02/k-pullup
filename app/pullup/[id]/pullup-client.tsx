@@ -4,10 +4,8 @@ import { type Device } from "@/app/mypage/page";
 import { type Marker } from "@/types/marker.types";
 import { type CommentsRes } from "@api/comment/get-comments";
 import { type FacilitiesRes } from "@api/marker/get-facilities";
-import Ads from "@common/ads";
 import Badge from "@common/badge";
 import Divider from "@common/divider";
-import ListItem, { ListContents, ListRight } from "@common/list-item";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
@@ -139,28 +137,28 @@ const PullupClient = ({
       <ImageCarousel photos={markerPhotos} />
 
       <Section className="py-0">
-        <div className="flex items-center mt-2 flex-wrap">
+        <div className="mt-2 flex flex-wrap items-center gap-2">
           {!철봉 ||
             !평행봉 ||
             (철봉.quantity <= 0 && 평행봉.quantity <= 0 && (
               <Badge
                 text={`기구 개수 정보 없음`}
-                className="flex items-center justify-center mr-2 mb-2 h-7 border-none shadow-full dark:shadow-[rgba(255,255,255,0.1)]"
-                textStyle="leading-3"
+                className="flex h-7 items-center justify-center border-none bg-search-input-bg/75 pr-3.5 pl-3.5 shadow-full dark:bg-black/35 dark:shadow-[rgba(255,255,255,0.1)]"
+                textStyle="leading-3 text-text-on-surface-muted dark:text-grey-light"
               />
             ))}
           {철봉 && 철봉.quantity > 0 && (
             <Badge
               text={`철봉 ${철봉?.quantity}개`}
-              className="flex items-center justify-center mr-2 mb-2 h-7 border-none shadow-full dark:shadow-[rgba(255,255,255,0.1)]"
-              textStyle="leading-3"
+              className="flex h-7 items-center justify-center border-none bg-search-input-bg/75 pr-3.5 pl-3.5 shadow-full dark:bg-black/35 dark:shadow-[rgba(255,255,255,0.1)]"
+              textStyle="leading-3 text-text-on-surface dark:text-grey-light"
             />
           )}
           {평행봉 && 평행봉.quantity > 0 && (
             <Badge
               text={`평행봉 ${평행봉?.quantity}개`}
-              className="flex items-center justify-center mr-2 mb-2 h-7 border-none shadow-full dark:shadow-[rgba(255,255,255,0.1)]"
-              textStyle="leading-3"
+              className="flex h-7 items-center justify-center border-none bg-search-input-bg/75 pr-3.5 pl-3.5 shadow-full dark:bg-black/35 dark:shadow-[rgba(255,255,255,0.1)]"
+              textStyle="leading-3 text-text-on-surface dark:text-grey-light"
             />
           )}
           <WeatherBadge lat={marker.latitude} lng={marker.longitude} />
@@ -176,20 +174,26 @@ const PullupClient = ({
           markerId={marker.markerId}
           isAdmin={marker.isChulbong || false}
         />
-        <Text className="mt-2 text-grey dark:text-[#999]" typography="t7">
+        <Text className="mt-3 text-grey dark:text-grey" typography="t7">
           최종 수정일: {formatDate(marker.updatedAt)}
         </Text>
-        <div className="flex items-center justify-between">
-          <div>
-            <Link href={`/pullup/${marker.markerId}/report`} className="mr-2">
-              <Text typography="t7" className="underline">
+        <div className="mt-2 flex items-end justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <Link
+              href={`/pullup/${marker.markerId}/report`}
+              className="rounded-sm text-primary underline underline-offset-2 transition-colors duration-150 active:text-primary-dark focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35"
+            >
+              <Text typography="t7" className="text-inherit">
                 정보 수정 요청
               </Text>
             </Link>
 
             {marker.isChulbong && (
-              <Link href={`/pullup/${marker.markerId}/facilities`}>
-                <Text typography="t7" className="underline">
+              <Link
+                href={`/pullup/${marker.markerId}/facilities`}
+                className="rounded-sm text-primary underline underline-offset-2 transition-colors duration-150 active:text-primary-dark focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35"
+              >
+                <Text typography="t7" className="text-inherit">
                   기구 개수 수정
                 </Text>
               </Link>
@@ -197,17 +201,18 @@ const PullupClient = ({
           </div>
 
           {marker.username && (
-            <div className="flex items-center max-w-[50%]">
-              <span className="mr-1 mb-0.75 shrink-0">
-                <StarIcon />
-              </span>
+            <div className="min-w-0 max-w-[58%] rounded-xl border border-location-badge-bg/85 bg-location-badge-bg/65 px-2.5 py-1.5 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/50">
               <button
                 onClick={() => {
                   router.push(`/user-info/${marker.username}`);
                 }}
-                className="text-left min-w-0"
+                className="flex w-full min-w-0 items-center gap-1.5 rounded-sm text-left transition-opacity duration-150 active:opacity-75 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35"
               >
-                <Text typography="t7" className="truncate block">
+                <StarIcon />
+                <Text
+                  typography="t7"
+                  className="block truncate text-location-badge-text dark:text-location-badge-text-dark"
+                >
                   {marker.username.length > 10 ? marker.username : `정보 제공자: ${marker.username}`}
                 </Text>
               </button>
@@ -220,11 +225,10 @@ const PullupClient = ({
         <ButtonList marker={marker} />
       </Section>
 
-      <Divider className="h-2" />
-      <Ads type="feed" />
-      <Divider className="h-2" />
+      {/* <Ads type="feed" /> */}
+      <Divider className="h-px bg-black/10 dark:bg-white/10" />
 
-      <div className="sticky top-0 left-0 bg-white dark:bg-black text-black dark:text-grey-light h-11 z-50 flex">
+      <div className="sticky top-0 left-0 z-50 flex h-11 bg-side-main text-text-on-surface dark:bg-black dark:text-grey-light">
         {["사진", "댓글"].map((label, index) => (
           <button
             key={index}
@@ -236,12 +240,11 @@ const PullupClient = ({
               setActiveIndex(index);
             }}
             className={`
-              grow px-4 py-2 whitespace-nowrap
-              border-b-2 transition-colors
+              grow whitespace-nowrap border-b-2 px-4 py-2 text-[15px] font-semibold transition-[color,border-color,background-color] duration-150 active:bg-search-input-bg/55 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:active:bg-grey-dark/35
               ${
                 activeIndex === index
-                  ? "border-primary-dark text-black dark:text-grey-light"
-                  : "border-gray-200 text-gray-500"
+                  ? "border-primary-dark text-text-on-surface dark:text-grey-light"
+                  : "border-transparent text-grey-dark dark:text-grey"
               }
             `}
           >
@@ -257,11 +260,11 @@ const PullupClient = ({
               return (
                 <div
                   key={comment.commentId}
-                  className="relative bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded-r-lg mb-4"
+                  className="relative mb-3 rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/55 px-4 py-3.5 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/45"
                 >
                   {(user?.chulbong || user?.userId === comment.userId) && (
                     <button
-                      className="absolute top-2 right-2"
+                      className="absolute top-2 right-2 rounded-full p-0.5 text-grey-dark transition-colors duration-150 active:bg-black/5 active:text-black focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:text-grey-light dark:active:bg-white/10 dark:active:text-white"
                       onClick={async () => {
                         if (
                           deleteLoading ||
@@ -271,21 +274,22 @@ const PullupClient = ({
                           return;
                         await handleDelete(comment.commentId);
                       }}
+                      aria-label="리뷰 삭제"
                     >
-                      <BsX size={22} color="#777" />
+                      <BsX size={22} />
                     </button>
                   )}
-                  <div className="flex flex-col select-none pr-6">
+                  <div className="flex select-none flex-col pr-6">
                     <Text
                       fontWeight="bold"
                       typography="t5"
-                      className="text-black-light dark:text-white text-center mb-1"
+                      className="mb-1 text-center text-text-on-surface dark:text-grey-light"
                     >
                       {comment.commentText.replace('🔉 ', '')}
                     </Text>
                     <Text
                       typography="t7"
-                      className="text-grey-dark dark:text-grey text-right"
+                      className="text-right text-text-on-surface-muted dark:text-grey"
                     >
                       - {formatDate(comment.postedAt)}
                     </Text>
@@ -322,7 +326,7 @@ const PullupClient = ({
         </Section>
       </div>
 
-      <Divider className="h-2" />
+      <Divider className="h-px bg-black/10 dark:bg-white/10" />
 
       <div
         ref={(el) => {
@@ -336,7 +340,10 @@ const PullupClient = ({
             buttonTitle="리뷰 작성하기"
             onClickButton={() => show("write-comments")}
           />
-          <Comments markerId={marker.markerId} initialComments={initialComments} />
+          <Comments
+            markerId={marker.markerId}
+            initialComments={initialComments}
+          />
         </Section>
       </div>
     </SideMain>

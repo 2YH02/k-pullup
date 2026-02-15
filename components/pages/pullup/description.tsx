@@ -3,7 +3,6 @@
 import useMapStore from "@/store/useMapStore";
 import updateDescription from "@api/marker/update-description";
 import Button from "@common/button";
-import Input from "@common/input";
 import Text from "@common/text";
 import useInput from "@hooks/useInput";
 import EditIcon from "@icons/edit-icon";
@@ -58,14 +57,14 @@ const Description = ({ description, markerId, isAdmin }: DescriptionProps) => {
     return (
       <div className="mt-2">
         <textarea
-          className="border border-primary bg-white dark:bg-black dark:text-white text-black w-full p-2 rounded-sm resize-none focus:outline-hidden"
+          className="w-full resize-none rounded-lg border border-primary/45 bg-search-input-bg/45 p-2.5 text-black transition-colors duration-150 focus:outline-hidden focus:ring-2 focus:ring-primary/35 dark:border-grey-dark dark:bg-black/35 dark:text-grey-light"
           maxLength={40}
           rows={4}
           placeholder="해당 위치에 대한 설명을 40자 이내로 작성해주세요."
           value={descriptionInput.value}
           onChange={descriptionInput.onChange}
         />
-        <div className="flex mt-2">
+        <div className="mt-2 flex items-center">
           <Button
             onClick={() => {
               setEdit(false);
@@ -73,14 +72,14 @@ const Description = ({ description, markerId, isAdmin }: DescriptionProps) => {
             }}
             size="sm"
             variant="contrast"
-            className="flex items-center justify-center w-14 h-8"
+            className="flex h-8 w-14 items-center justify-center"
           >
             취소
           </Button>
           <Button
             onClick={handleClick}
             size="sm"
-            className="flex items-center justify-center w-14 h-8 ml-2"
+            className="ml-2 flex h-8 w-14 items-center justify-center"
             disabled={description === descriptionInput.value || loading}
           >
             {loading ? (
@@ -90,20 +89,28 @@ const Description = ({ description, markerId, isAdmin }: DescriptionProps) => {
             )}
           </Button>
         </div>
-        <div className="h-4">
-          <div className="text-red text-xs">{editError}</div>
+        <div className="h-4 pt-1">
+          <div className="text-xs text-red">{editError}</div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex">
-      <Text typography="t6" fontWeight="bold" className="break-all mr-2">
+    <div className="mt-1 flex items-start">
+      <Text
+        typography="t6"
+        fontWeight="bold"
+        className="mr-2 break-all text-text-on-surface dark:text-grey-light"
+      >
         {descriptionValue || "작성된 설명이 없습니다."}
       </Text>
       {isAdmin && (
-        <button onClick={() => setEdit(true)} className="block">
+        <button
+          onClick={() => setEdit(true)}
+          className="mt-0.5 rounded-sm p-1 transition-colors duration-150 active:bg-black/5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:active:bg-white/10"
+          aria-label="설명 수정"
+        >
           <EditIcon
             size={14}
             className="stroke-grey-dark dark:stroke-grey-light dark:fill-black"

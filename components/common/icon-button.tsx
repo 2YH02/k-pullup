@@ -18,16 +18,18 @@ const IconButton = forwardRef(
     return (
       <button
         className={cn(
-          "h-13.75 w-13.75 flex flex-col items-center justify-center rounded-md gap-1",
+          "group h-13.75 w-13.75 flex flex-col items-center justify-center rounded-lg gap-1.5 text-text-on-surface dark:text-grey-light transition-[background-color,transform,color] duration-150 active:scale-[0.98] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 disabled:opacity-45 disabled:cursor-not-allowed",
           className
         )}
         onClick={onClick}
         ref={ref}
         disabled={disabled}
       >
-        <div>{icon}</div>
+        <div className="transition-transform duration-150 group-active:translate-y-px">
+          {icon}
+        </div>
         {text && (
-          <Text typography="t7" className="select-none">
+          <Text typography="t7" className="select-none text-inherit">
             {text}
           </Text>
         )}

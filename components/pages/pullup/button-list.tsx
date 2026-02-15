@@ -25,8 +25,8 @@ const ButtonList = ({ marker }: ButtonListProps) => {
     favCount > 0 && setFavCount((prev) => prev - 1);
 
   return (
-    <div className="flex border-t border-solid border-grey-light dark:border-grey-dark">
-      <div className="flex-1 relative">
+    <div className="flex overflow-hidden rounded-xl border border-grey-light/90 bg-search-input-bg/62 dark:border-grey-dark/90 dark:bg-black/38">
+      <div className="relative flex-1">
         <BookmarkButton
           markerId={marker.markerId}
           favorited={marker.favorited || false}
@@ -34,7 +34,7 @@ const ButtonList = ({ marker }: ButtonListProps) => {
           decreaseFavCount={decreaseFavCount}
         />
         {favCount > 0 && (
-          <div className="absolute top-1 right-4 text-[10px] w-4 h-4 flex items-center justify-center bg-red rounded-full text-white">
+          <div className="absolute top-2 right-3 flex h-4 min-w-4 items-center justify-center rounded-full bg-red px-1 text-[10px] text-white">
             {favCount}
           </div>
         )}
@@ -46,7 +46,7 @@ const ButtonList = ({ marker }: ButtonListProps) => {
         <IconButton
           icon={<BsPersonBoundingBox size={20} className="fill-primary" />}
           text="모먼트"
-          className="w-full"
+          className="w-full active:bg-black/5 dark:active:bg-white/10"
           onClick={() => router.push(`/pullup/${marker.markerId}/moment`)}
         />
       </div>

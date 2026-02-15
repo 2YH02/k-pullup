@@ -160,99 +160,103 @@ const ImageList = ({
     <div ref={containerRef}>
       {photos && images && photos.length > 0 ? (
         <>
-                    <div className="flex">
-          <div className="w-1/2 mr-1">
-            {photos.map((photo, i) => {
-              if (i % 2 === 1) return;
-              return (
-                <div
-                  key={photo.photoId}
-                  className="relative w-full mb-2"
-                  onMouseEnter={() => handleMouseEnter(photo.photoId)}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <button
-                    className="w-full"
-                    onClick={() => {
-                      openModal({ images, curIndex: i });
-                    }}
+          <div className="flex gap-2">
+            <div className="w-1/2">
+              {photos.map((photo, i) => {
+                if (i % 2 === 1) return;
+                return (
+                  <div
+                    key={photo.photoId}
+                    className="relative mb-2 w-full"
+                    onMouseEnter={() => handleMouseEnter(photo.photoId)}
+                    onMouseLeave={handleMouseLeave}
                   >
-                    <ImageWrap
-                      src={photo.photoUrl}
-                      w={230}
-                      h={230}
-                      alt="상세"
-                      className="rounded-md"
-                    />
-                  </button>
-                  {isOwnerOrAdmin && (
                     <button
-                      onClick={(e) => handleDeleteClick(photo.photoId, e)}
-                      disabled={deletingPhotoId === photo.photoId}
-                      className={`absolute top-2 right-2 bg-black/50 hover:bg-black/70 rounded-full p-1.5 transition-all duration-300 disabled:opacity-50 ${
-                        showMobileDeleteBtn || visibleDeleteBtn === photo.photoId
-                          ? "opacity-100"
-                          : "opacity-0 pointer-events-none"
-                      }`}
-                      aria-label="사진 삭제"
+                      className="group block w-full overflow-hidden rounded-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35"
+                      onClick={() => {
+                        openModal({ images, curIndex: i });
+                      }}
                     >
-                      <BsX size={20} className="text-white" />
+                      <ImageWrap
+                        src={photo.photoUrl}
+                        w={230}
+                        h={230}
+                        alt="상세"
+                        className="rounded-md transition-transform duration-200 group-active:scale-[0.99]"
+                      />
                     </button>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-          <div className="w-1/2 ml-1">
-            {photos.map((photo, i) => {
-              if (i % 2 !== 1) return;
-              return (
-                <div
-                  key={photo.photoId}
-                  className="relative w-full mb-2"
-                  onMouseEnter={() => handleMouseEnter(photo.photoId)}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <button
-                    className="w-full"
-                    onClick={() => {
-                      openModal({ images, curIndex: i });
-                    }}
+                    {isOwnerOrAdmin && (
+                      <button
+                        onClick={(e) => handleDeleteClick(photo.photoId, e)}
+                        disabled={deletingPhotoId === photo.photoId}
+                        className={`absolute top-2 right-2 rounded-full border border-white/35 bg-black/55 p-1.5 text-white transition-all duration-200 hover:bg-black/75 active:scale-[0.96] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/70 disabled:opacity-50 ${
+                          showMobileDeleteBtn || visibleDeleteBtn === photo.photoId
+                            ? "opacity-100"
+                            : "pointer-events-none opacity-0"
+                        }`}
+                        aria-label="사진 삭제"
+                      >
+                        <BsX size={20} />
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            <div className="w-1/2">
+              {photos.map((photo, i) => {
+                if (i % 2 !== 1) return;
+                return (
+                  <div
+                    key={photo.photoId}
+                    className="relative mb-2 w-full"
+                    onMouseEnter={() => handleMouseEnter(photo.photoId)}
+                    onMouseLeave={handleMouseLeave}
                   >
-                    <ImageWrap
-                      src={photo.photoUrl}
-                      w={230}
-                      h={230}
-                      alt="상세"
-                      className="rounded-md"
-                    />
-                  </button>
-                  {isOwnerOrAdmin && (
                     <button
-                      onClick={(e) => handleDeleteClick(photo.photoId, e)}
-                      disabled={deletingPhotoId === photo.photoId}
-                      className={`absolute top-2 right-2 bg-black/50 hover:bg-black/70 rounded-full p-1.5 transition-all duration-300 disabled:opacity-50 ${
-                        showMobileDeleteBtn || visibleDeleteBtn === photo.photoId
-                          ? "opacity-100"
-                          : "opacity-0 pointer-events-none"
-                      }`}
-                      aria-label="사진 삭제"
+                      className="group block w-full overflow-hidden rounded-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35"
+                      onClick={() => {
+                        openModal({ images, curIndex: i });
+                      }}
                     >
-                      <BsX size={20} className="text-white" />
+                      <ImageWrap
+                        src={photo.photoUrl}
+                        w={230}
+                        h={230}
+                        alt="상세"
+                        className="rounded-md transition-transform duration-200 group-active:scale-[0.99]"
+                      />
                     </button>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+                    {isOwnerOrAdmin && (
+                      <button
+                        onClick={(e) => handleDeleteClick(photo.photoId, e)}
+                        disabled={deletingPhotoId === photo.photoId}
+                        className={`absolute top-2 right-2 rounded-full border border-white/35 bg-black/55 p-1.5 text-white transition-all duration-200 hover:bg-black/75 active:scale-[0.96] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/70 disabled:opacity-50 ${
+                          showMobileDeleteBtn || visibleDeleteBtn === photo.photoId
+                            ? "opacity-100"
+                            : "pointer-events-none opacity-0"
+                        }`}
+                        aria-label="사진 삭제"
+                      >
+                        <BsX size={20} />
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </>
       ) : (
-        <div className="flex flex-col items-center justify-center w-full mt-2">
-          <div className="mb-4">
+        <div className="mt-2 flex w-full flex-col items-center justify-center rounded-xl border border-grey-light/75 bg-search-input-bg/40 px-4 py-6 dark:border-grey-dark/80 dark:bg-black/30">
+          <div className="mb-3">
             <ImageIcon />
           </div>
-          <Text display="block" typography="t6">
+          <Text
+            display="block"
+            typography="t6"
+            className="text-text-on-surface dark:text-grey-light"
+          >
             우와, 사진이 하나도 없네요 ㅜㅜ
           </Text>
         </div>

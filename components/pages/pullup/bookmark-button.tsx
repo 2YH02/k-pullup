@@ -100,7 +100,7 @@ const BookmarkButton = ({
         )
       }
       text="즐겨찾기"
-      className="w-full"
+      className="w-full active:bg-black/5 dark:active:bg-white/10"
       onClick={handleClick}
     />
   );
