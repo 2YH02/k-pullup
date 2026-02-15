@@ -39,7 +39,7 @@ const RankingPage = async () => {
   if (!markers || markers.markers.length <= 0) {
     return (
       <NotFound
-        headerTitle="저장한 장소"
+        headerTitle="내가 등록한 위치"
         hasBackButton
         prevUrl="/mypage"
         actionLabel="등록하러 가기"
@@ -54,21 +54,23 @@ const RankingPage = async () => {
     <SideMain
       headerTitle="내가 등록한 위치"
       hasBackButton
+      backFallbackUrl="/mypage"
       referrer={!!referrer}
       deviceType={deviceType}
     >
-      <Section>
-        <Text
-          display="block"
-          textAlign="center"
-          className="select-none mt-3"
-          fontWeight="bold"
-        >
-          내가 등록한 철봉 위치
-        </Text>
+      <Section className="pb-2">
+        <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
+          <Text fontWeight="bold" display="block" className="text-primary dark:text-primary-light">
+            등록한 위치
+          </Text>
+          <Text typography="t6" className="mt-0.5 text-grey-dark dark:text-grey">
+            총 <span className="font-bold text-primary dark:text-primary-light">{markers.totalMarkers}</span>
+            곳을 등록했어요
+          </Text>
+        </div>
       </Section>
 
-      <Section>
+      <Section className="pt-2">
         <RegisteredLocateList data={markers} />
       </Section>
     </SideMain>
