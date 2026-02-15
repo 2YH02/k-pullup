@@ -178,7 +178,7 @@ const PullupClient = ({
           최종 수정일: {formatDate(marker.updatedAt)}
         </Text>
         <div className="mt-2 flex items-end justify-between gap-3">
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-1">
             <Link
               href={`/pullup/${marker.markerId}/report`}
               className="rounded-sm text-primary underline decoration-1 decoration-primary/70 underline-offset-3 transition-[color,text-decoration-color] duration-150 hover:decoration-primary active:text-primary-dark focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:decoration-primary-light/70 dark:hover:decoration-primary-light"
@@ -201,7 +201,7 @@ const PullupClient = ({
           </div>
 
           {marker.username && (
-            <div className="min-w-0 max-w-[58%] rounded-xl border border-location-badge-bg/85 bg-location-badge-bg/65 px-2.5 py-1.5 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/50">
+            <div className="min-w-0 max-w-[50%] rounded-xl border border-location-badge-bg/85 bg-location-badge-bg/65 px-2.5 py-1.5 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/50">
               <button
                 onClick={() => {
                   router.push(`/user-info/${marker.username}`);
