@@ -19,7 +19,7 @@ import useMapStore from "@store/useMapStore";
 import useMarkerStore from "@store/useMarkerStore";
 import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { type Device } from "../mypage/page";
 
 export const registerError = {
@@ -95,6 +95,7 @@ const RegisterClient = ({
   const [marker, setMarker] = useState<KakaoMarker | null>(null);
 
   const [newMarkerId, setNewMarkerId] = useState<number | null>(null);
+  const submitRequestedRef = useRef(false);
 
   const [initPhotos, setInintPhotos] = useState<ImageUploadState[] | null>(
     null
@@ -123,9 +124,18 @@ const RegisterClient = ({
   }, []);
 
   useEffect(() => {
-    if (!map) return;
+    if (registerValue.step !== 4) {
+      submitRequestedRef.current = false;
+      return;
+    }
+    if (!map || submitRequestedRef.current) return;
+    submitRequestedRef.current = true;
+
     const fetch = async () => {
-      if (!registerValue.latitude || !registerValue.longitude) return;
+      if (!registerValue.latitude || !registerValue.longitude) {
+        submitRequestedRef.current = false;
+        return;
+      }
 
       const response = await setNewMarker({
         description: registerValue.description || "",
@@ -202,9 +212,7 @@ const RegisterClient = ({
       setUploadStatus("complete");
     };
 
-    if (registerValue.step === 4) {
-      fetch();
-    }
+    fetch();
   }, [
     setUser,
     setMarkerToStore,
@@ -214,7 +222,7 @@ const RegisterClient = ({
     registerValue.longitude,
     registerValue.photos,
     registerValue.facilities,
-    map, 
+    map,
     marker,
     uploadStatus,
   ]);
