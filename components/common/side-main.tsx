@@ -56,7 +56,7 @@ const menus = [
     name: "챌린지",
     icon: <Trophy size={20} strokeWidth={2} className="text-text-on-surface-muted dark:text-grey" />,
     iconActive: <Trophy size={20} strokeWidth={2.2} className="text-primary dark:text-primary-light" />,
-    path: "/ranking",
+    path: "/challenge",
   },
   {
     name: "내 정보",
