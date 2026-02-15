@@ -6,6 +6,7 @@ import areaRanking from "@lib/api/marker/area-ranking";
 import { type RankingInfo } from "@lib/api/marker/marker-ranking";
 import cn from "@lib/cn";
 import useGeolocationStore from "@store/useGeolocationStore";
+import { Crown } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -32,17 +33,24 @@ const MarkerRankingList = ({ allRanking }: { allRanking: RankingInfo[] }) => {
   return (
     <div>
       {/* 랭킹 타입 버튼 */}
-      <div className="flex gap-2 text-sm text-grey-dark dark:text-grey mb-2">
+      <div className="mb-3 inline-flex rounded-full border border-primary/12 bg-side-main p-1 text-sm dark:border-white/10">
         <button
-          className={cn("underline", rankingType === "all" && "text-primary")}
+          className={cn(
+            "rounded-full px-3 py-1 transition-colors",
+            rankingType === "all"
+              ? "bg-primary/12 text-primary dark:text-primary-light"
+              : "text-text-on-surface-muted dark:text-grey-light"
+          )}
           onClick={() => setRankingType("all")}
         >
           전체
         </button>
         <button
           className={cn(
-            "underline",
-            rankingType === "around" && "text-primary"
+            "rounded-full px-3 py-1 transition-colors",
+            rankingType === "around"
+              ? "bg-primary/12 text-primary dark:text-primary-light"
+              : "text-text-on-surface-muted dark:text-grey-light"
           )}
           onClick={() => setRankingType("around")}
         >
@@ -72,16 +80,19 @@ const List = ({
 
   if (isLoading) {
     return (
-      <div>
-        <Skeleton className="w-full h-32" />
+      <div className="space-y-2">
+        <Skeleton className="h-14 w-full rounded-xl" />
+        <Skeleton className="h-14 w-full rounded-xl" />
+        <Skeleton className="h-12 w-full rounded-lg" />
+        <Skeleton className="h-12 w-full rounded-lg" />
       </div>
     );
   }
 
   if (!data) {
     return (
-      <div>
-        <div className="text-black dark:text-white">
+      <div className="rounded-xl border border-primary/12 bg-side-main p-4 dark:border-white/10">
+        <div className="text-text-on-surface dark:text-white">
           랭킹에 등록되어 있는 철봉이 없습니다.
         </div>
       </div>
@@ -99,31 +110,62 @@ const List = ({
   };
 
   return (
-    <div>
+    <div className="space-y-1.5">
       {data.slice(0, visibleCount).map((item, index) => {
+        const rank = index + 1;
+        const isTopThree = rank <= 3;
+
         return (
           <button
             key={item.markerId}
-            className="flex items-center p-2 text-left active:bg-grey-light dark:active:bg-grey-dark w-full rounded-md"
+            className={cn(
+              "group flex w-full items-center text-left transition-all",
+              isTopThree
+                ? "rounded-xl border px-3 py-2.5"
+                : "rounded-lg px-2.5 py-2",
+              isTopThree && rank === 1 && "border-yellow/60 bg-yellow/15",
+              isTopThree && rank === 2 && "border-grey/45 bg-grey-light/65 dark:bg-grey-dark/24",
+              isTopThree && rank === 3 && "border-coral/40 bg-coral/14",
+              !isTopThree && "border border-primary/12 bg-side-main",
+              "active:scale-[0.985] active:bg-grey-light dark:active:bg-grey-dark",
+              "web:hover:border-primary/28 web:hover:bg-white/50 dark:web:hover:bg-black/30"
+            )}
             onClick={() => router.push(`/pullup/${item.markerId}`)}
+            type="button"
           >
-            <div className="shrink-0 font-bold mr-2 w-7 text-black dark:text-white">
-              {index + 1}
+            <div
+              className={cn(
+                "mr-3 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold",
+                rank === 1 && "bg-yellow/85 text-black",
+                rank === 2 && "bg-grey text-white",
+                rank === 3 && "bg-coral text-white",
+                rank > 3 && "bg-primary/12 text-text-on-surface"
+              )}
+            >
+              {rank}
             </div>
-            <div className="grow text-sm text-black dark:text-white">
+            {rank === 1 && (
+              <div className="mr-2 shrink-0 rounded-md bg-white/75 p-0.5 ring-1 ring-yellow/40 dark:bg-black/35">
+                <Crown
+                  size={14}
+                  className="text-yellow transition-transform duration-200 web:group-hover:-translate-y-0.5 web:group-hover:scale-110 group-active:scale-95 group-focus-visible:scale-105"
+                />
+              </div>
+            )}
+            <div className="grow text-sm text-text-on-surface dark:text-white">
               {item.address}
             </div>
-            <div className="shrink-0">
-              <PinIcon />
+            <div className="ml-2 shrink-0 opacity-90">
+              <PinIcon size={22} />
             </div>
           </button>
         );
       })}
-      <div className="flex justify-center gap-3">
+      <div className="flex justify-center gap-3 pt-1">
         {visibleCount > 10 && (
           <button
             onClick={resetList}
-            className="underline text-sm text-grey-dark dark:text-grey"
+            className="rounded-full border border-primary/15 px-3 py-1 text-sm text-text-on-surface-muted transition-colors web:hover:bg-primary/8 dark:text-grey-light"
           >
             접기
           </button>
@@ -131,7 +173,7 @@ const List = ({
         {hasMore && (
           <button
             onClick={loadMore}
-            className="underline text-sm text-grey-dark dark:text-grey"
+            className="rounded-full border border-primary/15 px-3 py-1 text-sm text-text-on-surface-muted transition-colors web:hover:bg-primary/8 dark:text-grey-light"
           >
             더보기
           </button>
