@@ -5,7 +5,6 @@ import updateUserName from "@api/user/update-username";
 import Button from "@common/button";
 import Input from "@common/input";
 import Section from "@common/section";
-import ShadowBox from "@common/shadow-box";
 import Text from "@common/text";
 import useInput from "@hooks/useInput";
 import EditIcon from "@icons/edit-icon";
@@ -59,21 +58,34 @@ const UsernameCard = ({ user }: UsernameCardProps) => {
 
   return (
     <Section>
-      <ShadowBox className="p-4">
-        <div className="flex items-center justify-center mb-2">
+      <div className="rounded-xl border border-primary/10 bg-surface/80 p-4 dark:border-grey-dark dark:bg-black">
+        <div className="mb-2 flex items-center justify-center">
           {edit ? (
-            <div className="flex flex-col w-full">
-              <div className="w-44 mx-auto">
+            <div className="w-full max-w-72 rounded-lg border border-primary/10 bg-white/60 p-3 dark:border-grey-dark dark:bg-black-light">
+              <Text
+                display="block"
+                textAlign="center"
+                typography="t7"
+                className="mb-2 text-grey-dark dark:text-grey"
+              >
+                닉네임은 최소 3자 이상 입력해주세요
+              </Text>
+              <div className="mx-auto w-full">
                 <Input
-                  isInvalid={false}
+                  isInvalid={!!editError}
                   value={username.value}
-                  onChange={username.onChange}
+                  onChange={(e) => {
+                    if (editError) {
+                      setEditError("");
+                    }
+                    username.onChange(e);
+                  }}
                 />
               </div>
-              <div className="h-4">
+              <div className="h-4 mt-1">
                 <div className="text-red text-xs text-center">{editError}</div>
               </div>
-              <div className="flex justify-center">
+              <div className="mt-1 flex justify-center gap-2">
                 <Button
                   onClick={() => {
                     setEditError("");
@@ -81,13 +93,13 @@ const UsernameCard = ({ user }: UsernameCardProps) => {
                     setEdit(false);
                   }}
                   variant="contrast"
-                  className="text-sm w-14 h-8 p-0 mr-2"
+                  className="h-8 w-16 rounded-md p-0 text-sm active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
                 >
                   취소
                 </Button>
                 <Button
                   onClick={changeUsername}
-                  className="text-sm w-14 h-8 p-0 flex items-center justify-center"
+                  className="flex h-8 w-16 items-center justify-center rounded-md p-0 text-sm active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
                   disabled={loading}
                 >
                   {loading ? (
@@ -99,19 +111,29 @@ const UsernameCard = ({ user }: UsernameCardProps) => {
               </div>
             </div>
           ) : (
-            <>
-              <Text className="mr-3">{usernameValue}</Text>
-
-              <button onClick={() => setEdit(true)}>
-                <EditIcon size={17} color="black" />
+            <div className="flex items-center gap-2">
+              <Text fontWeight="bold" className="text-primary dark:text-primary-light">
+                {usernameValue}
+              </Text>
+              <button
+                onClick={() => setEdit(true)}
+                className="rounded-md p-1 transition-colors duration-150 web:hover:bg-primary/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
+                aria-label="닉네임 수정"
+              >
+                <EditIcon size={16} color="primary" />
               </button>
-            </>
+            </div>
           )}
         </div>
-        <Text display="block" textAlign="center" typography="t6">
+        <Text
+          display="block"
+          textAlign="center"
+          typography="t6"
+          className="text-grey-dark dark:text-grey"
+        >
           {user.email}
         </Text>
-      </ShadowBox>
+      </div>
     </Section>
   );
 };
