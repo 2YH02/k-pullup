@@ -1,9 +1,7 @@
 import myInfo, { type ContributionLevel } from "@api/user/myInfo";
-import Divider from "@common/divider";
 import Footer from "@common/footer";
 import GrowBox from "@common/grow-box";
 import Section from "@common/section";
-import ShadowBox from "@common/shadow-box";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import ArrowRightIcon from "@icons/arrow-right-icon";
@@ -50,56 +48,74 @@ const Mypage = async () => {
     >
       <Section>
         {noUser ? (
-          <>
-            <Link
-              href="/signin?returnUrl=/mypage"
-              className="flex items-center justify-between p-2 rounded-md hover:bg-primary/20"
-            >
-              <Text fontWeight="bold" className="text-primary">
+          <Link
+            href="/signin?returnUrl=/mypage"
+            className="group flex items-center justify-between rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-primary/8 active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black dark:web:hover:border-primary-dark dark:web:hover:bg-primary-dark/15"
+          >
+            <div>
+              <Text fontWeight="bold" className="text-primary dark:text-primary-light">
                 로그인 및 회원가입하기
               </Text>
-              <ArrowRightIcon size={20} />
-            </Link>
-          </>
+              <Text typography="t6" className="text-grey-dark dark:text-grey">
+                로그인하면 내 활동 정보를 확인할 수 있어요
+              </Text>
+            </div>
+            <ArrowRightIcon
+              size={20}
+              className="transition-transform duration-180 ease-out group-hover:translate-x-px group-active:translate-x-px motion-reduce:transform-none motion-reduce:transition-none"
+            />
+          </Link>
         ) : (
-          <UserInfo user={user} />
+            <UserInfo user={user} />
         )}
       </Section>
 
       <Section className="pt-0">
-        <ShadowBox className="flex justify-between ">
+        <div className="grid grid-cols-2 gap-2 rounded-xl border border-primary/10 bg-surface/70 p-1.5 dark:border-grey-dark dark:bg-black">
           <Link
             href={noUser ? "/signin?returnUrl=/mypage" : "/mypage/user"}
-            className="w-1/2 rounded-lg p-1 text-center web:hover:bg-grey-light web:dark:hover:bg-grey-dark"
+            className="rounded-lg border border-primary/10 bg-white/55 px-2.5 py-2.5 text-center transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-white/70 active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-grey dark:web:hover:bg-black"
           >
-            <Text>내 정보 관리</Text>
+            <Text typography="t6" className="font-semibold text-primary dark:text-primary-light">
+              내 정보 관리
+            </Text>
           </Link>
-          <Divider orientation="vertical" className="w-[0.5px] mx-3" />
           <Link
             href="mypage/config"
-            className="w-1/2 rounded-lg p-1 text-center web:hover:bg-grey-light web:dark:hover:bg-grey-dark"
+            className="rounded-lg border border-primary/10 bg-white/55 px-2.5 py-2.5 text-center transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-white/70 active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-grey dark:web:hover:bg-black"
           >
-            <Text>설정</Text>
+            <Text typography="t6" className="font-semibold text-primary dark:text-primary-light">
+              설정
+            </Text>
           </Link>
-        </ShadowBox>
+        </div>
       </Section>
 
       {/* 기여 등급 */}
       {!noUser && (
         <Section>
-          <div className="flex justify-center items-center p-4 bg-white shadow-full rounded-sm dark:border dark:border-solid dark:border-grey-dark dark:bg-black">
-            <div className="flex flex-col justify-center items-center relative">
-              <Image
-                src={getContributionLevelImage(user.contributionLevel)}
-                alt="등급"
-                draggable={false}
-                width={112}
-                height={112}
-              />
-              <Text typography="t4" fontWeight="bold" className="mb-1">
+          <div className="rounded-xl border border-primary/10 bg-surface/80 p-4 dark:border-grey-dark dark:bg-black">
+            <div className="flex flex-col items-center">
+              <Text typography="t6" className="mb-2 text-grey-dark dark:text-grey">
+                기여 등급
+              </Text>
+              <div className="group relative mb-2">
+                <div className="pointer-events-none absolute inset-2 -z-10 rounded-full bg-primary/10 blur-md transition-opacity duration-180 ease-out web:group-hover:opacity-100 motion-reduce:transition-none dark:bg-primary-light/10" />
+                <div className="rounded-full border border-primary/10 bg-white/55 p-1.5 transition-transform duration-180 ease-out web:group-hover:scale-[1.02] motion-reduce:transform-none dark:border-grey-dark dark:bg-black-light">
+                  <Image
+                    src={getContributionLevelImage(user.contributionLevel)}
+                    alt="등급"
+                    draggable={false}
+                    width={108}
+                    height={108}
+                    className="motion-safe:animate-page-enter motion-reduce:animate-none"
+                  />
+                </div>
+              </div>
+              <Text typography="t4" fontWeight="bold" className="mb-1 text-primary dark:text-primary-light">
                 {user.contributionLevel}
               </Text>
-              <Text typography="t6">
+              <Text typography="t6" className="text-grey-dark dark:text-grey">
                 정보 기여 점수{" "}
                 <span className="text-primary font-bold">
                   {user.contributionCount || 0}
