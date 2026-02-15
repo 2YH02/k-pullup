@@ -29,10 +29,11 @@ const FacilitiesPage = ({ params }: { params: { id: string } }) => {
       headerTitle="기구 개수 등록"
       hasBackButton
       withNav
+      fullHeight
       referrer={!!referrer}
       deviceType={deviceType}
       dragable={false}
-      bodyStyle="pb-0"
+      bodyStyle="pb-0 mo:pb-0"
     >
       <FacilitiesClient markerId={~~id} />
     </SideMain>
