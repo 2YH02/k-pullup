@@ -7,9 +7,9 @@ import Text from "@common/text";
 import { useToast } from "@hooks/useToast";
 import PinIcon from "@icons/pin-icon";
 import { useBottomSheetStore } from "@store/useBottomSheetStore";
+import { MoreHorizontal, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { BsThreeDots, BsTrash } from "react-icons/bs";
 
 interface BookmarkList {
   data: Favorite[];
@@ -27,23 +27,25 @@ const BookmarkList = ({ data }: BookmarkList) => {
   };
 
   return (
-    <ul>
-      {markers.map((marker) => {
-        return (
-          <ListItem
-            key={marker.markerId}
-            id={marker.markerId}
-            title={marker.address || "주소 정보 없음"}
-            subTitle={marker.description || "설명 없음"}
-            leftIcon={<PinIcon size={28} />}
-            onClick={() => {
-              router.push(`/pullup/${marker.markerId}`);
-            }}
-            deleteMarker={deleteMarkers}
-          />
-        );
-      })}
-    </ul>
+    <section className="px-6 pb-6">
+      <ul className="space-y-2">
+        {markers.map((marker) => {
+          return (
+            <ListItem
+              key={marker.markerId}
+              id={marker.markerId}
+              title={marker.address || "주소 정보 없음"}
+              subTitle={marker.description || "설명 없음"}
+              leftIcon={<PinIcon size={26} />}
+              onClick={() => {
+                router.push(`/pullup/${marker.markerId}`);
+              }}
+              deleteMarker={deleteMarkers}
+            />
+          );
+        })}
+      </ul>
+    </section>
   );
 };
 
@@ -82,44 +84,53 @@ const ListItem = ({
   };
 
   return (
-    <div className="px-1 py-2 active:bg-grey-light dark:active:bg-grey-dark flex border-b border-solid border-grey-light dark:border-grey-dark">
-      <div className="max-w-[90%] grow">
+    <li className="group flex items-center gap-2 rounded-xl border border-primary/10 bg-surface/80 px-3 py-2.5 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-white/70 active:scale-[0.995] dark:border-grey-dark dark:bg-black dark:web:hover:bg-black-light">
+      <div className="min-w-0 grow">
         <button
-          className="flex items-center w-full text-left duration-100"
+          className="flex w-full items-center gap-3 text-left focus-visible:outline-none"
           onClick={onClick}
         >
           {leftIcon && (
-            <div className="shrink-0 w-[10%] flex justify-center items-center">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/8 dark:bg-primary-dark/20">
               {leftIcon}
             </div>
           )}
-          <div className="shrink-0 max-w-[80%] flex flex-col">
-            <Text className="text-sm font-bold wrap-break-word">{title}</Text>
-            <Text className="text-xs text-grey dark:text-grey wrap-break-word">
+          <div className="min-w-0 max-w-[85%]">
+            <Text
+              typography="t6"
+              className="block break-words font-semibold text-primary dark:text-primary-light"
+            >
+              {title}
+            </Text>
+            <Text
+              typography="t7"
+              className="mt-0.5 block break-words text-grey-dark dark:text-grey"
+            >
               {subTitle}
             </Text>
           </div>
         </button>
       </div>
       <button
-        className="shrink-0 w-[10%] flex justify-center items-center"
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-grey-dark transition-colors duration-150 web:hover:bg-primary/10 web:hover:text-primary active:scale-[0.98] dark:text-grey dark:web:hover:bg-primary-dark/20 dark:web:hover:text-primary-light"
+        aria-label="즐겨찾기 옵션"
         onClick={(e) => {
           e.stopPropagation();
           show(`bookmark-${id}`);
         }}
       >
-        <BsThreeDots className="text-grey" />
+        <MoreHorizontal size={18} />
       </button>
       <BottomSheet title="저장한 장소" id={`bookmark-${id}`} className="pb-10">
         <BottomSheetItem
-          icon={<BsTrash size={22} />}
+          icon={<Trash2 size={20} />}
           onClick={handleDelete}
           disabled={loading}
         >
           삭제
         </BottomSheetItem>
       </BottomSheet>
-    </div>
+    </li>
   );
 };
 

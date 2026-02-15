@@ -48,11 +48,16 @@ const RankingPage = async () => {
     <SideMain
       headerTitle="즐겨찾기"
       hasBackButton
+      backFallbackUrl="/mypage"
       referrer={!!referrer}
       deviceType={deviceType}
     >
-      <Section className="pb-0">
-        <WarningText>즐겨찾기는 최대 10개까지 추가할 수 있습니다.</WarningText>
+      <Section className="pb-2">
+        <div className="rounded-xl border border-yellow/35 bg-yellow/10 px-3 py-2 dark:border-yellow-dark/40 dark:bg-yellow-dark/10">
+          <WarningText className="text-[13px]">
+            즐겨찾기는 최대 10개까지 추가할 수 있습니다.
+          </WarningText>
+        </div>
       </Section>
 
       <BookmarkList data={markers.data} />
