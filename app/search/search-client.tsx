@@ -31,9 +31,11 @@ export interface SearchData {
 const SearchClient = ({
   isInternal,
   deviceType = "desktop",
+  isEntryFromHome = false,
 }: {
   isInternal?: boolean;
   deviceType?: Device;
+  isEntryFromHome?: boolean;
 }) => {
   const router = useRouter();
 
@@ -161,6 +163,7 @@ const SearchClient = ({
         value={searchValue.value}
         onChange={searchValue.onChange}
         isInternal={!!isInternal}
+        isEntryFromHome={isEntryFromHome}
         clearFn={() => searchValue.resetValue()}
         onEnter={handleEnterKey}
       />

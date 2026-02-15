@@ -10,6 +10,7 @@ interface PageProps {
     d?: string;
     lat?: string;
     lng?: string;
+    from?: string;
   };
 }
 
@@ -21,7 +22,7 @@ export const generateMetadata = () => {
 };
 
 const SearchPage = ({ searchParams }: PageProps) => {
-  const { addr, d, lat, lng } = searchParams;
+  const { addr, d, lat, lng, from } = searchParams;
 
   const headersList = headers();
   const referrer = headersList.get("referer");
@@ -52,7 +53,11 @@ const SearchPage = ({ searchParams }: PageProps) => {
 
   return (
     <>
-      <SearchClient isInternal={referrer?.includes(headersList.get("host") || "")} deviceType={deviceType} />
+      <SearchClient
+        isInternal={referrer?.includes(headersList.get("host") || "")}
+        deviceType={deviceType}
+        isEntryFromHome={from === "home"}
+      />
     </>
   );
 };
