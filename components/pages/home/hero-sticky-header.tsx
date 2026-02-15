@@ -39,7 +39,7 @@ const HeroStickyHeader = () => {
     <Section
       className={cn(
         "web:py-4 mo:py-2",
-        "sticky top-6 z-20",
+        "sticky top-6 web:top-0 z-20",
         "backdrop-blur-sm bg-surface/92 dark:bg-black/55",
         "web:transition-[background-color,backdrop-filter] web:duration-300 web:ease-out mo:transition-[background-color,backdrop-filter] mo:duration-300 mo:ease-out"
       )}

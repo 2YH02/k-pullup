@@ -232,7 +232,7 @@ const PullupClient = ({
       {/* <Ads type="feed" /> */}
       <Divider className="h-px bg-black/10 dark:bg-white/10" />
 
-      <div className="sticky top-6 left-0 z-50 flex h-11 bg-surface/92 dark:bg-black/55 text-text-on-surface dark:text-grey-light">
+      <div className="sticky top-6 web:top-0 left-0 z-50 flex h-11 bg-surface/92 dark:bg-black/55 text-text-on-surface dark:text-grey-light">
         {["사진", "댓글"].map((label, index) => (
           <button
             key={index}
