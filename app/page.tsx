@@ -3,19 +3,14 @@ import newPictures, {
   type NewPictures,
 } from "@api/marker/new-pictures";
 import getAllMoment from "@api/moment/get-all-moment";
-import Ads from "@common/ads";
 import Footer from "@common/footer";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import getDeviceType from "@lib/get-device-type";
 import AroundMarkerCarousel from "@pages/home/around-marker-carousel";
-import ArticleCarousel from "@pages/home/article-carousel";
-import ChatCarousel from "@pages/home/chat-carousel";
 import HeroStickyHeader from "@pages/home/hero-sticky-header";
-import IconLinkList from "@pages/home/icon-link-list";
 import MomentList from "@pages/home/moment-list";
 import NewImageSection from "@pages/home/new-image-section";
-import NoticeSlide from "@pages/home/notice-slide";
 import SearchInput from "@pages/home/search-input";
 import { headers } from "next/headers";
 import { type Device } from "./mypage/page";

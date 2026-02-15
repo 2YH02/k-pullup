@@ -1,6 +1,5 @@
 import markerRanking from "@api/marker/marker-ranking";
 import getAllMoment from "@api/moment/get-all-moment";
-import Ads from "@common/ads";
 import Footer from "@common/footer";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
