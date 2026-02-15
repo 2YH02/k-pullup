@@ -48,7 +48,7 @@ const SearchHeader = ({
   };
 
   return (
-    <div className="mo:fixed sticky top-0 left-0 flex items-center justify-center w-full h-14 bg-white/45 dark:bg-black/45 backdrop-blur-[2px] py-3">
+    <div className="mo:fixed sticky top-0 left-0 z-40 flex items-center justify-center w-full h-14 bg-white/45 dark:bg-black/45 backdrop-blur-[2px] py-3">
       <button
         className="px-3"
         onClick={() => (isInternal ? router.back() : router.push("/"))}
