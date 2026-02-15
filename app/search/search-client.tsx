@@ -179,7 +179,7 @@ const SearchClient = ({
           <Section>
             <Text
               className="mb-4"
-              typography="t5"
+              typography="t6"
               display="block"
               fontWeight="bold"
             >
@@ -190,31 +190,59 @@ const SearchClient = ({
             <button
               onClick={() => router.push("/search/around")}
               className={cn(
-                "w-full p-4 rounded-lg border-2 border-grey-light dark:border-grey-dark",
-                "bg-linear-to-br from-primary/5 to-transparent dark:from-primary-dark/10",
-                "hover:border-primary dark:hover:border-primary-dark",
-                "hover:shadow-md transition-all duration-200",
-                "flex items-center gap-3 text-left group"
+                "relative isolate overflow-hidden",
+                "w-full p-4 rounded-2xl border border-white/70 dark:border-white/10",
+                "bg-search-input-bg/70 dark:bg-black/35 backdrop-blur-md",
+                "shadow-[0_8px_24px_rgba(64,64,56,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.28)]",
+                "flex items-center gap-3 text-left group",
+                "transition-[transform,box-shadow,border-color] duration-180 ease-out motion-reduce:transition-none",
+                "hover:border-primary/45 dark:hover:border-primary-light/35",
+                "hover:shadow-[0_12px_28px_rgba(64,64,56,0.14)] dark:hover:shadow-[0_12px_28px_rgba(0,0,0,0.35)]",
+                "active:scale-[0.99] active:border-primary/60 dark:active:border-primary-light/40",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 dark:focus-visible:ring-primary-light/35",
+                "focus-visible:ring-offset-2 focus-visible:ring-offset-side-main dark:focus-visible:ring-offset-black"
               )}
             >
-              <div className="shrink-0 w-12 h-12 rounded-full bg-primary/10 dark:bg-primary-dark/20 flex items-center justify-center group-hover:bg-primary/20 dark:group-hover:bg-primary-dark/30 transition-colors">
+              <div
+                aria-hidden
+                className={cn(
+                  "absolute inset-0 pointer-events-none",
+                  "bg-linear-to-br from-white/35 via-transparent to-primary/10",
+                  "dark:from-white/10 dark:to-primary-dark/25"
+                )}
+              />
+              <div
+                aria-hidden
+                className={cn(
+                  "absolute -top-10 -left-8 h-28 w-28 rounded-full blur-2xl pointer-events-none",
+                  "bg-primary/20 dark:bg-primary-light/15",
+                  "transition-transform duration-220 ease-out motion-reduce:transition-none",
+                  "group-hover:translate-x-1 group-hover:-translate-y-1"
+                )}
+              />
+
+              <div className="relative shrink-0 w-12 h-12 rounded-full border border-white/45 dark:border-white/10 bg-white/35 dark:bg-white/5 flex items-center justify-center transition-transform duration-180 ease-out motion-reduce:transition-none group-hover:scale-[1.03] group-hover:-translate-y-0.5">
                 <LocationIcon size={24} color="primary" />
               </div>
-              <div className="flex-1">
+              <div className="relative flex-1">
                 <Text
                   typography="t5"
                   fontWeight="bold"
                   display="block"
-                  className="mb-1"
+                  className="mb-1 text-text-on-surface dark:text-grey-light"
                 >
                   주변 검색
                 </Text>
-                <Text typography="t7" className="text-grey dark:text-grey">
+                <Text
+                  typography="t7"
+                  className="text-text-on-surface-muted dark:text-grey"
+                >
                   지도를 움직여 원하는 위치 주변의 철봉을 찾아보세요
                 </Text>
               </div>
-              <div className="shrink-0 text-primary dark:text-primary-dark group-hover:translate-x-1 transition-transform">
-                <ArrowRightIcon className="fill-primary dark:fill-primary-dark" />
+
+              <div className="relative shrink-0 text-primary dark:text-primary-light transition-transform duration-180 ease-out motion-reduce:transition-none group-hover:translate-x-1">
+                <ArrowRightIcon className="fill-primary dark:fill-primary-light" />
               </div>
             </button>
           </Section>
