@@ -28,27 +28,29 @@ const Social = async () => {
 
   return (
     <SideMain headerTitle="소셜" withNav fullHeight deviceType={deviceType} bodyStyle="pb-0">
-      <Section className="pb-0">
-        <SectionTitle title="모먼트" subTitle="당신의 순간을 공유해보세요." />
-        <MomentList data={moment || []} />
-      </Section>
+      <div className="page-transition">
+        <Section className="pb-0">
+          <SectionTitle title="모먼트" subTitle="당신의 순간을 공유해보세요." />
+          <MomentList data={moment || []} />
+        </Section>
 
-      <Section>
-        <SectionTitle
-          title="지역 채팅 및 오픈 채팅"
-          subTitle="다른 사람들과 소통해보세요."
-        />
-        <ChatCarousel />
-      </Section>
+        <Section>
+          <SectionTitle
+            title="지역 채팅 및 오픈 채팅"
+            subTitle="다른 사람들과 소통해보세요."
+          />
+          <ChatCarousel />
+        </Section>
 
-      {/* <Ads type="feed" /> */}
+        {/* <Ads type="feed" /> */}
 
-      <Section>
-        <SectionTitle title="인기 많은 철봉" />
-        <MarkerRankingList allRanking={rankingData} />
-      </Section>
+        <Section>
+          <SectionTitle title="인기 많은 철봉" />
+          <MarkerRankingList allRanking={rankingData} />
+        </Section>
 
-      <Footer />
+        <Footer />
+      </div>
     </SideMain>
   );
 };

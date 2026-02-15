@@ -61,6 +61,7 @@
   --animate-shake: shake 0.5s ease-in-out;
   --animate-pulse-focus: pulse-focus 2s ease-out;
   --animate-fade-in: fade-in 0.3s ease-out;
+  --animate-page-enter: page-enter 180ms ease-out;
 }
 
 @keyframes grow {
@@ -142,6 +143,17 @@
   0% {
     opacity: 0;
     transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes page-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(2px);
   }
   100% {
     opacity: 1;
@@ -337,6 +349,16 @@
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.page-transition {
+  animation: var(--animate-page-enter);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    animation: none;
+  }
 }
 
 /* 로드뷰 동동이 */
