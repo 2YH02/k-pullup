@@ -7,7 +7,6 @@ import Skeleton from "@common/skeleton";
 import Text from "@common/text";
 import LocationIcon from "@icons/location-icon";
 import PinIcon from "@icons/pin-icon";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -540,13 +539,13 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
         ) : hasSearched ? (
           // Empty state
           <div className="flex flex-col items-center justify-center py-10 rounded-2xl border border-white/70 dark:border-white/10 bg-search-input-bg/55 dark:bg-black/25 backdrop-blur-sm">
-            <Image
-              src="/empty-search.gif"
-              alt="empty-search"
-              width={200}
-              height={150}
-              className="mb-4 opacity-80"
-            />
+            <div className="relative mb-5 h-24 w-24 flex items-center justify-center">
+              <span className="absolute h-24 w-24 rounded-full border border-primary/25 dark:border-primary-light/20 animate-ping motion-reduce:animate-none" />
+              <span className="absolute h-16 w-16 rounded-full border border-primary/35 dark:border-primary-light/28 animate-pulse" />
+              <span className="relative h-11 w-11 rounded-full border border-white/70 dark:border-white/10 bg-white/55 dark:bg-white/8 flex items-center justify-center">
+                <LocationIcon size={18} color="primary" />
+              </span>
+            </div>
             <Text
               typography="t5"
               fontWeight="bold"

@@ -9,7 +9,6 @@ import PinIcon from "@icons/pin-icon";
 import { type KakaoPlace } from "@layout/move-map-input";
 import useSearchStore from "@store/useSearchStore";
 import useSheetHeightStore from "@store/useSheetHeightStore";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { BsPinMapFill } from "react-icons/bs";
 
@@ -52,17 +51,38 @@ const SearchList = ({
   // Show empty state
   if (result.length === 0 && kakaoSearchResult.length === 0) {
     return (
-      <Section className="flex flex-col items-center">
-        <Image
-          src="/empty-search2.gif"
-          alt="empty-search"
-          width={300}
-          height={100}
-          className="mb-4"
-        />
-        <Text display="block" textAlign="center" fontWeight="bold">
-          검색 결과가 존재하지 않습니다...
-        </Text>
+      <Section className="pt-4">
+        <div className="relative isolate overflow-hidden flex flex-col items-center justify-center py-10 px-4 rounded-2xl border border-white/70 dark:border-white/10 bg-search-input-bg/55 dark:bg-black/25 backdrop-blur-sm">
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none bg-linear-to-br from-white/35 via-transparent to-primary/10 dark:from-white/8 dark:to-primary-dark/20"
+          />
+
+          <div className="relative mb-5 h-24 w-24 flex items-center justify-center">
+            <span className="absolute h-24 w-24 rounded-full border border-primary/25 dark:border-primary-light/20 animate-ping motion-reduce:animate-none" />
+            <span className="absolute h-16 w-16 rounded-full border border-primary/35 dark:border-primary-light/28 animate-pulse" />
+            <span className="relative h-11 w-11 rounded-full border border-white/70 dark:border-white/10 bg-white/55 dark:bg-white/8 flex items-center justify-center">
+              <PinIcon size={18} />
+            </span>
+          </div>
+
+          <Text
+            display="block"
+            textAlign="center"
+            fontWeight="bold"
+            className="relative text-text-on-surface dark:text-grey-light mb-1"
+          >
+            검색 결과가 없습니다
+          </Text>
+          <Text
+            typography="t6"
+            display="block"
+            textAlign="center"
+            className="relative text-text-on-surface-muted dark:text-grey"
+          >
+            키워드를 조금 더 넓게 입력해 보세요
+          </Text>
+        </div>
       </Section>
     );
   }

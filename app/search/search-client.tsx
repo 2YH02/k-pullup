@@ -53,15 +53,6 @@ const SearchClient = ({
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
 
   useEffect(() => {
-    const images = ["/empty-search.gif"];
-
-    images.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
-  }, []);
-
-  useEffect(() => {
     // Clear results immediately when search is empty
     if (searchValue.value === "") {
       setResult([]);
