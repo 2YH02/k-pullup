@@ -64,7 +64,7 @@ const LinkButton = ({
     <Link
       href={url}
       target={target}
-      className="group flex items-center gap-3 rounded-lg border border-primary/10 bg-white/55 px-3 py-2.5 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-white/70 active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-grey dark:web:hover:bg-black"
+      className="group flex items-center gap-3 rounded-lg border border-primary/10 bg-search-input-bg/50 px-3 py-2.5 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-search-input-bg active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black/35 dark:web:hover:border-grey dark:web:hover:bg-black/45"
     >
       <motion.span
         className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary/8 dark:bg-primary-dark/20"
