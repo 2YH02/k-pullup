@@ -1,6 +1,7 @@
 "use client";
 
 import HorizontalScroll from "@/components/common/horizontal-scroll";
+import cn from "@lib/cn";
 import { useRouter } from "next/navigation";
 
 const chatRoomData = [
@@ -64,7 +65,7 @@ const chatRoomData = [
   {
     location: "대구",
     icon: "🔥",
-    message: "대프리카 너무 덥다...🥵",
+    message: "대구 요즘 날씨 어때요? 🌤️",
     code: "dg",
   },
   {
@@ -83,16 +84,32 @@ const ChatCarousel = () => {
     router.push(`/social/chat/${code}`);
   };
 
+  const cardClassName = cn(
+    "group shrink-0 w-58 h-22 rounded-2xl border border-primary/12 bg-side-main",
+    "px-3 py-2.5 text-left transition-all duration-200",
+    "web:hover:border-primary/30 web:hover:bg-white/55",
+    "active:scale-[0.99] active:bg-white/65",
+    "dark:web:hover:bg-black/35 dark:active:bg-black/45"
+  );
+
   return (
-    <HorizontalScroll className="gap-4 py-1 px-1">
+    <HorizontalScroll className="gap-3 py-1 px-1">
       <a
         href="https://open.kakao.com/o/gyOTXHUg"
         target="_blank"
-        className="text-left flex flex-col shrink-0 w-32 h-32 p-2 rounded-md shadow-full dark:border dark:border-solid dark:border-black-light"
+        rel="noreferrer"
+        className={cn(cardClassName, "flex items-center gap-3")}
       >
-        <div className="font-bold text-black dark:text-white">오픈 채팅</div>
-        <div className="mt-2 text-sm text-grey-dark dark:text-grey">
-          카카오톡 오픈 채팅에 참여해보세요! 🎨
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-lg">
+          💬
+        </div>
+        <div className="min-w-0">
+          <div className="truncate text-sm font-semibold text-text-on-surface dark:text-white">
+            오픈 채팅
+          </div>
+          <div className="mt-0.5 truncate text-xs text-text-on-surface-muted dark:text-grey-light">
+            카카오톡 오픈 채팅에 참여해보세요
+          </div>
         </div>
       </a>
       {chatRoomData.map((v) => {
@@ -100,13 +117,19 @@ const ChatCarousel = () => {
           <button
             key={v.location}
             onClick={() => handleClick(v.code)}
-            className="text-left flex flex-col shrink-0 w-32 h-32 p-2 rounded-md shadow-full dark:border dark:border-solid dark:border-black-light"
+            className={cn(cardClassName, "flex items-center gap-3")}
+            type="button"
           >
-            <div className="font-bold text-black dark:text-white">
-              {v.location} 채팅방
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-lg">
+              {v.icon}
             </div>
-            <div className="mt-2 text-sm text-grey-dark dark:text-grey">
-              {v.message}
+            <div className="min-w-0">
+              <div className="truncate text-sm font-semibold text-text-on-surface dark:text-white">
+                {v.location} 채팅방
+              </div>
+              <div className="mt-0.5 truncate text-xs text-text-on-surface-muted dark:text-grey-light">
+                {v.message}
+              </div>
             </div>
           </button>
         );
