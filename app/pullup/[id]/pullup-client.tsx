@@ -259,49 +259,52 @@ const PullupClient = ({
 
       {providerInfo.length > 0 && (
         <div className="mt-4 px-4">
-          {providerInfo.map((comment, index) => {
-            if (index < 3) {
-              return (
-                <div
-                  key={comment.commentId}
-                  className="relative mb-3 rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/55 px-4 py-3.5 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/45"
+          {providerInfo.slice(0, 3).map((comment) => (
+            <div
+              key={comment.commentId}
+              className="relative mb-3 overflow-hidden rounded-2xl border border-location-badge-bg/80 bg-location-badge-bg/55 px-4 py-3.5 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/45"
+            >
+              <div className="absolute inset-x-0 top-0 h-0.5 bg-location-badge-text/35 dark:bg-location-badge-text-dark/35" />
+              {(user?.chulbong || user?.userId === comment.userId) && (
+                <button
+                  className="absolute top-2 right-2 rounded-full p-0.5 text-grey-dark transition-[color,background-color,transform] duration-150 active:scale-[0.96] active:bg-black/5 active:text-black focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:text-grey-light dark:active:bg-white/10 dark:active:text-white"
+                  onClick={async () => {
+                    if (
+                      deleteLoading ||
+                      !user ||
+                      (!user.chulbong && user.userId !== comment.userId)
+                    )
+                      return;
+                    await handleDelete(comment.commentId);
+                  }}
+                  aria-label="리뷰 삭제"
                 >
-                  {(user?.chulbong || user?.userId === comment.userId) && (
-                    <button
-                      className="absolute top-2 right-2 rounded-full p-0.5 text-grey-dark transition-colors duration-150 active:bg-black/5 active:text-black focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:text-grey-light dark:active:bg-white/10 dark:active:text-white"
-                      onClick={async () => {
-                        if (
-                          deleteLoading ||
-                          !user ||
-                          (!user.chulbong && user.userId !== comment.userId)
-                        )
-                          return;
-                        await handleDelete(comment.commentId);
-                      }}
-                      aria-label="리뷰 삭제"
-                    >
-                      <BsX size={22} />
-                    </button>
-                  )}
-                  <div className="flex select-none flex-col pr-6">
-                    <Text
-                      fontWeight="bold"
-                      typography="t5"
-                      className="mb-1 text-center text-text-on-surface dark:text-grey-light"
-                    >
-                      {comment.commentText.replace('🔉 ', '')}
-                    </Text>
-                    <Text
-                      typography="t7"
-                      className="text-right text-text-on-surface-muted dark:text-grey"
-                    >
-                      - {formatDate(comment.postedAt)}
-                    </Text>
-                  </div>
-                </div>
-              );
-            }
-          })}
+                  <BsX size={22} />
+                </button>
+              )}
+
+              <div className="mb-2 pr-6">
+                <span className="inline-flex rounded-full border border-location-badge-text/20 bg-location-badge-bg px-2 py-1 text-[10px] font-semibold text-location-badge-text dark:border-location-badge-text-dark/25 dark:bg-location-badge-bg-dark/75 dark:text-location-badge-text-dark">
+                  정보 제공
+                </span>
+              </div>
+
+              <Text
+                fontWeight="bold"
+                typography="t5"
+                className="pr-6 text-text-on-surface dark:text-grey-light"
+              >
+                {comment.commentText.replace('🔉 ', '')}
+              </Text>
+
+              <Text
+                typography="t7"
+                className="mt-2 block text-right text-text-on-surface-muted dark:text-grey"
+              >
+                {formatDate(comment.postedAt)}
+              </Text>
+            </div>
+          ))}
         </div>
       )}
 
