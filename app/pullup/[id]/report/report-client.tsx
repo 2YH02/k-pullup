@@ -19,7 +19,7 @@ import ReportCompleted from "@pages/pullup/report/report-completed";
 import UploadImage from "@pages/pullup/upload-image";
 import useAlertStore from "@store/useAlertStore";
 import useMapStore from "@store/useMapStore";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface ReportClientProps {
   marker: Marker;
@@ -158,21 +158,30 @@ const ReportClient = ({
     };
   }, [mapMarker, map, mapEl]);
 
-  const handleImageChange = (photos?: File[] | null) => {
-    if (!photos) return;
+  const handleImageChange = useCallback((photos?: File[] | null) => {
+    const nextPhotos = photos ?? [];
+    setReportValue((prev) => {
+      if (prev.photos === nextPhotos) return prev;
+      return {
+        ...prev,
+        photos: nextPhotos,
+      };
+    });
+  }, []);
 
-    setReportValue((prev) => ({
-      ...prev,
-      photos: photos,
-    }));
-  };
-
-  const handleDescChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setReportValue((prev) => ({
-      ...prev,
-      description: e.target.value,
-    }));
-  };
+  const handleDescChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      const nextDescription = e.target.value;
+      setReportValue((prev) => {
+        if (prev.description === nextDescription) return prev;
+        return {
+          ...prev,
+          description: nextDescription,
+        };
+      });
+    },
+    []
+  );
 
   const setLoadingTrue = () => {
     setLoading(true);
@@ -187,8 +196,12 @@ const ReportClient = ({
   };
 
   const onSubmit = async () => {
+    if (loading) return;
     setLoading(true);
-    if (reportValue.photos.length <= 0) return;
+    if (reportValue.photos.length <= 0) {
+      setLoading(false);
+      return;
+    }
     const sizeMap = reportValue.photos.map((photo) => {
       return photo.size / (1024 * 1024);
     });
@@ -263,26 +276,39 @@ const ReportClient = ({
         lng={marker.longitude}
         markerId={marker.markerId}
       />
-      <Section className="pb-0 text-sm">
-        <WarningText>
+      <Section className="pb-1 pt-3 text-sm">
+        <WarningText className="rounded-xl border border-yellow/35 bg-yellow/10 px-3 py-2 dark:border-yellow-dark/45 dark:bg-yellow-dark/10">
           요청된 정보가 부정확한 정보일 경우, 사전 안내 없이 삭제될 수 있습니다.
         </WarningText>
       </Section>
       <div className="flex flex-col h-full">
         {/* 설명 수정 */}
-        <Section className=" pb-0">
-          <Text className="mb-1" fontWeight="bold">
+        <Section className="pb-2 pt-4">
+          <Text
+            className="mb-1 text-text-on-surface dark:text-grey-light"
+            fontWeight="bold"
+          >
             수정할 설명을 입력해주세요.
+          </Text>
+          <Text typography="t7" className="mb-2 text-grey-dark dark:text-grey">
+            기존 설명을 보완하거나 오타를 수정할 수 있어요. (최대 40자)
           </Text>
           <Textarea
             placeholder="해당 위치에 대한 설명을 40자 이내로 작성해주세요."
             value={reportValue.description}
             onChange={handleDescChange}
+            className="bg-search-input-bg/45 dark:bg-black/35 dark:border-grey-dark/90"
           />
+          <Text
+            typography="t7"
+            className="mt-1.5 block text-right text-grey-dark dark:text-grey"
+          >
+            {reportValue.description.length}/40
+          </Text>
         </Section>
 
         {/* 이미지 등록 */}
-        <div>
+        <div className="mt-1">
           <UploadImage
             next={handleImageChange}
             withButton={false}
@@ -292,33 +318,51 @@ const ReportClient = ({
           />
         </div>
 
-        <Section>
-          <Text className="mb-1" fontWeight="bold">
+        <Section className="pt-3">
+          <Text
+            className="mb-2 text-text-on-surface dark:text-grey-light"
+            fontWeight="bold"
+          >
             위치가 정확하지 않나요?
           </Text>
-          <div>
-            <Text typography="t6" fontWeight="bold">
+          <div className="rounded-xl border border-grey-light/85 bg-search-input-bg/50 px-3 py-2 dark:border-grey-dark/85 dark:bg-black/30">
+            <Text typography="t6" fontWeight="bold" className="text-black dark:text-grey-light">
               현재 위치:{" "}
             </Text>
-            <Text typography="t6">{marker.address}</Text>
+            <Text typography="t6" className="wrap-break-word text-grey-dark dark:text-grey">
+              {marker.address}
+            </Text>
           </div>
-          <div>
+          <div className="mt-2 rounded-xl border border-primary/25 bg-primary/8 px-3 py-2 dark:border-primary-light/25 dark:bg-primary-dark/20">
             {changeAddr && (
               <>
-                <Text typography="t6" fontWeight="bold">
+                <Text typography="t6" fontWeight="bold" className="text-primary-dark dark:text-primary-light">
                   수정 위치:{" "}
                 </Text>
-                <Text typography="t6">{changeAddr}</Text>
+                <Text typography="t6" className="wrap-break-word text-text-on-surface dark:text-grey-light">
+                  {changeAddr}
+                </Text>
               </>
             )}
+            {!changeAddr && (
+              <Text typography="t6" className="text-grey-dark dark:text-grey">
+                지도를 클릭해서 수정할 위치를 선택해주세요.
+              </Text>
+            )}
           </div>
-          <Button className="my-1 web:hidden" onClick={changeLocation}>
+          <Button
+            className="my-2 web:hidden"
+            onClick={changeLocation}
+          >
             위치 변경하기
           </Button>
-          <WarningText className="text-sm mo:hidden">
+          <WarningText className="text-sm mt-1.5 mo:hidden rounded-lg bg-search-input-bg/35 px-2 py-1 dark:bg-black/30">
             지도에서 위치를 수정할 위치를 클릭해 주세요!
           </WarningText>
-          <div id="change-map" className="w-full h-52 web:hidden" />
+          <div
+            id="change-map"
+            className="mt-2 h-52 w-full overflow-hidden rounded-xl border border-grey-light/80 web:hidden dark:border-grey-dark/85"
+          />
         </Section>
 
         {/* 버튼 */}

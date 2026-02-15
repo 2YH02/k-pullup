@@ -1,7 +1,7 @@
 import { type Device } from "@/app/mypage/page";
 import markerDetail from "@api/marker/marker-detail";
 import getDeviceType from "@lib/get-device-type";
-import NotFoud from "@pages/pullup/not-foud";
+import NotFound from "@layout/not-found";
 import { cookies, headers } from "next/headers";
 import ReportClient from "./report-client";
 
@@ -19,7 +19,13 @@ const PullupReport = async ({ params }: { params: { id: string } }) => {
   const marker = await markerDetail({ id: ~~id, cookie: decodeCookie });
 
   if (marker.error === "Marker not found") {
-    return <NotFoud />;
+    return (
+      <NotFound
+        hasBackButton
+        headerTitle="정보 수정 요청"
+        errorTitle="해당 위치의 정보를 찾을 수 없습니다."
+      />
+    );
   }
 
   return (
