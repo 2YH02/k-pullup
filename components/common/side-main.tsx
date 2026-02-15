@@ -282,6 +282,20 @@ const MainHeader = ({
     if (headerPosition === "fixed") return "web:fixed mo:fixed";
   };
 
+  const handleBackClick = () => {
+    if (prevClick) {
+      prevClick();
+      return;
+    }
+
+    if (referrer && window.history.length > 1) {
+      router.back();
+      return;
+    }
+
+    router.push(backFallbackUrl);
+  };
+
   return (
     <div
       className={cn(
@@ -296,15 +310,7 @@ const MainHeader = ({
           className={`flex items-center justify-center shrink-0 w-10 h-10 ${
             hasBackButton ? "cursor-pointer" : "cursor-default"
           }`}
-          onClick={
-            hasBackButton
-              ? prevClick
-                ? prevClick
-                : referrer
-                ? () => router.back()
-                : () => router.push(backFallbackUrl)
-              : undefined
-          }
+          onClick={hasBackButton ? handleBackClick : undefined}
         >
           {hasBackButton && <ArrowLeftIcon color="black" />}
         </button>

@@ -26,6 +26,8 @@ const SigninPage = ({ searchParams }: PageProps) => {
   const headersList = headers();
   const referrer = headersList.get("referer");
   const userAgent = headersList.get("user-agent");
+  const safeReturnUrl =
+    returnUrl && returnUrl.startsWith("/") ? returnUrl : "/";
 
   const deviceType: Device = getDeviceType(userAgent as string);
 
@@ -35,6 +37,7 @@ const SigninPage = ({ searchParams }: PageProps) => {
       fullHeight
       hasBackButton
       referrer={!!referrer}
+      backFallbackUrl={safeReturnUrl}
       deviceType={deviceType}
     >
       <Section className="flex flex-col items-center justify-start pb-0">
