@@ -8,14 +8,16 @@ const AppSetting = () => {
   const { setTheme, theme } = useTheme();
 
   return (
-    <List title="앱 설정">
-      <ListItem
-        title="다크모드"
-        onTrue={() => setTheme("dark")}
-        onFalse={() => setTheme("light")}
-        initValue={theme === "dark" ? true : false}
-      />
-    </List>
+    <div className="pt-1">
+      <List title="앱 설정">
+        <ListItem
+          title="다크모드"
+          onTrue={() => setTheme("dark")}
+          onFalse={() => setTheme("light")}
+          initValue={theme === "dark" ? true : false}
+        />
+      </List>
+    </div>
   );
 };
 

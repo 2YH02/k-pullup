@@ -19,7 +19,7 @@ const ConfigPage = () => {
       headerTitle="설정"
       fullHeight
       hasBackButton
-      background="grey"
+      backFallbackUrl="/mypage"
       referrer={!!referrer}
       deviceType={deviceType}
     >

@@ -12,10 +12,38 @@ interface ListProps {
 
 const List = ({ title, children }: ListProps) => {
   return (
-    <div className="mb-3">
-      <Text className="p-2">{title}</Text>
-      <ul className="bg-white dark:bg-black-light">{children}</ul>
-    </div>
+    <section className="mb-4 px-6">
+      <Text
+        typography="t6"
+        fontWeight="bold"
+        className="mb-2 text-grey-dark dark:text-grey"
+      >
+        {title}
+      </Text>
+      <ul className="overflow-hidden rounded-xl border border-primary/10 bg-surface/80 dark:border-grey-dark dark:bg-black">
+        {children}
+      </ul>
+    </section>
+  );
+};
+
+const handleEnterOrSpace = (
+  e: React.KeyboardEvent<HTMLLIElement>,
+  onPress?: VoidFunction
+) => {
+  if (!onPress) return;
+
+  if (e.key === "Enter" || e.key === " ") {
+    e.preventDefault();
+    onPress();
+  }
+};
+
+const ItemArrow = () => {
+  return (
+    <span className="text-grey-dark transition-transform duration-180 ease-out group-hover:translate-x-px dark:text-grey motion-reduce:transform-none">
+      <ArrowRightIcon size={18} color="primary" />
+    </span>
   );
 };
 
@@ -41,42 +69,47 @@ export const ListItem = ({
   onFalse,
 }: ListItemProps) => {
   const router = useRouter();
+
+  const isClickable = Boolean((link && url) || onClick);
+  const handleItemClick =
+    link && url
+      ? () => {
+          router.push(url);
+        }
+      : onClick;
+
   return (
     <li
-      className={`flex justify-between items-center ${
-        (link && url) || onClick ? "cursor-pointer" : "cursor-default"
-      } p-2 border-b border-solid border-grey-light dark:border-grey-dark`}
-      onClick={
-        link && url
-          ? () => {
-              router.push(url);
-            }
-          : onClick
-          ? onClick
-          : undefined
-      }
+      className={`group flex min-h-12 items-center justify-between gap-3 border-b border-primary/10 px-3 py-2.5 last:border-b-0 dark:border-grey-dark ${
+        isClickable
+          ? "cursor-pointer transition-[background-color,transform] duration-150 ease-out web:hover:bg-primary/6 active:scale-[0.998] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:web:hover:bg-primary-dark/15"
+          : "cursor-default"
+      }`}
+      onClick={handleItemClick}
+      role={isClickable ? "button" : undefined}
+      tabIndex={isClickable ? 0 : undefined}
+      onKeyDown={(e) => handleEnterOrSpace(e, handleItemClick)}
     >
-      <div>
+      <div className="min-w-0">
         <Text display="block">{title}</Text>
-        <Text display="block" typography="t7" className="text-grey-dark">
-          {description}
-        </Text>
+        {description && (
+          <Text
+            display="block"
+            typography="t7"
+            className="mt-0.5 text-grey-dark dark:text-grey"
+          >
+            {description}
+          </Text>
+        )}
       </div>
 
-      {link && url && (
-        <div>
-          <ArrowRightIcon size={20} color="black" />
-        </div>
-      )}
+      {link && url && <ItemArrow />}
       {onTrue && onFalse && (
         <ToggleButton onTrue={onTrue} onFalse={onFalse} initValue={initValue} />
       )}
-      {onClick && (
-        <div>
-          <ArrowRightIcon size={20} color="black" />
-        </div>
-      )}
+      {onClick && <ItemArrow />}
     </li>
   );
 };
+
 export default List;

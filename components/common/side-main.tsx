@@ -29,6 +29,7 @@ interface SideMainProps {
   bodyStyle?: string;
   headerIconClick?: VoidFunction;
   prevClick?: VoidFunction;
+  backFallbackUrl?: string;
   onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
 }
 
@@ -78,6 +79,7 @@ const SideMain = ({
   dragable = true,
   headerIconClick,
   prevClick,
+  backFallbackUrl = "/",
   children,
   deviceType,
   bodyStyle,
@@ -199,6 +201,7 @@ const SideMain = ({
             headerPosition={headerPosition}
             iconClick={headerIconClick}
             prevClick={prevClick}
+            backFallbackUrl={backFallbackUrl}
             referrer={referrer}
             deviceType={deviceType}
           />
@@ -253,6 +256,7 @@ interface MainHeaderProps {
   deviceType?: Device;
   iconClick?: VoidFunction;
   prevClick?: VoidFunction;
+  backFallbackUrl?: string;
 }
 
 const MainHeader = ({
@@ -264,6 +268,7 @@ const MainHeader = ({
   deviceType,
   iconClick,
   prevClick,
+  backFallbackUrl = "/",
 }: MainHeaderProps) => {
   const router = useRouter();
 
@@ -297,7 +302,7 @@ const MainHeader = ({
                 ? prevClick
                 : referrer
                 ? () => router.back()
-                : () => router.push("/")
+                : () => router.push(backFallbackUrl)
               : undefined
           }
         >
