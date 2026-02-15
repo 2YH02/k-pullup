@@ -137,7 +137,7 @@ const PullupClient = ({
       <ImageCarousel photos={markerPhotos} />
 
       <Section className="py-0">
-        <div className="mt-2 flex flex-wrap items-center gap-2">
+        <div className="my-2 flex flex-wrap items-center gap-2">
           {!철봉 ||
             !평행봉 ||
             (철봉.quantity <= 0 && 평행봉.quantity <= 0 && (
