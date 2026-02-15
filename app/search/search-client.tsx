@@ -178,7 +178,7 @@ const SearchClient = ({
         <>
           <Section>
             <Text
-              className="mb-4"
+              className="mb-4 text-text-on-surface-muted dark:text-grey-light"
               typography="t6"
               display="block"
               fontWeight="bold"
@@ -188,7 +188,9 @@ const SearchClient = ({
 
             {/* Around Search Card */}
             <button
+              type="button"
               onClick={() => router.push("/search/around")}
+              aria-label="주변 검색 페이지로 이동"
               className={cn(
                 "relative isolate overflow-hidden",
                 "w-full p-4 rounded-2xl border border-white/70 dark:border-white/10",
@@ -251,21 +253,54 @@ const SearchClient = ({
             <Section>
               <div className="flex justify-between items-center">
                 <SectionTitle title="최근 검색" />
-                <button onClick={() => clearSearches()}>
-                  <Text typography="t6" className="text-grey dark:text-grey">
+                <button
+                  type="button"
+                  onClick={() => clearSearches()}
+                  aria-label="최근 검색 전체 삭제"
+                  className={cn(
+                    "rounded-full px-3 py-1.5",
+                    "bg-search-input-bg/70 dark:bg-white/5",
+                    "border border-white/70 dark:border-white/10",
+                    "transition-all duration-180 ease-out motion-reduce:transition-none",
+                    "hover:border-primary/40 dark:hover:border-primary-light/35",
+                    "active:scale-[0.98]",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 dark:focus-visible:ring-primary-light/35"
+                  )}
+                >
+                  <Text
+                    typography="t6"
+                    className="text-text-on-surface-muted dark:text-grey-light"
+                  >
                     목록 전체 삭제
                   </Text>
                 </button>
               </div>
-              <ul>
+
+              <ul
+                className={cn(
+                  "mt-3 rounded-2xl overflow-hidden",
+                  "border border-white/70 dark:border-white/10",
+                  "bg-search-input-bg/55 dark:bg-black/25",
+                  "backdrop-blur-sm"
+                )}
+              >
                 {searches.slice(0, visibleCount).map((search, index) => {
                   return (
                     <li
                       key={`${search}-${index}`}
-                      className="border-b border-solid dark:border-grey-dark flex"
+                      className={cn(
+                        "group flex border-b border-white/60 dark:border-white/8 last:border-b-0",
+                        "transition-colors duration-180 ease-out"
+                      )}
                     >
                       <button
-                        className="flex items-center py-3 text-left w-full h-full"
+                        className={cn(
+                          "w-full h-full text-left flex items-center py-3.5 px-4",
+                          "transition-colors duration-180 ease-out motion-reduce:transition-none",
+                          "hover:bg-white/55 dark:hover:bg-white/5",
+                          "active:bg-white/70 dark:active:bg-white/8",
+                          "focus-visible:outline-none focus-visible:bg-white/65 dark:focus-visible:bg-white/8"
+                        )}
                         onClick={() => {
                           if (search.d) {
                             router.push(`/pullup/${search.d}`);
@@ -278,7 +313,10 @@ const SearchClient = ({
                         }}
                       >
                         <div className="flex flex-col">
-                          <Text typography="t6" className="break-all">
+                          <Text
+                            typography="t6"
+                            className="break-all text-text-on-surface dark:text-grey-light"
+                          >
                             {highlightText(
                               removeMarkTags(search.addr as string),
                               extractMarkedText(search.addr as string).marked
@@ -287,7 +325,7 @@ const SearchClient = ({
                           {search.place && (
                             <Text
                               typography="t7"
-                              className="break-all text-grey dark:text-grey"
+                              className="mt-0.5 break-all text-text-on-surface-muted dark:text-grey"
                             >
                               {search.place}
                             </Text>
@@ -295,10 +333,19 @@ const SearchClient = ({
                         </div>
                       </button>
                       <button
-                        className="ml-2"
+                        type="button"
+                        className={cn(
+                          "mx-2 my-auto shrink-0 rounded-full p-2",
+                          "text-text-on-surface-muted dark:text-grey-light",
+                          "transition-all duration-180 ease-out motion-reduce:transition-none",
+                          "hover:bg-white/60 dark:hover:bg-white/8",
+                          "active:scale-[0.94]",
+                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 dark:focus-visible:ring-primary-light/35"
+                        )}
                         onClick={() => removeItem(search.addr as string)}
+                        aria-label="최근 검색 삭제"
                       >
-                        <BsXLg className="fill-black dark:fill-white" />
+                        <BsXLg className="fill-current" />
                       </button>
                     </li>
                   );
@@ -306,10 +353,21 @@ const SearchClient = ({
               </ul>
               {searches.length > visibleCount && (
                 <button
+                  type="button"
                   onClick={() => setVisibleCount((prev) => prev + 10)}
-                  className="w-full mt-3 py-2.5 rounded-lg bg-grey-light dark:bg-grey-dark hover:bg-grey-light/70 dark:hover:bg-grey-dark/70 transition-colors"
+                  aria-label="최근 검색 더보기"
+                  className={cn(
+                    "w-full mt-3 py-2.5 rounded-xl",
+                    "border border-white/70 dark:border-white/10",
+                    "bg-search-input-bg/70 dark:bg-white/5",
+                    "text-text-on-surface-muted dark:text-grey-light",
+                    "transition-all duration-180 ease-out motion-reduce:transition-none",
+                    "hover:border-primary/45 dark:hover:border-primary-light/35 hover:bg-white/50 dark:hover:bg-white/8",
+                    "active:scale-[0.99]",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 dark:focus-visible:ring-primary-light/35"
+                  )}
                 >
-                  <Text typography="t6" className="text-grey-dark dark:text-grey-light">
+                  <Text typography="t6" className="text-text-on-surface-muted dark:text-grey-light">
                     더보기
                   </Text>
                 </button>
@@ -318,37 +376,73 @@ const SearchClient = ({
           ) : (
             <Section>
               <SectionTitle title="검색 팁" />
-              <div className="space-y-3 mt-3">
-                <div className="flex gap-2">
+              <div
+                className={cn(
+                  "relative isolate overflow-hidden mt-3 rounded-2xl p-3 space-y-2.5",
+                  "border border-white/70 dark:border-white/10",
+                  "bg-search-input-bg/55 dark:bg-black/25",
+                  "backdrop-blur-sm"
+                )}
+              >
+                <div
+                  aria-hidden
+                  className={cn(
+                    "absolute inset-0 pointer-events-none",
+                    "bg-linear-to-br from-white/35 via-transparent to-primary/10",
+                    "dark:from-white/8 dark:to-primary-dark/18"
+                  )}
+                />
+                <div className="flex gap-2.5 rounded-xl p-2.5 transition-colors duration-180 ease-out hover:bg-white/45 dark:hover:bg-white/5">
                   <Text
                     typography="t6"
-                    className="text-primary dark:text-primary-dark font-bold"
+                    className={cn(
+                      "shrink-0 flex h-5 w-5 items-center justify-center rounded-full",
+                      "bg-primary/12 dark:bg-primary-light/20",
+                      "text-primary dark:text-primary-light font-bold"
+                    )}
                   >
-                    •
+                    1
                   </Text>
-                  <Text typography="t6" className="text-grey dark:text-grey">
+                  <Text
+                    typography="t6"
+                    className="relative text-text-on-surface-muted dark:text-grey"
+                  >
                     동, 구, 시 단위로 검색하면 더 정확한 결과를 얻을 수 있어요
                   </Text>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2.5 rounded-xl p-2.5 transition-colors duration-180 ease-out hover:bg-white/45 dark:hover:bg-white/5">
                   <Text
                     typography="t6"
-                    className="text-primary dark:text-primary-dark font-bold"
+                    className={cn(
+                      "shrink-0 flex h-5 w-5 items-center justify-center rounded-full",
+                      "bg-primary/12 dark:bg-primary-light/20",
+                      "text-primary dark:text-primary-light font-bold"
+                    )}
                   >
-                    •
+                    2
                   </Text>
-                  <Text typography="t6" className="text-grey dark:text-grey">
+                  <Text
+                    typography="t6"
+                    className="relative text-text-on-surface-muted dark:text-grey"
+                  >
                     건물명이나 공원 이름으로도 검색할 수 있어요
                   </Text>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2.5 rounded-xl p-2.5 transition-colors duration-180 ease-out hover:bg-white/45 dark:hover:bg-white/5">
                   <Text
                     typography="t6"
-                    className="text-primary dark:text-primary-dark font-bold"
+                    className={cn(
+                      "shrink-0 flex h-5 w-5 items-center justify-center rounded-full",
+                      "bg-primary/12 dark:bg-primary-light/20",
+                      "text-primary dark:text-primary-light font-bold"
+                    )}
                   >
-                    •
+                    3
                   </Text>
-                  <Text typography="t6" className="text-grey dark:text-grey">
+                  <Text
+                    typography="t6"
+                    className="relative text-text-on-surface-muted dark:text-grey"
+                  >
                     원하는 위치에 철봉이 없다면 주변 검색을 이용해보세요
                   </Text>
                 </div>
