@@ -3,9 +3,10 @@ import type { Moment } from "@api/moment/get-moment-for-marker";
 import Text from "@common/text";
 import { formatDate } from "@lib/format-date";
 import useAlertStore from "@store/useAlertStore";
+import useImageModalStore from "@store/useImageModalStore";
 import useUserStore from "@store/useUserStore";
+import { X } from "lucide-react";
 import Image from "next/image";
-import { BsX } from "react-icons/bs";
 
 interface MomentItem {
   moment: Moment;
@@ -15,6 +16,7 @@ interface MomentItem {
 const MomentItem = ({ moment, filterMoment }: MomentItem) => {
   const { user } = useUserStore();
   const { openAlert, closeAlert } = useAlertStore();
+  const { openModal } = useImageModalStore();
 
   const handledelete = () => {
     openAlert({
@@ -38,31 +40,46 @@ const MomentItem = ({ moment, filterMoment }: MomentItem) => {
     });
   };
   return (
-    <div className="py-3">
-      <div className="px-2 flex items-center justify-between h-10 w-full">
+    <div className="px-4 py-3">
+      <div className="mb-2 flex h-10 w-full items-center justify-between">
         <div className="flex flex-col">
-          <Text fontWeight="bold">{moment.username}</Text>
-          <Text typography="t7" className="text-grey">
+          <Text fontWeight="bold" className="text-text-on-surface dark:text-grey-light">
+            {moment.username}
+          </Text>
+          <Text typography="t7" className="text-grey-dark dark:text-grey">
             {formatDate(moment.createdAt)}
           </Text>
         </div>
         {user && user.userId === moment.userID && (
-          <button onClick={handledelete}>
-            <BsX size={24} className="text-grey dark:text-grey" />
+          <button
+            onClick={handledelete}
+            className="rounded-full p-1 text-grey-dark transition-colors duration-150 active:scale-[0.96] active:bg-black/5 active:text-black focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:text-grey dark:active:bg-white/10 dark:active:text-white"
+            aria-label="모먼트 삭제"
+          >
+            <X size={20} strokeWidth={2.2} />
           </button>
         )}
       </div>
-      <div className="w-full flex flex-col justify-center px-2">
-        <Text className="text-wrap wrap-break-word">{moment.caption}</Text>
+      <div className="mb-2 flex w-full flex-col justify-center">
+        <Text className="text-wrap wrap-break-word text-text-on-surface dark:text-grey-light">
+          {moment.caption}
+        </Text>
       </div>
-      <div className="relative w-full h-96">
+      <button
+        type="button"
+        className="relative h-96 w-full overflow-hidden rounded-xl border border-grey-light/80 text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:border-grey-dark/80"
+        onClick={() => {
+          openModal({ images: [moment.photoURL], curIndex: 0 });
+        }}
+        aria-label="모먼트 이미지 크게 보기"
+      >
         <Image
           src={moment.photoURL}
           fill
           alt={moment.caption}
-          className="object-cover"
+          className="object-cover transition-transform duration-200 active:scale-[1.01]"
         />
-      </div>
+      </button>
     </div>
   );
 };

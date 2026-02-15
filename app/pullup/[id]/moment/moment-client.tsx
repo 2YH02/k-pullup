@@ -16,9 +16,9 @@ import {
 } from "@lib/optimize-image";
 import useAlertStore from "@store/useAlertStore";
 import useUserStore from "@store/useUserStore";
+import { ImagePlus, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
-import { BsUpload } from "react-icons/bs";
 
 const MomentClient = ({
   deviceType,
@@ -129,7 +129,7 @@ const MomentClient = ({
         hasBackButton
         deviceType={deviceType}
         headerIcon={
-          <BsUpload size={18} className="text-black dark:text-grey-light" />
+          <Upload size={18} strokeWidth={2.2} className="text-text-on-surface dark:text-grey-light" />
         }
         headerIconClick={handleBoxClick}
       >
@@ -139,18 +139,38 @@ const MomentClient = ({
           ref={fileInputRef}
           className="hidden"
         />
-        <Section className="mt-10">
-          <Text fontWeight="bold" textAlign="center" display="block">
-            등록된 모먼트가 없습니다.
-          </Text>
-          <Text typography="t6" textAlign="center" display="block">
-            다른 사람들과 당신의 순간을 공유해보세요!
-          </Text>
+        <Section className="mt-8">
+          <div className="mx-auto max-w-sm rounded-2xl border border-grey-light/85 bg-search-input-bg/40 px-5 py-8 text-center motion-safe:animate-page-enter dark:border-grey-dark/85 dark:bg-black/30">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-primary/25 bg-primary/10 dark:border-primary-dark/45 dark:bg-primary-dark/25">
+              <ImagePlus size={24} strokeWidth={2.1} className="text-primary dark:text-primary-light" />
+            </div>
+            <Text
+              fontWeight="bold"
+              textAlign="center"
+              display="block"
+              className="mb-1 text-text-on-surface dark:text-grey-light"
+            >
+              등록된 모먼트가 없습니다.
+            </Text>
+            <Text
+              typography="t6"
+              textAlign="center"
+              display="block"
+              className="text-grey-dark dark:text-grey"
+            >
+              첫 모먼트를 올려 순간을 공유해보세요.
+            </Text>
 
-          <div className="text-center mt-4">
-            <Button full onClick={handleBoxClick} size="sm">
-              등록하기
-            </Button>
+            <div className="mt-5 text-center">
+              <Button
+                full
+                onClick={handleBoxClick}
+                size="sm"
+                className="h-10"
+              >
+                모먼트 등록하기
+              </Button>
+            </div>
           </div>
         </Section>
       </SideMain>
@@ -164,11 +184,22 @@ const MomentClient = ({
       hasBackButton
       deviceType={deviceType}
       headerIcon={
-        <BsUpload size={18} className="text-black dark:text-grey-light" />
+        <Upload size={18} strokeWidth={2.2} className="text-text-on-surface dark:text-grey-light" />
       }
       headerIconClick={handleBoxClick}
     >
-      <div className="p-2" />
+      <Section className="py-2">
+        <div className="rounded-xl border border-grey-light/85 bg-search-input-bg/35 px-3 py-2 dark:border-grey-dark/85 dark:bg-black/30">
+          <Text typography="t6" className="text-grey-dark dark:text-grey">
+            오늘의 운동 순간을 공유해보세요.
+          </Text>
+          {errorMessage && (
+            <Text typography="t7" className="mt-1 text-red">
+              {errorMessage}
+            </Text>
+          )}
+        </div>
+      </Section>
       <input
         type="file"
         onChange={handleImageChange}
@@ -177,9 +208,14 @@ const MomentClient = ({
       />
       {moments.map((moment, i) => {
         return (
-          <div key={`${moment.caption} ${moment.createdAt}`}>
+          <div
+            key={`${moment.caption} ${moment.createdAt}`}
+            className="motion-safe:animate-page-enter motion-reduce:animate-none"
+          >
             <MomentItem moment={moment} filterMoment={deleteMoment} />
-            {i !== moments.length - 1 && <Divider className="w-full h-4" />}
+            {i !== moments.length - 1 && (
+              <Divider className="h-px w-full bg-black/10 dark:bg-white/10" />
+            )}
           </div>
         );
       })}

@@ -4,8 +4,8 @@ import type { Moment } from "@api/moment/get-moment-for-marker";
 import postMoment from "@api/moment/post-moment";
 import SideMain from "@common/side-main";
 import useInput from "@hooks/useInput";
-import ArrowLeftIcon from "@icons/arrow-left-icon";
 import LoadingIcon from "@icons/loading-icon";
+import { ChevronLeft, SendHorizontal } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -76,35 +76,49 @@ const AddMomentPage = ({
     <SideMain fullHeight deviceType={deviceType} bodyStyle="p-0">
       <div className="w-full h-full bg-black">
         <div className="flex flex-col w-full h-full">
-          <div className="flex items-center pl-2 pr-4 h-10">
-            <button onClick={clear}>
-              <ArrowLeftIcon className="fill-white" />
+          <div className="flex h-12 items-center px-3">
+            <button
+              onClick={clear}
+              className="rounded-full p-1.5 text-white transition-colors duration-150 active:scale-[0.96] active:bg-white/15 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/70"
+              aria-label="작성 취소"
+            >
+              <ChevronLeft size={22} strokeWidth={2.2} />
             </button>
           </div>
 
-          <div className="relative pt-4 grow shrink flex flex-col items-center justify-center text-white">
-            <div className="relative w-full h-3/4">
+          <div className="relative grow shrink pt-2 text-white">
+            <div className="relative h-[68%] w-full overflow-hidden rounded-md">
               <Image src={url} fill alt="" className="object-contain" />
             </div>
-            <div className="w-full h-1/4 px-4 flex flex-col justify-center">
-              <div className="text-white mb-2">내용</div>
+            <div className="flex h-[32%] w-full flex-col justify-center px-4">
+              <div className="mb-2 text-[13px] text-white/85">내용</div>
               <input
                 value={textValue.value}
                 onChange={textValue.onChange}
                 maxLength={30}
-                className="w-full bg-grey-dark rounded-md  outline-hidden p-2"
+                className="w-full rounded-lg border border-white/25 bg-white/12 p-2 text-white placeholder:text-white/55 outline-hidden transition-colors duration-150 focus:border-white/45"
                 placeholder="오운완 🦾"
               />
+              <div className="mt-1 text-right text-[11px] text-white/60">
+                {textValue.value.length}/30
+              </div>
             </div>
           </div>
 
-          <div className="text-center">
+          <div className="px-4 pb-3 pt-1">
             <button
-              className="text-white p-2 h-10"
+              className="flex h-10 w-full items-center justify-center gap-1.5 rounded-md border border-white/35 bg-white/12 text-white transition-[transform,background-color] duration-150 active:scale-[0.98] active:bg-white/20 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/70 disabled:cursor-not-allowed disabled:opacity-55"
               disabled={loading}
               onClick={handleGenerateImage}
             >
-              {loading ? <LoadingIcon className="m-0" size="sm" /> : "만들기"}
+              {loading ? (
+                <LoadingIcon className="m-0" size="sm" />
+              ) : (
+                <>
+                  <SendHorizontal size={15} strokeWidth={2.2} />
+                  만들기
+                </>
+              )}
             </button>
           </div>
         </div>
