@@ -207,17 +207,7 @@ const SideMain = ({
           />
         )}
 
-        {!fullHeight && dragable && (
-          <div
-            className="sticky top-0 py-3 bg-side-main dark:bg-black z-20 rounded-t-3xl web:hidden cursor-grab active:cursor-grabbing"
-            onPointerDown={dragStart}
-            role="button"
-            aria-label="드로워 높이 조절"
-            tabIndex={0}
-          >
-            <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />
-          </div>
-        )}
+       
 
         <div
           ref={containerRef}
@@ -234,6 +224,17 @@ const SideMain = ({
           )}
           onScroll={onScroll}
         >
+          {!fullHeight && dragable && (
+            <div
+              className="sticky top-0 z-20 py-3 backdrop-blur-sm bg-surface/92 dark:bg-black/55 rounded-t-3xl web:hidden cursor-grab active:cursor-grabbing"
+              onPointerDown={dragStart}
+              role="button"
+              aria-label="드로워 높이 조절"
+              tabIndex={0}
+            >
+              <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />
+            </div>
+          )}
           {children}
         </div>
 
@@ -282,20 +283,6 @@ const MainHeader = ({
     if (headerPosition === "fixed") return "web:fixed mo:fixed";
   };
 
-  const handleBackClick = () => {
-    if (prevClick) {
-      prevClick();
-      return;
-    }
-
-    if (referrer && window.history.length > 1) {
-      router.back();
-      return;
-    }
-
-    router.push(backFallbackUrl);
-  };
-
   return (
     <div
       className={cn(
@@ -310,7 +297,15 @@ const MainHeader = ({
           className={`flex items-center justify-center shrink-0 w-10 h-10 ${
             hasBackButton ? "cursor-pointer" : "cursor-default"
           }`}
-          onClick={hasBackButton ? handleBackClick : undefined}
+          onClick={
+            hasBackButton
+              ? prevClick
+                ? prevClick
+                : referrer
+                ? () => router.back()
+                : () => router.push(backFallbackUrl)
+              : undefined
+          }
         >
           {hasBackButton && <ArrowLeftIcon color="black" />}
         </button>
