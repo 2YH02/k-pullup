@@ -2,6 +2,7 @@ import type { Device } from "./mypage/page";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import Skeleton from "@common/skeleton";
+import cn from "@lib/cn";
 import getDeviceType from "@lib/get-device-type";
 import { headers } from "next/headers";
 
@@ -9,12 +10,15 @@ const Loading = () => {
   const headersList = headers();
   const userAgent = headersList.get("user-agent");
   const deviceType: Device = getDeviceType(userAgent as string);
+  const isMobileApp =
+    deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
+  const searchPositionStyle = isMobileApp ? "mo:top-12" : "";
 
   return (
     <SideMain withNav deviceType={deviceType} bodyStyle="pb-0">
-      <Section className="py-2 sticky top-0 z-20 bg-surface/92 dark:bg-black/55 backdrop-blur-sm">
-        <div className="flex h-10 items-center justify-between">
-          <div className="w-2/3">
+      <Section className="web:py-4 mo:py-2 web:sticky web:top-0 web:z-20 mo:sticky mo:top-0 mo:z-20 web:backdrop-blur-sm web:bg-surface/92 web:dark:bg-black/55 mo:backdrop-blur-sm mo:bg-surface/92 mo:dark:bg-black/55">
+        <div className="flex h-10 items-center overflow-hidden web:justify-center mo:justify-between max-[384px]:justify-center">
+          <div className="flex grow flex-col overflow-hidden web:origin-left web:max-w-90 web:pr-4 mo:origin-left mo:max-w-[68%] mo:pr-3 max-[384px]:hidden">
             <Skeleton className="h-5 w-32 rounded-md" />
             <Skeleton className="mt-1 h-3.5 w-40 rounded-md max-[370px]:hidden" />
           </div>
@@ -22,7 +26,12 @@ const Loading = () => {
         </div>
       </Section>
 
-      <Section className="py-0">
+      <Section
+        className={cn(
+          "mo:bg-transparent mo:dark:bg-transparent mo:fixed mo:w-full mo:top-4 mo:left-1/2 mo:-translate-x-1/2 mo:py-0",
+          searchPositionStyle
+        )}
+      >
         <Skeleton className="h-12 w-full rounded-2xl" />
       </Section>
 
