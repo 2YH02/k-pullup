@@ -149,6 +149,11 @@ const SideMain = ({
 
   const isMobileApp =
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
+  const layoutClass = fullHeight
+    ? "mo:inset-0 mo:h-dvh mo:w-dvw web:top-1/2 web:-translate-y-1/2 web:h-[90%] web:left-6 web:max-w-96 w-full web:max-h-185"
+    : `mo:bottom-0 web:top-1/2 web:-translate-y-1/2 web:h-[90%] web:left-6 web:max-w-96 w-full web:max-h-185 ${
+        isMobileApp ? "mo:h-[80%]" : "mo:h-[85%]"
+      }`;
 
   if (hide) {
     return (
@@ -166,11 +171,11 @@ const SideMain = ({
     <SheetHeightProvider deviceType={deviceType as Device}>
       <main
         className={cn(
-          `flex flex-col fixed mo:bottom-0 web:top-1/2 web:-translate-y-1/2 web:h-[90%] web:left-6 web:max-w-96 w-full web:rounded-lg z-10
-        shadow-dark web:max-h-185 ${fullHeight ? "" : "mo:rounded-t-4xl"}
-        mo:bottom-0 mo:no-touch ${
-          fullHeight ? "mo:h-full" : isMobileApp ? "mo:h-[80%]" : "mo:h-[85%]"
-        } select-none`,
+          `fixed flex flex-col z-10 mo:no-touch select-none ${layoutClass} ${
+            fullHeight
+              ? "shadow-dark web:rounded-lg"
+              : "shadow-dark web:rounded-lg mo:rounded-t-4xl"
+          }`,
           background === "white"
             ? "bg-side-main dark:bg-black"
             : "bg-grey-light dark:bg-black",
