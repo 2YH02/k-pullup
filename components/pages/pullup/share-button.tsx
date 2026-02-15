@@ -7,14 +7,8 @@ import IconButton from "@common/icon-button";
 import useGps from "@hooks/useGps";
 import { useToast } from "@hooks/useToast";
 import downloadPdf from "@lib/api/marker/download-pdf";
+import { FileDown, Link2, MapPinned, Route, Share2 } from "lucide-react";
 import { useState } from "react";
-import {
-  BsCloudDownload,
-  BsFillShareFill,
-  BsGeo,
-  BsGeoAlt,
-  BsLink45Deg,
-} from "react-icons/bs";
 
 interface ShareButtonProps {
   markerId: number;
@@ -101,7 +95,13 @@ const ShareButton = ({ markerId, lat, lng, address }: ShareButtonProps) => {
     <>
       <div className="relative flex-1">
         <IconButton
-          icon={<BsFillShareFill size={20} className="fill-primary" />}
+          icon={
+            <Share2
+              size={20}
+              strokeWidth={2.2}
+              className="text-primary dark:text-primary-light"
+            />
+          }
           text="공유 / 길찾기"
           className="w-full active:bg-black/5 dark:active:bg-white/10"
           onClick={() => {
@@ -114,20 +114,54 @@ const ShareButton = ({ markerId, lat, lng, address }: ShareButtonProps) => {
         id={`share-${markerId}`}
         className="pb-10"
       >
-        <BottomSheetItem icon={<BsGeoAlt size={22} />} onClick={copyAddress}>
+        <BottomSheetItem
+          icon={
+            <MapPinned
+              size={20}
+              strokeWidth={2.2}
+              className="text-location-badge-text dark:text-location-badge-text-dark"
+            />
+          }
+          iconWrapClassName="border-location-badge-bg/85 bg-location-badge-bg/65 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/45"
+          onClick={copyAddress}
+        >
           주소 복사
         </BottomSheetItem>
         <BottomSheetItem
-          icon={<BsLink45Deg size={22} />}
+          icon={
+            <Link2
+              size={20}
+              strokeWidth={2.2}
+              className="text-location-badge-text dark:text-location-badge-text-dark"
+            />
+          }
+          iconWrapClassName="border-location-badge-bg/85 bg-location-badge-bg/65 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/45"
           onClick={copyTextToClipboard}
         >
           철봉 링크 복사
         </BottomSheetItem>
-        <BottomSheetItem icon={<BsGeo size={22} />} onClick={openLocation}>
+        <BottomSheetItem
+          icon={
+            <Route
+              size={20}
+              strokeWidth={2.2}
+              className="text-location-badge-text dark:text-location-badge-text-dark"
+            />
+          }
+          iconWrapClassName="border-location-badge-bg/85 bg-location-badge-bg/65 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/45"
+          onClick={openLocation}
+        >
           길찾기
         </BottomSheetItem>
         <BottomSheetItem
-          icon={<BsCloudDownload size={22} />}
+          icon={
+            <FileDown
+              size={20}
+              strokeWidth={2.2}
+              className="text-location-badge-text dark:text-location-badge-text-dark"
+            />
+          }
+          iconWrapClassName="border-location-badge-bg/85 bg-location-badge-bg/65 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/45"
           onClick={downloadMap}
           disabled={downLoading}
         >
