@@ -42,7 +42,7 @@ const Social = async () => {
         <ChatCarousel />
       </Section>
 
-      <Ads type="feed" />
+      {/* <Ads type="feed" /> */}
 
       <Section>
         <SectionTitle title="인기 많은 철봉" />
