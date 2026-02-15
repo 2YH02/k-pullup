@@ -26,11 +26,10 @@ const Home = async () => {
 
   return (
     <SideMain withNav deviceType={deviceType} bodyStyle="pb-0">
+      <HeroStickyHeader />
+      <SearchInput deviceType={deviceType} />
+
       <div className="page-transition">
-        <HeroStickyHeader />
-
-        <SearchInput deviceType={deviceType} />
-
         <Section className="pb-0">
           <SectionTitle title="모먼트" subTitle="지금 이 순간을 기록해보세요." />
           <MomentList data={moment || []} />
