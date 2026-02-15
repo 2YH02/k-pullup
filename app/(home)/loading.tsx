@@ -1,4 +1,4 @@
-import type { Device } from "./mypage/page";
+import type { Device } from "../mypage/page";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
 import Skeleton from "@common/skeleton";
@@ -51,7 +51,10 @@ const Loading = () => {
         <SectionTitle title="내 주변 철봉" subTitle="현재 위치 기준 2km" />
         <div className="flex gap-3">
           {Array.from({ length: 2 }).map((_, index) => (
-            <div key={`around-skeleton-${index}`} className="w-64 shrink-0 rounded-2xl border border-primary/10 bg-side-main p-2">
+            <div
+              key={`around-skeleton-${index}`}
+              className="w-64 shrink-0 rounded-2xl border border-primary/10 bg-side-main p-2"
+            >
               <Skeleton className="h-40 w-full rounded-xl" />
               <Skeleton className="mt-3 h-4 w-3/4 rounded-md" />
               <Skeleton className="mt-2 h-3 w-1/3 rounded-md" />

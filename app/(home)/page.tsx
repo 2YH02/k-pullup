@@ -13,7 +13,7 @@ import MomentList from "@pages/home/moment-list";
 import NewImageSection from "@pages/home/new-image-section";
 import SearchInput from "@pages/home/search-input";
 import { headers } from "next/headers";
-import { type Device } from "./mypage/page";
+import { type Device } from "../mypage/page";
 
 const Home = async () => {
   const images = await newPictures();
@@ -35,7 +35,6 @@ const Home = async () => {
         <MomentList data={moment || []} />
       </Section>
 
-
       {/* <Section className="py-1">
         <NoticeSlide />
       </Section> */}
@@ -55,7 +54,6 @@ const Home = async () => {
       {!isNewPicturesError(images) && (
         <NewImageSection data={images as NewPictures[]} />
       )}
-
 
       {/* <Section>
         <SectionTitle
