@@ -1,7 +1,7 @@
 import { type Device } from "@/app/mypage/page";
-import SideMain from "@common/side-main";
 import getChatRegion from "@lib/get-chat-region";
 import getDeviceType from "@lib/get-device-type";
+import NotFound from "@layout/not-found";
 import { headers } from "next/headers";
 import ChatDetailClient from "./chat-detail-client";
 
@@ -18,10 +18,17 @@ const ChatDetailpage = ({ params }: { params: { code: string } }) => {
 
   if (headerTitle === 404)
     return (
-      <SideMain
-        headerTitle="잘못된 주소입니다."
-        hasBackButton
+      <NotFound
+        errorTitle="존재하지 않는 채팅방입니다."
+        actionLabel="소셜로 가기"
+        actionUrl="/social"
+        prevUrl="/social"
+        fullHeight
+        withNav
+        referrer={false}
         deviceType={deviceType}
+        headerTitle="채팅방"
+        hasBackButton
       />
     );
 
