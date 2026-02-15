@@ -27,11 +27,11 @@ const LinkList = ({ isAdmin }: { isAdmin?: boolean }) => {
         </LinkButton>
 
         <LinkButton url="/mypage/report" icon={<FileText size={18} strokeWidth={2.1} className={iconClass} />}>
-          내가 요청한 수정 목록
+          내 정보 수정 제안
         </LinkButton>
 
         <LinkButton url="/mypage/myreport" icon={<Inbox size={18} strokeWidth={2.1} className={iconClass} />}>
-          받은 수정 요청 목록
+          받은 정보 수정 제안
         </LinkButton>
 
         {isAdmin && (

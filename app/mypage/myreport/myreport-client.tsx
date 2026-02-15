@@ -8,16 +8,13 @@ import type {
 } from "@api/report/report-for-mymarker";
 import BottomFixedButton from "@common/bottom-fixed-button";
 import Button from "@common/button";
-import { Carousel, CarouselContent, CarouselItem } from "@common/carousel";
-import GrowBox from "@common/grow-box";
-import Section, { SectionTitle } from "@common/section";
-import ShadowBox from "@common/shadow-box";
+import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import ImageCarousel from "@layout/image-carousel";
-import { Received } from "@pages/mypage/link-list";
 import { StatusBadge } from "@pages/mypage/report/report-list-item";
 import useAlertStore from "@store/useAlertStore";
+import { ChevronRight, FilePenLine } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { type Device } from "../page";
@@ -41,13 +38,14 @@ const MyreportClient = ({
   const [curAddr, setCurAddr] = useState("");
   const [markerId, setMarkerId] = useState<string | null>(null);
 
+  const markerGroups = useMemo(() => Object.entries(data.markers), [data.markers]);
+
   const images = useMemo(() => {
     if (!curData) return;
-    const newImages = curData?.photos.map((image, index) => {
+
+    return curData.photos.map((image, index) => {
       return { markerId: index, photoURL: image };
     });
-
-    return newImages;
   }, [curData]);
 
   const handleDeny = () => {
@@ -138,67 +136,10 @@ const MyreportClient = ({
     });
   };
 
-  const getIconBg = (status: string) => {
-    if (status === "APPROVED") return "bg-green";
-    else if (status === "DENIED") return "bg-red";
-    else return "bg-grey";
-  };
-
-  const getStatusText = (status: string) => {
-    if (status === "APPROVED") return "승인됨";
-    else if (status === "DENIED") return "거절됨";
-    else return "대기중";
-  };
-
-  const reportItems = Object.entries(data.markers).map(
-    ([key, { markerID, reports, address }]) => {
-      return (
-        <Section key={key}>
-          <SectionTitle title={`${address || "주소 제공 안됨"}`} />
-          <Carousel opts={{ dragFree: true }}>
-            <CarouselContent className="-ml-1 gap-3 w-64 h-20 p-1">
-              {reports.map((report) => (
-                <CarouselItem className="p-0" key={report.reportID}>
-                  <ShadowBox
-                    onClick={() => {
-                      setMarkerId(markerID.toString());
-                      setCurData(report);
-                      setCurAddr(`${address || "주소 제공 안됨"}`);
-                    }}
-                    className="w-full h-full flex flex-col p-3"
-                    withAction
-                  >
-                    <div className="w-full h-full flex items-center">
-                      <div
-                        className={`w-2 h-2 ${getIconBg(
-                          report.status
-                        )} rounded-full mr-2`}
-                      />
-                      <Text typography="t7">
-                        {getStatusText(report.status)}
-                      </Text>
-                      <GrowBox />
-                      <Received size={24} />
-                    </div>
-                    <div className="w-full h-full flex">
-                      <Text className="w-4/5 shrink-0 truncate">
-                        {report.description || "설명 제공 안됨"}
-                      </Text>
-                    </div>
-                  </ShadowBox>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-        </Section>
-      );
-    }
-  );
-
   if (curData) {
     return (
       <SideMain
-        headerTitle={curAddr}
+        headerTitle="수정 요청 상세"
         fullHeight
         hasBackButton
         prevClick={() => {
@@ -207,58 +148,84 @@ const MyreportClient = ({
         }}
         referrer={!!referrer}
         deviceType={deviceType}
+        backFallbackUrl="/mypage"
       >
-        <Section className="relative p-4 pt-6 mb-4 mt-5">
-          <div className="absolute right-3 top-3">
-            <StatusBadge status={curData.status} />
+        <Section className="pb-2">
+          <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
+            <Text typography="t7" display="block" className="mb-0.5 text-grey-dark dark:text-grey">
+              받은 제안
+            </Text>
+            <Text fontWeight="bold" display="block" className="text-primary dark:text-primary-light">
+              {curAddr}
+            </Text>
           </div>
-          <div className="mb-3">
-            <div className="flex justify-between mb-1">
-              <Text fontWeight="bold">수정 요청 정보</Text>
+        </Section>
+
+        <Section className="pt-2">
+          <div className="rounded-xl border border-primary/10 bg-surface/80 p-3 dark:border-grey-dark dark:bg-black">
+            <div className="mb-3 flex items-start justify-between gap-2">
+              <Text fontWeight="bold" display="block" className="text-primary dark:text-primary-light">
+                수정 요청 정보
+              </Text>
+              <StatusBadge status={curData.status} />
             </div>
-            <div>
-              <div className="flex">
-                <Text className="w-1/5">주소</Text>
-                <Text typography="t6" className="w-4/5 truncate">
+
+            <div className="space-y-1.5">
+              <div className="flex gap-2">
+                <Text typography="t6" display="block" className="w-10 shrink-0 text-grey-dark dark:text-grey">
+                  주소
+                </Text>
+                <Text typography="t6" display="block" className="wrap-break-word">
                   {curAddr}
                 </Text>
               </div>
-              <div className="flex">
-                <Text className="w-1/5">설명</Text>
-                <Text typography="t6" className="w-4/5 truncate">
+              <div className="flex gap-2">
+                <Text typography="t6" display="block" className="w-10 shrink-0 text-grey-dark dark:text-grey">
+                  설명
+                </Text>
+                <Text typography="t6" display="block" className="wrap-break-word">
                   {curData.description}
                 </Text>
               </div>
             </div>
+
+            {images && images.length > 0 && curData.status !== "APPROVED" && (
+              <div className="mb-4 mt-4">
+                <Text
+                  typography="t6"
+                  fontWeight="bold"
+                  display="block"
+                  className="mb-1 text-primary dark:text-primary-light"
+                >
+                  추가된 이미지
+                </Text>
+                <ImageCarousel data={images} />
+              </div>
+            )}
+
+            {curData.status === "PENDING" && (
+              <div className="mt-3 flex gap-2">
+                <Button
+                  onClick={handleDeny}
+                  size="sm"
+                  className="h-9 rounded-md"
+                  variant="contrast"
+                  full
+                >
+                  거절
+                </Button>
+                <Button onClick={handleApprove} size="sm" className="h-9 rounded-md" full>
+                  승인
+                </Button>
+              </div>
+            )}
           </div>
-
-          {images && images.length > 0 && curData.status !== "APPROVED" && (
-            <div className="mb-4">
-              <Text fontWeight="bold" className="mb-1">
-                추가된 이미지
-              </Text>
-              <ImageCarousel data={images} />
-            </div>
-          )}
-
-          {curData.status === "PENDING" && (
-            <div className="flex justify-center mt-3">
-              <Button
-                onClick={handleDeny}
-                size="sm"
-                className="mr-4"
-                variant="contrast"
-              >
-                거절
-              </Button>
-              <Button onClick={handleApprove} size="sm">
-                승인
-              </Button>
-            </div>
-          )}
         </Section>
 
-        <BottomFixedButton onClick={() => router.push(`/pullup/${markerId}`)}>
+        <BottomFixedButton
+          onClick={() => router.push(`/pullup/${markerId}`)}
+          containerStyle="border-t border-primary/10 dark:border-grey-dark"
+        >
           위치 상세 보기
         </BottomFixedButton>
       </SideMain>
@@ -266,8 +233,71 @@ const MyreportClient = ({
   }
 
   return (
-    <SideMain headerTitle="받은 정보 수정 요청 목록" fullHeight hasBackButton>
-      {reportItems}
+    <SideMain
+      headerTitle="받은 정보 수정 제안"
+      fullHeight
+      hasBackButton
+      backFallbackUrl="/mypage"
+      referrer={!!referrer}
+      deviceType={deviceType}
+    >
+      <Section className="pb-2">
+        <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
+          <Text fontWeight="bold" display="block" className="text-primary dark:text-primary-light">
+            내 위치에 들어온 수정 제안
+          </Text>
+          <Text typography="t6" className="mt-0.5 text-grey-dark dark:text-grey">
+            총 <span className="font-bold text-primary dark:text-primary-light">{data.totalReports}</span>
+            건의 제안을 받았어요
+          </Text>
+        </div>
+      </Section>
+
+      {markerGroups.map(([key, { markerID, reports, address }]) => {
+        return (
+          <Section key={key} className="py-2">
+            <div className="rounded-xl border border-primary/10 bg-surface/80 p-3 dark:border-grey-dark dark:bg-black">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <Text fontWeight="bold" display="block" className="truncate text-primary dark:text-primary-light">
+                  {address || "주소 제공 안됨"}
+                </Text>
+                <Text typography="t7" display="block" className="shrink-0 text-grey-dark dark:text-grey">
+                  {reports.length}건
+                </Text>
+              </div>
+
+              <div className="scrollbar-hidden flex gap-2 overflow-x-auto overflow-y-hidden py-1">
+                {reports.map((report) => (
+                  <button
+                    key={report.reportID}
+                    className="group min-w-60 cursor-pointer rounded-lg border border-primary/8 bg-search-input-bg/50 dark:bg-black/35 p-3 text-left transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/16 web:hover:bg-search-input-bg/65 active:scale-[0.99] dark:border-grey-dark dark:web:hover:bg-black/45"
+                    onClick={() => {
+                      setMarkerId(markerID.toString());
+                      setCurData(report);
+                      setCurAddr(address || "주소 제공 안됨");
+                    }}
+                  >
+                    <div className="mb-2 flex items-center justify-between">
+                      <StatusBadge status={report.status} />
+                      <FilePenLine
+                        size={16}
+                        className="text-primary/80 dark:text-primary-light/80"
+                      />
+                    </div>
+                    <Text typography="t7" display="block" className="line-clamp-2 text-grey-dark dark:text-grey">
+                      {report.description || "설명 제공 안됨"}
+                    </Text>
+                    <div className="mt-2 flex items-center text-grey-dark dark:text-grey">
+                      <Text typography="t7" display="block">상세 보기</Text>
+                      <ChevronRight size={14} className="ml-1" />
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </Section>
+        );
+      })}
     </SideMain>
   );
 };

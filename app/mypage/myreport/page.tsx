@@ -21,10 +21,11 @@ const MyreportPage = async () => {
   if (!reports || reports.message === "No reports found") {
     return (
       <NotFound
-        headerTitle="받은 수정 요청 목록"
-        errorTitle="요청한 받은 장소가 없습니다."
+        headerTitle="받은 정보 수정 제안"
+        errorTitle="받은 수정 제안이 없습니다."
         hasBackButton
         fullHeight
+        backFallbackUrl="/mypage"
         deviceType={deviceType}
       />
     );
@@ -33,9 +34,9 @@ const MyreportPage = async () => {
   if (reports.error === "No authorization token provided") {
     return (
       <AuthError
-        headerTitle="받은 수정 요청 목록"
-        errorTitle="로그인 후 정보 제안 요청 받은 목록을 확인해보세요."
-        returnUrl="/myapge/myreport"
+        headerTitle="받은 정보 수정 제안"
+        errorTitle="로그인 후 받은 정보 수정 제안을 확인해보세요."
+        returnUrl="/mypage/myreport"
         hasBackButton
         fullHeight
         deviceType={deviceType}
