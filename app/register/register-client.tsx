@@ -3,9 +3,9 @@
 import { KakaoMarker } from "@/types/kakao-map.types";
 import setNewFacilities from "@api/marker/set-new-facilities";
 import setNewMarker, { SetMarkerRes } from "@api/marker/set-new-marker";
+import Skeleton from "@common/skeleton";
 import SideMain from "@common/side-main";
 import useIsMounted from "@hooks/useIsMounted";
-import LoadingIcon from "@icons/loading-icon";
 import AuthError from "@layout/auth-error";
 import SelectLocation from "@pages/register/select-location";
 import SetDescription from "@pages/register/set-description";
@@ -399,16 +399,20 @@ const RegisterClient = ({
   if (!isMounted || !user) {
     return (
       <SideMain
-        headerTitle=" "
+        headerTitle="위치 등록"
         prevClick={() => {}}
         hasBackButton
         withNav
+        dragable={false}
         deviceType={deviceType}
       >
-        <div className="relative w-full h-full">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <LoadingIcon className="m-0" />
-          </div>
+        <div className="flex h-full flex-col px-6 pt-5">
+          <Skeleton className="h-32 w-full rounded-xl" />
+          <Skeleton className="mt-4 h-5 w-2/3 rounded-md" />
+          <Skeleton className="mt-2 h-4 w-full rounded-md" />
+          <Skeleton className="mt-2 h-4 w-5/6 rounded-md" />
+          <div className="grow" />
+          <Skeleton className="mb-2 h-11 w-full rounded-md" />
         </div>
       </SideMain>
     );
@@ -435,7 +439,7 @@ const RegisterClient = ({
       withNav={registerValue.step === 4 ? false : true}
       className={registerValue.step === 0 ? "duration-300" : ""}
       dragable={false}
-      bodyStyle={deviceType === "ios-mobile-app" ? "pb-0 mb-24" : "pb-0 mb-2"}
+      bodyStyle={deviceType === "ios-mobile-app" ? "pb-0 mo:pb-0 mb-24" : "pb-0 mo:pb-0 mb-2"}
       deviceType={deviceType}
     >
       {registerValue.step === 0 && (

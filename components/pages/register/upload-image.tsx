@@ -103,22 +103,27 @@ const UploadImage = ({
   };
 
   return (
-    <Section className="h-full pb-0 flex flex-col">
-      <div className="my-5">
+    <Section className="flex h-full flex-col pb-0">
+      <div className="my-4 rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/45 px-3.5 py-3 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/35">
         {title && (
           <>
-            {title.map((text) => {
-              return (
-                <Text fontWeight="bold" key={text}>
-                  {text}
-                </Text>
-              );
-            })}
+            <Text
+              fontWeight="bold"
+              className="text-text-on-surface dark:text-grey-light"
+            >
+              {title[0]}
+            </Text>
+            <Text
+              typography="t6"
+              className="text-grey-dark dark:text-grey"
+            >
+              {title[1]}
+            </Text>
           </>
         )}
       </div>
 
-      <div className="flex flex-col justify-center mb-4">
+      <div className="mb-4 flex flex-col justify-center">
         <input
           type="file"
           onChange={handleImageChange}
@@ -128,17 +133,17 @@ const UploadImage = ({
         />
 
         {/* 이미지 미리보기 */}
-        <div className="flex justify-start gap-4 flex-wrap">
+        <div className="flex flex-wrap justify-start gap-4">
           {initPhotos &&
             initPhotos.map((file, i) => {
               if (!file.previewURL || !file.id) return null;
               return (
                 <div
                   key={`${file.previewURL} ${file.file} ${i}`}
-                  className="relative rounded-lg w-16 h-16 shadow-xs dark:border border-solid border-grey-dark"
+                  className="relative h-16 w-16 rounded-lg border border-location-badge-bg/75 bg-location-badge-bg/40 shadow-xs dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/40"
                 >
                   <button
-                    className={`absolute -top-2 -right-2 rounded-full w-6 h-6 z-50 flex items-center justify-center bg-primary text-white`}
+                    className="absolute -top-2 -right-2 z-50 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-white transition-colors duration-150 active:scale-[0.97] active:bg-primary-dark focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/30 dark:bg-primary-dark dark:active:bg-primary"
                     onClick={() => {
                       setErrorMessage("");
                       deleteInintPhotos(file.id as string);
@@ -161,10 +166,7 @@ const UploadImage = ({
         </div>
 
         {/* 에러 메시지 */}
-        <div
-          data-testid="file-error"
-          className="mt-1 text-center text-sm text-red"
-        >
+        <div data-testid="file-error" className="mt-2 min-h-5 text-center text-sm text-red">
           {errorMessage}
         </div>
       </div>
@@ -181,7 +183,7 @@ const UploadImage = ({
               next(null);
             }
           }}
-          className="flex items-center justify-center h-12"
+          className="flex h-12 items-center justify-center"
           disabled={loading}
         >
           {loading ? (
@@ -199,12 +201,13 @@ const UploadImage = ({
 
 const AddImageButton = ({ onClick }: { onClick: VoidFunction }) => {
   return (
-    <div
-      className="relative rounded-lg flex items-center justify-center shrink-0 h-16 w-16 cursor-pointer border-2 border-dashed border-grey-dark text-black dark:text-white"
+    <button
+      type="button"
+      className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-lg border-2 border-dashed border-text-on-surface-muted/45 bg-location-badge-bg/40 text-text-on-surface-muted transition-colors duration-150 active:scale-[0.98] active:border-primary/60 active:text-primary focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/30 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/30 dark:text-grey dark:active:border-primary-light/70 dark:active:text-primary-light"
       onClick={onClick}
     >
       <BsPlusLg size={24} />
-    </div>
+    </button>
   );
 };
 

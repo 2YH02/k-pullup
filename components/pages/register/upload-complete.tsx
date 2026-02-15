@@ -31,7 +31,7 @@ const UploadComplete = ({
   }, [status]);
 
   return (
-    <Section className="w-full h-full flex flex-col items-center justify-center">
+    <Section className="flex h-full w-full flex-col items-center justify-center">
       <div className="w-35">
         <Image
           src={
@@ -60,7 +60,7 @@ const UploadComplete = ({
                 key={text}
                 typography="t4"
                 fontWeight="bold"
-                className="mt-10"
+                className="mt-8 text-text-on-surface dark:text-grey-light"
               >
                 {text}
               </Text>
@@ -70,12 +70,15 @@ const UploadComplete = ({
       )}
       {status == "error" && (
         <>
-          <Text typography="t4" fontWeight="bold" className="mt-10">
+          <Text typography="t4" fontWeight="bold" className="mt-8 text-red">
             {errorMessage || "잠시 후 다시 시도해주세요"}
           </Text>
-          <Text typography="t6">
+          <Text typography="t6" className="text-text-on-surface-muted dark:text-grey">
             오류 문의:{" "}
-            <a href="mailto:chulbong.kr@gmail.com" className="hover:underline">
+            <a
+              href="mailto:chulbong.kr@gmail.com"
+              className="text-primary underline-offset-2 transition-colors duration-150 hover:text-primary-dark hover:underline dark:text-primary-light dark:hover:text-primary"
+            >
               chulbong.kr@gmail.com
             </a>
           </Text>
@@ -91,19 +94,20 @@ const UploadComplete = ({
             }
           }}
           full
-          className="mt-10"
+          className="mt-8 h-12"
         >
           돌아가기
         </Button>
       )}
       {status === "complete" && (
         <>
-          <div className="flex items-center justify-center mt-3 px-3 w-full">
+          <div className="mt-4 flex w-full items-center justify-center px-3">
             <Button
               onClick={() => {
                 router.replace(returnUrl || "/");
               }}
               full
+              className="h-12"
             >
               위치 상세보기
             </Button>

@@ -16,16 +16,25 @@ const SetDescription = ({
   setDescription,
 }: SetDescriptionProps) => {
   return (
-    <Section className="h-full pb-0 flex flex-col">
-      <div className="my-5">
-        <Text fontWeight="bold">정확한 설명을 등록해 주시면,</Text>
-        <Text fontWeight="bold">
+    <Section className="flex h-full flex-col pb-0">
+      <div className="my-4 rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/45 px-3.5 py-3 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/35">
+        <Text
+          fontWeight="bold"
+          className="text-text-on-surface dark:text-grey-light"
+        >
+          정확한 설명을 등록해 주시면,
+        </Text>
+        <Text
+          typography="t6"
+          className="text-grey-dark dark:text-grey"
+        >
           다른 사람이 해당 위치를 찾는 데 큰 도움이 됩니다!
         </Text>
       </div>
+
       <div>
         <textarea
-          className="border border-primary bg-white dark:bg-black dark:text-white text-black w-full p-2 rounded-sm resize-none focus:outline-hidden"
+          className="w-full resize-none rounded-xl border border-text-on-surface-muted/40 bg-location-badge-bg/58 p-3 text-black transition-[border-color,background-color,box-shadow] duration-150 placeholder:text-text-on-surface-muted/85 focus:border-primary/70 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/20 dark:border-location-badge-bg-dark/90 dark:bg-location-badge-bg-dark/38 dark:text-white dark:placeholder:text-grey"
           maxLength={40}
           rows={4}
           placeholder="해당 위치에 대한 설명을 40자 이내로 작성해주세요."
@@ -34,6 +43,12 @@ const SetDescription = ({
             setDescription(e.target.value);
           }}
         ></textarea>
+        <Text
+          typography="t7"
+          className="mt-1.5 text-right text-text-on-surface-muted dark:text-grey"
+        >
+          {(description || "").length}/40
+        </Text>
       </div>
       <GrowBox />
 
@@ -51,6 +66,7 @@ const SetDescription = ({
         onClick={() => {
           next(description === "" ? null : description);
         }}
+        className="h-12"
       >
         {description === "" ? "설명 없이 다음으로" : "다음"}
       </Button>

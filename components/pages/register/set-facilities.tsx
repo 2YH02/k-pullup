@@ -28,15 +28,23 @@ const SetFacilities = ({
   평행봉,
 }: SetFacilitiesProps) => {
   return (
-    <Section className="h-full pb-0 flex flex-col">
-      <div className="my-5">
-        <Text fontWeight="bold">기구들의 개수를 입력해주시면</Text>
-        <Text fontWeight="bold">
-          다른 사람이 더욱 정확한 정보를 확인할 수 있습니다!
+    <Section className="flex h-full flex-col pb-0">
+      <div className="my-4 rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/45 px-3.5 py-3 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/35">
+        <Text
+          fontWeight="bold"
+          className="text-text-on-surface dark:text-grey-light"
+        >
+          기구들의 개수를 입력해주시면
+        </Text>
+        <Text
+          typography="t6"
+          className="text-grey-dark dark:text-grey"
+        >
+          다른 사람이 더욱 정확한 정보를 확인할 수 있습니다.
         </Text>
       </div>
 
-      <div className="border border-solid border-primary rounded-md px-2">
+      <div className="rounded-xl border border-primary/25 bg-search-input-bg/45 px-3 py-2 dark:border-primary-dark/50 dark:bg-black/30">
         <FacilityList
           name="철봉"
           count={철봉}
@@ -62,9 +70,12 @@ const SetFacilities = ({
           }}
         />
       </div>
-      {/* <Text typography="t6" className="text-red mt-3">
-        {errorMessage}
-      </Text> */}
+      <Text
+        typography="t7"
+        className="mt-2 text-text-on-surface-muted dark:text-grey"
+      >
+        필요한 경우 건너뛰고 다음 단계로 이동할 수 있습니다.
+      </Text>
 
       <GrowBox />
 
@@ -75,7 +86,9 @@ const SetFacilities = ({
       >
         다음
       </BottomFixedButton> */}
-      <Button onClick={next}>다음</Button>
+      <Button onClick={next} className="h-12">
+        다음
+      </Button>
     </Section>
   );
 };
