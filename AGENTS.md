@@ -162,3 +162,27 @@ yarn test:e2e
 - 기본 효과는 미세한 `opacity + transform(translate)` 중심으로 유지하고, 기본 타이밍은 `120~220ms` 범위에서 사용한다.
 - 페이지 전환 구현 시 `prefers-reduced-motion` 대응을 반드시 포함한다.
 - 전환 애니메이션 적용/수정 시 최소 `yarn lint`를 실행하고, LCP 영향이 우려되는 변경이면 `yarn build` 결과를 함께 확인한다.
+
+## 21) 컴포넌트 분리/폴더 구조 규칙
+
+- 기본 원칙: 재사용성과 책임 분리를 위해 분리하되, 한 번만 쓰는 단순 마크업은 과분리하지 않는다.
+- 분리 기준:
+  - JSX 블록이 길어져(대략 40~60줄 이상) 읽기 어려우면 하위 컴포넌트로 분리한다.
+  - 독립 상태/이벤트 로직(`useState`, `useEffect`, 핸들러 묶음)이 생기면 분리 우선 검토한다.
+  - 동일 UI 패턴이 2곳 이상에서 반복되면 공용 컴포넌트 추출을 우선한다.
+  - API 호출/스토어 접근/지도 객체 제어가 섞일 때는 UI와 로직 경계를 나눈다.
+- 폴더 책임:
+  - `app/*`: 라우트 진입 파일(`page.tsx`, `layout.tsx`)과 서버 데이터 조합 중심. 화면 세부 UI는 직접 과도하게 담지 않는다.
+  - `components/pages/*`: 특정 페이지 전용 UI 조각(해당 페이지에서만 의미가 있는 블록).
+  - `components/common/*`: 여러 페이지에서 재사용되는 프리미티브/공용 블록.
+  - `components/layout/*`: 네비, 헤더, 프레임 등 레이아웃 구조 컴포넌트.
+  - `components/icons/*`: 아이콘 컴포넌트. 동일 화면에서는 아이콘 스타일 세트 일관성을 유지한다.
+  - `lib/*`: 프레임워크 비의존 유틸/헬퍼 및 공통 로직.
+  - `lib/api/*`: API 호출 함수. `fetchData` 규칙과 에러 처리 규칙을 따른다.
+  - `store/*`: Zustand store. setter 의도(append vs replace/reset)를 명확히 분리한다.
+- 파일 생성/수정 규칙:
+  - 새 파일을 만들기 전에 기존 `components/pages/<route>` 또는 `components/common`에 유사 컴포넌트가 있는지 먼저 확인한다.
+  - 페이지 전용이면 `components/pages/<route>/`에, 2개 이상 화면에서 재사용되면 `components/common/`으로 이동/생성한다.
+  - Props는 최소 단위로 명시하고 `any`를 피한다.
+  - 스타일은 토큰 기반 클래스(`globals.css`)를 우선 사용하고, 하드코딩 색상 추가를 피한다.
+  - 분리 후 기존 기능/흐름/접근성(`active`, `focus-visible`)이 유지되는지 `yarn lint`로 최소 검증한다.
