@@ -3,8 +3,8 @@ import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import AuthError from "@layout/auth-error";
+import NotFound from "@layout/not-found";
 import getDeviceType from "@lib/get-device-type";
-import NotFound from "@pages/mypage/locate/not-found";
 import RegisteredLocateList from "@pages/mypage/locate/registered-locate-list";
 import { cookies, headers } from "next/headers";
 import { type Device } from "../page";
@@ -37,7 +37,17 @@ const RankingPage = async () => {
   }
 
   if (!markers || markers.markers.length <= 0) {
-    return <NotFound deviceType={deviceType} />;
+    return (
+      <NotFound
+        headerTitle="저장한 장소"
+        hasBackButton
+        prevUrl="/mypage"
+        actionLabel="등록하러 가기"
+        actionUrl="/register"
+        errorTitle="등록한 철봉 위치가 없습니다!"
+        deviceType={deviceType}
+      />
+    );
   }
 
   return (

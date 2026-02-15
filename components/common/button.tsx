@@ -1,4 +1,4 @@
-"use clinet";
+"use client";
 
 import cn from "@lib/cn";
 
@@ -31,12 +31,12 @@ const buttonColorMap = {
 
 const buttonContrastColorMap = {
   primary: cn(
-    "bg-white dark:bg-black",
-    "text-primary",
+    "bg-white dark:bg-black-light",
+    "text-primary dark:text-primary-light",
     "border",
-    "border-primary",
+    "border-primary dark:border-primary-dark",
     "disabled:text-primary/50",
-    "disabled:border-primary/50"
+    "disabled:border-primary/50 dark:disabled:border-primary-dark/50"
   ),
   coral: cn(
     "bg-white",
@@ -93,7 +93,7 @@ export interface ButtonProps {
   /**
    * tailwind 스타일 클래스
    */
-  className?: React.ComponentProps<"div">["className"];
+  className?: React.ComponentProps<"button">["className"];
   /**
    * 버튼 비활성화
    */
@@ -123,9 +123,12 @@ const Button = ({
     colorClass,
     sizeClass,
     fullClass,
-    "rounded-sm",
-    "focus:outline-hidden select-none",
-    !disabled && "active:bg-opacity-75"
+    "inline-flex items-center justify-center rounded-md font-medium",
+    "select-none transition-[transform,background-color,border-color,box-shadow] duration-180 ease-out",
+    "focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/25",
+    disabled
+      ? "cursor-not-allowed"
+      : "cursor-pointer active:scale-[0.99] active:bg-opacity-75"
   );
 
   return (
