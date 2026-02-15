@@ -26,7 +26,7 @@ import useUserStore from "@store/useUserStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
-import { BsHouseDoor, BsX } from "react-icons/bs";
+import { BsChevronRight, BsHouseDoor, BsX } from "react-icons/bs";
 
 interface PullupClientProps {
   facilities: FacilitiesRes[];
@@ -181,9 +181,9 @@ const PullupClient = ({
           <div className="flex flex-wrap items-center gap-2">
             <Link
               href={`/pullup/${marker.markerId}/report`}
-              className="rounded-sm text-primary underline underline-offset-2 transition-colors duration-150 active:text-primary-dark focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35"
+              className="rounded-sm text-primary underline decoration-1 decoration-primary/70 underline-offset-3 transition-[color,text-decoration-color] duration-150 hover:decoration-primary active:text-primary-dark focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:decoration-primary-light/70 dark:hover:decoration-primary-light"
             >
-              <Text typography="t7" className="text-inherit">
+              <Text typography="t7" display="inline" className="text-inherit">
                 정보 수정 요청
               </Text>
             </Link>
@@ -191,9 +191,9 @@ const PullupClient = ({
             {marker.isChulbong && (
               <Link
                 href={`/pullup/${marker.markerId}/facilities`}
-                className="rounded-sm text-primary underline underline-offset-2 transition-colors duration-150 active:text-primary-dark focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35"
+                className="rounded-sm text-primary underline decoration-1 decoration-primary/70 underline-offset-3 transition-[color,text-decoration-color] duration-150 hover:decoration-primary active:text-primary-dark focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:decoration-primary-light/70 dark:hover:decoration-primary-light"
               >
-                <Text typography="t7" className="text-inherit">
+                <Text typography="t7" display="inline" className="text-inherit">
                   기구 개수 수정
                 </Text>
               </Link>
@@ -206,15 +206,19 @@ const PullupClient = ({
                 onClick={() => {
                   router.push(`/user-info/${marker.username}`);
                 }}
-                className="flex w-full min-w-0 items-center gap-1.5 rounded-sm text-left transition-[opacity,transform] duration-150 active:scale-[0.99] active:opacity-75 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35"
+                className="flex w-full min-w-0 items-center gap-1.5 rounded-sm text-left transition-[opacity,transform,background-color] duration-150 active:scale-[0.99] active:bg-black/5 active:opacity-90 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:active:bg-white/10"
               >
                 <StarIcon />
                 <Text
                   typography="t7"
-                  className="block truncate text-location-badge-text dark:text-location-badge-text-dark"
+                  className="block grow truncate text-location-badge-text dark:text-location-badge-text-dark"
                 >
                   {marker.username.length > 10 ? marker.username : `정보 제공자: ${marker.username}`}
                 </Text>
+                <BsChevronRight
+                  size={12}
+                  className="shrink-0 text-location-badge-text/80 dark:text-location-badge-text-dark/80"
+                />
               </button>
             </div>
           )}
