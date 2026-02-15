@@ -203,6 +203,18 @@ const CheckboxItem = ({
   subText,
   id,
 }: CheckboxItemProps) => {
+  const labelColorClass = checked
+    ? "text-text-on-surface dark:text-grey-light"
+    : "text-text-on-surface-muted dark:text-grey";
+
+  const subTextColorClass = checked
+    ? "text-text-on-surface-muted dark:text-grey"
+    : "text-grey dark:text-grey-dark";
+
+  const linkIconColorClass = checked
+    ? "text-primary dark:text-primary-light"
+    : "text-text-on-surface-muted dark:text-grey";
+
   return (
     <div
       className={cn(
@@ -222,9 +234,13 @@ const CheckboxItem = ({
         height={20}
       />
       <div>
-        <label className="text-sm dark:text-white text-black">{label}</label>
+        <label className={cn("text-sm transition-colors duration-150", labelColorClass)}>
+          {label}
+        </label>
         {subText && (
-          <div className="text-xs text-grey dark:text-grey">{subText}</div>
+          <div className={cn("text-xs transition-colors duration-150", subTextColorClass)}>
+            {subText}
+          </div>
         )}
       </div>
 
@@ -237,10 +253,7 @@ const CheckboxItem = ({
             linkClick();
           }}
         >
-          <BsChevronRight
-            className="text-grey-dark dark:text-white"
-            size={14}
-          />
+          <BsChevronRight className={cn("transition-colors duration-150", linkIconColorClass)} size={14} />
         </Button>
       )}
     </div>
