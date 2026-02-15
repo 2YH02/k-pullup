@@ -177,6 +177,14 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
 }
 
 @utility text-balance {
