@@ -155,8 +155,11 @@ const List = ({
             <div className="grow text-sm text-text-on-surface dark:text-white">
               {item.address}
             </div>
-            <div className="ml-2 shrink-0 opacity-90">
-              <PinIcon size={22} />
+            <div className="ml-2 shrink-0 opacity-95">
+              <PinIcon
+                size={22}
+                className="text-location-badge-text dark:text-location-badge-text-dark"
+              />
             </div>
           </button>
         );
