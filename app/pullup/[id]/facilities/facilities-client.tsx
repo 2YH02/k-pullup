@@ -16,6 +16,7 @@ const FacilitiesClient = ({ markerId }: { markerId: number }) => {
   const [facilities, setFacilities] = useState({ 철봉: 0, 평행봉: 0 });
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const isDisabled = loading || (facilities.철봉 === 0 && facilities.평행봉 === 0);
 
   const increaseChulbong = () => {
     setFacilities((prev) => ({
@@ -76,59 +77,66 @@ const FacilitiesClient = ({ markerId }: { markerId: number }) => {
   };
 
   return (
-    <Section className="h-full pb-0 flex flex-col">
-      <div className="my-5">
-        <Text fontWeight="bold">기구들의 개수를 입력해주시면</Text>
-        <Text fontWeight="bold">
-          다른 사람이 더욱 정확한 정보를 확인할 수 있습니다!
+    <div className="flex min-h-full flex-col">
+      <Section className="pb-0 pt-4">
+        <div className="mb-5 rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/50 px-3.5 py-3 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/35">
+          <Text
+            fontWeight="bold"
+            className="text-text-on-surface dark:text-grey-light"
+          >
+            기구 개수를 입력하면
+          </Text>
+          <Text
+            typography="t6"
+            className="text-grey-dark dark:text-grey"
+          >
+            다른 사람이 더 정확한 정보를 확인할 수 있어요.
+          </Text>
+        </div>
+
+        <div className="rounded-xl border border-primary/25 bg-search-input-bg/45 px-3 py-2 dark:border-primary-dark/50 dark:bg-black/30">
+          <FacilityList
+            name="철봉"
+            count={facilities.철봉}
+            increase={() => {
+              if (facilities.철봉 === 99) return;
+              increaseChulbong();
+            }}
+            decrease={() => {
+              if (facilities.철봉 === 0) return;
+              decreaseChulbong();
+            }}
+          />
+          <FacilityList
+            name="평행봉"
+            count={facilities.평행봉}
+            increase={() => {
+              if (facilities.평행봉 === 99) return;
+              increasePenghang();
+            }}
+            decrease={() => {
+              if (facilities.평행봉 === 0) return;
+              decreasePenghang();
+            }}
+          />
+        </div>
+        <Text typography="t6" className="mt-3 text-red">
+          {errorMessage}
         </Text>
-      </div>
-
-      <div className="border border-solid border-primary rounded-md px-2">
-        <FacilityList
-          name="철봉"
-          count={facilities.철봉}
-          increase={() => {
-            if (facilities.철봉 === 99) return;
-            increaseChulbong();
-          }}
-          decrease={() => {
-            if (facilities.철봉 === 0) return;
-            decreaseChulbong();
-          }}
-        />
-        <FacilityList
-          name="평행봉"
-          count={facilities.평행봉}
-          increase={() => {
-            if (facilities.평행봉 === 99) return;
-            increasePenghang();
-          }}
-          decrease={() => {
-            if (facilities.평행봉 === 0) return;
-            decreasePenghang();
-          }}
-        />
-      </div>
-      <Text typography="t6" className="text-red mt-3">
-        {errorMessage}
-      </Text>
-
+      </Section>
       <GrowBox />
-
       <BottomFixedButton
         onClick={submit}
-        className="flex items-center justify-center h-12"
-        disabled={loading || (facilities.철봉 === 0 && facilities.평행봉 === 0)}
-        containerStyle="px-0"
+        disabled={isDisabled}
+        containerStyle="z-30"
       >
         {loading ? (
-          <LoadingIcon size="sm" className="text-white m-0" />
+          <LoadingIcon size="sm" className="m-0 text-white" />
         ) : (
           "등록하기"
         )}
       </BottomFixedButton>
-    </Section>
+    </div>
   );
 };
 
