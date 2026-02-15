@@ -108,7 +108,7 @@ const Description = ({ description, markerId, isAdmin }: DescriptionProps) => {
       {isAdmin && (
         <button
           onClick={() => setEdit(true)}
-          className="mt-0.5 rounded-sm p-1 transition-colors duration-150 active:bg-black/5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:active:bg-white/10"
+          className="rounded-sm p-1 transition-colors duration-150 active:bg-black/5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:active:bg-white/10"
           aria-label="설명 수정"
         >
           <EditIcon
