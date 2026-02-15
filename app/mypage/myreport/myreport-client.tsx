@@ -149,6 +149,7 @@ const MyreportClient = ({
         referrer={!!referrer}
         deviceType={deviceType}
         backFallbackUrl="/mypage"
+        bodyStyle="flex flex-col pb-0"
       >
         <Section className="pb-2">
           <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
@@ -224,7 +225,7 @@ const MyreportClient = ({
 
         <BottomFixedButton
           onClick={() => router.push(`/pullup/${markerId}`)}
-          containerStyle="border-t border-primary/10 dark:border-grey-dark"
+          containerStyle="mt-auto border-t border-primary/10 dark:border-grey-dark"
         >
           위치 상세 보기
         </BottomFixedButton>
