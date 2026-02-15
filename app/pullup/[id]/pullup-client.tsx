@@ -206,7 +206,7 @@ const PullupClient = ({
                 onClick={() => {
                   router.push(`/user-info/${marker.username}`);
                 }}
-                className="flex w-full min-w-0 items-center gap-1.5 rounded-sm text-left transition-opacity duration-150 active:opacity-75 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35"
+                className="flex w-full min-w-0 items-center gap-1.5 rounded-sm text-left transition-[opacity,transform] duration-150 active:scale-[0.99] active:opacity-75 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35"
               >
                 <StarIcon />
                 <Text
@@ -240,7 +240,7 @@ const PullupClient = ({
               setActiveIndex(index);
             }}
             className={`
-              grow whitespace-nowrap border-b-2 px-4 py-2 text-[15px] font-semibold transition-[color,border-color,background-color] duration-150 active:bg-search-input-bg/55 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:active:bg-grey-dark/35
+              grow whitespace-nowrap border-b-2 px-4 py-2 text-[15px] font-semibold transition-[color,border-color,background-color,transform] duration-180 ease-out active:scale-[0.99] active:bg-search-input-bg/55 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:active:bg-grey-dark/35
               ${
                 activeIndex === index
                   ? "border-primary-dark text-text-on-surface dark:text-grey-light"
@@ -305,7 +305,7 @@ const PullupClient = ({
         ref={(el) => {
           sectionRefs.current[0] = el;
         }}
-        className="scroll-mt-11"
+        className="scroll-mt-11 motion-safe:animate-page-enter motion-reduce:animate-none"
         id="image-list"
       >
         <Section>
@@ -332,6 +332,7 @@ const PullupClient = ({
         ref={(el) => {
           sectionRefs.current[1] = el;
         }}
+        className="motion-safe:animate-page-enter motion-reduce:animate-none"
         id="comment-list"
       >
         <Section>
