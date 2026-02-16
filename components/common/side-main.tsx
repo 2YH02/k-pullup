@@ -201,7 +201,8 @@ const SideMain = ({
 
         <div
           className={cn(
-            "grow overflow-hidden web:rounded-lg"
+            "grow overflow-hidden web:rounded-lg",
+            !fullHeight ? "mo:rounded-t-4xl" : ""
           )}
         >
           <div
