@@ -229,7 +229,7 @@ const SideMain = ({
         >
           {!fullHeight && dragable && (
             <div
-              className="sticky top-0 z-20 py-3 backdrop-blur-sm bg-surface/92 dark:bg-black/55 rounded-t-3xl web:hidden cursor-grab active:cursor-grabbing touch-none"
+              className="sticky top-0 z-20 py-3 overflow-hidden backdrop-blur-sm bg-surface/92 dark:bg-black/55 rounded-t-3xl web:hidden cursor-grab active:cursor-grabbing touch-none"
               onPointerDown={handleGrabberPointerDown}
               onPointerMove={handleGrabberPointerMove}
               onPointerUp={handleGrabberPointerEnd}
