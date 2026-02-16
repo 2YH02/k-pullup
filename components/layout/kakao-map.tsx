@@ -20,13 +20,43 @@ import Script from "next/script";
 import { useCallback, useEffect, useRef, useState } from "react";
 import MapContextMenu from "./map-context-menu";
 
+const MAP_SDK_IDLE_DELAY_MS = 2600;
+const MARKER_DATA_IDLE_DELAY_MS = 4200;
+
+const scheduleIdleTask = (
+  callback: () => void,
+  timeout: number
+): (() => void) => {
+  if (typeof window === "undefined") return () => {};
+
+  const win = window as Window & {
+    requestIdleCallback?: (
+      callback: IdleRequestCallback,
+      options?: IdleRequestOptions
+    ) => number;
+    cancelIdleCallback?: (handle: number) => void;
+  };
+
+  if (typeof win.requestIdleCallback === "function") {
+    const idleId = win.requestIdleCallback(callback, { timeout });
+    return () => {
+      if (typeof win.cancelIdleCallback === "function") {
+        win.cancelIdleCallback(idleId);
+      }
+    };
+  }
+
+  const timerId = globalThis.setTimeout(callback, timeout);
+  return () => globalThis.clearTimeout(timerId);
+};
+
 const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const isMounted = useIsMounted();
   const pathname = usePathname();
 
   const { setCurLocation, setMyLocation } = useGeolocationStore();
   const { map, setMap, setMapEl } = useMapStore();
-  const { setMarker } = useMarkerStore();
+  const { replaceMarker } = useMarkerStore();
 
   const { setCount } = useImageCountStore();
 
@@ -34,6 +64,7 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const { toast } = useToast();
 
   const [loading, setLoading] = useState(false);
+  const [shouldLoadMapSdk, setShouldLoadMapSdk] = useState(false);
 
   // Use GPS tracking hook
   const { gpsState, handleGps } = useGpsTracking({
@@ -55,20 +86,62 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   const touchStartPos = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
+    if (!isMounted || pathname === "/admin") return;
+
+    const triggerMapSdkLoad = () => {
+      setShouldLoadMapSdk(true);
+    };
+
+    // Prioritize LCP: load SDK after first interaction or idle timeout.
+    const handleInteraction = () => {
+      triggerMapSdkLoad();
+    };
+
+    const cancelIdleTask = scheduleIdleTask(() => {
+      triggerMapSdkLoad();
+    }, MAP_SDK_IDLE_DELAY_MS);
+
+    window.addEventListener("pointerdown", handleInteraction, { once: true });
+    window.addEventListener("keydown", handleInteraction, { once: true });
+    window.addEventListener("touchstart", handleInteraction, { once: true });
+    window.addEventListener("wheel", handleInteraction, { once: true });
+
+    return () => {
+      cancelIdleTask();
+      window.removeEventListener("pointerdown", handleInteraction);
+      window.removeEventListener("keydown", handleInteraction);
+      window.removeEventListener("touchstart", handleInteraction);
+      window.removeEventListener("wheel", handleInteraction);
+    };
+  }, [isMounted, pathname]);
+
+  useEffect(() => {
+    if (!isMounted || pathname === "/admin" || !shouldLoadMapSdk) return;
+
+    let disposed = false;
+
     const fetch = async () => {
       const data = await getAllMarker();
+
+      if (disposed) return;
 
       const imageMarker = data.filter((marker) => {
         return !!marker.hasPhoto;
       });
 
       setCount(imageMarker.length);
-
-      setMarker(data);
+      replaceMarker(data);
     };
 
-    fetch();
-  }, [setCount, setMarker]);
+    const cancelIdleTask = scheduleIdleTask(() => {
+      fetch();
+    }, MARKER_DATA_IDLE_DELAY_MS);
+
+    return () => {
+      disposed = true;
+      cancelIdleTask();
+    };
+  }, [isMounted, pathname, replaceMarker, setCount, shouldLoadMapSdk]);
 
   useEffect(() => {
     if (!window.ReactNativeWebView || !map) return;
@@ -267,21 +340,18 @@ const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   if (pathname === "/admin") return null;
 
   if (!isMounted) {
-    return (
-      <div className="relative w-dvw h-dvh bg-white dark:bg-black-light">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <LoadingIcon className="m-0" />
-        </div>
-      </div>
-    );
+    return null;
   }
 
   return (
     <>
-      <Script
-        src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_APP_KEY}&libraries=clusterer,services&autoload=false`}
-        onLoad={handleLoadMap}
-      />
+      {shouldLoadMapSdk && (
+        <Script
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_APP_KEY}&libraries=clusterer,services&autoload=false`}
+          strategy="lazyOnload"
+          onLoad={handleLoadMap}
+        />
+      )}
       {loading && (
         <div className="z-60 absolute top-0 left-0 w-dvw h-dvh bg-[#ffffffb2] flex items-center justify-center">
           <div>

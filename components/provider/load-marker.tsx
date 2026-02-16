@@ -30,7 +30,7 @@ const LoadMarker = () => {
     return () => {
       window.kakao.maps.event.removeListener(map, "idle", handleIdle);
     };
-  }, [map, marker, selectedId, pathname, reloadMarkers]);
+  }, [map, selectedId, pathname, reloadMarkers]);
 
   useEffect(() => {
     if (!map || !!pathname.startsWith("/pullup") || pathname === "/admin")
