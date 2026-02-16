@@ -70,6 +70,85 @@ const useDrawerGesture = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (!enabled) return;
+
+    const html = document.documentElement;
+    const body = document.body;
+
+    const prevHtmlOverscroll = html.style.overscrollBehaviorY;
+    const prevBodyOverscroll = body.style.overscrollBehaviorY;
+
+    html.style.overscrollBehaviorY = "none";
+    body.style.overscrollBehaviorY = "none";
+
+    return () => {
+      html.style.overscrollBehaviorY = prevHtmlOverscroll;
+      body.style.overscrollBehaviorY = prevBodyOverscroll;
+    };
+  }, [enabled]);
+
+  useEffect(() => {
+    if (!enabled) return;
+
+    let touchStartY = 0;
+    let trackingTouch = false;
+
+    const isInsideDrawerContent = (target: EventTarget | null) => {
+      if (!(target instanceof Node)) return false;
+      return containerRef.current?.contains(target) ?? false;
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
+      if (!isInsideDrawerContent(e.target)) return;
+
+      trackingTouch = true;
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!trackingTouch || e.touches.length !== 1) return;
+      if (!isInsideDrawerContent(e.target)) return;
+
+      const deltaY = e.touches[0].clientY - touchStartY;
+      const isTopLevelScroll = window.scrollY <= 0;
+      const isDrawerContentAtTop = (containerRef.current?.scrollTop ?? 0) <= 0;
+
+      if (deltaY > 0 && isTopLevelScroll && isDrawerContentAtTop && e.cancelable) {
+        e.preventDefault();
+      }
+    };
+
+    const handleTouchEnd = () => {
+      trackingTouch = false;
+    };
+
+    document.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+      capture: true,
+    });
+    document.addEventListener("touchmove", handleTouchMove, {
+      passive: false,
+      capture: true,
+    });
+    document.addEventListener("touchend", handleTouchEnd, {
+      passive: true,
+      capture: true,
+    });
+    document.addEventListener("touchcancel", handleTouchEnd, {
+      passive: true,
+      capture: true,
+    });
+
+    return () => {
+      document.removeEventListener("touchstart", handleTouchStart, true);
+      document.removeEventListener("touchmove", handleTouchMove, true);
+      document.removeEventListener("touchend", handleTouchEnd, true);
+      document.removeEventListener("touchcancel", handleTouchEnd, true);
+    };
+  }, [containerRef, enabled]);
+
   const clampHeight = (height: number) => {
     if (height >= sheetHeight.STEP_3.height) return sheetHeight.STEP_3.height;
     if (height <= sheetHeight.STEP_1.height) return sheetHeight.STEP_1.height;
