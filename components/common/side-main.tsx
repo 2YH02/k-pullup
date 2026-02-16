@@ -3,6 +3,7 @@
 import { type Device } from "@/app/mypage/page";
 import ArrowLeftIcon from "@icons/arrow-left-icon";
 import ArrowRightIcon from "@icons/arrow-right-icon";
+import useDrawerGesture from "@hooks/useDrawerGesture";
 import BottomNav from "@layout/bottom-nav";
 import cn from "@lib/cn";
 import useScrollRefStore from "@store/useScrollRefStore";
@@ -112,42 +113,30 @@ const SideMain = ({
     };
   }, []);
 
-  const dragStart: React.PointerEventHandler<HTMLDivElement> = (e) => {
-    if (!isMobile || fullHeight || !dragable) return;
+  const shouldEnableDrawerDrag = isMobile && !fullHeight && dragable;
 
-    const startY = e.clientY;
-
-    let newHeight: number;
-
-    const dragMove = (e: PointerEvent) => {
-      const delta = startY - e.clientY;
-
-      newHeight = curHeight + (delta / window.innerHeight) * 100;
-
-      if (newHeight >= sheetHeight.STEP_3.height) {
-        newHeight = sheetHeight.STEP_3.height;
-      } else if (newHeight <= sheetHeight.STEP_1.height) {
-        newHeight = sheetHeight.STEP_1.height;
-      }
-      setCurHeight(newHeight);
-    };
-
-    const dragEnd = () => {
-      if (newHeight <= sheetHeight.STEP_1.max) {
-        setCurHeight(sheetHeight.STEP_1.height);
-      } else if (newHeight <= sheetHeight.STEP_2.max) {
-        setCurHeight(sheetHeight.STEP_2.height);
-      } else {
-        setCurHeight(sheetHeight.STEP_3.height);
-      }
-
-      document.onpointermove = null;
-      document.onpointerup = null;
-    };
-
-    document.onpointermove = dragMove;
-    document.onpointerup = dragEnd;
-  };
+  const {
+    isDrawerDragging,
+    canScrollContent,
+    handleContainerPointerDown,
+    handleContainerPointerMove,
+    handleContainerPointerEnd,
+    handleContainerTouchStart,
+    handleContainerTouchMove,
+    handleContainerTouchEnd,
+    handleGrabberPointerDown,
+    handleGrabberPointerMove,
+    handleGrabberPointerEnd,
+    handleGrabberTouchStart,
+    handleGrabberTouchMove,
+    handleGrabberTouchEnd,
+  } = useDrawerGesture({
+    enabled: shouldEnableDrawerDrag,
+    containerRef,
+    curHeight,
+    sheetHeight,
+    setCurHeight,
+  });
 
   const isMobileApp =
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
@@ -173,11 +162,14 @@ const SideMain = ({
     <SheetHeightProvider deviceType={deviceType as Device}>
       <main
         className={cn(
-          `fixed flex flex-col z-10 mo:no-touch mo:overflow-hidden select-none ${layoutClass} ${
+          `fixed flex flex-col z-10 mo:overflow-hidden select-none ${layoutClass} ${
             fullHeight
               ? "shadow-dark web:rounded-lg"
               : "shadow-dark web:rounded-lg mo:rounded-t-4xl"
           }`,
+          shouldEnableDrawerDrag && !isDrawerDragging
+            ? "motion-safe:transition-[height] motion-safe:duration-200 motion-safe:ease-out"
+            : "",
           background === "white"
             ? "bg-side-main dark:bg-black"
             : "bg-grey-light dark:bg-black",
@@ -207,12 +199,11 @@ const SideMain = ({
           />
         )}
 
-       
-
         <div
           ref={containerRef}
           className={cn(
-            "grow overflow-y-auto overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
+            "grow overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
+            canScrollContent ? "overflow-y-auto" : "overflow-y-hidden touch-pan-y",
             withNav ? "pb-20 mo:pb-24" : "pb-12",
             headerTitle && fullHeight
               ? isMobileApp
@@ -220,14 +211,33 @@ const SideMain = ({
                 : "mo:pt-10"
               : "",
             deviceType === "ios-mobile-app" && withNav ? "pb-28" : "",
+            shouldEnableDrawerDrag && isDrawerDragging ? "touch-none" : "",
             bodyStyle
           )}
+          style={{
+            overscrollBehaviorY: shouldEnableDrawerDrag ? "contain" : undefined,
+          }}
           onScroll={onScroll}
+          onPointerDown={handleContainerPointerDown}
+          onPointerMove={handleContainerPointerMove}
+          onPointerUp={handleContainerPointerEnd}
+          onPointerCancel={handleContainerPointerEnd}
+          onTouchStart={handleContainerTouchStart}
+          onTouchMove={handleContainerTouchMove}
+          onTouchEnd={handleContainerTouchEnd}
+          onTouchCancel={handleContainerTouchEnd}
         >
           {!fullHeight && dragable && (
             <div
-              className="sticky top-0 z-20 py-3 backdrop-blur-sm bg-surface/92 dark:bg-black/55 rounded-t-3xl web:hidden cursor-grab active:cursor-grabbing"
-              onPointerDown={dragStart}
+              className="sticky top-0 z-20 py-3 backdrop-blur-sm bg-surface/92 dark:bg-black/55 rounded-t-3xl web:hidden cursor-grab active:cursor-grabbing touch-none"
+              onPointerDown={handleGrabberPointerDown}
+              onPointerMove={handleGrabberPointerMove}
+              onPointerUp={handleGrabberPointerEnd}
+              onPointerCancel={handleGrabberPointerEnd}
+              onTouchStart={handleGrabberTouchStart}
+              onTouchMove={handleGrabberTouchMove}
+              onTouchEnd={handleGrabberTouchEnd}
+              onTouchCancel={handleGrabberTouchEnd}
               role="button"
               aria-label="드로워 높이 조절"
               tabIndex={0}
