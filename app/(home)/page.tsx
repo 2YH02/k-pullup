@@ -16,8 +16,7 @@ import { headers } from "next/headers";
 import { type Device } from "../mypage/page";
 
 const Home = async () => {
-  const images = await newPictures();
-  const moment = await getAllMoment();
+  const [images, moment] = await Promise.all([newPictures(), getAllMoment()]);
 
   const headersList = headers();
   const userAgent = headersList.get("user-agent");
