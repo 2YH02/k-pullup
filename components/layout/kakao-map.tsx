@@ -1,9 +1,9 @@
 "use client";
 
-import type { Device } from "@/app/mypage/page";
 import type { Nullable } from "@/types";
 import getAllMarker from "@api/marker/get-all-marker";
 import Tooltip from "@common/tooltip";
+import useClientDeviceType from "@hooks/useClientDeviceType";
 import useGpsTracking from "@hooks/useGpsTracking";
 import useIsMounted from "@hooks/useIsMounted";
 import { useToast } from "@hooks/useToast";
@@ -50,7 +50,8 @@ const scheduleIdleTask = (
   return () => globalThis.clearTimeout(timerId);
 };
 
-const KakaoMap = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
+const KakaoMap = () => {
+  const deviceType = useClientDeviceType();
   const isMounted = useIsMounted();
   const pathname = usePathname();
 

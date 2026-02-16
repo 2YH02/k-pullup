@@ -1,6 +1,5 @@
 import KakaoMap from "@layout/kakao-map";
 import Roadview from "@layout/roadview";
-import getDeviceType from "@lib/get-device-type";
 import AlertProvider from "@provider/alert-provider";
 import ChatIdProvider from "@provider/chat-Id-provider";
 import GeoProvider from "@provider/geo-provider";
@@ -14,9 +13,7 @@ import { Toaster } from "@provider/toaster";
 import UserProvider from "@provider/user-provider";
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { headers } from "next/headers";
 import "./globals.css";
-import { Device } from "./mypage/page";
 
 declare global {
   interface Window {
@@ -98,10 +95,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headersList = headers();
-  const userAgent = headersList.get("user-agent");
-
-  const deviceType: Device = getDeviceType(userAgent as string);
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className={pretendard.className}>
@@ -118,16 +111,16 @@ export default function RootLayout({
         >
           <ChatIdProvider>
             <AlertProvider>
-              <ImageModalProvider deviceType={deviceType}>
+              <ImageModalProvider>
                 <UserProvider>
                   <LoadMarker />
                   <GeoProvider>{children}</GeoProvider>
-                  <Roadview deviceType={deviceType} />
+                  <Roadview />
                   <Toaster />
                 </UserProvider>
               </ImageModalProvider>
             </AlertProvider>
-            <KakaoMap deviceType={deviceType} />
+            <KakaoMap />
           </ChatIdProvider>
         </ThemeProvider>
         <div id="portal"></div>

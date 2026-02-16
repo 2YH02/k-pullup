@@ -1,9 +1,9 @@
 "use client";
 
-import { type Device } from "@/app/mypage/page";
 import { KakaoMap } from "@/types/kakao-map.types";
 import getRoadviewDate from "@api/marker/get-roadview-date";
 import Button from "@common/button";
+import useClientDeviceType from "@hooks/useClientDeviceType";
 import { useToast } from "@hooks/useToast";
 import MapWalker from "@lib/map-walker";
 import useMapStore from "@store/useMapStore";
@@ -19,7 +19,8 @@ const formatRoadviewDate = (isoDate: string): string => {
   return `${year}-${month}-${day}`;
 };
 
-const Roadview = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
+const Roadview = () => {
+  const deviceType = useClientDeviceType();
   const pathname = usePathname();
 
   const { lat, lng, open, closeModal } = useRoadviewStore();
