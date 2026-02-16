@@ -173,7 +173,7 @@ const SideMain = ({
     <SheetHeightProvider deviceType={deviceType as Device}>
       <main
         className={cn(
-          `fixed flex flex-col z-10 mo:no-touch select-none ${layoutClass} ${
+          `fixed flex flex-col z-10 mo:no-touch mo:overflow-hidden select-none ${layoutClass} ${
             fullHeight
               ? "shadow-dark web:rounded-lg"
               : "shadow-dark web:rounded-lg mo:rounded-t-4xl"
