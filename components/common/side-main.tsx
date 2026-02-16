@@ -200,52 +200,58 @@ const SideMain = ({
         )}
 
         <div
-          ref={containerRef}
           className={cn(
-            "grow overflow-x-hidden web:rounded-lg web:scrollbar-thin mo:scrollbar-hidden",
-            canScrollContent ? "overflow-y-auto" : "overflow-y-hidden touch-pan-y",
-            withNav ? "pb-20 mo:pb-24" : "pb-12",
-            headerTitle && fullHeight
-              ? isMobileApp
-                ? "mo:pt-24"
-                : "mo:pt-10"
-              : "",
-            deviceType === "ios-mobile-app" && withNav ? "pb-28" : "",
-            shouldEnableDrawerDrag && isDrawerDragging ? "touch-none" : "",
-            bodyStyle
+            "grow overflow-hidden web:rounded-lg"
           )}
-          style={{
-            overscrollBehaviorY: shouldEnableDrawerDrag ? "contain" : undefined,
-          }}
-          onScroll={onScroll}
-          onPointerDown={handleContainerPointerDown}
-          onPointerMove={handleContainerPointerMove}
-          onPointerUp={handleContainerPointerEnd}
-          onPointerCancel={handleContainerPointerEnd}
-          onTouchStart={handleContainerTouchStart}
-          onTouchMove={handleContainerTouchMove}
-          onTouchEnd={handleContainerTouchEnd}
-          onTouchCancel={handleContainerTouchEnd}
         >
-          {!fullHeight && dragable && (
-            <div
-              className="sticky top-0 z-20 py-3 overflow-hidden backdrop-blur-sm bg-surface/92 dark:bg-black/55 rounded-t-3xl web:hidden cursor-grab active:cursor-grabbing touch-none"
-              onPointerDown={handleGrabberPointerDown}
-              onPointerMove={handleGrabberPointerMove}
-              onPointerUp={handleGrabberPointerEnd}
-              onPointerCancel={handleGrabberPointerEnd}
-              onTouchStart={handleGrabberTouchStart}
-              onTouchMove={handleGrabberTouchMove}
-              onTouchEnd={handleGrabberTouchEnd}
-              onTouchCancel={handleGrabberTouchEnd}
-              role="button"
-              aria-label="드로워 높이 조절"
-              tabIndex={0}
-            >
-              <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />
-            </div>
-          )}
-          {children}
+          <div
+            ref={containerRef}
+            className={cn(
+              "h-full overflow-x-hidden web:scrollbar-thin mo:scrollbar-hidden",
+              canScrollContent ? "overflow-y-auto" : "overflow-y-hidden touch-pan-y",
+              withNav ? "pb-20 mo:pb-24" : "pb-12",
+              headerTitle && fullHeight
+                ? isMobileApp
+                  ? "mo:pt-24"
+                  : "mo:pt-10"
+                : "",
+              deviceType === "ios-mobile-app" && withNav ? "pb-28" : "",
+              shouldEnableDrawerDrag && isDrawerDragging ? "touch-none" : "",
+              bodyStyle
+            )}
+            style={{
+              overscrollBehaviorY: shouldEnableDrawerDrag ? "contain" : undefined,
+            }}
+            onScroll={onScroll}
+            onPointerDown={handleContainerPointerDown}
+            onPointerMove={handleContainerPointerMove}
+            onPointerUp={handleContainerPointerEnd}
+            onPointerCancel={handleContainerPointerEnd}
+            onTouchStart={handleContainerTouchStart}
+            onTouchMove={handleContainerTouchMove}
+            onTouchEnd={handleContainerTouchEnd}
+            onTouchCancel={handleContainerTouchEnd}
+          >
+            {!fullHeight && dragable && (
+              <div
+                className="sticky top-0 z-20 py-3 overflow-hidden backdrop-blur-sm bg-surface/92 dark:bg-black/55 rounded-t-3xl web:hidden cursor-grab active:cursor-grabbing touch-none"
+                onPointerDown={handleGrabberPointerDown}
+                onPointerMove={handleGrabberPointerMove}
+                onPointerUp={handleGrabberPointerEnd}
+                onPointerCancel={handleGrabberPointerEnd}
+                onTouchStart={handleGrabberTouchStart}
+                onTouchMove={handleGrabberTouchMove}
+                onTouchEnd={handleGrabberTouchEnd}
+                onTouchCancel={handleGrabberTouchEnd}
+                role="button"
+                aria-label="드로워 높이 조절"
+                tabIndex={0}
+              >
+                <div className="w-1/6 h-1 mx-auto rounded-lg bg-grey" />
+              </div>
+            )}
+            {children}
+          </div>
         </div>
 
         {withNav && (
