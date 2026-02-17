@@ -99,7 +99,7 @@ const SelectLocation = ({
   };
 
   return (
-    <Section className="flex h-full flex-col pb-0 pt-0">
+    <Section className="flex h-full flex-col pb-4 pt-0">
       <div className="flex flex-col items-center web:mt-8">
         {position.lat && position.lng ? (
           <div className="h-32.5 w-32.5 translate-y-3 select-none">
