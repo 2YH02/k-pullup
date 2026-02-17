@@ -226,7 +226,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
       >
         <div className="flex flex-col justify-start">
           <button
-            className="group relative h-12 w-12 shrink-0 rounded-full border border-primary/20 bg-side-main transition-all duration-200 active:scale-[0.97] web:hover:border-primary/40"
+            className="group relative h-12 w-12 shrink-0 rounded-full border border-primary/20 bg-side-main transition-all duration-200 active:scale-[0.97] web:hover:border-primary/40 dark:border-grey-dark dark:bg-black/35 dark:web:hover:border-primary-light/35"
             onClick={() => router.push("/moments")}
             type="button"
             aria-label="모먼트 페이지로 이동"
@@ -244,13 +244,13 @@ const MomentList = ({ data }: { data: Moment[] }) => {
             key={`${moment.caption} ${moment.createdAt}`}
           >
             <button
-              className="group relative h-12 w-12 shrink-0 rounded-full border border-primary/20 bg-side-main transition-all duration-200 active:scale-[0.97] web:hover:border-primary/40"
+              className="group relative h-12 w-12 shrink-0 rounded-full border border-primary/20 bg-side-main transition-all duration-200 active:scale-[0.97] web:hover:border-primary/40 dark:border-grey-dark dark:bg-black/35 dark:web:hover:border-primary-light/35"
               onClick={() => handleViewMoment(moment)}
               type="button"
               aria-label={`${getCity(moment.address)} 모먼트 보기`}
             >
               <div
-                className="absolute top-1/2 left-1/2 h-10.5 w-10.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/90 dark:border-black"
+                className="absolute top-1/2 left-1/2 h-10.5 w-10.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/90 dark:border-white/12"
                 style={{
                   backgroundImage: `url(${imageSrc[i]})`,
                   backgroundSize: "cover",
@@ -262,7 +262,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
               display="block"
               textAlign="center"
               typography="t7"
-              className="mt-1 text-text-on-surface-muted"
+              className="mt-1 text-text-on-surface-muted dark:text-grey"
             >
               {getCity(moment.address)}
             </Text>

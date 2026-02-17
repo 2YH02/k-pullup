@@ -92,8 +92,8 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
       {/* Thumbnail Grid */}
       <div className={className}>
         <div className="mb-3 flex items-center justify-between px-0.5">
-          <p className="text-xs font-medium text-text-on-surface-muted">첨부 사진</p>
-          <span className="rounded-full bg-primary/8 px-2.5 py-1 text-xs font-semibold text-text-on-surface">
+          <p className="text-xs font-medium text-text-on-surface-muted dark:text-grey">첨부 사진</p>
+          <span className="rounded-full bg-primary/8 px-2.5 py-1 text-xs font-semibold text-text-on-surface dark:bg-primary-light/15 dark:text-grey-light">
             {normalizedImages.length}
           </span>
         </div>
@@ -103,7 +103,7 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
               key={`${item.url}-${index}`}
               onClick={() => handleSelect(index)}
               type="button"
-              className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-2xl border border-primary/12 bg-side-main shadow-[0_1px_6px_rgba(64,64,56,0.08)] transition-all duration-300 web:hover:-translate-y-0.5 web:hover:shadow-[0_10px_18px_rgba(64,64,56,0.16)] active:scale-[0.99] active:border-primary/35 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+              className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-2xl border border-primary/12 bg-side-main shadow-[0_1px_6px_rgba(64,64,56,0.08)] transition-all duration-300 web:hover:-translate-y-0.5 web:hover:shadow-[0_10px_18px_rgba(64,64,56,0.16)] active:scale-[0.99] active:border-primary/35 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2 focus-visible:ring-offset-surface dark:border-grey-dark dark:bg-black/35 dark:web:hover:border-primary-light/35"
             >
               <Image
                 src={item.url}

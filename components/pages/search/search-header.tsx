@@ -74,6 +74,7 @@ const SearchHeader = ({
             "bg-search-input-bg dark:bg-black/35",
             "shadow-[0_1px_2px_rgba(64,64,56,0.08)]"
           )}
+          inputClassName="dark:bg-transparent"
           value={value}
           onChange={onChange}
           onKeyDown={handleKeyDown}

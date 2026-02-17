@@ -56,7 +56,7 @@ const AroundMarkerCarousel = () => {
           {[0, 1].map((key) => (
             <div
               key={key}
-              className="shrink-0 w-64 rounded-2xl border border-primary/10 bg-side-main p-2"
+              className="shrink-0 w-64 rounded-2xl border border-primary/10 bg-side-main p-2 dark:border-grey-dark dark:bg-black/35"
             >
               <Skeleton className="h-36 w-full rounded-xl" />
               <Skeleton className="mt-3 h-4 w-3/4 rounded-md" />
@@ -72,7 +72,7 @@ const AroundMarkerCarousel = () => {
     return (
       <Section>
         <SectionTitle title="내 주변 철봉" subTitle="현재 위치 기준 2km" />
-        <div className="rounded-2xl border border-primary/12 bg-side-main p-4">
+        <div className="rounded-2xl border border-primary/12 bg-side-main p-4 dark:border-grey-dark dark:bg-black/35">
           <div className="mb-3">
             <Text display="block" typography="t6" className="text-text-on-surface">
               현재 위치 정보를 확인할 수 없습니다.
@@ -80,7 +80,7 @@ const AroundMarkerCarousel = () => {
             <Text
               display="block"
               typography="t6"
-              className="text-text-on-surface-muted"
+              className="text-text-on-surface-muted dark:text-grey"
             >
               위치 접근을 허용한 뒤 다시 시도해 주세요.
             </Text>
@@ -103,7 +103,7 @@ const AroundMarkerCarousel = () => {
     return (
       <Section>
         <SectionTitle title="내 주변 철봉" subTitle="현재 위치 기준 2km" />
-        <div className="rounded-2xl border border-primary/12 bg-side-main p-4">
+        <div className="rounded-2xl border border-primary/12 bg-side-main p-4 dark:border-grey-dark dark:bg-black/35">
           <div className="mb-3">
             <Text display="block" typography="t6">
               현재 위치 주변 2,000m 내에 철봉이 없습니다.
@@ -111,7 +111,7 @@ const AroundMarkerCarousel = () => {
             <Text
               display="block"
               typography="t6"
-              className="text-text-on-surface-muted"
+              className="text-text-on-surface-muted dark:text-grey"
             >
               검색 반경을 넓혀 다른 위치를 확인해 보세요.
             </Text>
@@ -143,7 +143,7 @@ const AroundMarkerCarousel = () => {
               }}
               type="button"
             >
-              <div className="relative overflow-hidden rounded-2xl border border-primary/12 bg-side-main transition-colors duration-300 group-hover:border-primary/35 group-hover:bg-white/45 dark:group-hover:bg-black/30 group-active:border-primary/45 group-active:bg-white/55 dark:group-active:bg-black/35">
+              <div className="relative overflow-hidden rounded-2xl border border-primary/12 bg-side-main transition-colors duration-300 group-hover:border-primary/35 group-hover:bg-white/45 dark:border-grey-dark dark:bg-black/35 dark:group-hover:border-primary-light/35 dark:group-hover:bg-black/30 group-active:border-primary/45 group-active:bg-white/55 dark:group-active:bg-black/35">
                 <div className="absolute inset-x-0 top-0 h-0.5 bg-primary/0 transition-colors duration-300 group-hover:bg-primary/40 group-active:bg-primary/50" />
                 <div className="relative h-40 w-full overflow-hidden">
                   <Image
@@ -168,9 +168,9 @@ const AroundMarkerCarousel = () => {
                     {splitAddress(marker.address)}
                   </Text>
                   <div className="mt-1 flex items-center gap-1">
-                    <LocationIcon size={14} className="text-text-on-surface-muted" />
+                    <LocationIcon size={14} className="text-text-on-surface-muted dark:text-grey" />
                     <Text
-                      className="truncate text-text-on-surface-muted"
+                      className="truncate text-text-on-surface-muted dark:text-grey"
                       textAlign="left"
                       typography="t7"
                     >

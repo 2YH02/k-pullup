@@ -26,6 +26,10 @@ interface InputProps extends React.ComponentProps<"input"> {
    */
   className?: string;
   /**
+   * input element용 tailwind 스타일 클래스
+   */
+  inputClassName?: string;
+  /**
    * 컴포넌트 마운트 시 focus
    */
   isFocus?: boolean;
@@ -41,6 +45,7 @@ const Input = ({
   onIconClick,
   isSearchButton = false,
   className,
+  inputClassName,
   isFocus = false,
   placeholderAlign = "left",
   ...props
@@ -76,16 +81,19 @@ const Input = ({
       )}
     >
       <input
-        className={`w-full h-full focus:outline-hidden bg-transparent focus:border-primary-dark ${
-          isSearchButton ? "cursor-pointer" : ""
-        } dark:bg-black-light dark:focus:border-grey-light text-black placeholder:text-grey dark:text-white placeholder:text-sm
-        ${
-          placeholderAlign === "center"
-            ? "placeholder:text-center"
-            : placeholderAlign === "right"
-            ? "placeholder:text-right"
-            : "placeholder:text-left"
-        }`}
+        className={cn(
+          `w-full h-full focus:outline-hidden bg-transparent focus:border-primary-dark ${
+            isSearchButton ? "cursor-pointer" : ""
+          } dark:bg-black-light dark:focus:border-grey-light text-black placeholder:text-grey dark:text-white placeholder:text-sm
+          ${
+            placeholderAlign === "center"
+              ? "placeholder:text-center"
+              : placeholderAlign === "right"
+              ? "placeholder:text-right"
+              : "placeholder:text-left"
+          }`,
+          inputClassName
+        )}
         aria-invalid={isInvalid}
         ref={inputRef}
         onClick={isSearchButton ? handleClick : undefined}
