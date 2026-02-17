@@ -213,7 +213,7 @@ const PullupClient = ({
                   typography="t7"
                   className="block grow truncate text-location-badge-text dark:text-location-badge-text-dark"
                 >
-                  {marker.username.length > 10 ? marker.username : `정보 제공자: ${marker.username}`}
+                  {marker.username}
                 </Text>
                 <BsChevronRight
                   size={12}

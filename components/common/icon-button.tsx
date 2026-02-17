@@ -29,7 +29,10 @@ const IconButton = forwardRef(
           {icon}
         </div>
         {text && (
-          <Text typography="t7" className="select-none text-inherit">
+          <Text
+            typography="t7"
+            className="select-none whitespace-nowrap text-inherit mo:text-[11px]"
+          >
             {text}
           </Text>
         )}
