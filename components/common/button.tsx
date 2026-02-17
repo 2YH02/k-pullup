@@ -39,28 +39,28 @@ const buttonContrastColorMap = {
     "disabled:border-primary/50 dark:disabled:border-primary-dark/50"
   ),
   coral: cn(
-    "bg-white",
-    "text-coral",
+    "bg-white dark:bg-black-light",
+    "text-coral dark:text-coral",
     "border",
-    "border-coral",
+    "border-coral dark:border-coral/65",
     "disabled:text-coral/50",
-    "disabled:border-coral/50"
+    "disabled:border-coral/50 dark:disabled:border-coral/35"
   ),
   blue: cn(
-    "bg-white",
-    "text-blue",
+    "bg-white dark:bg-black-light",
+    "text-blue dark:text-blue",
     "border",
-    "border-blue",
+    "border-blue dark:border-blue/65",
     "disabled:text-blue/50",
-    "disabled:border-blue/50"
+    "disabled:border-blue/50 dark:disabled:border-blue/35"
   ),
   black: cn(
-    "bg-white",
-    "text-black",
+    "bg-white dark:bg-black-light",
+    "text-black dark:text-grey-light",
     "border",
-    "border-black",
-    "disabled:text-black/50",
-    "disabled:border-black/50"
+    "border-black dark:border-grey-dark",
+    "disabled:text-black/50 dark:disabled:text-grey/60",
+    "disabled:border-black/50 dark:disabled:border-grey-dark/60"
   ),
 };
 

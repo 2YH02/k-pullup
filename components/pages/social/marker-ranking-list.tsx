@@ -33,7 +33,7 @@ const MarkerRankingList = ({ allRanking }: { allRanking: RankingInfo[] }) => {
   return (
     <div>
       {/* 랭킹 타입 버튼 */}
-      <div className="mb-3 inline-flex rounded-full border border-primary/12 bg-side-main p-1 text-sm dark:border-white/10">
+      <div className="mb-3 inline-flex rounded-full border border-primary/12 bg-side-main p-1 text-sm dark:border-white/10 dark:bg-black/35">
         <button
           className={cn(
             "rounded-full px-3 py-1 transition-colors",
@@ -91,7 +91,7 @@ const List = ({
 
   if (!data) {
     return (
-      <div className="rounded-xl border border-primary/12 bg-side-main p-4 dark:border-white/10">
+      <div className="rounded-xl border border-primary/12 bg-side-main p-4 dark:border-white/10 dark:bg-black/35">
         <div className="text-text-on-surface dark:text-white">
           랭킹에 등록되어 있는 철봉이 없습니다.
         </div>
@@ -126,7 +126,7 @@ const List = ({
               isTopThree && rank === 1 && "border-yellow/60 bg-yellow/15",
               isTopThree && rank === 2 && "border-grey/45 bg-grey-light/65 dark:bg-grey-dark/24",
               isTopThree && rank === 3 && "border-coral/40 bg-coral/14",
-              !isTopThree && "border border-primary/12 bg-side-main",
+              !isTopThree && "border border-primary/12 bg-side-main dark:border-grey-dark dark:bg-black/35",
               "active:scale-[0.985] active:bg-grey-light dark:active:bg-grey-dark",
               "web:hover:border-primary/28 web:hover:bg-white/50 dark:web:hover:bg-black/30"
             )}
@@ -168,7 +168,7 @@ const List = ({
         {visibleCount > 10 && (
           <button
             onClick={resetList}
-            className="rounded-full border border-primary/15 px-3 py-1 text-sm text-text-on-surface-muted transition-colors web:hover:bg-primary/8 dark:text-grey-light"
+            className="rounded-full border border-primary/15 px-3 py-1 text-sm text-text-on-surface-muted transition-colors web:hover:bg-primary/8 dark:border-grey-dark dark:text-grey-light dark:web:hover:bg-black/35"
           >
             접기
           </button>
@@ -176,7 +176,7 @@ const List = ({
         {hasMore && (
           <button
             onClick={loadMore}
-            className="rounded-full border border-primary/15 px-3 py-1 text-sm text-text-on-surface-muted transition-colors web:hover:bg-primary/8 dark:text-grey-light"
+            className="rounded-full border border-primary/15 px-3 py-1 text-sm text-text-on-surface-muted transition-colors web:hover:bg-primary/8 dark:border-grey-dark dark:text-grey-light dark:web:hover:bg-black/35"
           >
             더보기
           </button>
