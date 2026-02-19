@@ -60,7 +60,7 @@ const HeroStickyHeader = () => {
           )}
         >
           <Text fontWeight="bold" typography="t5" className="text-text-on-surface whitespace-nowrap">
-            가까운 철봉 찾기
+            대한민국 철봉 지도
           </Text>
           <Text typography="t6" className="text-text-on-surface-muted whitespace-nowrap max-[370px]:hidden">
             내 주변에서 바로 시작
