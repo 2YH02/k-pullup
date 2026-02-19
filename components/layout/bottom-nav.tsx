@@ -4,8 +4,8 @@ import { type Device } from "@/app/mypage/page";
 import Text from "@common/text";
 import cn from "@lib/cn";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
-import { memo, useMemo } from "react";
+import { usePathname } from "next/navigation";
+import { memo, useEffect, useMemo, useState } from "react";
 
 export interface Menu {
   name: string;
@@ -41,7 +41,13 @@ const BottomNav = ({
   className,
 }: BottomNavProps) => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const [registerFrom, setRegisterFrom] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const from = new URLSearchParams(window.location.search).get("from");
+    setRegisterFrom(from);
+  }, []);
 
   const navWidth = useMemo(() => {
     if (width === "full") return "w-full";
@@ -58,7 +64,6 @@ const BottomNav = ({
   const rightMenus = secondaryMenus.slice(2);
   const isPrimaryActive = primaryMenu ? pathname === primaryMenu.path : false;
   const isRegisterPrimary = primaryMenu?.path === "/register";
-  const registerFrom = searchParams.get("from");
   const safeRegisterFrom =
     registerFrom && registerFrom.startsWith("/") && registerFrom !== "/register"
       ? registerFrom
