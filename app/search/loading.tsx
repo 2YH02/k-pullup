@@ -1,4 +1,5 @@
 import type { Device } from "@/app/mypage/page";
+import SearchInput from "@/components/pages/home/search-input";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Skeleton from "@common/skeleton";
@@ -15,14 +16,7 @@ const Loading = () => {
 
   return (
     <SideMain className={cn(isMobileApp ? "pt-12" : "")} deviceType={deviceType}>
-      <div className="mo:fixed sticky top-0 left-0 z-40 flex items-center justify-center w-full h-14 bg-white/45 dark:bg-black/45 backdrop-blur-[2px] py-3">
-        <div className="px-3">
-          <Skeleton className="h-6 w-6 rounded-full" />
-        </div>
-        <div className="grow pr-4">
-          <Skeleton className="h-10 w-full rounded-xl" />
-        </div>
-      </div>
+      <SearchInput deviceType={deviceType} />
 
       <div className="page-transition">
         <Section>
