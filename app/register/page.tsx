@@ -17,11 +17,7 @@ const Register = () => {
 
   const deviceType: Device = getDeviceType(userAgent as string);
 
-  return (
-    <>
-      <RegisterClient referrer={!!referrer} deviceType={deviceType} />
-    </>
-  );
+  return <RegisterClient referrer={!!referrer} deviceType={deviceType} />;
 };
 
 export default Register;

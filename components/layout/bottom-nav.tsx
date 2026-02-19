@@ -4,7 +4,7 @@ import { type Device } from "@/app/mypage/page";
 import Text from "@common/text";
 import cn from "@lib/cn";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { memo, useMemo } from "react";
 
 export interface Menu {
@@ -41,6 +41,7 @@ const BottomNav = ({
   className,
 }: BottomNavProps) => {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const navWidth = useMemo(() => {
     if (width === "full") return "w-full";
@@ -56,6 +57,32 @@ const BottomNav = ({
   const leftMenus = secondaryMenus.slice(0, 2);
   const rightMenus = secondaryMenus.slice(2);
   const isPrimaryActive = primaryMenu ? pathname === primaryMenu.path : false;
+  const isRegisterPrimary = primaryMenu?.path === "/register";
+  const registerFrom = searchParams.get("from");
+  const safeRegisterFrom =
+    registerFrom && registerFrom.startsWith("/") && registerFrom !== "/register"
+      ? registerFrom
+      : null;
+  const primaryHref = useMemo(() => {
+    if (!primaryMenu) return "/";
+
+    if (!isRegisterPrimary) return primaryMenu.path;
+
+    if (isPrimaryActive) return safeRegisterFrom || "/";
+
+    return pathname === "/register"
+      ? "/register"
+      : `/register?from=${encodeURIComponent(pathname)}`;
+  }, [isPrimaryActive, isRegisterPrimary, pathname, primaryMenu, safeRegisterFrom]);
+  const primaryIconStateClass = isRegisterPrimary && isPrimaryActive
+    ? "scale-105 rotate-45"
+    : isPrimaryActive
+    ? "scale-105 rotate-0"
+    : "scale-100 rotate-0";
+  const primaryIconMotionClass =
+    isRegisterPrimary && isPrimaryActive
+      ? "web:hover:rotate-45 active:rotate-45 active:scale-110"
+      : "web:hover:rotate-8 active:rotate-16 active:scale-110";
 
   return (
     <div
@@ -92,9 +119,9 @@ const BottomNav = ({
 
       {primaryMenu && (
         <Link
-          href={primaryMenu.path}
+          href={primaryHref}
           className="absolute left-1/2 top-0 z-40 flex -translate-x-1/2 -translate-y-[18%] flex-col items-center focus-visible:outline-hidden"
-          aria-label={primaryMenu.name}
+          aria-label={isRegisterPrimary && isPrimaryActive ? "등록 닫기" : primaryMenu.name}
         >
           <div
             className={cn(
@@ -107,8 +134,8 @@ const BottomNav = ({
             <span
               className={cn(
                 "inline-flex transition-transform duration-200",
-                isPrimaryActive ? "scale-105 rotate-3" : "scale-100 rotate-0",
-                "active:scale-110 active:rotate-6"
+                primaryIconStateClass,
+                primaryIconMotionClass
               )}
             >
               {isPrimaryActive ? primaryMenu.iconActive : primaryMenu.icon}

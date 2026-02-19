@@ -156,6 +156,7 @@ const SelectLocation = ({
         <Button
           onClick={handleNext}
           disabled={!position.lat || !position.lng || loading}
+          className="h-12"
         >
           다음
         </Button>

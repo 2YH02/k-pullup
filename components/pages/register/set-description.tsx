@@ -16,7 +16,7 @@ const SetDescription = ({
   setDescription,
 }: SetDescriptionProps) => {
   return (
-    <Section className="flex h-full flex-col pb-0">
+    <Section className="flex h-full flex-col pb-4">
       <div className="my-4 rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/45 px-3.5 py-3 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/35">
         <Text
           fontWeight="bold"

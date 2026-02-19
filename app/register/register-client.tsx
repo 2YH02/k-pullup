@@ -450,54 +450,56 @@ const RegisterClient = ({
       bodyStyle={deviceType === "ios-mobile-app" ? "pb-0 mo:pb-0 mb-24" : "pb-0 mo:pb-0 mb-2"}
       deviceType={deviceType}
     >
-      {registerValue.step === 0 && (
-        <SelectLocation
-          next={handleLocationChange}
-          marker={marker as KakaoMarker}
-          position={{
-            lat: registerValue.latitude,
-            lng: registerValue.longitude,
-          }}
-          setPosition={setPosition}
-        />
-      )}
-      {registerValue.step === 1 && (
-        <SetFacilities
-          next={handleNext}
-          increase={increaseFacilities}
-          decrease={decreaseFacilities}
-          철봉={registerValue.facilities[0].quantity}
-          평행봉={registerValue.facilities[1].quantity}
-        />
-      )}
-      {registerValue.step === 2 && (
-        <SetDescription
-          next={handleDescChange}
-          description={registerValue.description}
-          setDescription={setDescription}
-        />
-      )}
-      {registerValue.step === 3 && (
-        <UploadImage
-          next={handleImageChange}
-          title={[
-            "정확한 이미지를 등록해 주시면,",
-            "다른 사람이 해당 위치를 찾는 데 큰 도움이 됩니다!",
-          ]}
-          initPhotos={initPhotos}
-          setInintPhotos={changeInitPhoto}
-          deleteInintPhotos={deleteInitPhoto}
-        />
-      )}
-      {registerValue.step === 4 && (
-        <UploadComplete
-          status={uploadStatus}
-          returnUrl={`/pullup/${newMarkerId}`}
-          errorMessage={errorMessage}
-          resetStep={resetStep}
-          setStep={setStep}
-        />
-      )}
+      <div className="page-transition h-full">
+        {registerValue.step === 0 && (
+          <SelectLocation
+            next={handleLocationChange}
+            marker={marker as KakaoMarker}
+            position={{
+              lat: registerValue.latitude,
+              lng: registerValue.longitude,
+            }}
+            setPosition={setPosition}
+          />
+        )}
+        {registerValue.step === 1 && (
+          <SetFacilities
+            next={handleNext}
+            increase={increaseFacilities}
+            decrease={decreaseFacilities}
+            철봉={registerValue.facilities[0].quantity}
+            평행봉={registerValue.facilities[1].quantity}
+          />
+        )}
+        {registerValue.step === 2 && (
+          <SetDescription
+            next={handleDescChange}
+            description={registerValue.description}
+            setDescription={setDescription}
+          />
+        )}
+        {registerValue.step === 3 && (
+          <UploadImage
+            next={handleImageChange}
+            title={[
+              "정확한 이미지를 등록해 주시면,",
+              "다른 사람이 해당 위치를 찾는 데 큰 도움이 됩니다!",
+            ]}
+            initPhotos={initPhotos}
+            setInintPhotos={changeInitPhoto}
+            deleteInintPhotos={deleteInitPhoto}
+          />
+        )}
+        {registerValue.step === 4 && (
+          <UploadComplete
+            status={uploadStatus}
+            returnUrl={`/pullup/${newMarkerId}`}
+            errorMessage={errorMessage}
+            resetStep={resetStep}
+            setStep={setStep}
+          />
+        )}
+      </div>
     </SideMain>
   );
 };
