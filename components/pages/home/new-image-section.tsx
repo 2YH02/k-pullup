@@ -13,7 +13,7 @@ const NewImageSection = ({ data }: { data: NewPictures[] }) => {
   return (
     <Section>
       <SectionTitle
-        title="최근 추가된 이미지"
+        title="최근 10개 이미지"
         subTitle={count ? `총 등록된 이미지 ${count}개` : ""}
       />
       <ImageGallery

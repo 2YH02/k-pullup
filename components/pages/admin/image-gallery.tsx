@@ -91,12 +91,6 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
     <>
       {/* Thumbnail Grid */}
       <div className={className}>
-        <div className="mb-3 flex items-center justify-between px-0.5">
-          <p className="text-xs font-medium text-text-on-surface-muted dark:text-grey">첨부 사진</p>
-          <span className="rounded-full bg-primary/8 px-2.5 py-1 text-xs font-semibold text-text-on-surface dark:bg-primary-light/15 dark:text-grey-light">
-            {normalizedImages.length}
-          </span>
-        </div>
         <div className="columns-2 gap-3 [column-fill:balance]">
           {normalizedImages.map((item, index) => (
             <button
