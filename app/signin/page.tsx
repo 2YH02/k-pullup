@@ -45,12 +45,12 @@ const SigninPage = ({ searchParams }: PageProps) => {
           <Image
             src="/logo.png"
             alt="로그인"
-            width={144}
-            height={144}
+            width={164}
+            height={164}
             className="w-full h-full object-cover"
           />
         </div>
-        <Text typography="t4" className="mt-3 mb-6">
+        <Text typography="t4" className="mb-6">
           대한민국 철봉 지도
         </Text>
 
