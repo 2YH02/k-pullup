@@ -52,6 +52,9 @@ const fetchPhotoAsDataUrl = async (url: string): Promise<string | null> => {
     const buf = Buffer.from(await res.arrayBuffer());
     const jpeg = await sharp(buf)
       .resize(1200, 630, { fit: "cover", position: "center" })
+      // 밝은 사진도 텍스트가 읽히도록 밝기 70% + 채도 85% 처리
+      // CSS 오버레이만으로는 밝은 이미지를 제압하기 어려워 이미지 자체를 조정
+      .modulate({ brightness: 0.70, saturation: 0.85 })
       .jpeg({ quality: 85 })
       .toBuffer();
     return `data:image/jpeg;base64,${jpeg.toString("base64")}`;
@@ -94,23 +97,52 @@ const OgImage = async ({
           height: "630px",
           display: "flex",
           position: "relative",
-          backgroundColor: "#2a2920",
+          backgroundColor: "#0f0e0a",
           fontFamily: "'Noto Sans KR', sans-serif",
           overflow: "hidden",
         }}
       >
+        {/* ── 배경 ── */}
         {!hasPhoto && (
-          <div
-            style={{
-              position: "absolute",
-              inset: "0",
-              background:
-                "linear-gradient(135deg, #2a2920 0%, #3d3c2e 50%, #4a4838 100%)",
-              display: "flex",
-            }}
-          />
+          <>
+            <div
+              style={{
+                position: "absolute",
+                inset: "0",
+                background: "linear-gradient(150deg, #141210 0%, #1c1a12 55%, #111008 100%)",
+                display: "flex",
+              }}
+            />
+            {/* 앰비언트 오브 - 우상단 웜 오렌지 */}
+            <div
+              style={{
+                position: "absolute",
+                width: "580px",
+                height: "580px",
+                borderRadius: "50%",
+                background:
+                  "radial-gradient(circle at center, rgba(210,90,40,0.22) 0%, rgba(210,90,40,0) 68%)",
+                top: "-180px",
+                right: "-80px",
+                display: "flex",
+              }}
+            />
+            {/* 앰비언트 오브 - 좌하단 쿨 그린 */}
+            <div
+              style={{
+                position: "absolute",
+                width: "440px",
+                height: "440px",
+                borderRadius: "50%",
+                background:
+                  "radial-gradient(circle at center, rgba(65,88,52,0.20) 0%, rgba(65,88,52,0) 68%)",
+                bottom: "-110px",
+                left: "-20px",
+                display: "flex",
+              }}
+            />
+          </>
         )}
-
         {hasPhoto && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -129,131 +161,184 @@ const OgImage = async ({
           />
         )}
 
+        {/* ── 스크림 1: 전체 기본 어둠 ── */}
+        {hasPhoto && (
+          <div
+            style={{
+              position: "absolute",
+              inset: "0",
+              backgroundColor: "rgba(0,0,0,0.18)",
+              display: "flex",
+            }}
+          />
+        )}
+
+        {/* ── 스크림 2: 상단 (배지 구역) ── */}
         <div
           style={{
             position: "absolute",
             inset: "0",
-            background: hasPhoto
-              ? "linear-gradient(to top, rgba(32,26,18,0.97) 0%, rgba(32,26,18,0.62) 48%, rgba(32,26,18,0.08) 100%)"
-              : "linear-gradient(to top, rgba(32,26,18,0.55) 0%, rgba(32,26,18,0.0) 100%)",
+            background:
+              "linear-gradient(to bottom, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.14) 30%, rgba(0,0,0,0) 52%)",
             display: "flex",
           }}
         />
 
+        {/* ── 스크림 3: 하단 (텍스트 구역) ── */}
+        <div
+          style={{
+            position: "absolute",
+            inset: "0",
+            background:
+              "linear-gradient(to top, rgba(8,6,3,0.98) 0%, rgba(8,6,3,0.90) 22%, rgba(8,6,3,0.55) 48%, rgba(8,6,3,0.04) 70%, rgba(8,6,3,0) 100%)",
+            display: "flex",
+          }}
+        />
+
+        {/* ── 스크림 4: 좌우 비네트 ── */}
+        <div
+          style={{
+            position: "absolute",
+            inset: "0",
+            background:
+              "linear-gradient(to right, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0) 18%, rgba(0,0,0,0) 82%, rgba(0,0,0,0.28) 100%)",
+            display: "flex",
+          }}
+        />
+
+        {/* ── 상단 바: 브랜드(좌) + 즐겨찾기(우) ── */}
         <div
           style={{
             position: "absolute",
             top: "48px",
             left: "60px",
+            right: "60px",
             display: "flex",
             alignItems: "center",
-            gap: "10px",
-            backgroundColor: "rgba(237,229,220,0.12)",
-            border: "1px solid rgba(237,229,220,0.22)",
-            borderRadius: "100px",
-            padding: "10px 22px",
+            justifyContent: "space-between",
           }}
         >
+          {/* 브랜드 배지 */}
           <div
             style={{
-              width: "10px",
-              height: "10px",
-              borderRadius: "50%",
-              backgroundColor: "#d07a4f",
-              boxShadow: "0 0 0 3px rgba(208,122,79,0.28)",
-            }}
-          />
-          <span
-            style={{
-              fontSize: "20px",
-              fontWeight: "700",
-              color: "rgba(245,237,229,0.9)",
-              letterSpacing: "0.3px",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+              backgroundColor: "rgba(0,0,0,0.52)",
+              border: "1px solid rgba(255,255,255,0.13)",
+              borderRadius: "100px",
+              padding: "10px 20px",
             }}
           >
-            대한민국 철봉 지도
-          </span>
+            <div
+              style={{
+                width: "8px",
+                height: "8px",
+                borderRadius: "50%",
+                backgroundColor: "#e07a4f",
+                boxShadow: "0 0 0 3px rgba(224,122,79,0.28)",
+              }}
+            />
+            <span
+              style={{
+                fontSize: "18px",
+                fontWeight: "700",
+                color: "rgba(255,248,238,0.92)",
+                letterSpacing: "0.3px",
+              }}
+            >
+              대한민국 철봉 지도
+            </span>
+          </div>
+
+          {/* 즐겨찾기 배지 */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              backgroundColor: "rgba(0,0,0,0.52)",
+              border: "1px solid rgba(224,122,79,0.38)",
+              borderRadius: "100px",
+              padding: "10px 20px",
+            }}
+          >
+            <span style={{ fontSize: "19px", color: "#e07a4f" }}>♥</span>
+            <span
+              style={{
+                fontSize: "19px",
+                fontWeight: "700",
+                color: "#ffffff",
+              }}
+            >
+              {favCount}
+            </span>
+          </div>
         </div>
 
+        {/* ── 하단 콘텐츠 ── */}
         <div
           style={{
             position: "absolute",
             bottom: "0",
             left: "0",
             right: "0",
-            padding: "0 60px 52px",
+            padding: "0 60px 50px",
             display: "flex",
             flexDirection: "column",
           }}
         >
+          {/* 오렌지 액센트 바 */}
           <div
             style={{
-              fontSize: address.length > 18 ? "46px" : "56px",
+              width: "40px",
+              height: "4px",
+              backgroundColor: "#e07a4f",
+              borderRadius: "2px",
+              marginBottom: "16px",
+            }}
+          />
+
+          {/* 주소 */}
+          <div
+            style={{
+              fontSize: address.length > 18 ? "46px" : "58px",
               fontWeight: "700",
-              color: "#f5ede5",
-              lineHeight: "1.2",
+              color: "#ffffff",
+              lineHeight: "1.15",
               letterSpacing: "-0.5px",
-              marginBottom: "14px",
+              marginBottom: "12px",
             }}
           >
             {shortAddress}
           </div>
 
+          {/* 설명 */}
           {shortDesc ? (
             <div
               style={{
-                fontSize: "26px",
-                color: "rgba(222,206,192,0.72)",
+                fontSize: "24px",
+                color: "rgba(218,206,188,0.75)",
                 lineHeight: "1.5",
-                marginBottom: "30px",
+                marginBottom: "28px",
               }}
             >
               {shortDesc}
             </div>
           ) : (
-            <div style={{ marginBottom: "30px" }} />
+            <div style={{ marginBottom: "20px" }} />
           )}
 
-          <div
+          {/* 도메인 */}
+          <span
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              fontSize: "18px",
+              color: "rgba(190,180,160,0.48)",
+              letterSpacing: "0.8px",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                backgroundColor: "rgba(208,122,79,0.18)",
-                border: "1px solid rgba(208,122,79,0.38)",
-                borderRadius: "100px",
-                padding: "10px 26px",
-              }}
-            >
-              <span style={{ fontSize: "26px", color: "#d07a4f" }}>♥</span>
-              <span
-                style={{
-                  fontSize: "26px",
-                  fontWeight: "700",
-                  color: "#f5ede5",
-                }}
-              >
-                {favCount}
-              </span>
-            </div>
-
-            <span
-              style={{
-                fontSize: "22px",
-                color: "rgba(165,165,143,0.55)",
-                letterSpacing: "0.5px",
-              }}
-            >
-              k-pullup.com
-            </span>
-          </div>
+            k-pullup.com
+          </span>
         </div>
       </div>
     ),

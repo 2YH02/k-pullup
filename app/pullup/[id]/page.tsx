@@ -22,25 +22,33 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
 
-  const { address, description, favCount, photos } = await getCachedMarkerDetail(
+  const { address, description, favCount } = await getCachedMarkerDetail(
     ~~id,
     decodeCookie
   );
 
+  const shortDesc =
+    description.length > 80 ? description.slice(0, 80) + "…" : description;
+
+  const pageDesc = shortDesc
+    ? `${shortDesc} · 즐겨찾기 ${favCount}개`
+    : `즐겨찾기 ${favCount}명이 저장한 철봉 위치입니다.`;
+
   return {
-    title: `${address} - 대한민국 철봉 지도`,
-    description: `즐거운 맨몸운동 생활 - ${description} - ${address} - 좋아요 : ${favCount}`,
-    keywords: `철봉, ${address}`,
+    title: `${address} | 대한민국 철봉 지도`,
+    description: pageDesc,
+    keywords: `철봉, 풀업바, 맨몸운동, ${address}`,
     openGraph: {
       type: "website",
+      siteName: "대한민국 철봉 지도",
       url: `https://www.k-pullup.com/pullup/${id}`,
-      title: `${address} | 철봉`,
-      description: `즐거운 맨몸운동 생활 - ${description} - ${address} - 좋아요 : ${favCount}`,
+      title: address,
+      description: pageDesc,
     },
     twitter: {
       card: "summary_large_image",
-      title: `${address} | 철봉`,
-      description: `즐거운 맨몸운동 생활 - ${description} - ${address} - 좋아요 : ${favCount}`,
+      title: address,
+      description: pageDesc,
     },
   };
 };

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -H local.k-pullup.com -p 5173 --experimental-https",
+    "dev": "next dev -H local.k-pullup.com -p 5173 --experimental-https --experimental-https-key certificates/localhost-key.pem --experimental-https-cert certificates/localhost.pem",
     "dev:simple": "next dev -p 5173",
     "build": "next build",
     "start": "next start",
