@@ -12,7 +12,6 @@ type Params = {
   id: string;
 };
 
-// Cache markerDetail to avoid duplicate calls between metadata and page render
 const getCachedMarkerDetail = cache(
   async (id: number, cookie: string) => markerDetail({ id, cookie })
 );
@@ -37,13 +36,11 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
       url: `https://www.k-pullup.com/pullup/${id}`,
       title: `${address} | 철봉`,
       description: `즐거운 맨몸운동 생활 - ${description} - ${address} - 좋아요 : ${favCount}`,
-      images: photos ? photos[0].photoUrl : "/metaimg.webp",
     },
     twitter: {
       card: "summary_large_image",
       title: `${address} | 철봉`,
       description: `즐거운 맨몸운동 생활 - ${description} - ${address} - 좋아요 : ${favCount}`,
-      images: photos ? photos[0].photoUrl : "/metaimg.webp",
     },
   };
 };
@@ -59,7 +56,6 @@ const PullupPage = async ({ params }: { params: Params }) => {
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
 
-  // Parallel fetch all data to avoid waterfall
   const [marker, facilities, initialComments] = await Promise.all([
     getCachedMarkerDetail(~~id, decodeCookie),
     getFacilities(~~id),
