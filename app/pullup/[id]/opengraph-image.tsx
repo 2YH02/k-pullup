@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
+import sharp from "sharp";
 import type { Marker } from "@/types/marker.types";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 export const alt = "철봉 위치";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -43,6 +44,22 @@ const fetchMarker = async (id: string) => {
   };
 };
 
+// Satori는 WebP를 디코딩하지 못하므로 sharp로 JPEG 변환 후 data URL로 전달
+const fetchPhotoAsDataUrl = async (url: string): Promise<string | null> => {
+  try {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) return null;
+    const buf = Buffer.from(await res.arrayBuffer());
+    const jpeg = await sharp(buf)
+      .resize(1200, 630, { fit: "cover", position: "center" })
+      .jpeg({ quality: 85 })
+      .toBuffer();
+    return `data:image/jpeg;base64,${jpeg.toString("base64")}`;
+  } catch {
+    return null;
+  }
+};
+
 const OgImage = async ({
   params,
 }: {
@@ -50,20 +67,21 @@ const OgImage = async ({
 }) => {
   const { id } = params;
 
-  const {
-    address,
-    description,
-    favCount,
-    photoUrl,
-  } = await fetchMarker(id).catch(() => ({
-    address: "철봉 위치",
-    description: "",
-    favCount: 0,
-    photoUrl: null,
-  }));
+  const [{ address, description, favCount, photoUrl }, fontData] =
+    await Promise.all([
+      fetchMarker(id).catch(() => ({
+        address: "철봉 위치",
+        description: "",
+        favCount: 0,
+        photoUrl: null,
+      })),
+      loadKoreanFont().catch(() => null),
+    ]);
 
-  const fontData = await loadKoreanFont().catch(() => null);
-  const hasPhoto = !!photoUrl;
+  const bgDataUrl = photoUrl
+    ? await fetchPhotoAsDataUrl(photoUrl).catch(() => null)
+    : null;
+  const hasPhoto = !!bgDataUrl;
   const shortAddress = address.length > 22 ? address.slice(0, 22) + "…" : address;
   const shortDesc =
     description.length > 55 ? description.slice(0, 55) + "…" : description;
@@ -96,13 +114,16 @@ const OgImage = async ({
         {hasPhoto && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={photoUrl!}
+            src={bgDataUrl!}
             alt=""
+            width={1200}
+            height={630}
             style={{
               position: "absolute",
-              inset: "0",
-              width: "100%",
-              height: "100%",
+              top: 0,
+              left: 0,
+              width: 1200,
+              height: 630,
               objectFit: "cover",
             }}
           />

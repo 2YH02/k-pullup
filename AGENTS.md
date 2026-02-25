@@ -190,7 +190,101 @@ yarn test:e2e
   - 스타일은 토큰 기반 클래스(`globals.css`)를 우선 사용하고, 하드코딩 색상 추가를 피한다.
   - 분리 후 기존 기능/흐름/접근성(`active`, `focus-visible`)이 유지되는지 `yarn lint`로 최소 검증한다.
 
-## 22) 다크모드 스타일링 규칙
+## 22) 코드 컨벤션 (파일명 · 선언 방식 · 구조)
+
+### 파일명
+
+| 레이어 | 규칙 | 예시 |
+|---|---|---|
+| 컴포넌트 (`components/`) | `kebab-case.tsx` | `bookmark-button.tsx` |
+| 앱 페이지 (`app/`) | Next.js 예약 파일명 그대로 | `page.tsx`, `layout.tsx`, `loading.tsx`, `opengraph-image.tsx` |
+| 클라이언트 분리 래퍼 | `[page-name]-client.tsx` | `pullup-client.tsx` |
+| 훅 (`hooks/`) | camelCase, `use` 접두사 | `useMapControl.ts` |
+| 스토어 (`store/`) | camelCase, `use[Name]Store.ts` | `useMarkerStore.ts` |
+| API 함수 (`lib/api/`) | `kebab-case.ts` 우선 (기존 camelCase 파일은 유지, 신규는 kebab-case) | `marker-detail.ts` |
+| 유틸/헬퍼 (`lib/`) | `kebab-case.ts` | `get-device-type.ts` |
+
+### 컴포넌트 선언
+
+```tsx
+// 1. Props 인터페이스는 컴포넌트 바로 위에 정의
+interface ComponentNameProps {
+  value: string;
+  onChange?: (v: string) => void;
+}
+
+// 2. const 화살표 함수 (function 선언문 사용 안 함)
+const ComponentName = ({ value, onChange }: ComponentNameProps) => {
+  return <div>{value}</div>;
+};
+
+// 3. 파일 맨 아래 default export (인라인 export 안 함)
+export default ComponentName;
+```
+
+- `"use client"` 는 파일 최상단 첫 줄에 선언하고, 필요한 경우에만 추가한다.
+- `forwardRef` 사용 시 선언 후 `.displayName = "ComponentName"` 을 반드시 설정한다.
+- 단순 타입은 `{ prop?: Type }` 인라인 허용, 2개 이상 props가 있으면 `interface` 분리한다.
+
+### 훅 선언
+
+```ts
+const useHookName = () => {
+  // 로직
+  return { value };
+};
+
+export default useHookName;
+```
+
+### 스토어 선언
+
+```ts
+interface StateName {
+  data: Type[];
+  setData: (data: Type[]) => void;
+}
+
+const useNameStore = create<StateName>()((set) => ({
+  data: [],
+  setData: (data) => set({ data }),
+}));
+
+export default useNameStore;
+```
+
+### API 함수 선언
+
+```ts
+import fetchData from "@lib/fetchData";
+
+const functionName = async (params: ParamType): Promise<ReturnType> => {
+  const response = await fetchData("/api/v1/endpoint", { ... });
+  return response.json();
+};
+
+export default functionName;
+```
+
+- 파일 하나에 함수 하나.
+- `fetchData` 사용을 원칙으로 하되, `app/*/opengraph-image.tsx` 같은 Next.js 특수 서버 파일에서는 raw `fetch` 사용 허용.
+
+### 변수 선언
+
+- `const` 우선. 재할당이 꼭 필요한 경우에만 `let`.
+- `any` 금지. 불가피하면 `unknown` + 타입 가드 사용.
+- 타입 별칭은 단순 유니온/매핑은 `type`, 객체 형태는 `interface`.
+- `import type { ... }` 은 타입 전용 임포트에 반드시 사용.
+
+### 임포트 순서
+
+1. 외부 라이브러리 (`next`, `react`, 써드파티)
+2. 내부 경로 별칭 (`@common/`, `@store/`, `@api/`, `@hooks/`, `@lib/`, `@types/` 등)
+3. 상대 경로 (`./`, `../`)
+
+경로 별칭을 우선 사용하고, 별칭이 없는 경우에만 상대 경로를 사용한다.
+
+## 23) 다크모드 스타일링 규칙
 
 - 기본 원칙: 스타일링 수정 시 라이트 모드만 변경하지 않고, 다크 모드(`dark:`)를 항상 함께 반영한다.
 - 대응 방식:
