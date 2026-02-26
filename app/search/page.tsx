@@ -37,7 +37,13 @@ const SearchPage = ({ searchParams }: PageProps) => {
       );
     } else {
       if (!lat || !lng) {
-        return <SearchResult address={addr} deviceType={deviceType} />;
+        return (
+          <SearchClient
+            isInternal={referrer?.includes(headersList.get("host") || "")}
+            deviceType={deviceType}
+            initialValue={addr}
+          />
+        );
       } else {
         return (
           <SearchResult

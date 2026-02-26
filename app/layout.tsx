@@ -56,25 +56,26 @@ const pretendard = localFont({
   ],
 });
 
+const description =
+  "내 주변 철봉을 찾고, 직접 위치를 등록해보세요. 전국 공원 철봉 위치를 한눈에.";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.k-pullup.com"),
   title: "대한민국 철봉 지도",
   keywords: "철봉지도,위치등록,철봉정보,채팅,위치검색,관리,철봉찾기",
-  description:
-    "대한민국 철봉 지도에서 전국 공원의 철봉 위치를 직접 등록하고 조회하세요.",
+  description,
   openGraph: {
     type: "website",
+    siteName: "대한민국 철봉 지도",
     url: "https://www.k-pullup.com",
     title: "대한민국 철봉 지도",
-    description:
-      "대한민국 철봉 지도에서 전국 공원의 철봉 위치를 직접 등록하고 조회하세요.",
+    description,
     images: "/metaimg.webp",
   },
   twitter: {
     card: "summary_large_image",
     title: "대한민국 철봉 지도",
-    description:
-      "대한민국 철봉 지도에서 전국 공원의 철봉 위치를 직접 등록하고 조회하세요.",
+    description,
     images: "/metaimg.webp",
   },
   verification: {
@@ -98,6 +99,23 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className={pretendard.className}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "대한민국 철봉 지도",
+              url: "https://www.k-pullup.com",
+              potentialAction: {
+                "@type": "SearchAction",
+                target:
+                  "https://www.k-pullup.com/search?addr={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
+        />
         <KakaoSdk />
         {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />

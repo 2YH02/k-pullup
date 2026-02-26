@@ -32,14 +32,16 @@ const SearchClient = ({
   isInternal,
   deviceType = "desktop",
   isEntryFromHome = false,
+  initialValue = "",
 }: {
   isInternal?: boolean;
   deviceType?: Device;
   isEntryFromHome?: boolean;
+  initialValue?: string;
 }) => {
   const router = useRouter();
 
-  const searchValue = useInput("");
+  const searchValue = useInput(initialValue);
 
   const { searches, clearSearches, removeItem } = useSearchStore();
   const { move } = useMapControl();
