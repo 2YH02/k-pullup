@@ -30,9 +30,10 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
   const shortDesc =
     description.length > 80 ? description.slice(0, 80) + "…" : description;
 
+  const count = favCount ?? 0;
   const pageDesc = shortDesc
-    ? `${shortDesc} · 즐겨찾기 ${favCount}개`
-    : `즐겨찾기 ${favCount}명이 저장한 철봉 위치입니다.`;
+    ? `${shortDesc} · 즐겨찾기 ${count}개`
+    : `즐겨찾기 ${count}명이 저장한 철봉 위치입니다.`;
 
   return {
     title: `${address} | 대한민국 철봉 지도`,
