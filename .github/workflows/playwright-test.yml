@@ -5,7 +5,7 @@ on:
 
 jobs:
   test:
-    timeout-minutes: 60
+    timeout-minutes: 20
     runs-on: ubuntu-latest
 
     steps:
@@ -16,11 +16,30 @@ jobs:
         with:
           node-version: lts/*
 
-      - name: Install dependencies
-        run: npm install -g yarn && yarn
+      - name: Enable Corepack
+        run: corepack enable
 
-      - name: Install Playwright Browsers
-        run: yarn playwright install --with-deps
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Get Playwright version
+        id: playwright-version
+        run: echo "version=$(node -e "console.log(require('./package.json').devDependencies['@playwright/test'])")" >> $GITHUB_OUTPUT
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-browsers-${{ steps.playwright-version.outputs.version }}
+
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: yarn playwright install --with-deps chromium firefox
+
+      - name: Install Playwright OS deps
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: yarn playwright install-deps chromium firefox
 
       - name: Map custom domain to localhost
         run: echo "127.0.0.1 local.k-pullup.com" | sudo tee -a /etc/hosts
@@ -29,7 +48,7 @@ jobs:
         run: yarn dev &
 
       - name: Wait for dev server
-        run: npx wait-on https://local.k-pullup.com:5173
+        run: npx wait-on https://local.k-pullup.com:5173 --timeout 60000
 
       - name: Run Playwright tests
         run: yarn playwright test
