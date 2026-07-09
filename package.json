@@ -14,7 +14,8 @@
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:ci": "playwright test --reporter=dot,html",
     "prepare": "husky",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.14",
@@ -68,11 +69,13 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "eslint-plugin-storybook": "^0.8.0",
+    "fast-check": "^4.8.0",
     "husky": "^9.1.7",
     "postcss": "^8",
     "storybook": "^8.2.2",
     "tailwindcss": "^4.1.18",
     "typescript": "^5",
+    "vitest": "^4.1.10",
     "webpack": "^5.93.0",
     "webpack-cli": "^5.1.4"
   },
