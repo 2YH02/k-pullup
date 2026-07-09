@@ -36,6 +36,10 @@ export interface KakaoMarker {
   Gb: string;
 }
 
+export interface KakaoOverlay {
+  setMap: (map: KakaoMap | null) => void;
+}
+
 export interface Qa {
   La: number;
   Ma: number;

@@ -46,8 +46,8 @@ const useMarkerControl = () => {
 
   const { move } = useMapControl();
 
-  const setMarkers = useMapStore((state) => state.setMarkers);
-  const setOverlays = useMapStore((state) => state.setOverlays);
+  const appendMarkers = useMapStore((state) => state.appendMarkers);
+  const appendOverlay = useMapStore((state) => state.appendOverlay);
   const deleteAllMarker = useMapStore((state) => state.deleteAllMarker);
   const deleteOverlays = useMapStore((state) => state.deleteOverlays);
 
@@ -83,14 +83,14 @@ const useMarkerControl = () => {
         zIndex: options.image === "selected" ? 5 : 4,
       });
 
-      setMarkers([marker]);
+      appendMarkers([marker]);
 
       window.kakao.maps.event.addListener(marker, "click", () => {
         move({ latlng: options.position });
         router.push(`/pullup/${options.markerId}`);
       });
     },
-    [move, router, setMarkers]
+    [move, router, appendMarkers]
   );
 
   const createOverlay = useCallback(
@@ -108,9 +108,9 @@ const useMarkerControl = () => {
 
       overlay.setMap(map);
 
-      setOverlays(overlay);
+      appendOverlay(overlay);
     },
-    [setOverlays]
+    [appendOverlay]
   );
 
   const reloadMarkers = useCallback(
