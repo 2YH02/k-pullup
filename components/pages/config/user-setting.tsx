@@ -2,6 +2,7 @@
 
 import signout from "@api/auth/signout";
 import deleteUser from "@api/user/deleteUser";
+import { clearSessionCache } from "@lib/session-cache";
 import List, { ListItem } from "@pages/config/config-list";
 import useAlertStore from "@store/useAlertStore";
 import useUserStore from "@store/useUserStore";
@@ -14,10 +15,24 @@ const UserSetting = () => {
   const { openAlert } = useAlertStore();
 
   const handleSignout = async () => {
-    await signout();
-    router.replace("/mypage");
-    router.refresh();
+    // 1. 클라이언트 상태 즉시 정리
     setUser(null);
+    clearSessionCache();
+
+    // 2. 서버 로그아웃 API 호출 (5초 타임아웃, 실패해도 진행)
+    try {
+      await Promise.race([
+        signout(),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("timeout")), 5000)
+        ),
+      ]);
+    } catch {
+      // API 실패 또는 타임아웃: 무시하고 진행
+    }
+
+    // 3. 홈으로 이동
+    router.replace("/");
   };
 
   const handleResign = () => {

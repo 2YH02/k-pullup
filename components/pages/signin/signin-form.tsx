@@ -1,7 +1,6 @@
 "use client";
 
 import signin from "@api/auth/signin";
-import myInfo from "@api/user/myInfo";
 import BottomSheet from "@common/bottom-sheet";
 import Button from "@common/button";
 import InputField from "@common/input-field";
@@ -9,6 +8,8 @@ import Text from "@common/text";
 import useInput from "@hooks/useInput";
 import { useToast } from "@hooks/useToast";
 import LoadingIcon from "@icons/loading-icon";
+import { FetchError } from "@lib/fetchData";
+import { setSessionCache } from "@lib/session-cache";
 import { validateSigin } from "@lib/validate";
 import { useBottomSheetStore } from "@store/useBottomSheetStore";
 import useTermsStore from "@store/useTermsStore";
@@ -70,33 +71,51 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
     if (loading) return; // 이중 제출 방지
     setLoading(true);
 
-    const signinData = {
-      email: emailValue.value,
-      password: passwordValue.value,
-    };
+    try {
+      const response = await signin({
+        email: emailValue.value,
+        password: passwordValue.value,
+      });
 
-    const response = await signin(signinData);
+      // error 필드 → 인라인 에러 메시지 (Req 2.2)
+      if (response.error) {
+        errors.email = "이메일 혹은 비밀번호를 확인해주세요.";
+        errors.password = "이메일 혹은 비밀번호를 확인해주세요.";
+        setLoading(false);
+        return;
+      }
 
-    if (response.error) {
-      errors.email = "이메일 혹은 비밀번호를 확인해주세요.";
-      errors.password = "이메일 혹은 비밀번호를 확인해주세요.";
+      // user null 또는 userId 누락 → 토스트 (Req 2.3)
+      if (!response.user || !response.user.userId) {
+        toast({ description: "잠시 후 다시 시도해주세요." });
+        setLoading(false);
+        return;
+      }
+
+      // 성공: signin 응답의 user를 직접 store + cache 저장 (Req 2.1)
+      setUser(response.user);
+      setSessionCache(response.user);
       setLoading(false);
-      return;
-    }
 
-    const user = await myInfo();
-
-    if (user.error || !user.userId || !user) {
+      // returnUrl 검증: /로 시작하고 //가 아닌 경우만 허용 (Req 3.6, 3.7)
+      const targetUrl =
+        returnUrl && returnUrl.startsWith("/") && !returnUrl.startsWith("//")
+          ? returnUrl
+          : "/";
+      router.replace(targetUrl);
       router.refresh();
-      toast({ description: "잠시 후 다시 시도해주세요," });
+    } catch (error) {
+      // FetchError / 네트워크 에러 (Req 2.4)
+      if (error instanceof FetchError) {
+        toast({
+          description:
+            "네트워크 문제가 발생했습니다. 잠시 후 다시 시도해주세요.",
+        });
+      } else {
+        toast({ description: "잠시 후 다시 시도해주세요." });
+      }
       setLoading(false);
-      return; // 기존 버그 수정: 실패 시 return 추가
     }
-
-    setUser(user);
-    setLoading(false);
-    router.replace(returnUrl || "/mypage");
-    router.refresh();
   }, [emailValue.value, passwordValue.value, loading, errors, router, returnUrl, setUser, toast]);
 
   // Enter 키 핸들러
