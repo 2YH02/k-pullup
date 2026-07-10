@@ -31,6 +31,10 @@ const InputField = forwardRef<HTMLInputElement, Props>(
     const [focused, setFocused] = useState(false);
     const generatedId = useId();
     const fieldId = props.id || `input-field-${generatedId}`;
+    const errorId = `${fieldId}-error`;
+
+    const hasVisibleError =
+      isError && typeof message === "string" && message.length > 0;
 
     const labelColorClass = isError
       ? "text-red dark:text-red"
@@ -71,11 +75,16 @@ const InputField = forwardRef<HTMLInputElement, Props>(
           onBlur={handleBlur}
           isInvalid={isError || false}
           id={fieldId}
+          aria-describedby={hasVisibleError ? errorId : undefined}
+          aria-invalid={isError || undefined}
           className={inputClassName}
           {...props}
         />
 
         <Text
+          id={hasVisibleError ? errorId : undefined}
+          role={hasVisibleError ? "alert" : undefined}
+          aria-live={hasVisibleError ? "polite" : undefined}
           typography="t7"
           className={cn(
             "block min-h-4",

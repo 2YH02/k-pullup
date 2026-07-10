@@ -37,9 +37,17 @@ const TermsCheckboxForm = ({ next }: { next: VoidFunction }) => {
     <div className="p-2">
       {/* 전체 동의  */}
       <div
-        className="flex items-center mb-4 cursor-pointer"
-        role="button"
+        className="flex items-center mb-4 cursor-pointer rounded-sm focus-visible:outline-2 focus-visible:outline-primary/60 focus-visible:outline-offset-2"
+        role="checkbox"
+        aria-checked={allChecked}
+        tabIndex={0}
         onClick={toggleAll}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggleAll();
+          }
+        }}
         id="agree-all"
       >
         <Image
@@ -218,12 +226,20 @@ const CheckboxItem = ({
   return (
     <div
       className={cn(
-        "flex items-center mb-1 cursor-pointer",
+        "flex items-center mb-1 cursor-pointer rounded-sm focus-visible:outline-2 focus-visible:outline-primary/60 focus-visible:outline-offset-2",
         linkClick ? "py-0" : "py-2",
         subText ? "items-start" : "items-center"
       )}
       onClick={onToggle}
-      role="button"
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onToggle();
+        }
+      }}
+      role="checkbox"
+      aria-checked={checked}
+      tabIndex={0}
       id={id}
     >
       <Image

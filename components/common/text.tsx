@@ -12,7 +12,7 @@ const typographyMap = {
 
 export type Typography = keyof typeof typographyMap;
 
-interface TextProps {
+interface TextProps extends React.ComponentProps<"span"> {
   /**
    * 버튼 크기
    */
@@ -23,11 +23,6 @@ interface TextProps {
    */
   textAlign?: "left" | "center" | "right";
   fontWeight?: "normal" | "bold" | "lighter" | "bolder";
-  /**
-   * tailwind 스타일 클래스 
-   */
-  className?: React.ComponentProps<"span">["className"];
-  children?: React.ReactNode;
 }
 
 const Text = ({
@@ -37,6 +32,7 @@ const Text = ({
   fontWeight = "normal",
   className,
   children,
+  ...props
 }: TextProps) => {
   const textStyle = cn(
     typographyMap[typography],
@@ -60,7 +56,7 @@ const Text = ({
   );
 
   return (
-    <span className={cn(textStyle, "text-black dark:text-white", className)}>
+    <span className={cn(textStyle, "text-black dark:text-white", className)} {...props}>
       {children}
     </span>
   );

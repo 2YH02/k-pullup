@@ -1,6 +1,6 @@
 import { Device } from "@/app/mypage/page";
+import Skeleton from "@common/skeleton";
 import SideMain from "@common/side-main";
-import LoadingIcon from "@icons/loading-icon";
 import getDeviceType from "@lib/get-device-type";
 import { headers } from "next/headers";
 
@@ -22,8 +22,13 @@ const PageLoading = ({
       withNav={withNav}
       deviceType={deviceType}
     >
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <LoadingIcon className="m-0" />
+      <div className="p-4 space-y-4">
+        {/* 헤더 플레이스홀더 */}
+        <Skeleton className="h-5 w-2/5 rounded-md" />
+        {/* 콘텐츠 플레이스홀더 */}
+        <Skeleton className="h-4 w-full rounded-md" />
+        <Skeleton className="h-4 w-full rounded-md" />
+        <Skeleton className="h-4 w-3/4 rounded-md" />
       </div>
     </SideMain>
   );

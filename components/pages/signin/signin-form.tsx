@@ -14,7 +14,7 @@ import { useBottomSheetStore } from "@store/useBottomSheetStore";
 import useTermsStore from "@store/useTermsStore";
 import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import TermsCheckboxForm from "../terms/terms-checkbox-form";
 
 interface SigninValue {
@@ -65,76 +65,21 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
     });
   }, []);
 
-  useEffect(() => {
-    const onSubmit = async () => {
-      setLoading(true);
-      const siginData = {
-        email: emailValue.value,
-        password: passwordValue.value,
-      };
-
-      const response = await signin(siginData);
-
-      if (response.error) {
-        errors.email = "이메일 혹은 비밀번호를 확인해주세요.";
-        errors.password = "이메일 혹은 비밀번호를 확인해주세요.";
-
-        setLoading(false);
-        return;
-      }
-
-      const user = await myInfo();
-
-      if (user.error || !user.userId || !user) {
-        router.refresh();
-        toast({ description: "잠시 후 다시 시도해주세요," });
-        setLoading(false);
-      }
-
-      setUser(user);
-      setLoading(false);
-      if (returnUrl) {
-        router.replace(returnUrl);
-      } else {
-        router.replace("/mypage");
-      }
-      router.refresh();
-    };
-    const isAvailable = Object.keys(errors).length === 0;
-    const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
-        if (!isAvailable) return;
-        onSubmit();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyPress);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-    };
-  }, [errors, emailValue.value, passwordValue.value, router, returnUrl, setUser, toast]);
-
-  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setViewInputError((prev) => ({
-      ...prev,
-      [e.target.name]: "true",
-    }));
-  };
-
-  const onSubmit = async () => {
+  // 단일 submit 함수 (useCallback으로 안정화)
+  const handleSubmit = useCallback(async () => {
+    if (loading) return; // 이중 제출 방지
     setLoading(true);
-    const siginData = {
+
+    const signinData = {
       email: emailValue.value,
       password: passwordValue.value,
     };
 
-    const response = await signin(siginData);
+    const response = await signin(signinData);
 
     if (response.error) {
       errors.email = "이메일 혹은 비밀번호를 확인해주세요.";
       errors.password = "이메일 혹은 비밀번호를 확인해주세요.";
-
       setLoading(false);
       return;
     }
@@ -145,16 +90,37 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
       router.refresh();
       toast({ description: "잠시 후 다시 시도해주세요," });
       setLoading(false);
+      return; // 기존 버그 수정: 실패 시 return 추가
     }
 
     setUser(user);
     setLoading(false);
-    if (returnUrl) {
-      router.replace(returnUrl);
-    } else {
-      router.replace("/mypage");
-    }
+    router.replace(returnUrl || "/mypage");
     router.refresh();
+  }, [emailValue.value, passwordValue.value, loading, errors, router, returnUrl, setUser, toast]);
+
+  // Enter 키 핸들러
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        const isAvailable = Object.keys(errors).length === 0;
+        if (!isAvailable || loading) return;
+        handleSubmit();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [errors, loading, handleSubmit]);
+
+  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setViewInputError((prev) => ({
+      ...prev,
+      [e.target.name]: "true",
+    }));
   };
 
   const isAvailable = Object.keys(errors).length === 0;
@@ -184,7 +150,7 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
       </div>
       <div className="mt-3">
         <Button
-          onClick={onSubmit}
+          onClick={handleSubmit}
           disabled={!isAvailable || loading}
           className="flex items-center justify-center w-20 h-10 p-0 text-grey-dark disabled:text-grey-dark"
         >

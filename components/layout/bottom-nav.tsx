@@ -125,6 +125,7 @@ const BottomNav = ({
       {primaryMenu && (
         <Link
           href={primaryHref}
+          aria-current={isPrimaryActive ? "page" : undefined}
           className="absolute left-1/2 top-0 z-40 flex -translate-x-1/2 -translate-y-[18%] flex-col items-center focus-visible:outline-hidden"
           aria-label={isRegisterPrimary && isPrimaryActive ? "등록 닫기" : primaryMenu.name}
         >
@@ -183,6 +184,7 @@ const NavLink = memo(({
     <li className="relative z-20 h-full">
       <Link
         href={url}
+        aria-current={pathname === url ? "page" : undefined}
         className="relative flex h-full w-full cursor-pointer flex-col items-center justify-center gap-0.5 pb-1 transition-transform duration-150 active:scale-[0.96] focus-visible:outline-hidden"
       >
         <div
