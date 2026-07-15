@@ -37,7 +37,7 @@ vi.mock("next/server", () => ({
       const hasCookie = options?.hasCookie ?? false;
       this.cookies = {
         get: (name: string) =>
-          hasCookie && name === "session"
+          hasCookie && name === "--Chl-TK"
             ? { value: "mock-session-token" }
             : undefined,
       };
@@ -68,7 +68,7 @@ const createMockRequest = (
   url: `http://localhost:3000${pathname}`,
   cookies: {
     get: (name: string) =>
-      hasCookie && name === "session"
+      hasCookie && name === "--Chl-TK"
         ? { value: "mock-session-token" }
         : undefined,
   },

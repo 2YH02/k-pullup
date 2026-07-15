@@ -43,7 +43,7 @@ const STATIC_FILE_EXTENSIONS = [
   ".webm",
 ];
 
-const SESSION_COOKIE_NAME = "session";
+const SESSION_COOKIE_NAME = "--Chl-TK";
 
 export const middleware = (request: NextRequest) => {
   const { pathname } = request.nextUrl;

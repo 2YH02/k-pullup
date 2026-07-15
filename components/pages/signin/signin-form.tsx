@@ -81,6 +81,7 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
       if (response.error) {
         errors.email = "이메일 혹은 비밀번호를 확인해주세요.";
         errors.password = "이메일 혹은 비밀번호를 확인해주세요.";
+        setViewInputError({ email: "true", password: "true" });
         setLoading(false);
         return;
       }
@@ -105,12 +106,20 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
       router.replace(targetUrl);
       router.refresh();
     } catch (error) {
-      // FetchError / 네트워크 에러 (Req 2.4)
+      // FetchError: 로그인 실패(401/400)도 여기로 옴 (fetchData가 non-OK에서 throw)
       if (error instanceof FetchError) {
-        toast({
-          description:
-            "네트워크 문제가 발생했습니다. 잠시 후 다시 시도해주세요.",
-        });
+        if (error.status === 401 || error.status === 400) {
+          // 잘못된 자격 증명 → 인라인 에러 메시지
+          errors.email = "이메일 혹은 비밀번호를 확인해주세요.";
+          errors.password = "이메일 혹은 비밀번호를 확인해주세요.";
+          setViewInputError({ email: "true", password: "true" });
+        } else {
+          // 기타 서버/네트워크 에러
+          toast({
+            description:
+              "네트워크 문제가 발생했습니다. 잠시 후 다시 시도해주세요.",
+          });
+        }
       } else {
         toast({ description: "잠시 후 다시 시도해주세요." });
       }
