@@ -10,6 +10,7 @@ import AuthError from "@layout/auth-error";
 import SelectLocation from "@pages/register/select-location";
 import SetDescription from "@pages/register/set-description";
 import SetFacilities from "@pages/register/set-facilities";
+import StepIndicator from "@pages/register/step-indicator";
 import UploadComplete from "@pages/register/upload-complete";
 import UploadImage, {
   type ImageUploadState,
@@ -450,7 +451,11 @@ const RegisterClient = ({
       bodyStyle={deviceType === "ios-mobile-app" ? "pb-0 mo:pb-0 mb-24" : "pb-0 mo:pb-0 mb-2"}
       deviceType={deviceType}
     >
-      <div className="page-transition h-full">
+      <div className="flex h-full flex-col">
+        {registerValue.step < 4 && (
+          <StepIndicator currentStep={registerValue.step} />
+        )}
+        <div className="page-transition min-h-0 flex-1">
         {registerValue.step === 0 && (
           <SelectLocation
             next={handleLocationChange}
@@ -499,6 +504,7 @@ const RegisterClient = ({
             setStep={setStep}
           />
         )}
+      </div>
       </div>
     </SideMain>
   );
