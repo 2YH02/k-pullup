@@ -71,6 +71,9 @@ test.describe("로그인 페이지 테스트", () => {
       await route.fulfill({
         status: 200,
         contentType: "application/json",
+        headers: {
+          "Set-Cookie": "--Chl-TK=mock-session; Path=/",
+        },
         body: JSON.stringify({
           token: "mock-token",
           user: {
@@ -99,6 +102,9 @@ test.describe("로그인 페이지 테스트", () => {
       await route.fulfill({
         status: 200,
         contentType: "application/json",
+        headers: {
+          "Set-Cookie": "--Chl-TK=mock-session; Path=/",
+        },
         body: JSON.stringify({
           token: "mock-token",
           user: {
