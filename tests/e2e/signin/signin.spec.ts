@@ -74,7 +74,7 @@ test.describe("로그인 페이지 테스트", () => {
         body: JSON.stringify({
           token: "mock-token",
           user: {
-            id: "123",
+            userId: 123,
             email: "valid@email.com",
             nickname: "테스트",
           },
@@ -89,7 +89,7 @@ test.describe("로그인 페이지 테스트", () => {
     await expect(loginButton).toBeEnabled();
 
     await loginButton.click();
-    await expect(page).toHaveURL("/mypage");
+    await expect(page).toHaveURL("/");
   });
 
   test("returnUrl이 포함된 로그인 페이지에서 로그인 시 해당 경로로 리디렉션됨", async ({
@@ -102,7 +102,7 @@ test.describe("로그인 페이지 테스트", () => {
         body: JSON.stringify({
           token: "mock-token",
           user: {
-            id: "123",
+            userId: 123,
             email: "valid@email.com",
             nickname: "테스트",
           },
