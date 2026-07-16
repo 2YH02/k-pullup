@@ -142,10 +142,10 @@ test.describe("로그인 페이지 테스트", () => {
   test("필수 약관 모두 동의 시 회원가입 버튼이 활성화됨", async ({ page }) => {
     await page.getByRole("button", { name: "이메일로 회원가입 하기" }).click();
 
-    await page.locator('#agree-terms[role="button"]').click();
-    await page.locator('#agree-age[role="button"]').click();
-    await page.locator('#agree-privacy[role="button"]').click();
-    await page.locator('#agree-location[role="button"]').click();
+    await page.locator('#agree-terms[role="checkbox"]').click();
+    await page.locator('#agree-age[role="checkbox"]').click();
+    await page.locator('#agree-privacy[role="checkbox"]').click();
+    await page.locator('#agree-location[role="checkbox"]').click();
 
     const signupButton = page.getByRole("button", {
       name: "동의하고 계속하기",
@@ -156,7 +156,7 @@ test.describe("로그인 페이지 테스트", () => {
   test("전체 동의 클릭 시 회원가입 버튼이 활성화됨", async ({ page }) => {
     await page.getByRole("button", { name: "이메일로 회원가입 하기" }).click();
 
-    await page.locator('#agree-all[role="button"]').click();
+    await page.locator('#agree-all[role="checkbox"]').click();
 
     const signupButton = page.getByRole("button", {
       name: "동의하고 계속하기",
@@ -169,8 +169,8 @@ test.describe("로그인 페이지 테스트", () => {
   }) => {
     await page.getByRole("button", { name: "이메일로 회원가입 하기" }).click();
 
-    await page.locator('#agree-terms[role="button"]').click();
-    await page.locator('#agree-age[role="button"]').click();
+    await page.locator('#agree-terms[role="checkbox"]').click();
+    await page.locator('#agree-age[role="checkbox"]').click();
 
     const signupButton = page.getByRole("button", {
       name: "동의하고 계속하기",
