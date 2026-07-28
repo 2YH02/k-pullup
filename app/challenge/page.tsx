@@ -1,8 +1,9 @@
 import type { Device } from "@/app/mypage/page";
 import Ads from "@/components/common/ads";
-import ChallengeClient from "@/components/pages/challenge/challenge-client";
+import Section from "@common/section";
 import SideMain from "@common/side-main";
 import getDeviceType from "@lib/get-device-type";
+import ChallengeClient from "@pages/challenge/challenge-client";
 import { headers } from "next/headers";
 
 export const generateMetadata = () => {
@@ -21,7 +22,7 @@ const ChallengePage = () => {
     <SideMain headerTitle="챌린지" withNav fullHeight deviceType={deviceType}>
       <div className="page-transition">
         <ChallengeClient />
-        <Ads type="square" />
+        <Ads type="feed" />
       </div>
     </SideMain>
   );

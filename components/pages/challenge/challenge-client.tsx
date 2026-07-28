@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 
+import Section from "@/components/common/section";
 import useChallengeStore from "@store/useChallengeStore";
 
 import CelebrationMotion from "./celebration-motion";
@@ -10,7 +11,6 @@ import StreakCounter from "./streak-counter";
 import WeeklyHeatmap from "./weekly-heatmap";
 
 const ChallengeClient = () => {
-  const isHydrated = useChallengeStore((s) => s.isHydrated);
   const hydrate = useChallengeStore((s) => s.hydrate);
   const recordVisit = useChallengeStore((s) => s.recordVisit);
 
@@ -18,29 +18,24 @@ const ChallengeClient = () => {
   useEffect(() => {
     hydrate();
     recordVisit();
-  }, [hydrate, recordVisit]);
-
-  if (!isHydrated) {
-    return (
-      <div className="flex flex-col gap-4 px-4 py-6">
-        {/* Skeleton: CelebrationMotion area */}
-        <div className="h-16 animate-pulse rounded-3xl bg-primary/10 dark:bg-white/10" />
-        {/* Skeleton: StreakCounter area */}
-        <div className="h-24 animate-pulse rounded-3xl bg-primary/10 dark:bg-white/10" />
-        {/* Skeleton: WeeklyHeatmap area */}
-        <div className="h-56 animate-pulse rounded-3xl bg-primary/10 dark:bg-white/10" />
-        {/* Skeleton: GoalCard area */}
-        <div className="h-44 animate-pulse rounded-3xl bg-primary/10 dark:bg-white/10" />
-      </div>
-    );
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Zustand actions are stable, only run on mount
+  }, []);
 
   return (
-    <div className="flex flex-col gap-4 px-4 py-6">
-      <CelebrationMotion />
-      <StreakCounter />
-      <WeeklyHeatmap />
-      <GoalCard />
+    <div>
+      {/* <CelebrationMotion /> */}
+
+      <Section>
+        <StreakCounter />
+      </Section>
+
+      <Section>
+        <WeeklyHeatmap />
+      </Section>
+
+      <Section>
+        <GoalCard />
+      </Section>
     </div>
   );
 };

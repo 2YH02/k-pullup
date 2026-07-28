@@ -3,6 +3,7 @@
 import { getWeeklyAchievedCount } from "@lib/challenge-streak";
 import useChallengeStore from "@store/useChallengeStore";
 import { Target } from "lucide-react";
+import { useMemo } from "react";
 
 interface GoalCardProps {
   className?: string;
@@ -13,8 +14,19 @@ const GoalCard = ({ className = "" }: GoalCardProps) => {
   const records = useChallengeStore((s) => s.data.records);
   const setWeeklyGoal = useChallengeStore((s) => s.setWeeklyGoal);
 
-  const today = getToday();
-  const achieved = getWeeklyAchievedCount(records, today);
+  const today = useMemo(() => {
+    const now = new Date();
+    const year = String(now.getFullYear()).padStart(4, "0");
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }, []);
+
+  const achieved = useMemo(
+    () => getWeeklyAchievedCount(records, today),
+    [records, today]
+  );
+
   const progressPercent = Math.min((achieved / weeklyGoal) * 100, 100);
 
   return (
@@ -24,10 +36,7 @@ const GoalCard = ({ className = "" }: GoalCardProps) => {
       {/* Header */}
       <div className="mb-4 flex items-center gap-3">
         <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-primary/14 bg-primary/6">
-          <Target
-            size={18}
-            className="text-primary dark:text-primary-light"
-          />
+          <Target size={18} className="text-primary dark:text-primary-light" />
         </div>
         <div>
           <p className="text-sm font-medium text-text-on-surface dark:text-white">
@@ -57,16 +66,16 @@ const GoalCard = ({ className = "" }: GoalCardProps) => {
         <p className="mb-2 text-xs text-text-on-surface-muted dark:text-grey-light">
           주간 목표 변경
         </p>
-        <div className="flex gap-1.5">
+        <div className="flex gap-1.5 touch-pan-y">
           {Array.from({ length: 7 }, (_, i) => i + 1).map((day) => (
             <button
               key={day}
               type="button"
               onClick={() => setWeeklyGoal(day)}
-              className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium transition-colors duration-150 ${
+              className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium touch-manipulation transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 dark:focus-visible:ring-primary-light/40 ${
                 day === weeklyGoal
                   ? "bg-primary text-white dark:bg-primary-light dark:text-black"
-                  : "bg-primary/8 text-text-on-surface-muted hover:bg-primary/16 active:scale-95 dark:bg-white/8 dark:text-grey-light dark:hover:bg-white/16"
+                  : "bg-primary/8 text-text-on-surface-muted active:scale-95 dark:bg-white/8 dark:text-grey-light"
               }`}
               aria-label={`주간 목표 ${day}일로 변경`}
               aria-pressed={day === weeklyGoal}
@@ -78,15 +87,6 @@ const GoalCard = ({ className = "" }: GoalCardProps) => {
       </div>
     </div>
   );
-};
-
-/** 오늘 날짜를 YYYY-MM-DD 형식으로 반환 */
-const getToday = (): string => {
-  const now = new Date();
-  const year = String(now.getFullYear()).padStart(4, "0");
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
 };
 
 export default GoalCard;
