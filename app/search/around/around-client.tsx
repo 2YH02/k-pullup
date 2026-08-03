@@ -4,38 +4,21 @@ import { type Device } from "@/app/mypage/page";
 import Section from "@/components/common/section";
 import Text from "@/components/common/text";
 import SideMain from "@common/side-main";
-import AroundSearch from "@pages/search/around-search";
-import useGeolocationStore from "@store/useGeolocationStore";
-import { useEffect, useState } from "react";
+import useRegionAddress from "@hooks/useRegionAddress";
 import LocationIcon from "@icons/location-icon";
 import cn from "@/lib/cn";
+import AroundSearch from "@pages/search/around-search";
+import useGeolocationStore from "@store/useGeolocationStore";
 
 interface Props {
   deviceType: Device;
 }
 
 const AroundClient = ({ deviceType }: Props) => {
-  const { region, geoLocationError, curLocation } = useGeolocationStore();
+  const { addressText, hasRegion } = useRegionAddress();
+  const curLocation = useGeolocationStore((s) => s.curLocation);
 
-  const [addr, setAddr] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!region || geoLocationError) {
-      setAddr("위치 정보 없음");
-    } else {
-      const { region_2depth_name, region_3depth_name, address_name } = region;
-      const title =
-        region_2depth_name !== "" || region_3depth_name !== ""
-          ? `${region_2depth_name} ${region_3depth_name}`
-          : address_name;
-
-      if (title) {
-        setAddr(title);
-      }
-    }
-  }, [region, geoLocationError]);
-
-  if (addr === null || addr === "위치 정보 없음") {
+  if (!hasRegion) {
     return (
       <SideMain headerTitle="주변 검색" hasBackButton deviceType={deviceType}>
         <Section>
@@ -118,7 +101,7 @@ const AroundClient = ({ deviceType }: Props) => {
   return (
     <SideMain headerTitle="주변 검색" hasBackButton deviceType={deviceType}>
       <AroundSearch
-        address={addr}
+        address={addressText}
         lat={curLocation.lat.toString()}
         lng={curLocation.lng.toString()}
       />

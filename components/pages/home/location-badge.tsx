@@ -2,9 +2,9 @@
 
 import useGpsTracking, { type GpsState } from "@hooks/useGpsTracking";
 import useGpsGuide from "@hooks/useGpsGuide";
+import useRegionAddress from "@hooks/useRegionAddress";
 import { useToast } from "@hooks/useToast";
 import LocationIcon from "@icons/location-icon";
-import useGeolocationStore from "@store/useGeolocationStore";
 import cn from "@lib/cn";
 import { Loader2, Navigation } from "lucide-react";
 
@@ -78,8 +78,7 @@ const GpsActionButton = ({ gpsState, showGuide, onClick }: GpsActionButtonProps)
 };
 
 const LocationBadge = () => {
-  // TODO: 주소 가져오기 이후 훅 분리 필요 (search/around-client 에서 사용 중)
-  const { region, regionLoading, geoLocationError } = useGeolocationStore();
+  const { addressText, isLoading, hasRegion } = useRegionAddress();
   const { toast } = useToast();
   const { showGuide, dismissGuide } = useGpsGuide({ storageKey: GPS_GUIDE_KEY });
 
@@ -97,13 +96,8 @@ const LocationBadge = () => {
     }
     handleGps();
   };
-  const hasRegion = !!region && !geoLocationError;
-  const title = hasRegion
-    ? region.region_2depth_name !== "" || region.region_3depth_name !== ""
-      ? `${region.region_2depth_name} ${region.region_3depth_name}`
-      : region.address_name
-    : "위치 정보 없음";
-  const iconElement = hasRegion && regionLoading
+
+  const iconElement = hasRegion && isLoading
     ? <Loader2 size={17} className={GPS_LOCATING_STROKE_CLASS_NAME} />
     : <LocationIcon size={17} className={BADGE_ICON_CLASS_NAME} />;
 
@@ -112,7 +106,7 @@ const LocationBadge = () => {
       <div className="relative">
         <div className={BADGE_CLASS_NAME}>
           {iconElement}
-          <span className={BADGE_TEXT_CLASS_NAME}>{title}</span>
+          <span className={BADGE_TEXT_CLASS_NAME}>{addressText}</span>
           <GpsActionButton
             gpsState={gpsState}
             showGuide={showGuide}
