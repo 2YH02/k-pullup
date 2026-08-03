@@ -38,7 +38,7 @@ const MomentClient = ({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewURL, setPreviewURL] = useState<string | null>(null);
 
-  // TODO: 로딩 에러 처리
+  // 로딩/에러 상태
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -161,14 +161,25 @@ const MomentClient = ({
               첫 모먼트를 올려 순간을 공유해보세요.
             </Text>
 
+            {errorMessage && (
+              <Text
+                typography="t7"
+                display="block"
+                className="mt-3 text-red dark:text-red"
+              >
+                {errorMessage}
+              </Text>
+            )}
+
             <div className="mt-5 text-center">
               <Button
                 full
                 onClick={handleBoxClick}
                 size="sm"
                 className="h-10"
+                disabled={loading}
               >
-                모먼트 등록하기
+                {loading ? "처리 중..." : "모먼트 등록하기"}
               </Button>
             </div>
           </div>
@@ -191,7 +202,7 @@ const MomentClient = ({
       <Section className="py-2">
         <div className="rounded-xl border border-grey-light/85 bg-search-input-bg/35 px-3 py-2 dark:border-grey-dark/85 dark:bg-black/30">
           <Text typography="t6" className="text-grey-dark dark:text-grey">
-            오늘의 운동 순간을 공유해보세요.
+            {loading ? "이미지 처리 중..." : "오늘의 운동 순간을 공유해보세요."}
           </Text>
           {errorMessage && (
             <Text typography="t7" className="mt-1 text-red">
