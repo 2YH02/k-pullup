@@ -3,7 +3,6 @@
 import Section from "@common/section";
 import Text from "@common/text";
 import { useMemo, useState } from "react";
-// TODO: 이후에 공통 컴포넌트로 폴더 이동
 
 interface TabData {
   title: string;

@@ -1,7 +1,7 @@
 import SideMain from "@common/side-main";
 import NoticeList from "@components/notice/notice-list";
 import getDeviceType from "@lib/get-device-type";
-import Tabs from "@pages/pullup/tabs";
+import Tabs from "@common/tabs";
 import { headers } from "next/headers";
 import type { Device } from "../mypage/page";
 
