@@ -1,21 +1,30 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import List, { ListItem } from "@pages/config/config-list";
 import { useTheme } from "next-themes";
-// TODO: 설정 페이지 다크 모드 후 새로고침 토글 false 오류 확인
 
 const AppSetting = () => {
-  const { setTheme, theme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // next-themes는 hydration 이후에만 정확한 theme 값을 제공
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className="pt-1">
       <List title="앱 설정">
-        <ListItem
-          title="다크모드"
-          onTrue={() => setTheme("dark")}
-          onFalse={() => setTheme("light")}
-          initValue={theme === "dark" ? true : false}
-        />
+        {mounted && (
+          <ListItem
+            title="다크모드"
+            onTrue={() => setTheme("dark")}
+            onFalse={() => setTheme("light")}
+            initValue={resolvedTheme === "dark"}
+          />
+        )}
       </List>
     </div>
   );
