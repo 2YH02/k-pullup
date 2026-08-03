@@ -2,7 +2,7 @@ import Button from "@common/button";
 import GrowBox from "@common/grow-box";
 import Section from "@common/section";
 import Text from "@common/text";
-// TODO: textarea 공통 컴포넌트로 적용
+import Textarea from "@common/textarea";
 
 interface SetDescriptionProps {
   next: (description?: string | null) => void;
@@ -33,8 +33,7 @@ const SetDescription = ({
       </div>
 
       <div>
-        <textarea
-          className="w-full resize-none rounded-xl border border-text-on-surface-muted/40 bg-location-badge-bg/58 p-3 text-black transition-[border-color,background-color,box-shadow] duration-150 placeholder:text-text-on-surface-muted/85 focus:border-primary/70 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/20 dark:border-location-badge-bg-dark/90 dark:bg-location-badge-bg-dark/38 dark:text-white dark:placeholder:text-grey"
+        <Textarea
           maxLength={40}
           rows={4}
           placeholder="해당 위치에 대한 설명을 40자 이내로 작성해주세요."
@@ -42,7 +41,7 @@ const SetDescription = ({
           onChange={(e) => {
             setDescription(e.target.value);
           }}
-        ></textarea>
+        />
         <Text
           typography="t7"
           className="mt-1.5 text-right text-text-on-surface-muted dark:text-grey"
