@@ -1,0 +1,26 @@
+name: Vitest Unit Tests
+
+on:
+  workflow_call:
+
+jobs:
+  unit-test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run Vitest
+        run: yarn test
