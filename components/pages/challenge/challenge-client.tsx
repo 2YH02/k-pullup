@@ -23,7 +23,9 @@ const ChallengeClient = () => {
 
   return (
     <div>
-      {/* <CelebrationMotion /> */}
+      <Section>
+        <CelebrationMotion />
+      </Section>
 
       <Section>
         <StreakCounter />
