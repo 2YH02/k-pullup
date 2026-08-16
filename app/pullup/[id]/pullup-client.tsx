@@ -116,7 +116,7 @@ const PullupClient = ({
 
   return (
     <SideMain
-      headerTitle={marker.address}
+      headerTitle={marker.address || "위치 상세"}
       hasBackButton
       referrer={!!referrer}
       deviceType={deviceType}
