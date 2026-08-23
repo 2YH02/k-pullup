@@ -56,7 +56,7 @@ const AroundMarkerCarousel = () => {
           {[0, 1].map((key) => (
             <div
               key={key}
-              className="shrink-0 w-64 rounded-2xl border border-primary/10 bg-side-main p-2 dark:border-grey-dark dark:bg-black/35"
+              className="shrink-0 w-[17rem] rounded-2xl border border-primary/10 bg-side-main p-2 dark:border-grey-dark dark:bg-black/35"
             >
               <Skeleton className="h-36 w-full rounded-xl" />
               <Skeleton className="mt-3 h-4 w-3/4 rounded-md" />
@@ -132,10 +132,15 @@ const AroundMarkerCarousel = () => {
 
   return (
     <Section>
-      <SectionTitle title="내 주변 철봉" subTitle="현재 위치 기준 2km" />
+      <SectionTitle
+        title="내 주변 철봉"
+        subTitle="현재 위치 기준 2km"
+        buttonTitle="더보기"
+        onClickButton={() => router.push("/search/around")}
+      />
       <HorizontalScroll className="pb-1">
         {data.map((marker, index) => (
-          <ScrollItem className="p-0 w-64" key={`${marker.markerId}-${index}`}>
+          <ScrollItem className="p-0 w-[17rem]" key={`${marker.markerId}-${index}`}>
             <button
               className="group w-full text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2 focus-visible:ring-offset-surface active:scale-[0.99] transition-transform duration-150"
               onClick={() => {

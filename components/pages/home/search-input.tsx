@@ -34,7 +34,7 @@ const SearchInput = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
   return (
     <Section
       className={cn(
-        "mo:bg-transparent mo:dark:bg-transparent mo:fixed mo:w-full mo:top-4 mo:left-1/2 mo:-translate-x-1/2 mo:py-0",
+        "pt-1 pb-3 mo:bg-transparent mo:dark:bg-transparent mo:fixed mo:w-full mo:top-4 mo:left-1/2 mo:-translate-x-1/2 mo:py-0",
         style
       )}
     >

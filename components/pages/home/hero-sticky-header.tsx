@@ -38,25 +38,26 @@ const HeroStickyHeader = () => {
   return (
     <Section
       className={cn(
-        "web:py-4 mo:py-2",
+        "web:py-3 mo:py-2 pb-1",
         "sticky top-6 web:top-0 z-20",
         "backdrop-blur-sm bg-surface/92 dark:bg-black/55",
-        "web:transition-[background-color,backdrop-filter] web:duration-300 web:ease-out mo:transition-[background-color,backdrop-filter] mo:duration-300 mo:ease-out"
+        "transition-[background-color,backdrop-filter] duration-300 ease-out"
       )}
     >
       <div
         className={cn(
-          "flex h-10 items-center overflow-hidden",
+          "flex items-center overflow-hidden",
           "web:justify-center",
-          isCompact ? "mo:justify-center" : "mo:justify-between",
-          "max-[384px]:justify-center"
+          isCompact ? "justify-center h-8" : "mo:justify-between h-10",
+          "max-[384px]:justify-center",
+          "transition-[height] duration-200 ease-out"
         )}
       >
         <div
           className={cn(
-            "flex flex-col grow overflow-hidden web:origin-left web:max-w-90 web:pr-4 mo:origin-left mo:max-w-[68%] mo:pr-3",
-            "web:transition-[max-width,opacity,transform,padding] web:duration-250 web:ease-out mo:transition-[max-width,opacity,transform,padding] mo:duration-250 mo:ease-out",
-            isCompact && "web:grow-0 web:max-w-0 web:pr-0 web:opacity-0 web:-translate-y-0.5 web:pointer-events-none mo:grow-0 mo:max-w-0 mo:pr-0 mo:opacity-0 mo:-translate-y-0.5 mo:pointer-events-none"
+            "flex flex-col grow overflow-hidden origin-left max-w-[68%] pr-3 web:max-w-90 web:pr-4",
+            "transition-[max-width,opacity,transform,padding] duration-250 ease-out",
+            isCompact && "grow-0 max-w-0 pr-0 opacity-0 -translate-y-0.5 pointer-events-none"
           )}
         >
           <Text fontWeight="bold" typography="t5" className="text-text-on-surface whitespace-nowrap">
@@ -70,8 +71,8 @@ const HeroStickyHeader = () => {
         <div
           className={cn(
             "shrink-0",
-            "web:transition-transform web:duration-250 web:ease-out mo:transition-transform mo:duration-250 mo:ease-out",
-            isCompact && "mo:mx-auto web:mx-auto",
+            "transition-transform duration-250 ease-out",
+            isCompact && "mx-auto",
             "max-[370px]:mx-auto"
           )}
         >
