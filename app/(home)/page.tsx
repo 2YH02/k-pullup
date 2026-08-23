@@ -26,7 +26,9 @@ const Home = async () => {
   return (
     <SideMain withNav deviceType={deviceType} bodyStyle="pb-0">
       <HeroStickyHeader />
-      <SearchInput deviceType={deviceType} />
+      <div className="web:-mt-2">
+        <SearchInput deviceType={deviceType} />
+      </div>
 
       <div className="page-transition">
         <AroundMarkerCarousel />
