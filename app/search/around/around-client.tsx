@@ -28,7 +28,7 @@ const AroundClient = ({ deviceType }: Props) => {
               "relative isolate overflow-hidden",
               "p-6 rounded-2xl border border-white/70 dark:border-white/10",
               "bg-surface/65 dark:bg-black-light/90 backdrop-blur-md",
-              "shadow-[0_10px_24px_rgba(64,64,56,0.08)] dark:shadow-[0_10px_24px_rgba(0,0,0,0.3)]",
+              "shadow-[0_10px_24px_rgba(15,23,42,0.06)] dark:shadow-[0_10px_24px_rgba(0,0,0,0.3)]",
               "flex flex-col items-center text-center mt-6"
             )}
           >
@@ -36,8 +36,6 @@ const AroundClient = ({ deviceType }: Props) => {
               aria-hidden
               className={cn(
                 "absolute inset-0 pointer-events-none",
-                "bg-linear-to-br from-white/35 via-transparent to-primary/10",
-                "dark:from-white/8 dark:to-primary-dark/20"
               )}
             />
             <div className="relative w-16 h-16 rounded-full border border-white/45 dark:border-white/10 bg-white/35 dark:bg-white/6 flex items-center justify-center mb-4">

@@ -55,7 +55,7 @@ const CelebrationMotion = () => {
 
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl border border-border bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 px-4 py-3.5 dark:border-grey-dark dark:from-primary-light/10 dark:via-primary-light/5 dark:to-primary-light/10 ${
+      className={`relative overflow-hidden rounded-2xl border border-border bg-primary-subtle px-4 py-3.5 dark:border-grey-dark dark:bg-black-light ${
         showEntryAnimation && !reducedMotion
           ? "animate-[fade-in_300ms_ease-out]"
           : ""

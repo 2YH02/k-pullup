@@ -97,7 +97,7 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
               key={`${item.url}-${index}`}
               onClick={() => handleSelect(index)}
               type="button"
-              className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-2xl border border-border bg-white shadow-[0_1px_6px_rgba(64,64,56,0.08)] transition-all duration-300 web:hover:-translate-y-0.5 web:hover:shadow-[0_10px_18px_rgba(64,64,56,0.16)] active:scale-[0.99] active:border-primary/35 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2 focus-visible:ring-offset-surface dark:border-grey-dark dark:bg-black-light dark:web:hover:border-primary-light/35"
+              className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-2xl border border-border bg-white shadow-[0_1px_6px_rgba(15,23,42,0.06)] transition-all duration-300 web:hover:-translate-y-0.5 web:hover:shadow-[0_10px_18px_rgba(15,23,42,0.10)] active:scale-[0.99] active:border-primary/35 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2 focus-visible:ring-offset-surface dark:border-grey-dark dark:bg-black-light dark:web:hover:border-primary-light/35"
             >
               <Image
                 src={item.url}

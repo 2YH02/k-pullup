@@ -304,7 +304,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
           "relative isolate overflow-hidden",
           "p-4 rounded-2xl border border-white/70 dark:border-white/10",
           "bg-surface/70 dark:bg-black-light backdrop-blur-md",
-          "shadow-[0_10px_24px_rgba(64,64,56,0.08)] dark:shadow-[0_10px_24px_rgba(0,0,0,0.3)]",
+          "shadow-[0_10px_24px_rgba(15,23,42,0.06)] dark:shadow-[0_10px_24px_rgba(0,0,0,0.3)]",
           "mb-6"
         )}
       >
@@ -312,8 +312,6 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
           aria-hidden
           className={cn(
             "absolute inset-0 pointer-events-none",
-            "bg-linear-to-br from-white/40 via-transparent to-primary/10",
-            "dark:from-white/8 dark:to-primary-dark/22"
           )}
         />
         <div className="flex items-center gap-3">
@@ -342,7 +340,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
           "relative isolate overflow-hidden",
           "p-5 rounded-2xl border border-white/70 dark:border-white/10",
           "bg-surface/65 dark:bg-black-light/90 backdrop-blur-md",
-          "shadow-[0_10px_24px_rgba(64,64,56,0.08)] dark:shadow-[0_10px_24px_rgba(0,0,0,0.3)]",
+          "shadow-[0_10px_24px_rgba(15,23,42,0.06)] dark:shadow-[0_10px_24px_rgba(0,0,0,0.3)]",
           "mb-6"
         )}
       >
@@ -350,15 +348,13 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
           aria-hidden
           className={cn(
             "absolute inset-0 pointer-events-none",
-            "bg-linear-to-br from-white/35 via-transparent to-primary/8",
-            "dark:from-white/8 dark:to-primary-dark/20"
           )}
         />
         {/* Kakao Map with Radius Overlay */}
-        <div className="relative w-full aspect-square max-w-72 mx-auto mb-5 rounded-2xl overflow-hidden border border-white/55 dark:border-white/10 shadow-[0_12px_24px_rgba(64,64,56,0.12)] dark:shadow-[0_12px_24px_rgba(0,0,0,0.32)]">
+        <div className="relative w-full aspect-square max-w-72 mx-auto mb-5 rounded-2xl overflow-hidden border border-white/55 dark:border-white/10 shadow-[0_12px_24px_rgba(15,23,42,0.08)] dark:shadow-[0_12px_24px_rgba(0,0,0,0.32)]">
           <div ref={miniMapRef} className="w-full h-full" />
           {/* Distance overlay badge */}
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-white/85 dark:bg-black/65 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/70 dark:border-white/12 shadow-[0_6px_16px_rgba(64,64,56,0.18)] dark:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-white/85 dark:bg-black/65 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/70 dark:border-white/12 shadow-[0_6px_16px_rgba(15,23,42,0.12)] dark:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
             <Text
               typography="t7"
               fontWeight="bold"
@@ -404,7 +400,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
                 "border transition-all duration-180 ease-out motion-reduce:transition-none",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 dark:focus-visible:ring-primary-light/35",
                 distance === preset.value
-                  ? "bg-primary dark:bg-primary-light text-white dark:text-black border-primary dark:border-primary-light shadow-[0_8px_16px_rgba(64,64,56,0.22)] dark:shadow-[0_8px_16px_rgba(0,0,0,0.32)] scale-[1.02]"
+                  ? "bg-primary dark:bg-primary-light text-white dark:text-black border-primary dark:border-primary-light shadow-[0_8px_16px_rgba(15,23,42,0.14)] dark:shadow-[0_8px_16px_rgba(0,0,0,0.32)] scale-[1.02]"
                   : "bg-white/55 dark:bg-white/6 border-white/70 dark:border-white/10 text-text-on-surface dark:text-grey-light hover:border-primary/45 dark:hover:border-primary-light/35 hover:bg-white/80 dark:hover:bg-white/10 active:scale-[0.98]"
               )}
             >
@@ -475,7 +471,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
                       "border border-white/70 dark:border-white/10",
                       "bg-surface/55 dark:bg-black/25 backdrop-blur-sm",
                       "transition-all duration-180 ease-out motion-reduce:transition-none group",
-                      "hover:border-primary/45 dark:hover:border-primary-light/35 hover:shadow-[0_8px_18px_rgba(64,64,56,0.12)] dark:hover:shadow-[0_8px_18px_rgba(0,0,0,0.3)]",
+                      "hover:border-primary/45 dark:hover:border-primary-light/35 hover:shadow-[0_8px_18px_rgba(15,23,42,0.08)] dark:hover:shadow-[0_8px_18px_rgba(0,0,0,0.3)]",
                       "active:scale-[0.99]",
                       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 dark:focus-visible:ring-primary-light/35"
                     )}
@@ -485,8 +481,6 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
                       aria-hidden
                       className={cn(
                         "absolute inset-0 pointer-events-none",
-                        "bg-linear-to-br from-white/32 via-transparent to-primary/10",
-                        "dark:from-white/8 dark:to-primary-dark/18"
                       )}
                     />
                     <div className="relative shrink-0 w-10 h-10 rounded-full border border-white/45 dark:border-white/10 bg-white/45 dark:bg-white/7 flex items-center justify-center group-hover:scale-[1.02] transition-transform duration-180 ease-out motion-reduce:transition-none">

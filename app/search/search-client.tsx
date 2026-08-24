@@ -188,11 +188,11 @@ const SearchClient = ({
                 "relative isolate overflow-hidden",
                 "w-full p-4 rounded-2xl border border-white/70 dark:border-white/10",
                 "bg-surface/70 dark:bg-black-light backdrop-blur-md",
-                "shadow-[0_8px_24px_rgba(64,64,56,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.28)]",
+                "shadow-[0_8px_24px_rgba(15,23,42,0.06)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.28)]",
                 "flex items-center gap-3 text-left group",
                 "transition-[transform,box-shadow,border-color] duration-180 ease-out motion-reduce:transition-none",
                 "hover:border-primary/45 dark:hover:border-primary-light/35",
-                "hover:shadow-[0_12px_28px_rgba(64,64,56,0.14)] dark:hover:shadow-[0_12px_28px_rgba(0,0,0,0.35)]",
+                "hover:shadow-[0_12px_28px_rgba(15,23,42,0.10)] dark:hover:shadow-[0_12px_28px_rgba(0,0,0,0.35)]",
                 "active:scale-[0.99] active:border-primary/60 dark:active:border-primary-light/40",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 dark:focus-visible:ring-primary-light/35",
                 "focus-visible:ring-offset-2 focus-visible:ring-offset-side-main dark:focus-visible:ring-offset-black"
@@ -202,8 +202,6 @@ const SearchClient = ({
                 aria-hidden
                 className={cn(
                   "absolute inset-0 pointer-events-none",
-                  "bg-linear-to-br from-white/35 via-transparent to-primary/10",
-                  "dark:from-white/10 dark:to-primary-dark/25"
                 )}
               />
               <div
@@ -381,8 +379,6 @@ const SearchClient = ({
                   aria-hidden
                   className={cn(
                     "absolute inset-0 pointer-events-none",
-                    "bg-linear-to-br from-white/35 via-transparent to-primary/10",
-                    "dark:from-white/8 dark:to-primary-dark/18"
                   )}
                 />
                 <div className="flex gap-2.5 rounded-xl p-2.5 transition-colors duration-180 ease-out hover:bg-white/45 dark:hover:bg-white/5">
