@@ -16,7 +16,7 @@ const ErrorPage = ({
     <SideMain headerTitle="채팅방" fullHeight hasBackButton>
       <Section className="mt-8">
         <div className="mx-auto max-w-sm rounded-2xl border border-border/80 bg-surface/50 px-5 py-7 text-center dark:border-black-light/75 dark:bg-black-light/35">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-surface dark:border-primary-light/35 dark:bg-black-light/60">
+          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-border bg-surface dark:border-grey-dark dark:bg-black-light/60">
             <AlertTriangle
               size={20}
               strokeWidth={2.2}

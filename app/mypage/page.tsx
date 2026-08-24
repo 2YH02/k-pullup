@@ -50,7 +50,7 @@ const Mypage = async () => {
         {noUser ? (
           <Link
             href="/signin?returnUrl=/mypage"
-            className="group flex items-center justify-between rounded-xl border border-border bg-surface/80 px-4 py-3 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-primary-subtle active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black dark:web:hover:border-primary-dark dark:web:hover:bg-primary-dark/15"
+            className="group flex items-center justify-between rounded-xl border border-border bg-surface/80 px-4 py-3 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-border web:hover:bg-primary-subtle active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black dark:web:hover:border-primary/40 dark:web:hover:bg-primary-dark/15"
           >
             <div>
               <Text fontWeight="bold" className="text-primary dark:text-primary-light">
@@ -74,7 +74,7 @@ const Mypage = async () => {
         <div className="grid grid-cols-2 gap-2 rounded-xl border border-border bg-surface/70 p-1.5 dark:border-grey-dark dark:bg-black">
           <Link
             href={noUser ? "/signin?returnUrl=/mypage" : "/mypage/user"}
-            className="rounded-lg border border-border bg-surface/50 px-2.5 py-2.5 text-center transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-surface active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-grey dark:web:hover:bg-black/45"
+            className="rounded-lg border border-border bg-surface/50 px-2.5 py-2.5 text-center transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-border web:hover:bg-surface active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-grey dark:web:hover:bg-black/45"
           >
             <Text typography="t6" className="font-semibold text-primary dark:text-primary-light">
               내 정보 관리
@@ -82,7 +82,7 @@ const Mypage = async () => {
           </Link>
           <Link
             href="mypage/config"
-            className="rounded-lg border border-border bg-surface/50 px-2.5 py-2.5 text-center transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-surface active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-grey dark:web:hover:bg-black/45"
+            className="rounded-lg border border-border bg-surface/50 px-2.5 py-2.5 text-center transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-border web:hover:bg-surface active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-grey dark:web:hover:bg-black/45"
           >
             <Text typography="t6" className="font-semibold text-primary dark:text-primary-light">
               설정

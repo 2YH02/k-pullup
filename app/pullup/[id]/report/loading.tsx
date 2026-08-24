@@ -47,7 +47,7 @@ const Loading = () => {
         <Section className="pt-3">
           <Skeleton className="mb-2 h-5 w-36 rounded-md" />
           <Skeleton className="mb-2 h-13 w-full rounded-xl bg-surface/60 dark:bg-black/40" />
-          <Skeleton className="mb-2 h-13 w-full rounded-xl bg-primary-subtle dark:bg-primary-dark/25" />
+          <Skeleton className="mb-2 h-13 w-full rounded-xl bg-grey-light dark:bg-primary-dark/25" />
           <Skeleton className="my-2 h-9 w-32 rounded-md web:hidden" />
           <Skeleton className="mt-1.5 h-3.5 w-52 rounded-md mo:hidden" />
           <Skeleton className="mt-2 h-52 w-full rounded-xl web:hidden" />

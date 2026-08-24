@@ -141,7 +141,7 @@ const MomentClient = ({
         />
         <Section className="mt-8">
           <div className="mx-auto max-w-sm rounded-2xl border border-grey-light/85 bg-surface/40 px-5 py-8 text-center motion-safe:animate-page-enter dark:border-grey-dark/85 dark:bg-black-light">
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-primary/25 bg-primary-subtle dark:border-primary-dark/45 dark:bg-primary-dark/25">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-border bg-primary-subtle dark:border-primary/40/45 dark:bg-primary-dark/25">
               <ImagePlus size={24} strokeWidth={2.1} className="text-primary dark:text-primary-light" />
             </div>
             <Text

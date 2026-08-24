@@ -333,7 +333,7 @@ const ReportClient = ({
               {marker.address}
             </Text>
           </div>
-          <div className="mt-2 rounded-xl border border-primary/25 bg-primary-subtle px-3 py-2 dark:border-primary-light/25 dark:bg-primary-dark/20">
+          <div className="mt-2 rounded-xl border border-border bg-primary-subtle px-3 py-2 dark:border-grey-dark dark:bg-primary-dark/20">
             {changeAddr && (
               <>
                 <Text typography="t6" fontWeight="bold" className="text-primary-dark dark:text-primary-light">

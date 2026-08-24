@@ -35,7 +35,7 @@ const Loading = () => {
               key={`social-chat-skeleton-${index}`}
               className="group flex h-22 w-58 shrink-0 items-center gap-3 rounded-2xl border border-border bg-side-main px-3 py-2.5 text-left"
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-subtle">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-grey-light">
                 <Skeleton className="h-4 w-4 rounded-full" />
               </div>
               <div className="min-w-0 grow">

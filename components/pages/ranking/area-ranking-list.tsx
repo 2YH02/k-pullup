@@ -162,8 +162,8 @@ const BadgeCarousel = ({
               icon={curState === item && <CheckedIcon size={20} />}
               className={`${
                 curState === item
-                  ? "border-primary-dark"
-                  : "border-primary-dark border-opacity-60"
+                  ? "border-primary/40"
+                  : "border-primary/40 border-opacity-60"
               }`}
             />
           </CarouselItem>

@@ -271,7 +271,7 @@ const MyreportClient = ({
                 {reports.map((report) => (
                   <button
                     key={report.reportID}
-                    className="group min-w-60 cursor-pointer rounded-lg border border-border bg-surface/50 dark:bg-black-light p-3 text-left transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/25 web:hover:bg-surface/65 active:scale-[0.99] dark:border-grey-dark dark:web:hover:bg-black/45"
+                    className="group min-w-60 cursor-pointer rounded-lg border border-border bg-surface/50 dark:bg-black-light p-3 text-left transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-border web:hover:bg-surface/65 active:scale-[0.99] dark:border-grey-dark dark:web:hover:bg-black/45"
                     onClick={() => {
                       setMarkerId(markerID.toString());
                       setCurData(report);

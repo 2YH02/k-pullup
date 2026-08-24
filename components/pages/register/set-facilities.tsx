@@ -44,7 +44,7 @@ const SetFacilities = ({
         </Text>
       </div>
 
-      <div className="rounded-xl border border-primary/25 bg-surface/45 px-3 py-2 dark:border-primary-dark/50 dark:bg-black-light">
+      <div className="rounded-xl border border-border bg-surface/45 px-3 py-2 dark:border-primary/40/50 dark:bg-black-light">
         <FacilityList
           name="철봉"
           count={철봉}

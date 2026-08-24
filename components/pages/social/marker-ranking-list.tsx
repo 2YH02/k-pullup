@@ -128,7 +128,7 @@ const List = ({
               isTopThree && rank === 3 && "border-coral/40 bg-coral/14",
               !isTopThree && "border border-border bg-side-main dark:border-grey-dark dark:bg-black-light",
               "active:scale-[0.985] active:bg-grey-light dark:active:bg-grey-dark",
-              "web:hover:border-primary/28 web:hover:bg-white/50 dark:web:hover:bg-black/30"
+              "web:hover:border-border web:hover:bg-white/50 dark:web:hover:bg-black/30"
             )}
             onClick={() => router.push(`/pullup/${item.markerId}`)}
             type="button"

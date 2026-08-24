@@ -520,7 +520,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
 
             {/* Show more nearby button */}
             {hasMoreNearby && (
-              <div className="mt-4 p-4 rounded-xl border border-dashed border-primary/30 dark:border-primary-light/28 bg-primary-subtle dark:bg-primary-dark/10 text-center">
+              <div className="mt-4 p-4 rounded-xl border border-dashed border-border dark:border-grey-dark bg-primary-subtle dark:bg-primary-dark/10 text-center">
                 <Text typography="t6" display="block" className="text-text-on-surface-muted dark:text-grey mb-2">
                   더 먼 곳에 {markers.length - displayMarkers.length}개의 철봉이 있습니다
                 </Text>
@@ -540,8 +540,8 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
           // Empty state
           <div className="flex flex-col items-center justify-center py-10 rounded-2xl border border-white/70 dark:border-white/10 bg-surface/55 dark:bg-black/25 backdrop-blur-sm">
             <div className="relative mb-5 h-24 w-24 flex items-center justify-center">
-              <span className="absolute h-24 w-24 rounded-full border border-primary/25 dark:border-primary-light/20 animate-ping motion-reduce:animate-none" />
-              <span className="absolute h-16 w-16 rounded-full border border-primary/35 dark:border-primary-light/28 animate-pulse" />
+              <span className="absolute h-24 w-24 rounded-full border border-border dark:border-grey-dark animate-ping motion-reduce:animate-none" />
+              <span className="absolute h-16 w-16 rounded-full border border-primary/35 dark:border-grey-dark animate-pulse" />
               <span className="relative h-11 w-11 rounded-full border border-white/70 dark:border-white/10 bg-white/55 dark:bg-white/8 flex items-center justify-center">
                 <LocationIcon size={18} color="primary" />
               </span>

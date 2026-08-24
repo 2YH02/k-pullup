@@ -82,7 +82,7 @@ const Input = ({
     >
       <input
         className={cn(
-          `w-full h-full focus:outline-hidden bg-transparent focus:border-primary-dark ${
+          `w-full h-full focus:outline-hidden bg-transparent focus:border-primary/40 ${
             isSearchButton ? "cursor-pointer" : ""
           } dark:bg-black-light dark:focus:border-grey-light text-black placeholder:text-grey dark:text-white placeholder:text-sm
           ${

@@ -84,7 +84,7 @@ const ListItem = ({
   };
 
   return (
-    <li className="group flex items-center gap-2 rounded-xl border border-border bg-surface/80 px-3 py-2.5 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-white/70 active:scale-[0.995] dark:border-grey-dark dark:bg-black dark:web:hover:bg-black-light">
+    <li className="group flex items-center gap-2 rounded-xl border border-border bg-surface/80 px-3 py-2.5 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-border web:hover:bg-white/70 active:scale-[0.995] dark:border-grey-dark dark:bg-black dark:web:hover:bg-black-light">
       <div className="min-w-0 grow">
         <button
           className="flex w-full cursor-pointer items-center gap-3 text-left focus-visible:outline-none"

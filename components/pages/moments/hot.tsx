@@ -27,7 +27,7 @@ const Hot = ({ data }: { data: RankingInfo[] }) => {
               className="group flex w-full items-center rounded-lg px-2.5 py-2 text-left transition-[transform,background-color] duration-150 active:scale-[0.99] active:bg-surface dark:active:bg-black-light/55"
               onClick={() => router.push(`/pullup/${marker.markerId}/moment`)}
             >
-              <div className="mr-2 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/35 bg-surface text-primary dark:border-primary-light/35 dark:bg-black-light/75 dark:text-primary-light">
+              <div className="mr-2 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/35 bg-surface text-primary dark:border-grey-dark dark:bg-black-light/75 dark:text-primary-light">
                 {rank === 1 ? (
                   <Medal size={14} strokeWidth={2.3} />
                 ) : (

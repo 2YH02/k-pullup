@@ -247,7 +247,7 @@ const PullupClient = ({
               grow whitespace-nowrap border-b-2 px-4 py-2 text-[15px] font-semibold transition-[color,border-color,background-color,transform] duration-180 ease-out active:scale-[0.99] active:bg-surface/55 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:active:bg-grey-dark/35
               ${
                 activeIndex === index
-                  ? "border-primary-dark text-text-on-surface dark:text-grey-light"
+                  ? "border-primary/40 text-text-on-surface dark:text-grey-light"
                   : "border-transparent text-grey-dark dark:text-grey"
               }
             `}
@@ -284,7 +284,7 @@ const PullupClient = ({
               )}
 
               <div className="mb-2 pr-6">
-                <span className="inline-flex rounded-full border border-primary/20 bg-surface px-2 py-1 text-[10px] font-semibold text-primary dark:border-primary-light/25 dark:bg-black-light/75 dark:text-primary-light">
+                <span className="inline-flex rounded-full border border-border bg-surface px-2 py-1 text-[10px] font-semibold text-primary dark:border-grey-dark dark:bg-black-light/75 dark:text-primary-light">
                   정보 제공
                 </span>
               </div>
