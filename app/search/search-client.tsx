@@ -198,23 +198,7 @@ const SearchClient = ({
                 "focus-visible:ring-offset-2 focus-visible:ring-offset-side-main dark:focus-visible:ring-offset-black"
               )}
             >
-              <div
-                aria-hidden
-                className={cn(
-                  "absolute inset-0 pointer-events-none",
-                )}
-              />
-              <div
-                aria-hidden
-                className={cn(
-                  "absolute -top-10 -left-8 h-28 w-28 rounded-full blur-2xl pointer-events-none",
-                  "bg-primary/20 dark:bg-primary-light/15",
-                  "transition-transform duration-220 ease-out motion-reduce:transition-none",
-                  "group-hover:translate-x-1 group-hover:-translate-y-1"
-                )}
-              />
-
-              <div className="relative shrink-0 w-12 h-12 rounded-full border border-white/45 dark:border-white/10 bg-white/35 dark:bg-white/5 flex items-center justify-center transition-transform duration-180 ease-out motion-reduce:transition-none group-hover:scale-[1.03] group-hover:-translate-y-0.5">
+              <div className="relative shrink-0 w-12 h-12 rounded-full border border-border dark:border-grey-dark bg-surface dark:bg-black-light flex items-center justify-center transition-transform duration-180 ease-out motion-reduce:transition-none group-hover:scale-[1.03] group-hover:-translate-y-0.5">
                 <LocationIcon size={24} color="primary" />
               </div>
               <div className="relative flex-1">

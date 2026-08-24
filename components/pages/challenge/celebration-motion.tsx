@@ -61,13 +61,7 @@ const CelebrationMotion = () => {
           : ""
       }`}
     >
-      {/* 배경 반짝임 효과 */}
-      {!reducedMotion && (
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -left-4 top-1/2 h-8 w-8 -translate-y-1/2 animate-[pulse_3s_ease-in-out_infinite] rounded-full bg-primary-subtle blur-lg dark:bg-primary-light/10" />
-          <div className="absolute -right-2 top-1/4 h-6 w-6 animate-[pulse_4s_ease-in-out_infinite_1s] rounded-full bg-primary-subtle blur-md dark:bg-primary-light/8" />
-        </div>
-      )}
+      {/* 배경 장식 제거 — 미니멀 유지 */}
 
       <div className="relative flex items-center gap-3">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/12 dark:bg-primary-light/15">
