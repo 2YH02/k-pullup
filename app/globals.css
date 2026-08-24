@@ -270,6 +270,9 @@
   body {
     color: var(--color);
     background: var(--background);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.01em;
 
     position: fixed;
     top: 0;

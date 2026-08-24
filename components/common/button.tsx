@@ -51,9 +51,9 @@ const buttonContrastColorMap = {
 };
 
 const buttonSizeMap = {
-  sm: cn("text-sm", "py-2", "px-3"),
-  md: cn("text-base", "py-[10px]", "px-6"),
-  lg: cn("text-lg", "py-3", "px-8"),
+  sm: cn("text-[13px]", "py-2", "px-3.5"),
+  md: cn("text-[14px]", "py-2.5", "px-5"),
+  lg: cn("text-[15px]", "py-3", "px-6"),
 };
 
 type ButtonColor = keyof typeof buttonColorMap;
@@ -109,7 +109,7 @@ const Button = ({
     colorClass,
     sizeClass,
     fullClass,
-    "inline-flex items-center justify-center rounded-xl font-semibold",
+    "inline-flex items-center justify-center rounded-xl font-semibold tracking-[-0.01em]",
     "select-none transition-[transform,background-color,border-color,box-shadow] duration-180 ease-out",
     "focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/25",
     disabled
