@@ -47,8 +47,8 @@ const Badge = ({
     <Component
       className={cn(
         `${
-          withBorder ? "border border-primary-dark border-solid" : ""
-        } px-4 py-1 rounded-3xl inline-block select-none bg-search-input-bg/65 dark:bg-black/35 text-text-on-surface dark:text-grey-light transition-colors duration-150 ${
+          withBorder ? "border border-border dark:border-border-strong" : ""
+        } px-4 py-1 rounded-3xl inline-block select-none bg-surface dark:bg-black/35 text-text-on-surface dark:text-grey-light transition-colors duration-150 ${
           isButton
             ? "cursor-pointer active:scale-[0.98] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35"
             : ""

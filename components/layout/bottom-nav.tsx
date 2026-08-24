@@ -131,7 +131,7 @@ const BottomNav = ({
         >
           <div
             className={cn(
-              "flex h-12 w-12 items-center justify-center rounded-full border border-white/75 shadow-[0_6px_14px_rgba(64,64,56,0.18)] transition-all duration-200 active:scale-[0.96] web:hover:-translate-y-0.5",
+              "flex h-12 w-12 items-center justify-center rounded-full border border-white/75 shadow-[0_6px_14px_rgba(15,23,42,0.12)] transition-all duration-200 active:scale-[0.96] web:hover:-translate-y-0.5",
               isPrimaryActive
                 ? "bg-primary dark:bg-primary-dark"
                 : "bg-text-on-surface-muted dark:bg-grey-dark"

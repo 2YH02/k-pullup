@@ -4,15 +4,9 @@ import cn from "@lib/cn";
 
 const buttonColorMap = {
   primary: cn(
-    "bg-primary dark:bg-primary-dark",
+    "bg-primary dark:bg-primary",
     "text-white",
     "disabled:bg-primary/50",
-    "disabled:text-white/70"
-  ),
-  coral: cn(
-    "bg-coral",
-    "text-white",
-    "disabled:bg-coral/50",
     "disabled:text-white/70"
   ),
   blue: cn(
@@ -34,17 +28,9 @@ const buttonContrastColorMap = {
     "bg-white dark:bg-black-light",
     "text-primary dark:text-primary-light",
     "border",
-    "border-primary dark:border-primary-dark",
+    "border-primary dark:border-primary-light/50",
     "disabled:text-primary/50",
-    "disabled:border-primary/50 dark:disabled:border-primary-dark/50"
-  ),
-  coral: cn(
-    "bg-white dark:bg-black-light",
-    "text-coral dark:text-coral",
-    "border",
-    "border-coral dark:border-coral/65",
-    "disabled:text-coral/50",
-    "disabled:border-coral/50 dark:disabled:border-coral/35"
+    "disabled:border-primary/50 dark:disabled:border-primary-light/30"
   ),
   blue: cn(
     "bg-white dark:bg-black-light",
