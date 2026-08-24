@@ -103,7 +103,7 @@ export const FacilityList = ({
     <div className="my-1.5 flex items-center rounded-lg px-1.5 py-1">
       <Text className="text-text-on-surface dark:text-grey-light">{name}</Text>
       <GrowBox />
-      <span className="flex items-center rounded-full border border-grey-light/80 bg-side-main px-1 py-0.5 dark:border-grey-dark/80 dark:bg-black-light">
+      <span className="flex items-center rounded-full border border-grey-light/80 bg-white px-1 py-0.5 dark:border-grey-dark/80 dark:bg-black-light">
         <button
           className="rounded-full p-1 text-text-on-surface transition-colors duration-150 active:scale-[0.97] active:bg-black/5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:text-grey-light dark:active:bg-white/10"
           onClick={() => decrease()}

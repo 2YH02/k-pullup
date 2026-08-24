@@ -47,12 +47,11 @@ const SearchInput = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
           "h-12",
           "rounded-2xl px-5",
           "bg-surface dark:bg-black-light",
-          "border border-white/70 dark:border-white/10",
-          "shadow-[0_1px_2px_rgba(64,64,56,0.08)]",
-          "backdrop-blur-[2px]",
-          "transition-transform duration-180 ease-out motion-reduce:transition-none",
+          "border border-border dark:border-grey-dark",
+          "shadow-xs",
+          "transition-transform duration-150 ease-out motion-reduce:transition-none",
           "active:scale-[0.99] focus-visible:scale-[0.995]",
-          isNavigating ? "scale-[1.015] opacity-95" : "scale-100 opacity-100"
+          isNavigating ? "scale-[1.01] opacity-95" : "scale-100 opacity-100"
         )}
       >
         <SearchIcon

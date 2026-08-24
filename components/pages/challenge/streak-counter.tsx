@@ -12,7 +12,7 @@ const StreakCounter = ({ className = "" }: StreakCounterProps) => {
 
   return (
     <div
-      className={`rounded-3xl border border-border bg-side-main p-5 dark:border-white/12 dark:bg-black-light ${className}`}
+      className={`rounded-3xl border border-border bg-white p-5 dark:border-white/12 dark:bg-black-light ${className}`}
     >
       <div className="flex items-center">
         {/* Current streak */}

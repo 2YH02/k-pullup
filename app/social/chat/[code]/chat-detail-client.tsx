@@ -214,7 +214,7 @@ const ChatDetailClient = ({
               })}
             </div>
 
-            <div className="shrink-0 border-t border-grey-light/80 bg-side-main/95 px-3 py-2 backdrop-blur-xs dark:border-grey-dark/85 dark:bg-black/90">
+            <div className="shrink-0 border-t border-grey-light/80 bg-white/95 px-3 py-2 backdrop-blur-xs dark:border-grey-dark/85 dark:bg-black/90">
               <div className="flex items-center gap-2 rounded-xl border border-grey-light/80 bg-surface/45 p-1.5 dark:border-grey-dark/80 dark:bg-black-light">
                 <div className="grow">
                   <Input

@@ -3,7 +3,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="mt-12 w-full border-t border-border bg-side-main px-4 py-8 dark:border-white/10 dark:bg-black">
+    <footer className="mt-12 w-full border-t border-border bg-surface px-4 py-8 dark:border-grey-dark dark:bg-black">
       <div className="mx-auto flex max-w-(--breakpoint-xl) flex-col items-center gap-3 text-sm">
         <Link
           href="https://buymeacoffee.com/seokwon"

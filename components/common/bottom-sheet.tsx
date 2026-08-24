@@ -43,7 +43,7 @@ const BottomSheet = ({
     <Dimmed onClose={hide}>
       <div
         className={cn(
-          "absolute bottom-0 left-0 z-50 w-full rounded-t-3xl border-t border-grey-light/85 bg-side-main p-4 text-text-on-surface shadow-[0_-8px_24px_rgba(0,0,0,0.12)] transition-[transform,opacity] duration-180 ease-out motion-reduce:transition-none dark:border-grey-dark/85 dark:bg-black dark:text-grey-light",
+          "absolute bottom-0 left-0 z-50 w-full rounded-t-3xl border-t border-grey-light/85 bg-white p-4 text-text-on-surface shadow-[0_-8px_24px_rgba(0,0,0,0.12)] transition-[transform,opacity] duration-180 ease-out motion-reduce:transition-none dark:border-grey-dark/85 dark:bg-black dark:text-grey-light",
           active ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
           className
         )}

@@ -30,7 +30,7 @@ const Loading = () => {
             <div className="my-1.5 flex items-center rounded-lg px-1.5 py-1">
               <Skeleton className="h-4 w-10 rounded-md" />
               <div className="grow" />
-              <div className="flex items-center rounded-full border border-grey-light/80 bg-side-main px-1 py-0.5 dark:border-grey-dark/80 dark:bg-black-light">
+              <div className="flex items-center rounded-full border border-grey-light/80 bg-white px-1 py-0.5 dark:border-grey-dark/80 dark:bg-black-light">
                 <Skeleton className="h-6 w-6 rounded-full" />
                 <Skeleton className="mx-1 h-4 w-8 rounded-md" />
                 <Skeleton className="h-6 w-6 rounded-full" />
@@ -39,7 +39,7 @@ const Loading = () => {
             <div className="my-1.5 flex items-center rounded-lg px-1.5 py-1">
               <Skeleton className="h-4 w-12 rounded-md" />
               <div className="grow" />
-              <div className="flex items-center rounded-full border border-grey-light/80 bg-side-main px-1 py-0.5 dark:border-grey-dark/80 dark:bg-black-light">
+              <div className="flex items-center rounded-full border border-grey-light/80 bg-white px-1 py-0.5 dark:border-grey-dark/80 dark:bg-black-light">
                 <Skeleton className="h-6 w-6 rounded-full" />
                 <Skeleton className="mx-1 h-4 w-8 rounded-md" />
                 <Skeleton className="h-6 w-6 rounded-full" />
@@ -51,7 +51,7 @@ const Loading = () => {
 
         <div className="grow" />
 
-        <div className="sticky bottom-0 z-30 w-full border-t border-border bg-side-main/95 p-4 backdrop-blur-xs dark:border-grey-dark dark:bg-black/90">
+        <div className="sticky bottom-0 z-30 w-full border-t border-border bg-white/95 p-4 backdrop-blur-xs dark:border-grey-dark dark:bg-black/90">
           <Skeleton className="h-11 w-full rounded-md" />
         </div>
       </div>

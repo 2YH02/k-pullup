@@ -55,7 +55,7 @@ const Loading = () => {
 
         <div className="grow" />
 
-        <div className="sticky bottom-0 z-30 w-full border-t border-border bg-side-main/95 p-4 backdrop-blur-xs dark:border-grey-dark dark:bg-black/90">
+        <div className="sticky bottom-0 z-30 w-full border-t border-border bg-white/95 p-4 backdrop-blur-xs dark:border-grey-dark dark:bg-black/90">
           <Skeleton className="h-11 w-full rounded-md" />
         </div>
       </div>

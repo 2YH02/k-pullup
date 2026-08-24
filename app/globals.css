@@ -40,12 +40,6 @@
   --color-border-strong: #cbd5e1;
   --color-divider: #f1f5f9;
 
-  /* === Location Badge (호환용 — 추후 범용 토큰으로 통합) === */
-  --color-location-badge-bg: #f1f5f9;
-  --color-location-badge-text: #2563eb;
-  --color-location-badge-bg-dark: #1e293b;
-  --color-location-badge-text-dark: #60a5fa;
-
   /* === Text === */
   --color-text-on-surface: #0f172a;
   --color-text-on-surface-muted: #64748b;

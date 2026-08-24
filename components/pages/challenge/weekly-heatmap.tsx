@@ -48,7 +48,7 @@ const WeeklyHeatmap = ({ className = "" }: WeeklyHeatmapProps) => {
 
   return (
     <div
-      className={`rounded-3xl border border-border bg-side-main p-5 dark:border-white/12 dark:bg-black-light ${className}`}
+      className={`rounded-3xl border border-border bg-white p-5 dark:border-white/12 dark:bg-black-light ${className}`}
     >
       <h2 className="mb-3 text-sm font-semibold text-text-on-surface dark:text-white">
         방문 히트맵

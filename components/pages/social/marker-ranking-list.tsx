@@ -33,7 +33,7 @@ const MarkerRankingList = ({ allRanking }: { allRanking: RankingInfo[] }) => {
   return (
     <div>
       {/* 랭킹 타입 버튼 */}
-      <div className="mb-3 inline-flex rounded-full border border-border bg-side-main p-1 text-sm dark:border-white/10 dark:bg-black-light">
+      <div className="mb-3 inline-flex rounded-full border border-border bg-white p-1 text-sm dark:border-white/10 dark:bg-black-light">
         <button
           className={cn(
             "rounded-full px-3 py-1 transition-colors",
@@ -91,7 +91,7 @@ const List = ({
 
   if (!data) {
     return (
-      <div className="rounded-xl border border-border bg-side-main p-4 dark:border-white/10 dark:bg-black-light">
+      <div className="rounded-xl border border-border bg-white p-4 dark:border-white/10 dark:bg-black-light">
         <div className="text-text-on-surface dark:text-white">
           랭킹에 등록되어 있는 철봉이 없습니다.
         </div>
@@ -126,7 +126,7 @@ const List = ({
               isTopThree && rank === 1 && "border-yellow/60 bg-yellow/15",
               isTopThree && rank === 2 && "border-grey/45 bg-grey-light/65 dark:bg-grey-dark/24",
               isTopThree && rank === 3 && "border-coral/40 bg-coral/14",
-              !isTopThree && "border border-border bg-side-main dark:border-grey-dark dark:bg-black-light",
+              !isTopThree && "border border-border bg-white dark:border-grey-dark dark:bg-black-light",
               "active:scale-[0.985] active:bg-grey-light dark:active:bg-grey-dark",
               "web:hover:border-border web:hover:bg-white/50 dark:web:hover:bg-black/30"
             )}

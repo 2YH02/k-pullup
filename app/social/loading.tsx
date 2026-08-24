@@ -33,7 +33,7 @@ const Loading = () => {
           {Array.from({ length: 4 }).map((_, index) => (
             <div
               key={`social-chat-skeleton-${index}`}
-              className="group flex h-22 w-58 shrink-0 items-center gap-3 rounded-2xl border border-border bg-side-main px-3 py-2.5 text-left"
+              className="group flex h-22 w-58 shrink-0 items-center gap-3 rounded-2xl border border-border bg-white px-3 py-2.5 text-left"
             >
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-grey-light">
                 <Skeleton className="h-4 w-4 rounded-full" />
@@ -53,7 +53,7 @@ const Loading = () => {
 
       <Section>
         <SectionTitle title="인기 많은 철봉" />
-        <div className="mb-3 inline-flex rounded-full border border-border bg-side-main p-1 dark:border-white/10">
+        <div className="mb-3 inline-flex rounded-full border border-border bg-white p-1 dark:border-white/10">
           <Skeleton className="h-7 w-14 rounded-full" />
           <Skeleton className="ml-1 h-7 w-16 rounded-full" />
         </div>

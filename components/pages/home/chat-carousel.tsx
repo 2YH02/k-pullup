@@ -85,7 +85,7 @@ const ChatCarousel = () => {
   };
 
   const cardClassName = cn(
-    "group shrink-0 w-58 h-22 rounded-2xl border border-border bg-side-main dark:border-grey-dark dark:bg-black-light",
+    "group shrink-0 w-58 h-22 rounded-2xl border border-border bg-white dark:border-grey-dark dark:bg-black-light",
     "px-3 py-2.5 text-left transition-all duration-200",
     "web:hover:border-border web:hover:bg-white/55",
     "active:scale-[0.99] active:bg-white/65",

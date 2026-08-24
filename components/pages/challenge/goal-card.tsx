@@ -31,7 +31,7 @@ const GoalCard = ({ className = "" }: GoalCardProps) => {
 
   return (
     <div
-      className={`rounded-3xl border border-border bg-side-main p-5 dark:border-white/12 dark:bg-black-light ${className}`}
+      className={`rounded-3xl border border-border bg-white p-5 dark:border-white/12 dark:bg-black-light ${className}`}
     >
       {/* Header */}
       <div className="mb-4 flex items-center gap-3">

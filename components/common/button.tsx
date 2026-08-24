@@ -109,7 +109,7 @@ const Button = ({
     colorClass,
     sizeClass,
     fullClass,
-    "inline-flex items-center justify-center rounded-md font-medium",
+    "inline-flex items-center justify-center rounded-xl font-semibold",
     "select-none transition-[transform,background-color,border-color,box-shadow] duration-180 ease-out",
     "focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/25",
     disabled
