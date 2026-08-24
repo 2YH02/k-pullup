@@ -35,7 +35,6 @@
   --color-beige: #f8fafc;
 
   /* === Surface & Border (Light) === */
-  --color-search-input-bg: #f1f5f9;
   --color-border: #e2e8f0;
   --color-border-strong: #cbd5e1;
   --color-divider: #f1f5f9;
@@ -261,10 +260,6 @@
 
 @utility bg-black-transparent {
   background-color: rgba(0, 0, 0, 0.8);
-}
-
-@utility bg-side-main {
-  background-color: var(--color-canvas);
 }
 
 @layer utilities {
