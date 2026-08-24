@@ -7,13 +7,13 @@
 
 @theme {
   /* === Brand & Accent === */
-  --color-primary: #2563eb;
+  --color-primary: #0f766e;
   --color-primary-dark: #1e40af;
-  --color-primary-light: #60a5fa;
-  --color-primary-hover: #1d4ed8;
-  --color-primary-active: #1e40af;
-  --color-primary-muted: #dbeafe;
-  --color-primary-subtle: #eff6ff;
+  --color-primary-light: #5eead4;
+  --color-primary-hover: #115e59;
+  --color-primary-active: #134e4a;
+  --color-primary-muted: #ccfbf1;
+  --color-primary-subtle: #f0fdfa;
 
   /* === Neutral === */
   --color-white: #ffffff;
@@ -27,7 +27,7 @@
 
   /* === Semantic === */
   --color-red: #dc2626;
-  --color-blue: #2563eb;
+  --color-blue: #0f766e;
   --color-green: #16a34a;
   --color-yellow: #ca8a04;
   --color-yellow-dark: #eab308;
