@@ -14,7 +14,7 @@ const PinIcon = ({
       xmlns="http://www.w3.org/2000/svg"
       width={size}
       height={size}
-      className={className ?? "text-location-badge-text dark:text-location-badge-text-dark"}
+      className={className ?? "text-primary dark:text-primary-light"}
     >
       <path
         d="M32 8a18.87 18.87 0 0 0-18.87 18.87C13.13 39.26 28.47 56 32 56s18.87-16.27 18.87-29.13A18.87 18.87 0 0 0 32 8Zm-.09 33a13.44 13.44 0 1 1 13.44-13.44A13.44 13.44 0 0 1 31.91 41Zm0 0"

@@ -74,7 +74,7 @@ const Around = () => {
         <Text fontWeight="bold" className="mb-2 text-text-on-surface dark:text-grey-light">
           근처 추천 철봉
         </Text>
-        <div className="rounded-xl border border-grey-light/85 bg-search-input-bg/45 px-3.5 py-3 dark:border-grey-dark/85 dark:bg-black/30">
+        <div className="rounded-xl border border-grey-light/85 bg-surface/45 px-3.5 py-3 dark:border-grey-dark/85 dark:bg-black-light">
           <Text typography="t6" display="block" className="text-grey-dark dark:text-grey">
             주변 철봉에서 모먼트를 공유해보세요.
           </Text>
@@ -110,15 +110,15 @@ const Around = () => {
       <Text fontWeight="bold" className="mb-2 text-text-on-surface dark:text-grey-light">
         근처 추천 철봉
       </Text>
-      <div className="rounded-xl border border-grey-light/85 bg-search-input-bg/40 p-1.5 dark:border-grey-dark/85 dark:bg-black/30">
+      <div className="rounded-xl border border-grey-light/85 bg-surface/40 p-1.5 dark:border-grey-dark/85 dark:bg-black-light">
         {markers.map((marker) => {
           return (
             <button
               key={marker.markerId}
-              className="group flex w-full items-center rounded-lg px-2.5 py-2 text-left transition-[transform,background-color] duration-150 active:scale-[0.99] active:bg-search-input-bg/75 dark:active:bg-grey-dark/35"
+              className="group flex w-full items-center rounded-lg px-2.5 py-2 text-left transition-[transform,background-color] duration-150 active:scale-[0.99] active:bg-surface/75 dark:active:bg-grey-dark/35"
               onClick={() => router.push(`/pullup/${marker.markerId}/moment`)}
             >
-              <div className="mr-2 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-location-badge-bg/85 bg-location-badge-bg/70 text-location-badge-text dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/50 dark:text-location-badge-text-dark">
+              <div className="mr-2 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border/85 bg-surface/70 text-primary dark:border-black-light/75 dark:bg-black-light/50 dark:text-primary-light">
                 <MapPin size={14} strokeWidth={2.2} />
               </div>
               <div className="grow">

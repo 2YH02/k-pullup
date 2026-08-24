@@ -31,11 +31,11 @@ const GoalCard = ({ className = "" }: GoalCardProps) => {
 
   return (
     <div
-      className={`rounded-3xl border border-primary/14 bg-side-main p-5 dark:border-white/12 dark:bg-black/30 ${className}`}
+      className={`rounded-3xl border border-border bg-side-main p-5 dark:border-white/12 dark:bg-black-light ${className}`}
     >
       {/* Header */}
       <div className="mb-4 flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-primary/14 bg-primary/6">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-primary-subtle">
           <Target size={18} className="text-primary dark:text-primary-light" />
         </div>
         <div>
@@ -50,7 +50,7 @@ const GoalCard = ({ className = "" }: GoalCardProps) => {
 
       {/* Progress bar */}
       <div className="mb-4">
-        <div className="h-2 w-full overflow-hidden rounded-full bg-primary/10 dark:bg-white/10">
+        <div className="h-2 w-full overflow-hidden rounded-full bg-primary-subtle dark:bg-white/10">
           <div
             className="h-full rounded-full bg-primary transition-all duration-300 dark:bg-primary-light"
             style={{ width: `${progressPercent}%` }}
@@ -75,7 +75,7 @@ const GoalCard = ({ className = "" }: GoalCardProps) => {
               className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium touch-manipulation transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 dark:focus-visible:ring-primary-light/40 ${
                 day === weeklyGoal
                   ? "bg-primary text-white dark:bg-primary-light dark:text-black"
-                  : "bg-primary/8 text-text-on-surface-muted active:scale-95 dark:bg-white/8 dark:text-grey-light"
+                  : "bg-primary-subtle text-text-on-surface-muted active:scale-95 dark:bg-white/8 dark:text-grey-light"
               }`}
               aria-label={`주간 목표 ${day}일로 변경`}
               aria-pressed={day === weeklyGoal}

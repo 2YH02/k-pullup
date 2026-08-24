@@ -24,12 +24,12 @@ const Error = ({
   return (
     <SideMain headerTitle="오류" fullHeight withNav>
       <Section className="mt-8">
-        <div className="mx-auto max-w-sm rounded-2xl border border-location-badge-bg/85 bg-location-badge-bg/45 px-5 py-7 text-center dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/30">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-location-badge-text/35 bg-location-badge-bg dark:border-location-badge-text-dark/35 dark:bg-location-badge-bg-dark/60">
+        <div className="mx-auto max-w-sm rounded-2xl border border-border/85 bg-surface/45 px-5 py-7 text-center dark:border-black-light/75 dark:bg-black-light/30">
+          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-primary/35 bg-surface dark:border-primary-light/35 dark:bg-black-light/60">
             <TriangleAlert
               size={20}
               strokeWidth={2.2}
-              className="text-location-badge-text dark:text-location-badge-text-dark"
+              className="text-primary dark:text-primary-light"
             />
           </div>
           <Text

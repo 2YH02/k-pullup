@@ -303,7 +303,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
         className={cn(
           "relative isolate overflow-hidden",
           "p-4 rounded-2xl border border-white/70 dark:border-white/10",
-          "bg-search-input-bg/70 dark:bg-black/35 backdrop-blur-md",
+          "bg-surface/70 dark:bg-black-light backdrop-blur-md",
           "shadow-[0_10px_24px_rgba(64,64,56,0.08)] dark:shadow-[0_10px_24px_rgba(0,0,0,0.3)]",
           "mb-6"
         )}
@@ -341,7 +341,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
         className={cn(
           "relative isolate overflow-hidden",
           "p-5 rounded-2xl border border-white/70 dark:border-white/10",
-          "bg-search-input-bg/65 dark:bg-black/32 backdrop-blur-md",
+          "bg-surface/65 dark:bg-black-light/90 backdrop-blur-md",
           "shadow-[0_10px_24px_rgba(64,64,56,0.08)] dark:shadow-[0_10px_24px_rgba(0,0,0,0.3)]",
           "mb-6"
         )}
@@ -422,7 +422,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
             className={cn(
               "rounded-2xl p-4",
               "border border-white/70 dark:border-white/10",
-              "bg-search-input-bg/55 dark:bg-black/25"
+              "bg-surface/55 dark:bg-black/25"
             )}
           >
             <Text typography="t6" className="text-text-on-surface-muted dark:text-grey mb-3">
@@ -451,7 +451,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
 
             {/* Distance info badge */}
             {displayMarkers.length > 0 && (
-              <div className="mb-3 p-2.5 rounded-xl bg-primary/8 dark:bg-primary-dark/12 border border-primary/18 dark:border-primary-light/18 backdrop-blur-sm">
+              <div className="mb-3 p-2.5 rounded-xl bg-primary-subtle dark:bg-primary-dark/12 border border-border dark:border-primary-light/18 backdrop-blur-sm">
                 <Text
                   typography="t7"
                   className="text-text-on-surface-muted dark:text-grey text-center"
@@ -473,7 +473,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
                       "relative isolate overflow-hidden",
                       "flex items-center gap-3 p-3.5 text-left w-full rounded-xl",
                       "border border-white/70 dark:border-white/10",
-                      "bg-search-input-bg/55 dark:bg-black/25 backdrop-blur-sm",
+                      "bg-surface/55 dark:bg-black/25 backdrop-blur-sm",
                       "transition-all duration-180 ease-out motion-reduce:transition-none group",
                       "hover:border-primary/45 dark:hover:border-primary-light/35 hover:shadow-[0_8px_18px_rgba(64,64,56,0.12)] dark:hover:shadow-[0_8px_18px_rgba(0,0,0,0.3)]",
                       "active:scale-[0.99]",
@@ -520,7 +520,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
 
             {/* Show more nearby button */}
             {hasMoreNearby && (
-              <div className="mt-4 p-4 rounded-xl border border-dashed border-primary/30 dark:border-primary-light/28 bg-primary/6 dark:bg-primary-dark/10 text-center">
+              <div className="mt-4 p-4 rounded-xl border border-dashed border-primary/30 dark:border-primary-light/28 bg-primary-subtle dark:bg-primary-dark/10 text-center">
                 <Text typography="t6" display="block" className="text-text-on-surface-muted dark:text-grey mb-2">
                   더 먼 곳에 {markers.length - displayMarkers.length}개의 철봉이 있습니다
                 </Text>
@@ -538,7 +538,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
           </>
         ) : hasSearched ? (
           // Empty state
-          <div className="flex flex-col items-center justify-center py-10 rounded-2xl border border-white/70 dark:border-white/10 bg-search-input-bg/55 dark:bg-black/25 backdrop-blur-sm">
+          <div className="flex flex-col items-center justify-center py-10 rounded-2xl border border-white/70 dark:border-white/10 bg-surface/55 dark:bg-black/25 backdrop-blur-sm">
             <div className="relative mb-5 h-24 w-24 flex items-center justify-center">
               <span className="absolute h-24 w-24 rounded-full border border-primary/25 dark:border-primary-light/20 animate-ping motion-reduce:animate-none" />
               <span className="absolute h-16 w-16 rounded-full border border-primary/35 dark:border-primary-light/28 animate-pulse" />

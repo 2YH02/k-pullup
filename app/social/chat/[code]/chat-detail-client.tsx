@@ -154,7 +154,7 @@ const ChatDetailClient = ({
       <div className="flex h-full flex-col">
         {isLoading && (
           <div className="flex h-full items-center justify-center">
-            <div className="rounded-xl border border-grey-light/85 bg-search-input-bg/40 px-6 py-5 text-center dark:border-grey-dark/85 dark:bg-black/30">
+            <div className="rounded-xl border border-grey-light/85 bg-surface/40 px-6 py-5 text-center dark:border-grey-dark/85 dark:bg-black-light">
               <LoadingIcon size="lg" className="mx-auto mb-2 mt-0" />
               <div className="text-sm text-grey-dark dark:text-grey">
                 채팅방에 접속 중입니다.
@@ -164,7 +164,7 @@ const ChatDetailClient = ({
         )}
         {isConnectionError && !isLoading ? (
           <div className="mt-10 px-6">
-            <div className="rounded-2xl border border-location-badge-bg/80 bg-location-badge-bg/50 px-5 py-6 text-center dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/35">
+            <div className="rounded-2xl border border-border/80 bg-surface/50 px-5 py-6 text-center dark:border-black-light/75 dark:bg-black-light/35">
               <div className="mb-1 text-2xl font-bold text-text-on-surface dark:text-grey-light">
                 연결 실패
               </div>
@@ -215,7 +215,7 @@ const ChatDetailClient = ({
             </div>
 
             <div className="shrink-0 border-t border-grey-light/80 bg-side-main/95 px-3 py-2 backdrop-blur-xs dark:border-grey-dark/85 dark:bg-black/90">
-              <div className="flex items-center gap-2 rounded-xl border border-grey-light/80 bg-search-input-bg/45 p-1.5 dark:border-grey-dark/80 dark:bg-black/35">
+              <div className="flex items-center gap-2 rounded-xl border border-grey-light/80 bg-surface/45 p-1.5 dark:border-grey-dark/80 dark:bg-black-light">
                 <div className="grow">
                   <Input
                     type="text"
@@ -260,7 +260,7 @@ const MessageBubble = ({
   if (message.message?.includes("님이 입장하셨습니다.")) {
     return (
       <div className="px-2 py-1.5 text-center motion-safe:animate-page-enter motion-reduce:animate-none">
-        <span className="rounded-full border border-location-badge-bg/85 bg-location-badge-bg/70 px-3 py-1 text-[11px] text-location-badge-text dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/45 dark:text-location-badge-text-dark">
+        <span className="rounded-full border border-border/85 bg-surface/70 px-3 py-1 text-[11px] text-primary dark:border-black-light/75 dark:bg-black-light/45 dark:text-primary-light">
           {message.userNickname}님이 참여하였습니다.
         </span>
       </div>
@@ -269,7 +269,7 @@ const MessageBubble = ({
   if (message.message?.includes("님이 퇴장하셨습니다.")) {
     return (
       <div className="px-2 py-1.5 text-center motion-safe:animate-page-enter motion-reduce:animate-none">
-        <span className="rounded-full border border-grey-light/85 bg-search-input-bg/70 px-3 py-1 text-[11px] text-grey-dark dark:border-grey-dark/75 dark:bg-black/35 dark:text-grey">
+        <span className="rounded-full border border-grey-light/85 bg-surface/70 px-3 py-1 text-[11px] text-grey-dark dark:border-grey-dark/75 dark:bg-black-light dark:text-grey">
           {message.userNickname}님이 나가셨습니다.
         </span>
       </div>
@@ -293,7 +293,7 @@ const MessageBubble = ({
           className={`rounded-2xl px-4 py-2 text-sm shadow-xs ${
             isMine
               ? "bg-primary text-white dark:bg-primary-dark"
-              : "border border-grey-light/85 bg-search-input-bg/70 text-text-on-surface dark:border-grey-dark/80 dark:bg-black/35 dark:text-grey-light"
+              : "border border-grey-light/85 bg-surface/70 text-text-on-surface dark:border-grey-dark/80 dark:bg-black-light dark:text-grey-light"
           }`}
         >
           {message.message}

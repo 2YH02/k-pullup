@@ -119,10 +119,10 @@ const ShareButton = ({ markerId, lat, lng, address }: ShareButtonProps) => {
             <MapPinned
               size={20}
               strokeWidth={2.2}
-              className="text-location-badge-text dark:text-location-badge-text-dark"
+              className="text-primary dark:text-primary-light"
             />
           }
-          iconWrapClassName="border-location-badge-bg/85 bg-location-badge-bg/65 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/45"
+          iconWrapClassName="border-border/85 bg-surface/65 dark:border-black-light/75 dark:bg-black-light/45"
           onClick={copyAddress}
         >
           주소 복사
@@ -132,10 +132,10 @@ const ShareButton = ({ markerId, lat, lng, address }: ShareButtonProps) => {
             <Link2
               size={20}
               strokeWidth={2.2}
-              className="text-location-badge-text dark:text-location-badge-text-dark"
+              className="text-primary dark:text-primary-light"
             />
           }
-          iconWrapClassName="border-location-badge-bg/85 bg-location-badge-bg/65 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/45"
+          iconWrapClassName="border-border/85 bg-surface/65 dark:border-black-light/75 dark:bg-black-light/45"
           onClick={copyTextToClipboard}
         >
           철봉 링크 복사
@@ -145,10 +145,10 @@ const ShareButton = ({ markerId, lat, lng, address }: ShareButtonProps) => {
             <Route
               size={20}
               strokeWidth={2.2}
-              className="text-location-badge-text dark:text-location-badge-text-dark"
+              className="text-primary dark:text-primary-light"
             />
           }
-          iconWrapClassName="border-location-badge-bg/85 bg-location-badge-bg/65 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/45"
+          iconWrapClassName="border-border/85 bg-surface/65 dark:border-black-light/75 dark:bg-black-light/45"
           onClick={openLocation}
         >
           길찾기
@@ -158,10 +158,10 @@ const ShareButton = ({ markerId, lat, lng, address }: ShareButtonProps) => {
             <FileDown
               size={20}
               strokeWidth={2.2}
-              className="text-location-badge-text dark:text-location-badge-text-dark"
+              className="text-primary dark:text-primary-light"
             />
           }
-          iconWrapClassName="border-location-badge-bg/85 bg-location-badge-bg/65 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/45"
+          iconWrapClassName="border-border/85 bg-surface/65 dark:border-black-light/75 dark:bg-black-light/45"
           onClick={downloadMap}
           disabled={downLoading}
         >

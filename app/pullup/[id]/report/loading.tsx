@@ -29,7 +29,7 @@ const Loading = () => {
         <Section className="pb-2 pt-4">
           <Skeleton className="mb-1 h-5 w-44 rounded-md" />
           <Skeleton className="mb-2 h-3.5 w-4/5 rounded-md" />
-          <Skeleton className="h-32 w-full rounded-xl bg-search-input-bg/70 dark:bg-black/45" />
+          <Skeleton className="h-32 w-full rounded-xl bg-surface/70 dark:bg-black/45" />
           <Skeleton className="mt-1.5 ml-auto h-3.5 w-12 rounded-md" />
         </Section>
 
@@ -46,8 +46,8 @@ const Loading = () => {
 
         <Section className="pt-3">
           <Skeleton className="mb-2 h-5 w-36 rounded-md" />
-          <Skeleton className="mb-2 h-13 w-full rounded-xl bg-search-input-bg/60 dark:bg-black/40" />
-          <Skeleton className="mb-2 h-13 w-full rounded-xl bg-primary/10 dark:bg-primary-dark/25" />
+          <Skeleton className="mb-2 h-13 w-full rounded-xl bg-surface/60 dark:bg-black/40" />
+          <Skeleton className="mb-2 h-13 w-full rounded-xl bg-primary-subtle dark:bg-primary-dark/25" />
           <Skeleton className="my-2 h-9 w-32 rounded-md web:hidden" />
           <Skeleton className="mt-1.5 h-3.5 w-52 rounded-md mo:hidden" />
           <Skeleton className="mt-2 h-52 w-full rounded-xl web:hidden" />
@@ -55,7 +55,7 @@ const Loading = () => {
 
         <div className="grow" />
 
-        <div className="sticky bottom-0 z-30 w-full border-t border-primary/10 bg-side-main/95 p-4 backdrop-blur-xs dark:border-grey-dark dark:bg-black/90">
+        <div className="sticky bottom-0 z-30 w-full border-t border-border bg-side-main/95 p-4 backdrop-blur-xs dark:border-grey-dark dark:bg-black/90">
           <Skeleton className="h-11 w-full rounded-md" />
         </div>
       </div>

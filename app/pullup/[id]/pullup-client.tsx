@@ -143,21 +143,21 @@ const PullupClient = ({
             (철봉.quantity <= 0 && 평행봉.quantity <= 0 && (
               <Badge
                 text={`기구 개수 정보 없음`}
-                className="flex h-7 items-center justify-center border-none bg-search-input-bg/75 pr-3.5 pl-3.5 shadow-full dark:bg-black/35 dark:shadow-[rgba(255,255,255,0.1)]"
+                className="flex h-7 items-center justify-center border-none bg-surface/75 pr-3.5 pl-3.5 shadow-full dark:bg-black-light dark:shadow-[rgba(255,255,255,0.1)]"
                 textStyle="leading-3 text-text-on-surface-muted dark:text-grey-light"
               />
             ))}
           {철봉 && 철봉.quantity > 0 && (
             <Badge
               text={`철봉 ${철봉?.quantity}개`}
-              className="flex h-7 items-center justify-center border-none bg-search-input-bg/75 pr-3.5 pl-3.5 shadow-full dark:bg-black/35 dark:shadow-[rgba(255,255,255,0.1)]"
+              className="flex h-7 items-center justify-center border-none bg-surface/75 pr-3.5 pl-3.5 shadow-full dark:bg-black-light dark:shadow-[rgba(255,255,255,0.1)]"
               textStyle="leading-3 text-text-on-surface dark:text-grey-light"
             />
           )}
           {평행봉 && 평행봉.quantity > 0 && (
             <Badge
               text={`평행봉 ${평행봉?.quantity}개`}
-              className="flex h-7 items-center justify-center border-none bg-search-input-bg/75 pr-3.5 pl-3.5 shadow-full dark:bg-black/35 dark:shadow-[rgba(255,255,255,0.1)]"
+              className="flex h-7 items-center justify-center border-none bg-surface/75 pr-3.5 pl-3.5 shadow-full dark:bg-black-light dark:shadow-[rgba(255,255,255,0.1)]"
               textStyle="leading-3 text-text-on-surface dark:text-grey-light"
             />
           )}
@@ -201,7 +201,7 @@ const PullupClient = ({
           </div>
 
           {marker.username && (
-            <div className="min-w-0 max-w-[50%] rounded-xl border border-location-badge-bg/85 bg-location-badge-bg/65 px-2.5 py-1.5 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/50">
+            <div className="min-w-0 max-w-[50%] rounded-xl border border-border/85 bg-surface/65 px-2.5 py-1.5 dark:border-black-light/70 dark:bg-black-light/50">
               <button
                 onClick={() => {
                   router.push(`/user-info/${marker.username}`);
@@ -211,13 +211,13 @@ const PullupClient = ({
                 <StarIcon />
                 <Text
                   typography="t7"
-                  className="block grow truncate text-location-badge-text dark:text-location-badge-text-dark"
+                  className="block grow truncate text-primary dark:text-primary-light"
                 >
                   {marker.username}
                 </Text>
                 <BsChevronRight
                   size={12}
-                  className="shrink-0 text-location-badge-text/80 dark:text-location-badge-text-dark/80"
+                  className="shrink-0 text-primary/80 dark:text-primary-light/80"
                 />
               </button>
             </div>
@@ -244,7 +244,7 @@ const PullupClient = ({
               setActiveIndex(index);
             }}
             className={`
-              grow whitespace-nowrap border-b-2 px-4 py-2 text-[15px] font-semibold transition-[color,border-color,background-color,transform] duration-180 ease-out active:scale-[0.99] active:bg-search-input-bg/55 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:active:bg-grey-dark/35
+              grow whitespace-nowrap border-b-2 px-4 py-2 text-[15px] font-semibold transition-[color,border-color,background-color,transform] duration-180 ease-out active:scale-[0.99] active:bg-surface/55 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:active:bg-grey-dark/35
               ${
                 activeIndex === index
                   ? "border-primary-dark text-text-on-surface dark:text-grey-light"
@@ -262,9 +262,9 @@ const PullupClient = ({
           {providerInfo.slice(0, 3).map((comment) => (
             <div
               key={comment.commentId}
-              className="relative mb-3 overflow-hidden rounded-2xl border border-location-badge-bg/80 bg-location-badge-bg/55 px-4 py-3.5 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/45"
+              className="relative mb-3 overflow-hidden rounded-2xl border border-border/80 bg-surface/55 px-4 py-3.5 dark:border-black-light/75 dark:bg-black-light/45"
             >
-              <div className="absolute inset-x-0 top-0 h-0.5 bg-location-badge-text/35 dark:bg-location-badge-text-dark/35" />
+              <div className="absolute inset-x-0 top-0 h-0.5 bg-primary/35 dark:bg-primary-light/35" />
               {(user?.chulbong || user?.userId === comment.userId) && (
                 <button
                   className="absolute top-2 right-2 rounded-full p-0.5 text-grey-dark transition-[color,background-color,transform] duration-150 active:scale-[0.96] active:bg-black/5 active:text-black focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:text-grey-light dark:active:bg-white/10 dark:active:text-white"
@@ -284,7 +284,7 @@ const PullupClient = ({
               )}
 
               <div className="mb-2 pr-6">
-                <span className="inline-flex rounded-full border border-location-badge-text/20 bg-location-badge-bg px-2 py-1 text-[10px] font-semibold text-location-badge-text dark:border-location-badge-text-dark/25 dark:bg-location-badge-bg-dark/75 dark:text-location-badge-text-dark">
+                <span className="inline-flex rounded-full border border-primary/20 bg-surface px-2 py-1 text-[10px] font-semibold text-primary dark:border-primary-light/25 dark:bg-black-light/75 dark:text-primary-light">
                   정보 제공
                 </span>
               </div>

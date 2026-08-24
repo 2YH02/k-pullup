@@ -13,7 +13,7 @@ const Loading = () => {
   return (
     <SideMain headerTitle="내가 등록한 위치" hasBackButton deviceType={deviceType}>
       <Section className="pb-2">
-        <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
+        <div className="rounded-xl border border-border bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
           <Skeleton className="h-5 w-40 rounded-md" />
           <Skeleton className="mt-1.5 h-4 w-44 rounded-md" />
         </div>
@@ -24,7 +24,7 @@ const Loading = () => {
           {Array.from({ length: 5 }).map((_, index) => (
             <div
               key={`locate-skeleton-${index}`}
-              className="flex items-center gap-3 rounded-xl border border-primary/10 bg-surface/80 px-3 py-2.5 dark:border-grey-dark dark:bg-black"
+              className="flex items-center gap-3 rounded-xl border border-border bg-surface/80 px-3 py-2.5 dark:border-grey-dark dark:bg-black"
             >
               <Skeleton className="h-9 w-9 rounded-lg" />
               <div className="grow">

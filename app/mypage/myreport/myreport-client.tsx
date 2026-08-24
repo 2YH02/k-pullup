@@ -152,7 +152,7 @@ const MyreportClient = ({
         bodyStyle="flex flex-col pb-0"
       >
         <Section className="pb-2">
-          <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
+          <div className="rounded-xl border border-border bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
             <Text typography="t7" display="block" className="mb-0.5 text-grey-dark dark:text-grey">
               받은 제안
             </Text>
@@ -163,7 +163,7 @@ const MyreportClient = ({
         </Section>
 
         <Section className="pt-2">
-          <div className="rounded-xl border border-primary/10 bg-surface/80 p-3 dark:border-grey-dark dark:bg-black">
+          <div className="rounded-xl border border-border bg-surface/80 p-3 dark:border-grey-dark dark:bg-black">
             <div className="mb-3 flex items-start justify-between gap-2">
               <Text fontWeight="bold" display="block" className="text-primary dark:text-primary-light">
                 수정 요청 정보
@@ -225,7 +225,7 @@ const MyreportClient = ({
 
         <BottomFixedButton
           onClick={() => router.push(`/pullup/${markerId}`)}
-          containerStyle="mt-auto border-t border-primary/10 dark:border-grey-dark"
+          containerStyle="mt-auto border-t border-border dark:border-grey-dark"
         >
           위치 상세 보기
         </BottomFixedButton>
@@ -243,7 +243,7 @@ const MyreportClient = ({
       deviceType={deviceType}
     >
       <Section className="pb-2">
-        <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
+        <div className="rounded-xl border border-border bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
           <Text fontWeight="bold" display="block" className="text-primary dark:text-primary-light">
             내 위치에 들어온 수정 제안
           </Text>
@@ -257,7 +257,7 @@ const MyreportClient = ({
       {markerGroups.map(([key, { markerID, reports, address }]) => {
         return (
           <Section key={key} className="py-2">
-            <div className="rounded-xl border border-primary/10 bg-surface/80 p-3 dark:border-grey-dark dark:bg-black">
+            <div className="rounded-xl border border-border bg-surface/80 p-3 dark:border-grey-dark dark:bg-black">
               <div className="mb-2 flex items-center justify-between gap-2">
                 <Text fontWeight="bold" display="block" className="truncate text-primary dark:text-primary-light">
                   {address || "주소 제공 안됨"}
@@ -271,7 +271,7 @@ const MyreportClient = ({
                 {reports.map((report) => (
                   <button
                     key={report.reportID}
-                    className="group min-w-60 cursor-pointer rounded-lg border border-primary/8 bg-search-input-bg/50 dark:bg-black/35 p-3 text-left transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/16 web:hover:bg-search-input-bg/65 active:scale-[0.99] dark:border-grey-dark dark:web:hover:bg-black/45"
+                    className="group min-w-60 cursor-pointer rounded-lg border border-border bg-surface/50 dark:bg-black-light p-3 text-left transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/25 web:hover:bg-surface/65 active:scale-[0.99] dark:border-grey-dark dark:web:hover:bg-black/45"
                     onClick={() => {
                       setMarkerId(markerID.toString());
                       setCurData(report);

@@ -17,7 +17,7 @@ const iconClass = "text-primary/85 dark:text-primary-light";
 const LinkList = ({ isAdmin }: { isAdmin?: boolean }) => {
   return (
     <div className="px-4 pb-2">
-      <div className="space-y-2 rounded-xl border border-primary/10 bg-surface/70 p-2 dark:border-grey-dark dark:bg-black">
+      <div className="space-y-2 rounded-xl border border-border bg-surface/70 p-2 dark:border-grey-dark dark:bg-black">
         <LinkButton url="/mypage/bookmark" icon={<BookmarkLine size={18} strokeWidth={2.1} className={iconClass} />}>
           즐겨찾기
         </LinkButton>
@@ -64,10 +64,10 @@ const LinkButton = ({
     <Link
       href={url}
       target={target}
-      className="group flex items-center gap-3 rounded-lg border border-primary/10 bg-search-input-bg/50 px-3 py-2.5 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-search-input-bg active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black/35 dark:web:hover:border-grey dark:web:hover:bg-black/45"
+      className="group flex items-center gap-3 rounded-lg border border-border bg-surface/50 px-3 py-2.5 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-surface active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-grey dark:web:hover:bg-black/45"
     >
       <motion.span
-        className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary/8 dark:bg-primary-dark/20"
+        className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary-subtle dark:bg-primary-dark/20"
         whileHover={prefersReducedMotion ? undefined : { y: -1, scale: 1.03 }}
         whileTap={prefersReducedMotion ? undefined : { scale: 0.97 }}
         transition={{ duration: 0.16, ease: "easeOut" }}

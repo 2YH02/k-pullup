@@ -13,7 +13,7 @@ const Loading = () => {
   return (
     <SideMain headerTitle="받은 정보 수정 제안" hasBackButton fullHeight deviceType={deviceType}>
       <Section className="pb-2">
-        <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
+        <div className="rounded-xl border border-border bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
           <Skeleton className="h-5 w-42 rounded-md" />
           <Skeleton className="mt-1.5 h-4 w-44 rounded-md" />
         </div>
@@ -21,7 +21,7 @@ const Loading = () => {
 
       {Array.from({ length: 3 }).map((_, sectionIdx) => (
         <Section key={`myreport-group-${sectionIdx}`} className="py-2">
-          <div className="rounded-xl border border-primary/10 bg-surface/80 p-3 dark:border-grey-dark dark:bg-black">
+          <div className="rounded-xl border border-border bg-surface/80 p-3 dark:border-grey-dark dark:bg-black">
             <div className="mb-2 flex items-center justify-between gap-2">
               <Skeleton className="h-4 w-2/3 rounded-md" />
               <Skeleton className="h-3 w-10 rounded-md" />
@@ -30,7 +30,7 @@ const Loading = () => {
               {Array.from({ length: 2 }).map((__, cardIdx) => (
                 <div
                   key={`myreport-card-${sectionIdx}-${cardIdx}`}
-                  className="min-w-60 rounded-lg border border-primary/8 bg-search-input-bg/50 p-3 dark:border-grey-dark dark:bg-black/35"
+                  className="min-w-60 rounded-lg border border-border bg-surface/50 p-3 dark:border-grey-dark dark:bg-black-light"
                 >
                   <div className="mb-2 flex items-center justify-between">
                     <Skeleton className="h-6 w-14 rounded-full" />

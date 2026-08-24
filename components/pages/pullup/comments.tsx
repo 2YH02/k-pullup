@@ -189,7 +189,7 @@ const Comments = ({ markerId, initialComments }: CommentsProps) => {
   return (
     <div>
       {comments.length <= 0 && !commentsLoading && (
-        <div className="mt-2 mb-4 flex flex-col items-center justify-center rounded-xl border border-grey-light/75 bg-search-input-bg/40 px-4 py-6 dark:border-grey-dark/80 dark:bg-black/30">
+        <div className="mt-2 mb-4 flex flex-col items-center justify-center rounded-xl border border-grey-light/75 bg-surface/40 px-4 py-6 dark:border-grey-dark/80 dark:bg-black-light">
           <div className="mb-3">
             <CommentIcon />
           </div>

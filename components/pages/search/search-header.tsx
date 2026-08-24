@@ -71,7 +71,7 @@ const SearchHeader = ({
           isInvalid={false}
           className={cn(
             "rounded-xl border-white/70 dark:border-white/10",
-            "bg-search-input-bg dark:bg-black/35",
+            "bg-surface dark:bg-black-light",
             "shadow-[0_1px_2px_rgba(64,64,56,0.08)]"
           )}
           inputClassName="dark:bg-transparent"

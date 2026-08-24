@@ -98,7 +98,7 @@ const BottomNav = ({
         navStyle
       )}
     >
-      <nav className="relative h-full overflow-visible border-t border-primary/12 bg-surface/94 backdrop-blur-sm dark:bg-black/84 dark:border-white/10 web:rounded-b-lg">
+      <nav className="relative h-full overflow-visible border-t border-border bg-surface/94 backdrop-blur-sm dark:bg-black/84 dark:border-white/10 web:rounded-b-lg">
         <ul className="relative z-20 grid h-full grid-cols-5 items-end px-2 pb-1">
           {leftMenus.map((menu) => (
             <NavLink
@@ -190,7 +190,7 @@ const NavLink = memo(({
         <div
           className={cn(
             "mb-0.5 h-0.5 w-4 rounded-full transition-colors duration-200",
-            isActive ? "bg-primary/55 dark:bg-primary-light/65" : "bg-transparent"
+            isActive ? "bg-primary-subtle5 dark:bg-primary-light/65" : "bg-transparent"
           )}
         />
         <div

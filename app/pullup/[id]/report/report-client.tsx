@@ -297,7 +297,7 @@ const ReportClient = ({
             placeholder="해당 위치에 대한 설명을 40자 이내로 작성해주세요."
             value={reportValue.description}
             onChange={handleDescChange}
-            className="bg-search-input-bg/45 dark:bg-black/35 dark:border-grey-dark/90"
+            className="bg-surface/45 dark:bg-black-light dark:border-grey-dark/90"
           />
           <Text
             typography="t7"
@@ -325,7 +325,7 @@ const ReportClient = ({
           >
             위치가 정확하지 않나요?
           </Text>
-          <div className="rounded-xl border border-grey-light/85 bg-search-input-bg/50 px-3 py-2 dark:border-grey-dark/85 dark:bg-black/30">
+          <div className="rounded-xl border border-grey-light/85 bg-surface/50 px-3 py-2 dark:border-grey-dark/85 dark:bg-black-light">
             <Text typography="t6" fontWeight="bold" className="text-black dark:text-grey-light">
               현재 위치:{" "}
             </Text>
@@ -333,7 +333,7 @@ const ReportClient = ({
               {marker.address}
             </Text>
           </div>
-          <div className="mt-2 rounded-xl border border-primary/25 bg-primary/8 px-3 py-2 dark:border-primary-light/25 dark:bg-primary-dark/20">
+          <div className="mt-2 rounded-xl border border-primary/25 bg-primary-subtle px-3 py-2 dark:border-primary-light/25 dark:bg-primary-dark/20">
             {changeAddr && (
               <>
                 <Text typography="t6" fontWeight="bold" className="text-primary-dark dark:text-primary-light">
@@ -356,7 +356,7 @@ const ReportClient = ({
           >
             위치 변경하기
           </Button>
-          <WarningText className="text-sm mt-1.5 mo:hidden rounded-lg bg-search-input-bg/35 px-2 py-1 dark:bg-black/30">
+          <WarningText className="text-sm mt-1.5 mo:hidden rounded-lg bg-surface/35 px-2 py-1 dark:bg-black-light">
             지도에서 위치를 수정할 위치를 클릭해 주세요!
           </WarningText>
           <div

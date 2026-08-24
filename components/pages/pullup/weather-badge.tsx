@@ -46,7 +46,7 @@ const WeatherBadge = ({ lat, lng }: WeatherBadgeProps) => {
         />
       }
       text={`${weather.temperature} °C`}
-      className="flex h-7 items-center justify-center border-none bg-search-input-bg/75 pr-3.5 pl-3.5 shadow-full dark:bg-black/35 dark:shadow-[rgba(255,255,255,0.1)]"
+      className="flex h-7 items-center justify-center border-none bg-surface/75 pr-3.5 pl-3.5 shadow-full dark:bg-black-light dark:shadow-[rgba(255,255,255,0.1)]"
       textStyle="leading-3 text-text-on-surface dark:text-grey-light"
     />
   );

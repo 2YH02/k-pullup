@@ -32,7 +32,7 @@ const SearchList = ({
   if (isSearching) {
     return (
       <Section className="pt-3">
-        <div className="space-y-2 rounded-2xl border border-white/70 dark:border-white/10 bg-search-input-bg/55 dark:bg-black/25 p-3 backdrop-blur-sm">
+        <div className="space-y-2 rounded-2xl border border-white/70 dark:border-white/10 bg-surface/55 dark:bg-black/25 p-3 backdrop-blur-sm">
           <div className="h-4 w-28 rounded-full bg-grey-light dark:bg-grey-dark animate-pulse" />
           {[1, 2, 3, 4, 5].map((i) => (
             <div
@@ -55,7 +55,7 @@ const SearchList = ({
   if (result.length === 0 && kakaoSearchResult.length === 0) {
     return (
       <Section className="pt-4">
-        <div className="relative isolate overflow-hidden flex flex-col items-center justify-center py-10 px-4 rounded-2xl border border-white/70 dark:border-white/10 bg-search-input-bg/55 dark:bg-black/25 backdrop-blur-sm">
+        <div className="relative isolate overflow-hidden flex flex-col items-center justify-center py-10 px-4 rounded-2xl border border-white/70 dark:border-white/10 bg-surface/55 dark:bg-black/25 backdrop-blur-sm">
           <div
             aria-hidden
             className="absolute inset-0 pointer-events-none bg-linear-to-br from-white/35 via-transparent to-primary/10 dark:from-white/8 dark:to-primary-dark/20"
@@ -95,7 +95,7 @@ const SearchList = ({
   return (
     <>
       <Section className="pt-2 pb-2">
-        <div className="relative isolate overflow-hidden rounded-2xl border border-white/70 dark:border-white/10 bg-search-input-bg/60 dark:bg-black/25 backdrop-blur-sm p-3">
+        <div className="relative isolate overflow-hidden rounded-2xl border border-white/70 dark:border-white/10 bg-surface/60 dark:bg-black/25 backdrop-blur-sm p-3">
           <div
             aria-hidden
             className="absolute inset-0 pointer-events-none bg-linear-to-br from-white/35 via-transparent to-primary/10 dark:from-white/8 dark:to-primary-dark/20"
@@ -130,7 +130,7 @@ const SearchList = ({
                 <li key={`${item.markerId ? item.markerId : item.address}-${index}`}>
                   <button
                     type="button"
-                    className="relative isolate overflow-hidden flex items-center gap-3 w-full text-left rounded-xl border border-white/70 dark:border-white/10 bg-search-input-bg/55 dark:bg-black/25 backdrop-blur-sm p-3 transition-all duration-180 ease-out motion-reduce:transition-none hover:border-primary/45 dark:hover:border-primary-light/35 hover:shadow-[0_8px_18px_rgba(64,64,56,0.12)] dark:hover:shadow-[0_8px_18px_rgba(0,0,0,0.3)] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 dark:focus-visible:ring-primary-light/35"
+                    className="relative isolate overflow-hidden flex items-center gap-3 w-full text-left rounded-xl border border-white/70 dark:border-white/10 bg-surface/55 dark:bg-black/25 backdrop-blur-sm p-3 transition-all duration-180 ease-out motion-reduce:transition-none hover:border-primary/45 dark:hover:border-primary-light/35 hover:shadow-[0_8px_18px_rgba(64,64,56,0.12)] dark:hover:shadow-[0_8px_18px_rgba(0,0,0,0.3)] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 dark:focus-visible:ring-primary-light/35"
                     onClick={() => {
                       addSearch({
                         addr: item.address,
@@ -181,7 +181,7 @@ const SearchList = ({
                 <li key={item.id}>
                   <button
                     type="button"
-                    className="relative isolate overflow-hidden flex items-center gap-3 w-full text-left rounded-xl border border-white/70 dark:border-white/10 bg-search-input-bg/55 dark:bg-black/25 backdrop-blur-sm p-3 transition-all duration-180 ease-out motion-reduce:transition-none hover:border-primary/45 dark:hover:border-primary-light/35 hover:shadow-[0_8px_18px_rgba(64,64,56,0.12)] dark:hover:shadow-[0_8px_18px_rgba(0,0,0,0.3)] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 dark:focus-visible:ring-primary-light/35"
+                    className="relative isolate overflow-hidden flex items-center gap-3 w-full text-left rounded-xl border border-white/70 dark:border-white/10 bg-surface/55 dark:bg-black/25 backdrop-blur-sm p-3 transition-all duration-180 ease-out motion-reduce:transition-none hover:border-primary/45 dark:hover:border-primary-light/35 hover:shadow-[0_8px_18px_rgba(64,64,56,0.12)] dark:hover:shadow-[0_8px_18px_rgba(0,0,0,0.3)] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 dark:focus-visible:ring-primary-light/35"
                     onClick={() => {
                       move({
                         lat: Number(item.y),

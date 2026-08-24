@@ -25,7 +25,7 @@ const ButtonList = ({ marker }: ButtonListProps) => {
     favCount > 0 && setFavCount((prev) => prev - 1);
 
   return (
-    <div className="flex overflow-hidden rounded-xl border border-grey-light/90 bg-search-input-bg/62 dark:border-grey-dark/90 dark:bg-black/38">
+    <div className="flex overflow-hidden rounded-xl border border-grey-light/90 bg-surface/62 dark:border-grey-dark/90 dark:bg-black/38">
       <div className="relative flex-1">
         <BookmarkButton
           markerId={marker.markerId}

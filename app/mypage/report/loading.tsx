@@ -13,7 +13,7 @@ const Loading = () => {
   return (
     <SideMain headerTitle="내 정보 수정 제안" hasBackButton fullHeight deviceType={deviceType}>
       <Section className="pb-2">
-        <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
+        <div className="rounded-xl border border-border bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
           <Skeleton className="h-5 w-36 rounded-md" />
           <Skeleton className="mt-1.5 h-4 w-44 rounded-md" />
         </div>
@@ -24,7 +24,7 @@ const Loading = () => {
           {Array.from({ length: 4 }).map((_, index) => (
             <div
               key={`report-skeleton-${index}`}
-              className="rounded-xl border border-primary/10 bg-surface/80 p-3 dark:border-grey-dark dark:bg-black"
+              className="rounded-xl border border-border bg-surface/80 p-3 dark:border-grey-dark dark:bg-black"
             >
               <div className="mb-3 flex items-start justify-between">
                 <div>

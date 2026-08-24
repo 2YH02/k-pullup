@@ -12,7 +12,7 @@ const Loading = () => {
   return (
     <SideMain headerTitle="챌린지" withNav fullHeight deviceType={deviceType}>
       <section className="px-6 pt-10 pb-6">
-        <div className="mx-auto w-full max-w-md rounded-3xl border border-primary/14 bg-side-main p-6 dark:border-white/12 dark:bg-black/30">
+        <div className="mx-auto w-full max-w-md rounded-3xl border border-border bg-side-main p-6 dark:border-white/12 dark:bg-black-light">
           <Skeleton className="mx-auto mb-4 h-14 w-14 rounded-2xl" />
           <Skeleton className="mx-auto h-7 w-36 rounded-md" />
           <Skeleton className="mx-auto mt-3 h-4 w-56 rounded-md" />

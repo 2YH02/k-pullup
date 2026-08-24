@@ -53,7 +53,7 @@ const ReportClient = ({
       deviceType={deviceType}
     >
       <Section className="pb-2">
-        <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
+        <div className="rounded-xl border border-border bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
           <Text fontWeight="bold" display="block" className="text-primary dark:text-primary-light">
             내가 제안한 수정 목록
           </Text>

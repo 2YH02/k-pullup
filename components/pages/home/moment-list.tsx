@@ -226,13 +226,13 @@ const MomentList = ({ data }: { data: Moment[] }) => {
       >
         <div className="flex flex-col justify-start">
           <button
-            className="group relative h-12 w-12 shrink-0 rounded-full border border-primary/20 bg-side-main transition-all duration-200 active:scale-[0.97] web:hover:border-primary/40 dark:border-grey-dark dark:bg-black/35 dark:web:hover:border-primary-light/35"
+            className="group relative h-12 w-12 shrink-0 rounded-full border border-primary/20 bg-side-main transition-all duration-200 active:scale-[0.97] web:hover:border-primary/40 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-primary-light/35"
             onClick={() => router.push("/moments")}
             type="button"
             aria-label="모먼트 페이지로 이동"
           >
             <div
-              className="absolute top-1/2 left-1/2 flex h-10.5 w-10.5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-primary/12 bg-white dark:bg-black"
+              className="absolute top-1/2 left-1/2 flex h-10.5 w-10.5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white dark:bg-black"
             >
               <Plus className="text-text-on-surface-muted dark:text-grey-light" size={18} />
             </div>
@@ -244,7 +244,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
             key={`${moment.caption} ${moment.createdAt}`}
           >
             <button
-              className="group relative h-12 w-12 shrink-0 rounded-full border border-primary/20 bg-side-main transition-all duration-200 active:scale-[0.97] web:hover:border-primary/40 dark:border-grey-dark dark:bg-black/35 dark:web:hover:border-primary-light/35"
+              className="group relative h-12 w-12 shrink-0 rounded-full border border-primary/20 bg-side-main transition-all duration-200 active:scale-[0.97] web:hover:border-primary/40 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-primary-light/35"
               onClick={() => handleViewMoment(moment)}
               type="button"
               aria-label={`${getCity(moment.address)} 모먼트 보기`}

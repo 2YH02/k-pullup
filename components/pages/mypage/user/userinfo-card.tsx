@@ -17,7 +17,7 @@ const UserinfoCard = ({ user }: UserinfoCardProps) => {
   return (
     <Section>
       <SectionTitle title="개인 정보" />
-      <div className="rounded-xl border border-primary/10 bg-surface/80 p-4 dark:border-grey-dark dark:bg-black">
+      <div className="rounded-xl border border-border bg-surface/80 p-4 dark:border-grey-dark dark:bg-black">
         {user.provider && user.provider !== "website" && (
           <div className="flex items-center gap-2 py-2">
             <Text typography="t6" className="w-16 text-grey-dark dark:text-grey">
@@ -38,7 +38,7 @@ const UserinfoCard = ({ user }: UserinfoCardProps) => {
           </Text>
         </div>
         {user.provider === "website" && (
-          <div className="flex items-center gap-2 border-t border-primary/10 pt-2 mt-1 dark:border-grey-dark">
+          <div className="flex items-center gap-2 border-t border-border pt-2 mt-1 dark:border-grey-dark">
             <Text typography="t6" className="w-16 text-grey-dark dark:text-grey">
               비밀번호
             </Text>
@@ -54,7 +54,7 @@ const UserinfoCard = ({ user }: UserinfoCardProps) => {
                   cancel: true,
                 });
               }}
-              className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-primary transition-colors duration-150 web:hover:bg-primary/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:text-primary-light dark:web:hover:bg-primary-dark/20"
+              className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-primary transition-colors duration-150 web:hover:bg-primary-subtle active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:text-primary-light dark:web:hover:bg-primary-dark/20"
               aria-label="비밀번호 수정"
             >
               <EditIcon size={15} color="primary" />

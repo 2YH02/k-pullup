@@ -26,7 +26,7 @@ const Loading = () => {
             aria-label="검색 로딩 카드"
             className={cn(
               "w-full rounded-2xl border border-white/70 dark:border-white/10",
-              "bg-search-input-bg/70 dark:bg-black/35 p-4"
+              "bg-surface/70 dark:bg-black-light p-4"
             )}
           >
             <div className="flex items-center gap-3">
@@ -50,7 +50,7 @@ const Loading = () => {
             className={cn(
               "rounded-2xl overflow-hidden border",
               "border-white/70 dark:border-white/10",
-              "bg-search-input-bg/55 dark:bg-black/25"
+              "bg-surface/55 dark:bg-black/25"
             )}
           >
             {Array.from({ length: 6 }).map((_, index) => (

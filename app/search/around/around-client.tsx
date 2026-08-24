@@ -27,7 +27,7 @@ const AroundClient = ({ deviceType }: Props) => {
             className={cn(
               "relative isolate overflow-hidden",
               "p-6 rounded-2xl border border-white/70 dark:border-white/10",
-              "bg-search-input-bg/65 dark:bg-black/32 backdrop-blur-md",
+              "bg-surface/65 dark:bg-black-light/90 backdrop-blur-md",
               "shadow-[0_10px_24px_rgba(64,64,56,0.08)] dark:shadow-[0_10px_24px_rgba(0,0,0,0.3)]",
               "flex flex-col items-center text-center mt-6"
             )}

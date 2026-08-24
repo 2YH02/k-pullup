@@ -53,7 +53,7 @@ const Loading = () => {
           {Array.from({ length: 2 }).map((_, index) => (
             <div
               key={`around-skeleton-${index}`}
-              className="w-64 shrink-0 rounded-2xl border border-primary/10 bg-side-main p-2"
+              className="w-64 shrink-0 rounded-2xl border border-border bg-side-main p-2"
             >
               <Skeleton className="h-40 w-full rounded-xl" />
               <Skeleton className="mt-3 h-4 w-3/4 rounded-md" />

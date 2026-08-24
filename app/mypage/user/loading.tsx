@@ -13,7 +13,7 @@ const Loading = () => {
   return (
     <SideMain headerTitle="내 정보 관리" fullHeight hasBackButton deviceType={deviceType}>
       <Section>
-        <div className="rounded-xl border border-primary/10 bg-surface/80 p-4 dark:border-grey-dark dark:bg-black">
+        <div className="rounded-xl border border-border bg-surface/80 p-4 dark:border-grey-dark dark:bg-black">
           <div className="mb-3 flex items-center justify-center gap-2">
             <Skeleton className="h-6 w-28 rounded-md" />
             <Skeleton className="h-6 w-6 rounded-md" />
@@ -24,7 +24,7 @@ const Loading = () => {
 
       <Section className="pt-0">
         <SectionTitle title="개인 정보" />
-        <div className="rounded-xl border border-primary/10 bg-surface/80 p-4 dark:border-grey-dark dark:bg-black">
+        <div className="rounded-xl border border-border bg-surface/80 p-4 dark:border-grey-dark dark:bg-black">
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <Skeleton className="h-4 w-14 rounded-md" />
@@ -34,7 +34,7 @@ const Loading = () => {
               <Skeleton className="h-4 w-14 rounded-md" />
               <Skeleton className="h-4 w-48 rounded-md" />
             </div>
-            <div className="flex items-center gap-2 border-t border-primary/10 pt-3 dark:border-grey-dark">
+            <div className="flex items-center gap-2 border-t border-border pt-3 dark:border-grey-dark">
               <Skeleton className="h-4 w-14 rounded-md" />
               <Skeleton className="h-4 w-24 rounded-md" />
               <div className="grow" />

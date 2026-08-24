@@ -84,14 +84,14 @@ const ListItem = ({
   };
 
   return (
-    <li className="group flex items-center gap-2 rounded-xl border border-primary/10 bg-surface/80 px-3 py-2.5 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-white/70 active:scale-[0.995] dark:border-grey-dark dark:bg-black dark:web:hover:bg-black-light">
+    <li className="group flex items-center gap-2 rounded-xl border border-border bg-surface/80 px-3 py-2.5 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-white/70 active:scale-[0.995] dark:border-grey-dark dark:bg-black dark:web:hover:bg-black-light">
       <div className="min-w-0 grow">
         <button
           className="flex w-full cursor-pointer items-center gap-3 text-left focus-visible:outline-none"
           onClick={onClick}
         >
           {leftIcon && (
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/8 dark:bg-primary-dark/20">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-subtle dark:bg-primary-dark/20">
               {leftIcon}
             </div>
           )}
@@ -112,7 +112,7 @@ const ListItem = ({
         </button>
       </div>
       <button
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-grey-dark transition-colors duration-150 web:hover:bg-primary/10 web:hover:text-primary active:scale-[0.98] dark:text-grey dark:web:hover:bg-primary-dark/20 dark:web:hover:text-primary-light"
+        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-grey-dark transition-colors duration-150 web:hover:bg-primary-subtle web:hover:text-primary active:scale-[0.98] dark:text-grey dark:web:hover:bg-primary-dark/20 dark:web:hover:text-primary-light"
         aria-label="즐겨찾기 옵션"
         onClick={(e) => {
           e.stopPropagation();

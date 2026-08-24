@@ -29,7 +29,7 @@ const SetFacilities = ({
 }: SetFacilitiesProps) => {
   return (
     <Section className="flex h-full flex-col pb-4">
-      <div className="my-4 rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/45 px-3.5 py-3 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/35">
+      <div className="my-4 rounded-xl border border-border/80 bg-surface/45 px-3.5 py-3 dark:border-black-light/70 dark:bg-black-light/35">
         <Text
           fontWeight="bold"
           className="text-text-on-surface dark:text-grey-light"
@@ -44,7 +44,7 @@ const SetFacilities = ({
         </Text>
       </div>
 
-      <div className="rounded-xl border border-primary/25 bg-search-input-bg/45 px-3 py-2 dark:border-primary-dark/50 dark:bg-black/30">
+      <div className="rounded-xl border border-primary/25 bg-surface/45 px-3 py-2 dark:border-primary-dark/50 dark:bg-black-light">
         <FacilityList
           name="철봉"
           count={철봉}
@@ -103,7 +103,7 @@ export const FacilityList = ({
     <div className="my-1.5 flex items-center rounded-lg px-1.5 py-1">
       <Text className="text-text-on-surface dark:text-grey-light">{name}</Text>
       <GrowBox />
-      <span className="flex items-center rounded-full border border-grey-light/80 bg-side-main px-1 py-0.5 dark:border-grey-dark/80 dark:bg-black/35">
+      <span className="flex items-center rounded-full border border-grey-light/80 bg-side-main px-1 py-0.5 dark:border-grey-dark/80 dark:bg-black-light">
         <button
           className="rounded-full p-1 text-text-on-surface transition-colors duration-150 active:scale-[0.97] active:bg-black/5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:text-grey-light dark:active:bg-white/10"
           onClick={() => decrease()}

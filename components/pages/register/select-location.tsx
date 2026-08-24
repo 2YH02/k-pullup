@@ -116,7 +116,7 @@ const SelectLocation = ({
           <Proposal size={130} />
         )}
 
-        <div className="mt-8 w-full rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/45 px-3.5 py-3 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/35">
+        <div className="mt-8 w-full rounded-xl border border-border/80 bg-surface/45 px-3.5 py-3 dark:border-black-light/70 dark:bg-black-light/35">
           <Text
             className="select-none text-center text-text-on-surface dark:text-grey-light"
             fontWeight="bold"

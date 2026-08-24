@@ -20,7 +20,7 @@ const List = ({ title, children }: ListProps) => {
       >
         {title}
       </Text>
-      <ul className="overflow-hidden rounded-xl border border-primary/10 bg-surface/80 dark:border-grey-dark dark:bg-black">
+      <ul className="overflow-hidden rounded-xl border border-border bg-surface/80 dark:border-grey-dark dark:bg-black">
         {children}
       </ul>
     </section>
@@ -80,9 +80,9 @@ export const ListItem = ({
 
   return (
     <li
-      className={`group flex min-h-12 items-center justify-between gap-3 border-b border-primary/10 px-3 py-2.5 last:border-b-0 dark:border-grey-dark ${
+      className={`group flex min-h-12 items-center justify-between gap-3 border-b border-border px-3 py-2.5 last:border-b-0 dark:border-grey-dark ${
         isClickable
-          ? "cursor-pointer transition-[background-color,transform] duration-150 ease-out web:hover:bg-primary/6 active:scale-[0.998] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:web:hover:bg-primary-dark/15"
+          ? "cursor-pointer transition-[background-color,transform] duration-150 ease-out web:hover:bg-primary-subtle active:scale-[0.998] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:web:hover:bg-primary-dark/15"
           : "cursor-default"
       }`}
       onClick={handleItemClick}

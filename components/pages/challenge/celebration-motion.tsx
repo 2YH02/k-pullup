@@ -55,7 +55,7 @@ const CelebrationMotion = () => {
 
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl border border-primary/18 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 px-4 py-3.5 dark:border-primary-light/20 dark:from-primary-light/10 dark:via-primary-light/5 dark:to-primary-light/10 ${
+      className={`relative overflow-hidden rounded-2xl border border-border bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 px-4 py-3.5 dark:border-primary-light/20 dark:from-primary-light/10 dark:via-primary-light/5 dark:to-primary-light/10 ${
         showEntryAnimation && !reducedMotion
           ? "animate-[fade-in_300ms_ease-out]"
           : ""
@@ -64,8 +64,8 @@ const CelebrationMotion = () => {
       {/* 배경 반짝임 효과 */}
       {!reducedMotion && (
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -left-4 top-1/2 h-8 w-8 -translate-y-1/2 animate-[pulse_3s_ease-in-out_infinite] rounded-full bg-primary/10 blur-lg dark:bg-primary-light/10" />
-          <div className="absolute -right-2 top-1/4 h-6 w-6 animate-[pulse_4s_ease-in-out_infinite_1s] rounded-full bg-primary/8 blur-md dark:bg-primary-light/8" />
+          <div className="absolute -left-4 top-1/2 h-8 w-8 -translate-y-1/2 animate-[pulse_3s_ease-in-out_infinite] rounded-full bg-primary-subtle blur-lg dark:bg-primary-light/10" />
+          <div className="absolute -right-2 top-1/4 h-6 w-6 animate-[pulse_4s_ease-in-out_infinite_1s] rounded-full bg-primary-subtle blur-md dark:bg-primary-light/8" />
         </div>
       )}
 

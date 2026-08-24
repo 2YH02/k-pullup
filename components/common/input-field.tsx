@@ -43,7 +43,7 @@ const InputField = forwardRef<HTMLInputElement, Props>(
       : "text-grey-dark dark:text-grey";
 
     const inputClassName = cn(
-      "bg-location-badge-bg/58 dark:bg-location-badge-bg-dark/38 border-text-on-surface-muted/40 dark:border-location-badge-bg-dark/90 ring-1 ring-black/4 dark:ring-white/8 transition-[border-color,background-color,box-shadow] duration-150",
+      "bg-surface/58 dark:bg-black-light/38 border-text-on-surface-muted/40 dark:border-black-light/90 ring-1 ring-black/4 dark:ring-white/8 transition-[border-color,background-color,box-shadow] duration-150",
       focused && !isError
         ? "border-primary/70 dark:border-primary-dark/70 ring-2 ring-primary/18 dark:ring-primary-dark/24"
         : "",
