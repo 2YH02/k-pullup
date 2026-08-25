@@ -392,12 +392,12 @@ const KakaoMap = () => {
                   ? "#22c55e"
                   : gpsState === "error"
                   ? "#ef4444"
-                  : "#f9b4ab",
+                  : "#18181b",
                 stroke: gpsState === "success"
                   ? "#22c55e"
                   : gpsState === "error"
                   ? "#ef4444"
-                  : "#f9b4ab",
+                  : "#18181b",
                 transition: "all 0.3s ease-out",
               }}
             />
