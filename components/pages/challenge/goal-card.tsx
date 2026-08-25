@@ -35,7 +35,7 @@ const GoalCard = ({ className = "" }: GoalCardProps) => {
     >
       {/* Header */}
       <div className="mb-4 flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-primary-subtle">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-primary-subtle dark:border-grey-dark dark:bg-black-light">
           <Target size={18} className="text-primary dark:text-primary-light" />
         </div>
         <div>

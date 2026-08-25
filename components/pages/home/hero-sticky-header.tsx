@@ -5,7 +5,7 @@ import Text from "@common/text";
 import cn from "@lib/cn";
 import LocationBadge from "@pages/home/location-badge";
 import useScrollRefStore from "@store/useScrollRefStore";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const COMPACT_ENTER_SCROLL_TOP = 36;
 const COMPACT_EXIT_SCROLL_TOP = 12;
@@ -13,6 +13,9 @@ const COMPACT_EXIT_SCROLL_TOP = 12;
 const HeroStickyHeader = () => {
   const { containerRef } = useScrollRefStore();
   const [isCompact, setIsCompact] = useState(false);
+  const rowRef = useRef<HTMLDivElement>(null);
+  const badgeRef = useRef<HTMLDivElement>(null);
+  const [offsetX, setOffsetX] = useState(0);
 
   useEffect(() => {
     const container = containerRef?.current;
@@ -35,6 +38,22 @@ const HeroStickyHeader = () => {
     };
   }, [containerRef]);
 
+  // 뱃지를 가운데로 이동할 거리 계산
+  useEffect(() => {
+    const row = rowRef.current;
+    const badge = badgeRef.current;
+    if (!row || !badge) return;
+
+    const rowWidth = row.offsetWidth;
+    const badgeWidth = badge.offsetWidth;
+    const badgeRight = row.offsetWidth - badge.offsetLeft - badgeWidth;
+    // 가운데 위치: (rowWidth - badgeWidth) / 2
+    // 현재 위치에서 가운데까지의 이동 거리 (왼쪽으로)
+    const centerLeft = (rowWidth - badgeWidth) / 2;
+    const currentLeft = row.offsetWidth - badgeRight - badgeWidth;
+    setOffsetX(centerLeft - currentLeft);
+  }, [isCompact]);
+
   return (
     <Section
       className={cn(
@@ -45,6 +64,7 @@ const HeroStickyHeader = () => {
       )}
     >
       <div
+        ref={rowRef}
         className={cn(
           "flex items-center",
           isCompact ? "h-8" : "h-10",
@@ -69,11 +89,9 @@ const HeroStickyHeader = () => {
 
         {/* 위치 뱃지 — compact 시 가운데로 슬라이드 */}
         <div
-          className={cn(
-            "shrink-0",
-            "transition-[margin] duration-300 ease-out",
-            isCompact ? "mx-auto" : "ml-auto"
-          )}
+          ref={badgeRef}
+          className="ml-auto shrink-0 transition-transform duration-300 ease-out"
+          style={{ transform: isCompact ? `translateX(${offsetX}px)` : "translateX(0)" }}
         >
           <LocationBadge />
         </div>
