@@ -16,7 +16,7 @@ test.describe("챌린지 페이지 테스트", () => {
   });
 
   test("주간 히트맵이 표시됨", async ({ page }) => {
-    await expect(page.getByText("방문 기록")).toBeVisible();
+    await expect(page.getByText("방문 히트맵")).toBeVisible();
   });
 
   test("주간 목표 카드가 표시됨", async ({ page }) => {
@@ -24,6 +24,9 @@ test.describe("챌린지 페이지 테스트", () => {
   });
 
   test("페이지 진입 시 오늘 방문이 기록됨 (localStorage)", async ({ page }) => {
+    // hydration + recordVisit 완료 대기
+    await page.waitForTimeout(1000);
+
     const storageData = await page.evaluate(() => {
       const raw = localStorage.getItem("k-pullup-challenge");
       return raw ? JSON.parse(raw) : null;
