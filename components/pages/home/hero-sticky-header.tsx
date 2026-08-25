@@ -46,8 +46,7 @@ const HeroStickyHeader = () => {
     >
       <div
         className={cn(
-          "flex items-center overflow-hidden",
-          "web:justify-center",
+          "relative flex items-center overflow-hidden",
           isCompact ? "justify-center h-8" : "mo:justify-between h-10",
           "max-[384px]:justify-center",
           "transition-[height] duration-200 ease-out"
@@ -55,9 +54,11 @@ const HeroStickyHeader = () => {
       >
         <div
           className={cn(
-            "flex flex-col grow overflow-hidden origin-left max-w-[68%] pr-3 web:max-w-90 web:pr-4",
+            "flex flex-col overflow-hidden origin-left max-w-[68%] pr-3 web:max-w-90 web:pr-4",
             "transition-[max-width,opacity,transform,padding] duration-250 ease-out",
-            isCompact && "grow-0 max-w-0 pr-0 opacity-0 -translate-y-0.5 pointer-events-none"
+            isCompact
+              ? "absolute left-0 max-w-0 pr-0 opacity-0 -translate-y-0.5 pointer-events-none"
+              : ""
           )}
         >
           <Text fontWeight="bold" typography="t5" className="text-text-on-surface whitespace-nowrap">
@@ -71,8 +72,8 @@ const HeroStickyHeader = () => {
         <div
           className={cn(
             "shrink-0",
-            "transition-transform duration-250 ease-out",
-            isCompact && "mx-auto",
+            "transition-[transform,margin] duration-250 ease-out",
+            !isCompact && "mo:ml-auto",
             "max-[370px]:mx-auto"
           )}
         >
