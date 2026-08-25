@@ -47,18 +47,16 @@ const HeroStickyHeader = () => {
       <div
         className={cn(
           "relative flex items-center overflow-hidden",
-          isCompact ? "justify-center h-8" : "mo:justify-between h-10",
-          "max-[384px]:justify-center",
-          "transition-[height] duration-200 ease-out"
+          isCompact ? "h-8" : "h-10",
+          "transition-[height] duration-250 ease-out"
         )}
       >
+        {/* 타이틀 — compact 시 페이드아웃 */}
         <div
           className={cn(
-            "flex flex-col overflow-hidden origin-left pr-3 web:max-w-90 web:pr-4",
-            "transition-[max-width,opacity,transform,padding,flex] duration-250 ease-out",
-            isCompact
-              ? "absolute left-0 max-w-0 pr-0 opacity-0 -translate-y-0.5 pointer-events-none"
-              : "flex-1 min-w-0"
+            "flex flex-col min-w-0 flex-1 pr-3 web:pr-4",
+            "transition-[opacity,transform] duration-250 ease-out",
+            isCompact && "opacity-0 -translate-y-1 pointer-events-none"
           )}
         >
           <Text fontWeight="bold" typography="t5" className="text-text-on-surface whitespace-nowrap">
@@ -69,11 +67,14 @@ const HeroStickyHeader = () => {
           </Text>
         </div>
 
+        {/* 위치 뱃지 — compact 시 가운데로 슬라이드 */}
         <div
           className={cn(
-            "shrink-0",
-            "transition-[transform,margin] duration-250 ease-out",
-            "max-[370px]:mx-auto"
+            "absolute shrink-0 top-1/2 -translate-y-1/2",
+            "transition-[left,transform] duration-300 ease-out",
+            isCompact
+              ? "left-1/2 -translate-x-1/2"
+              : "left-[calc(100%-0px)] -translate-x-full"
           )}
         >
           <LocationBadge />
