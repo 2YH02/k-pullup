@@ -28,7 +28,7 @@ const AuthError = ({ errorTitle, prevUrl, returnUrl, ...props }: Props) => {
     >
       <Section className="mt-8">
         <div className="mx-auto flex max-w-sm flex-col items-center text-center motion-safe:animate-page-enter">
-          <div className="relative mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-border bg-primary-subtle dark:border-primary/40/40 dark:bg-primary-dark/20">
+          <div className="relative mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-border bg-primary-subtle dark:border-grey-dark dark:bg-primary-dark/20">
             <span className="pointer-events-none absolute inset-0 rounded-full ring-2 ring-primary/20 motion-safe:animate-pulse motion-reduce:animate-none dark:ring-primary-light/25" />
             <Text typography="t3" fontWeight="bold" className="text-primary dark:text-primary-light">
               ?

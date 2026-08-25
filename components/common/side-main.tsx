@@ -214,7 +214,7 @@ const SideMain = ({
               headerTitle && fullHeight
                 ? isMobileApp
                   ? "mo:pt-24"
-                  : "mo:pt-10"
+                  : "mo:pt-12"
                 : "",
               deviceType === "ios-mobile-app" && withNav ? "pb-28" : "",
               shouldEnableDrawerDrag && isDrawerDragging ? "touch-none" : "",

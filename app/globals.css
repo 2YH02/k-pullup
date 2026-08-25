@@ -218,11 +218,11 @@
 }
 
 @utility shadow-dark-primary {
-  box-shadow: rgba(37, 99, 235, 0.2) 0px 3px 8px;
+  box-shadow: rgba(24, 24, 27, 0.15) 0px 3px 8px;
 }
 
 @utility shadow-simple-primary {
-  box-shadow: rgba(37, 99, 235, 0.15) 0px 1px 4px;
+  box-shadow: rgba(24, 24, 27, 0.10) 0px 1px 4px;
 }
 
 @utility no-touch {

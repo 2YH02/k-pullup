@@ -6,7 +6,7 @@ const buttonColorMap = {
   primary: cn(
     "bg-primary dark:bg-primary",
     "text-white",
-    "disabled:bg-primary-subtle0",
+    "disabled:bg-primary-subtle",
     "disabled:text-white/70"
   ),
   blue: cn(
