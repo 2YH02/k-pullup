@@ -5,11 +5,11 @@ description: 대한민국 철봉 지도 — 미니멀 화이트/블랙 베이스
 
 colors:
   # === Brand & Accent ===
-  primary: "#0f766e"
-  primary-hover: "#115e59"
-  primary-active: "#134e4a"
-  primary-muted: "#ccfbf1"
-  primary-subtle: "#f0fdfa"
+  primary: "#18181b"
+  primary-hover: "#09090b"
+  primary-active: "#000000"
+  primary-muted: "#e4e4e7"
+  primary-subtle: "#f4f4f5"
 
   # === Neutral (Light Mode) ===
   canvas: "#ffffff"
@@ -44,8 +44,8 @@ colors:
   warning-muted: "#fef9c3"
   error: "#dc2626"
   error-muted: "#fee2e2"
-  info: "#0f766e"
-  info-muted: "#ccfbf1"
+  info: "#18181b"
+  info-muted: "#e4e4e7"
 
   # === Scrim & Overlay ===
   scrim: "rgba(15, 23, 42, 0.6)"
@@ -252,12 +252,12 @@ components:
 
 ## Overview
 
-k-pullup(대한민국 철봉 지도)의 디자인 시스템은 **미니멀리스트 화이트/블랙 베이스**에 단일 프라이머리 컬러(#0f766e, 블루)로 포인트를 주는 구조입니다. 콘텐츠(사진, 지도 마커, 사용자 데이터)가 화면의 주인공이 되고, UI 크롬은 최대한 배경으로 빠집니다.
+k-pullup(대한민국 철봉 지도)의 디자인 시스템은 **미니멀리스트 화이트/블랙 베이스**에 단일 프라이머리 컬러(#18181b, 차콜)로 포인트를 주는 구조입니다. 콘텐츠(사진, 지도 마커, 사용자 데이터)가 화면의 주인공이 되고, UI 크롬은 최대한 배경으로 빠집니다.
 
 ### Design Principles
 
 1. **콘텐츠 퍼스트** — 지도, 사진, 위치 데이터가 시각적 무게의 중심. UI 장식은 최소화.
-2. **절제된 컬러** — 프라이머리 블루는 CTA, 활성 상태, 핵심 인터랙션에만 사용. 나머지는 뉴트럴.
+2. **절제된 컬러** — 프라이머리 차콜는 CTA, 활성 상태, 핵심 인터랙션에만 사용. 나머지는 뉴트럴.
 3. **깨끗한 공간** — 넉넉한 여백과 1px 보더로 섹션을 구분. 그림자는 계층이 필요할 때만.
 4. **다크모드 네이티브** — 라이트/다크 모두 같은 계층 구조를 유지. 다크는 슬레이트 계열.
 5. **모바일 우선** — 터치 타겟 44px 이상, 모바일에서 먼저 완성하고 데스크톱으로 확장.
@@ -266,22 +266,22 @@ k-pullup(대한민국 철봉 지도)의 디자인 시스템은 **미니멀리스
 
 ### Philosophy
 
-화면의 90%는 화이트(라이트) 또는 다크 슬레이트(다크)로 채워집니다. 프라이머리 블루(#0f766e)는 **CTA 버튼, 활성 탭, 토글 on 상태, 링크** 등 "지금 여기를 눌러라"는 시그널에만 사용합니다. 대부분의 텍스트, 아이콘, 보더는 뉴트럴 슬레이트 팔레트로 처리합니다.
+화면의 90%는 화이트(라이트) 또는 다크 슬레이트(다크)로 채워집니다. 프라이머리 차콜(#18181b)는 **CTA 버튼, 활성 탭, 토글 on 상태, 링크** 등 "지금 여기를 눌러라"는 시그널에만 사용합니다. 대부분의 텍스트, 아이콘, 보더는 뉴트럴 슬레이트 팔레트로 처리합니다.
 
 ### Brand & Accent
 
 | Token | Hex | Use |
 |---|---|---|
-| `primary` | #0f766e | CTA 버튼, 활성 상태, 토글, 링크, 선택된 마커 |
-| `primary-hover` | #115e59 | 호버 상태 |
-| `primary-active` | #134e4a | 누름 상태 |
-| `primary-muted` | #ccfbf1 | Focus ring, 선택 배경 (연한 블루) |
-| `primary-subtle` | #f0fdfa | 뱃지 배경, 알림 배경 (가장 연한 블루) |
+| `primary` | #18181b | CTA 버튼, 활성 상태, 토글, 링크, 선택된 마커 |
+| `primary-hover` | #09090b | 호버 상태 |
+| `primary-active` | #000000 | 누름 상태 |
+| `primary-muted` | #e4e4e7 | Focus ring, 선택 배경 (연한 그레이) |
+| `primary-subtle` | #f4f4f5 | 뱃지 배경, 알림 배경 (가장 연한 그레이) |
 
-프라이머리 블루를 선택한 이유:
-- 운동/아웃도어 앱에서 신뢰감과 활력을 동시에 전달
+프라이머리 차콜를 선택한 이유:
+- 미니멀 흑백 기반으로 콘텐츠에 집중
 - 화이트/블랙 베이스에서 충분한 대비를 확보 (WCAG AA 통과)
-- 지도 위 마커 색상으로도 잘 보이고, Kakao Maps 타일과 충돌하지 않음
+- 무채색이라 어떤 콘텐츠 위에서도 방해하지 않음
 
 ### Surface (Light)
 
@@ -321,7 +321,7 @@ k-pullup(대한민국 철봉 지도)의 디자인 시스템은 **미니멀리스
 | `success` | #16a34a | 성공 메시지, 완료 상태 |
 | `warning` | #ca8a04 | 경고 |
 | `error` | #dc2626 | 에러, 삭제 |
-| `info` | #0f766e | 정보 알림 (= primary) |
+| `info` | #18181b | 정보 알림 (= primary) |
 
 각 시맨틱 색상은 `-muted` 변형(연한 배경용)을 함께 제공합니다.
 
@@ -418,7 +418,7 @@ Pretendard를 기본으로 사용합니다. 한/영 모두 깔끔하게 처리�
 
 ### Navigation
 
-- **Bottom Nav**: 흰 배경(다크: 슬레이트), 상단 1px 보더. 아이콘 + 라벨. 활성 탭만 프라이머리 블루.
+- **Bottom Nav**: 흰 배경(다크: 슬레이트), 상단 1px 보더. 아이콘 + 라벨. 활성 탭만 프라이머리 차콜.
 - **Header**: 타이틀 중앙 정렬. 좌측 뒤로가기, 우측 액션 아이콘.
 
 ### Search
@@ -469,7 +469,7 @@ Pretendard를 기본으로 사용합니다. 한/영 모두 깔끔하게 처리�
 모든 텍스트/배경 조합은 최소 WCAG AA(4.5:1) 충족:
 - ink-dark(#f8fafc) on canvas-dark(#0f172a) → 15.4:1 ✓
 - muted-dark(#94a3b8) on canvas-dark(#0f172a) → 5.7:1 ✓
-- primary(#0f766e) on canvas-dark(#0f172a) → 4.6:1 ✓
+- primary(#18181b) on canvas-dark(#0f172a) → 4.6:1 ✓
 
 ## Implementation Notes
 
@@ -479,11 +479,11 @@ Pretendard를 기본으로 사용합니다. 한/영 모두 깔끔하게 처리�
 
 ```css
 @theme {
-  --color-primary: #0f766e;
-  --color-primary-hover: #115e59;
-  --color-primary-active: #134e4a;
-  --color-primary-muted: #ccfbf1;
-  --color-primary-subtle: #f0fdfa;
+  --color-primary: #18181b;
+  --color-primary-hover: #09090b;
+  --color-primary-active: #000000;
+  --color-primary-muted: #e4e4e7;
+  --color-primary-subtle: #f4f4f5;
   /* ... */
 }
 ```
@@ -492,7 +492,7 @@ Pretendard를 기본으로 사용합니다. 한/영 모두 깔끔하게 처리�
 
 | 현재 토큰 | 새 토큰 | 비고 |
 |---|---|---|
-| `--color-primary: #6c705e` | `--color-primary: #0f766e` | 올리브 → 블루 |
+| `--color-primary: #6c705e` | `--color-primary: #18181b` | 올리브 → 블루 |
 | `--color-surface: #f3ede5` | `--color-surface: #f8fafc` | 웜 베이지 → 쿨 슬레이트 |
 | `--color-text-on-surface: #404038` | `--color-ink: #0f172a` | 웜 다크 → 쿨 다크 |
 | `--color-search-input-bg: #e4e8de` | `--color-surface: #f8fafc` | 통합 |
