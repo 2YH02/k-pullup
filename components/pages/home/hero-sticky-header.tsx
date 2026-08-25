@@ -54,11 +54,11 @@ const HeroStickyHeader = () => {
       >
         <div
           className={cn(
-            "flex flex-col overflow-hidden origin-left max-w-[68%] pr-3 web:max-w-90 web:pr-4",
-            "transition-[max-width,opacity,transform,padding] duration-250 ease-out",
+            "flex flex-col overflow-hidden origin-left pr-3 web:max-w-90 web:pr-4",
+            "transition-[max-width,opacity,transform,padding,flex] duration-250 ease-out",
             isCompact
               ? "absolute left-0 max-w-0 pr-0 opacity-0 -translate-y-0.5 pointer-events-none"
-              : ""
+              : "flex-1 min-w-0"
           )}
         >
           <Text fontWeight="bold" typography="t5" className="text-text-on-surface whitespace-nowrap">
@@ -73,7 +73,6 @@ const HeroStickyHeader = () => {
           className={cn(
             "shrink-0",
             "transition-[transform,margin] duration-250 ease-out",
-            !isCompact && "mo:ml-auto",
             "max-[370px]:mx-auto"
           )}
         >
