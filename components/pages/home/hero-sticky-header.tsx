@@ -38,21 +38,27 @@ const HeroStickyHeader = () => {
     };
   }, [containerRef]);
 
-  // 뱃지를 가운데로 이동할 거리 계산
+  // 뱃지를 가운데로 이동할 거리 계산 (마운트 + 리사이즈 시)
   useEffect(() => {
-    const row = rowRef.current;
-    const badge = badgeRef.current;
-    if (!row || !badge) return;
+    const calculate = () => {
+      const row = rowRef.current;
+      const badge = badgeRef.current;
+      if (!row || !badge) return;
 
-    const rowWidth = row.offsetWidth;
-    const badgeWidth = badge.offsetWidth;
-    const badgeRight = row.offsetWidth - badge.offsetLeft - badgeWidth;
-    // 가운데 위치: (rowWidth - badgeWidth) / 2
-    // 현재 위치에서 가운데까지의 이동 거리 (왼쪽으로)
-    const centerLeft = (rowWidth - badgeWidth) / 2;
-    const currentLeft = row.offsetWidth - badgeRight - badgeWidth;
-    setOffsetX(centerLeft - currentLeft);
-  }, [isCompact]);
+      const rowWidth = row.offsetWidth;
+      const badgeWidth = badge.offsetWidth;
+      // 가운데 left 위치
+      const centerLeft = (rowWidth - badgeWidth) / 2;
+      // 현재 위치 (ml-auto = 오른쪽 끝)
+      const currentLeft = rowWidth - badgeWidth;
+      // 이동할 거리 (왼쪽으로 → 음수)
+      setOffsetX(centerLeft - currentLeft);
+    };
+
+    calculate();
+    window.addEventListener("resize", calculate);
+    return () => window.removeEventListener("resize", calculate);
+  }, []);
 
   return (
     <Section
