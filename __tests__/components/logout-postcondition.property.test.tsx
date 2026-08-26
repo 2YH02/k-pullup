@@ -74,14 +74,26 @@ const userArbitrary: fc.Arbitrary<User> = fc.record({
 });
 
 describe("Feature: auth-flow-improvements, Property 12: Logout post-condition invariant", () => {
+  let locationHrefSpy: ReturnType<typeof vi.spyOn>;
+
   beforeEach(() => {
     mockSignout.mockReset();
     mockReplace.mockReset();
     sessionStorage.clear();
+    // window.location.href mock
+    locationHrefSpy = vi.spyOn(window, "location", "get").mockReturnValue({
+      ...window.location,
+      href: "http://localhost",
+    } as Location);
+    Object.defineProperty(window, "location", {
+      writable: true,
+      value: { ...window.location, href: "" },
+    });
   });
 
   afterEach(() => {
     cleanup();
+    locationHrefSpy?.mockRestore?.();
   });
 
   it(
@@ -108,12 +120,12 @@ describe("Feature: auth-flow-improvements, Property 12: Logout post-condition in
             render(<UserSetting />);
 
             // Find and click the logout button
-            const logoutButton = screen.getByText("로그아웃");
+            const logoutButton = screen.getByRole("button", { name: /로그아웃/ });
             fireEvent.click(logoutButton);
 
-            // Wait for the handler to complete
+            // Wait for the handler to complete (window.location.href 설정 확인)
             await waitFor(() => {
-              expect(mockReplace).toHaveBeenCalledWith("/");
+              expect(window.location.href).toBe("/");
             });
 
             // Post-condition: store.user SHALL be null
@@ -123,7 +135,7 @@ describe("Feature: auth-flow-improvements, Property 12: Logout post-condition in
             expect(sessionStorage.getItem(SESSION_CACHE_KEY)).toBeNull();
 
             cleanup();
-            mockReplace.mockReset();
+            window.location.href = "";
           }
         ),
         { numRuns: 100 }
