@@ -31,8 +31,8 @@ const UserSetting = () => {
       // API 실패 또는 타임아웃: 무시하고 진행
     }
 
-    // 3. 홈으로 이동
-    router.replace("/");
+    // 3. 홈으로 이동 (하드 네비게이션 — Next.js Router Cache 무효화)
+    window.location.href = "/";
   };
 
   const handleResign = () => {
