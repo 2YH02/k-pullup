@@ -103,8 +103,8 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
         returnUrl && returnUrl.startsWith("/") && !returnUrl.startsWith("//")
           ? returnUrl
           : "/";
-      router.replace(targetUrl);
-      router.refresh();
+      // 하드 네비게이션: 미들웨어가 새 쿠키를 확실히 인식하도록
+      window.location.href = targetUrl;
     } catch (error) {
       // FetchError: 로그인 실패(401/400)도 여기로 옴 (fetchData가 non-OK에서 throw)
       if (error instanceof FetchError) {
