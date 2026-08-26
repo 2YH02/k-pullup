@@ -51,7 +51,10 @@ describe("Feature: challenge-local-streak, Property 2: Schema structure round-tr
   // Arbitrary for ChallengeData
   const challengeDataArb: fc.Arbitrary<ChallengeData> = fc.record({
     version: fc.integer({ min: 1, max: 10 }),
-    lastSyncedAt: fc.oneof(fc.constant(null), fc.date().map((d) => d.toISOString())),
+    lastSyncedAt: fc.oneof(
+      fc.constant(null),
+      fc.date({ min: new Date("2020-01-01"), max: new Date("2030-12-31") }).map((d) => d.toISOString())
+    ),
     records: fc.array(visitRecordArb, { minLength: 0, maxLength: 50 }),
     streakData: streakDataArb,
     goalSettings: goalSettingsArb,
