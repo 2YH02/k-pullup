@@ -29,7 +29,7 @@ const Tabs = ({ tabs }: TabsProps) => {
               key={tab.title}
               className={`flex-1 p-2 ${
                 curTab === tab.title
-                  ? "border-b border-solid border-primary-dark"
+                  ? "border-b border-solid border-primary/40"
                   : "border-b border-solid border-grey-light"
               }`}
               onClick={() => setCurTab(tab.title)}

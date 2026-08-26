@@ -46,18 +46,17 @@ const SearchInput = ({ deviceType = "desktop" }: { deviceType?: Device }) => {
           "w-full flex items-center gap-4",
           "h-12",
           "rounded-2xl px-5",
-          "bg-search-input-bg dark:bg-black/35",
-          "border border-white/70 dark:border-white/10",
-          "shadow-[0_1px_2px_rgba(64,64,56,0.08)]",
-          "backdrop-blur-[2px]",
-          "transition-transform duration-180 ease-out motion-reduce:transition-none",
+          "bg-surface dark:bg-black-light",
+          "border border-border dark:border-grey-dark",
+          "shadow-xs",
+          "transition-transform duration-150 ease-out motion-reduce:transition-none",
           "active:scale-[0.99] focus-visible:scale-[0.995]",
-          isNavigating ? "scale-[1.015] opacity-95" : "scale-100 opacity-100"
+          isNavigating ? "scale-[1.01] opacity-95" : "scale-100 opacity-100"
         )}
       >
         <SearchIcon
           size={24}
-          className="fill-location-badge-text dark:fill-location-badge-text-dark"
+          className="fill-primary dark:fill-primary-light"
         />
         <span className="text-left text-text-on-surface-muted/70 dark:text-grey-light/70">
           철봉 주소 검색...

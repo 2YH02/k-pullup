@@ -18,16 +18,16 @@ const Hot = ({ data }: { data: RankingInfo[] }) => {
       >
         인기 철봉 TOP3
       </Text>
-      <div className="rounded-xl border border-location-badge-bg/85 bg-location-badge-bg/45 p-1.5 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/30">
+      <div className="rounded-xl border border-border/85 bg-surface/45 p-1.5 dark:border-black-light/75 dark:bg-black-light/30">
         {data.map((marker, index) => {
           const rank = index + 1;
           return (
             <button
               key={marker.markerId}
-              className="group flex w-full items-center rounded-lg px-2.5 py-2 text-left transition-[transform,background-color] duration-150 active:scale-[0.99] active:bg-location-badge-bg dark:active:bg-location-badge-bg-dark/55"
+              className="group flex w-full items-center rounded-lg px-2.5 py-2 text-left transition-[transform,background-color] duration-150 active:scale-[0.99] active:bg-surface dark:active:bg-black-light/55"
               onClick={() => router.push(`/pullup/${marker.markerId}/moment`)}
             >
-              <div className="mr-2 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-location-badge-text/35 bg-location-badge-bg text-location-badge-text dark:border-location-badge-text-dark/35 dark:bg-location-badge-bg-dark/75 dark:text-location-badge-text-dark">
+              <div className="mr-2 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-primary/35 bg-surface text-primary dark:border-grey-dark dark:bg-black-light/75 dark:text-primary-light">
                 {rank === 1 ? (
                   <Medal size={14} strokeWidth={2.3} />
                 ) : (

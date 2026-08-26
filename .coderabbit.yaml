@@ -1,0 +1,11 @@
+language: ko
+reviews:
+  auto_review:
+    enabled: true
+    base_branches:
+      - main
+      - develop
+  path_filters:
+    - "!**/*.test.ts"
+    - "!**/*.spec.ts"
+    - "!**/*.stories.ts"

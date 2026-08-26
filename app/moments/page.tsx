@@ -28,7 +28,7 @@ const MomentsPage = async () => {
       deviceType={deviceType}
     >
       <div className="px-4 pt-4 pb-2">
-        <div className="rounded-2xl border border-location-badge-bg/85 bg-location-badge-bg/45 px-4 py-4 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/30">
+        <div className="rounded-2xl border border-border/85 bg-surface/45 px-4 py-4 dark:border-black-light/75 dark:bg-black-light/30">
           <Text
             fontWeight="bold"
             display="block"

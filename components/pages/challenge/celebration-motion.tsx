@@ -55,19 +55,13 @@ const CelebrationMotion = () => {
 
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl border border-primary/18 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 px-4 py-3.5 dark:border-primary-light/20 dark:from-primary-light/10 dark:via-primary-light/5 dark:to-primary-light/10 ${
+      className={`relative overflow-hidden rounded-2xl border border-border bg-primary-subtle px-4 py-3.5 dark:border-grey-dark dark:bg-black-light ${
         showEntryAnimation && !reducedMotion
           ? "animate-[fade-in_300ms_ease-out]"
           : ""
       }`}
     >
-      {/* 배경 반짝임 효과 */}
-      {!reducedMotion && (
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -left-4 top-1/2 h-8 w-8 -translate-y-1/2 animate-[pulse_3s_ease-in-out_infinite] rounded-full bg-primary/10 blur-lg dark:bg-primary-light/10" />
-          <div className="absolute -right-2 top-1/4 h-6 w-6 animate-[pulse_4s_ease-in-out_infinite_1s] rounded-full bg-primary/8 blur-md dark:bg-primary-light/8" />
-        </div>
-      )}
+      {/* 배경 장식 제거 — 미니멀 유지 */}
 
       <div className="relative flex items-center gap-3">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/12 dark:bg-primary-light/15">

@@ -67,7 +67,7 @@ const NoticeList = ({ tab }: NoticeListProps) => {
         return (
           <div
             key={notice.id}
-            className="mb-4 p-2 border-2 border-solid border-[#ccc] rounded-md"
+            className="mb-4 p-2 border-2 border-solid border-border rounded-md"
           >
             <button
               className="flex items-center w-full text-left"

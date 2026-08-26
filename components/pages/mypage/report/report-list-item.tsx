@@ -42,7 +42,7 @@ const ReportListItem = ({ data, onDelete }: ReportListItemProps) => {
   };
 
   return (
-    <li className="rounded-xl border border-primary/10 bg-surface/80 p-3 dark:border-grey-dark dark:bg-black">
+    <li className="rounded-xl border border-border bg-surface/80 p-3 dark:border-grey-dark dark:bg-black">
       <div className="mb-3 flex items-start justify-between gap-3">
         <div>
           <Text typography="t7" display="block" className="mb-0.5 text-grey-dark dark:text-grey">

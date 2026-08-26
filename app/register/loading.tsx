@@ -23,7 +23,7 @@ const Loading = () => {
         <div className="flex flex-col items-center web:mt-8">
           <Skeleton className="mt-3 h-32.5 w-32.5 rounded-full" />
 
-          <div className="mt-8 w-full rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/45 px-3.5 py-3 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/35">
+          <div className="mt-8 w-full rounded-xl border border-border/80 bg-surface/45 px-3.5 py-3 dark:border-black-light/70 dark:bg-black-light/35">
             <Skeleton className="h-5 w-full rounded-md" />
           </div>
 

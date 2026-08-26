@@ -12,12 +12,12 @@ const StreakCounter = ({ className = "" }: StreakCounterProps) => {
 
   return (
     <div
-      className={`rounded-3xl border border-primary/14 bg-side-main p-5 dark:border-white/12 dark:bg-black/30 ${className}`}
+      className={`rounded-3xl border border-border bg-white p-5 dark:border-white/12 dark:bg-black-light ${className}`}
     >
       <div className="flex items-center">
         {/* Current streak */}
         <div className="flex flex-1 items-center justify-center gap-3">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-primary/18 bg-primary/8">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-border bg-primary-subtle dark:border-grey-dark dark:bg-black-light">
             <Flame size={22} className="text-primary dark:text-primary-light" />
           </div>
           <div>
@@ -38,7 +38,7 @@ const StreakCounter = ({ className = "" }: StreakCounterProps) => {
 
         {/* Max streak */}
         <div className="flex flex-1 items-center justify-center gap-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-primary/14 bg-primary/6">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-primary-subtle dark:border-grey-dark dark:bg-black-light">
             <Trophy
               size={16}
               className="text-primary-light dark:text-grey-light"

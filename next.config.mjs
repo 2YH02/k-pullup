@@ -10,7 +10,16 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ["chulbong-kr.s3.amazonaws.com", "t1.daumcdn.net"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "chulbong-kr.s3.amazonaws.com",
+      },
+      {
+        protocol: "https",
+        hostname: "t1.daumcdn.net",
+      },
+    ],
   },
 };
 

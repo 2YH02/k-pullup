@@ -9,7 +9,7 @@ interface SectionProps {
 
 const Section = ({ className, children }: SectionProps) => {
   return (
-    <section className={cn("py-4 px-6 bg-side-main dark:bg-black", className)}>
+    <section className={cn("py-4 px-5 bg-white dark:bg-black", className)}>
       {children}
     </section>
   );
@@ -28,13 +28,13 @@ export const SectionTitle = ({
 }) => {
   return (
     <Text
-      className="mb-2 select-none flex items-center"
+      className="mb-3 select-none flex items-center"
       typography="t5"
-      fontWeight="bold"
+      fontWeight="semibold"
     >
       <p className="text-text-on-surface dark:text-grey-light">{title}</p>
       {subTitle && (
-        <p className="text-[10px] ml-2 text-text-on-surface-muted dark:text-grey">
+        <p className="text-[11px] ml-2 text-grey dark:text-grey">
           {subTitle}
         </p>
       )}

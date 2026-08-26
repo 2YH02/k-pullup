@@ -35,7 +35,7 @@ const Loading = ({ params }: { params: { code: string } }) => {
     >
       <div className="flex h-full flex-col">
         <Section className="py-2">
-          <div className="flex items-center gap-2 rounded-xl border border-grey-light/85 bg-search-input-bg/35 px-3 py-2 dark:border-grey-dark/85 dark:bg-black/30">
+          <div className="flex items-center gap-2 rounded-xl border border-grey-light/85 bg-surface/35 px-3 py-2 dark:border-grey-dark/85 dark:bg-black-light">
             <Upload size={14} strokeWidth={2.2} className="text-grey-dark dark:text-grey" />
             <Skeleton className="h-3.5 w-28 rounded-md" />
           </div>
@@ -49,8 +49,8 @@ const Loading = ({ params }: { params: { code: string } }) => {
           <MessageBubbleSkeleton />
         </div>
 
-        <div className="shrink-0 border-t border-grey-light/80 bg-side-main/95 px-3 py-2 backdrop-blur-xs dark:border-grey-dark/85 dark:bg-black/90">
-          <div className="flex items-center gap-2 rounded-xl border border-grey-light/80 bg-search-input-bg/45 p-1.5 dark:border-grey-dark/80 dark:bg-black/35">
+        <div className="shrink-0 border-t border-grey-light/80 bg-white/95 px-3 py-2 backdrop-blur-xs dark:border-grey-dark/85 dark:bg-black/90">
+          <div className="flex items-center gap-2 rounded-xl border border-grey-light/80 bg-surface/45 p-1.5 dark:border-grey-dark/80 dark:bg-black-light">
             <div className="grow">
               <Skeleton className="h-9 w-full rounded-lg" />
             </div>

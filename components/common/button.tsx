@@ -4,16 +4,10 @@ import cn from "@lib/cn";
 
 const buttonColorMap = {
   primary: cn(
-    "bg-primary dark:bg-primary-dark",
+    "bg-primary dark:bg-primary",
     "text-white",
-    "disabled:bg-primary/50",
-    "disabled:text-white/70"
-  ),
-  coral: cn(
-    "bg-coral",
-    "text-white",
-    "disabled:bg-coral/50",
-    "disabled:text-white/70"
+    "disabled:bg-primary-subtle",
+    "disabled:text-grey-dark"
   ),
   blue: cn(
     "bg-blue",
@@ -34,17 +28,9 @@ const buttonContrastColorMap = {
     "bg-white dark:bg-black-light",
     "text-primary dark:text-primary-light",
     "border",
-    "border-primary dark:border-primary-dark",
+    "border-primary dark:border-primary-light/50",
     "disabled:text-primary/50",
-    "disabled:border-primary/50 dark:disabled:border-primary-dark/50"
-  ),
-  coral: cn(
-    "bg-white dark:bg-black-light",
-    "text-coral dark:text-coral",
-    "border",
-    "border-coral dark:border-coral/65",
-    "disabled:text-coral/50",
-    "disabled:border-coral/50 dark:disabled:border-coral/35"
+    "disabled:border-primary/50 dark:disabled:border-primary-light/30"
   ),
   blue: cn(
     "bg-white dark:bg-black-light",
@@ -65,9 +51,9 @@ const buttonContrastColorMap = {
 };
 
 const buttonSizeMap = {
-  sm: cn("text-sm", "py-2", "px-3"),
-  md: cn("text-base", "py-[10px]", "px-6"),
-  lg: cn("text-lg", "py-3", "px-8"),
+  sm: cn("text-[13px]", "py-2", "px-3.5"),
+  md: cn("text-[14px]", "py-2.5", "px-5"),
+  lg: cn("text-[15px]", "py-3", "px-6"),
 };
 
 type ButtonColor = keyof typeof buttonColorMap;
@@ -123,7 +109,7 @@ const Button = ({
     colorClass,
     sizeClass,
     fullClass,
-    "inline-flex items-center justify-center rounded-md font-medium",
+    "inline-flex items-center justify-center rounded-xl font-semibold tracking-[-0.01em]",
     "select-none transition-[transform,background-color,border-color,box-shadow] duration-180 ease-out",
     "focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/25",
     disabled

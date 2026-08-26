@@ -43,7 +43,7 @@ const Loading = () => {
 
       <Divider className="h-px bg-black/10 dark:bg-white/10" />
 
-      <div className="sticky top-0 left-0 z-10 flex h-11 bg-side-main dark:bg-black">
+      <div className="sticky top-0 left-0 z-10 flex h-11 bg-white dark:bg-black">
         <div className="flex grow items-center justify-center border-b-2 border-grey-light dark:border-grey-dark">
           <Skeleton className="h-4 w-10 rounded-md" />
         </div>

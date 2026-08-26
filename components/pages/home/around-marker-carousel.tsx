@@ -56,7 +56,7 @@ const AroundMarkerCarousel = () => {
           {[0, 1].map((key) => (
             <div
               key={key}
-              className="shrink-0 w-64 rounded-2xl border border-primary/10 bg-side-main p-2 dark:border-grey-dark dark:bg-black/35"
+              className="shrink-0 w-[17rem] rounded-2xl border border-border bg-white p-2 dark:border-grey-dark dark:bg-black-light"
             >
               <Skeleton className="h-36 w-full rounded-xl" />
               <Skeleton className="mt-3 h-4 w-3/4 rounded-md" />
@@ -72,7 +72,7 @@ const AroundMarkerCarousel = () => {
     return (
       <Section>
         <SectionTitle title="내 주변 철봉" subTitle="현재 위치 기준 2km" />
-        <div className="rounded-2xl border border-primary/12 bg-side-main p-4 dark:border-grey-dark dark:bg-black/35">
+        <div className="rounded-2xl border border-border bg-white p-4 dark:border-grey-dark dark:bg-black-light">
           <div className="mb-3">
             <Text display="block" typography="t6" className="text-text-on-surface">
               현재 위치 정보를 확인할 수 없습니다.
@@ -103,7 +103,7 @@ const AroundMarkerCarousel = () => {
     return (
       <Section>
         <SectionTitle title="내 주변 철봉" subTitle="현재 위치 기준 2km" />
-        <div className="rounded-2xl border border-primary/12 bg-side-main p-4 dark:border-grey-dark dark:bg-black/35">
+        <div className="rounded-2xl border border-border bg-white p-4 dark:border-grey-dark dark:bg-black-light">
           <div className="mb-3">
             <Text display="block" typography="t6">
               현재 위치 주변 2,000m 내에 철봉이 없습니다.
@@ -132,10 +132,15 @@ const AroundMarkerCarousel = () => {
 
   return (
     <Section>
-      <SectionTitle title="내 주변 철봉" subTitle="현재 위치 기준 2km" />
+      <SectionTitle
+        title="내 주변 철봉"
+        subTitle="현재 위치 기준 2km"
+        buttonTitle="더보기"
+        onClickButton={() => router.push("/search/around")}
+      />
       <HorizontalScroll className="pb-1">
         {data.map((marker, index) => (
-          <ScrollItem className="p-0 w-64" key={`${marker.markerId}-${index}`}>
+          <ScrollItem className="p-0 w-[17rem]" key={`${marker.markerId}-${index}`}>
             <button
               className="group w-full text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2 focus-visible:ring-offset-surface active:scale-[0.99] transition-transform duration-150"
               onClick={() => {
@@ -143,8 +148,7 @@ const AroundMarkerCarousel = () => {
               }}
               type="button"
             >
-              <div className="relative overflow-hidden rounded-2xl border border-primary/12 bg-side-main transition-colors duration-300 group-hover:border-primary/35 group-hover:bg-white/45 dark:border-grey-dark dark:bg-black/35 dark:group-hover:border-primary-light/35 dark:group-hover:bg-black/30 group-active:border-primary/45 group-active:bg-white/55 dark:group-active:bg-black/35">
-                <div className="absolute inset-x-0 top-0 h-0.5 bg-primary/0 transition-colors duration-300 group-hover:bg-primary/40 group-active:bg-primary/50" />
+              <div className="relative overflow-hidden rounded-2xl border border-border bg-white transition-colors duration-300 group-hover:border-border-strong dark:border-grey-dark dark:bg-black-light dark:group-hover:border-grey group-active:border-border-strong">
                 <div className="relative h-40 w-full overflow-hidden">
                   <Image
                     src={marker.thumbnail ? marker.thumbnail : "/metaimg.webp"}

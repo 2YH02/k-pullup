@@ -26,41 +26,21 @@ const Home = async () => {
   return (
     <SideMain withNav deviceType={deviceType} bodyStyle="pb-0">
       <HeroStickyHeader />
-      <SearchInput deviceType={deviceType} />
+      <div className="web:-mt-2">
+        <SearchInput deviceType={deviceType} />
+      </div>
 
       <div className="page-transition">
-        <Section className="pb-0">
+        <AroundMarkerCarousel />
+
+        <Section className="pb-2">
           <SectionTitle title="모먼트" subTitle="지금 이 순간을 기록해보세요." />
           <MomentList data={moment || []} />
         </Section>
 
-        {/* <Section className="py-1">
-          <NoticeSlide />
-        </Section> */}
-
-        {/* <Ads type="feed" /> */}
-
-        {/* <Section>
-          <ArticleCarousel />
-        </Section>
-
-        <Section className="pt-0">
-          <IconLinkList />
-        </Section> */}
-
-        <AroundMarkerCarousel />
-
         {!isNewPicturesError(images) && (
           <NewImageSection data={images as NewPictures[]} />
         )}
-
-        {/* <Section>
-          <SectionTitle
-            title="지역 채팅"
-            subTitle="다른 사람들과 소통해보세요."
-          />
-          <ChatCarousel />
-        </Section> */}
 
         <Footer />
       </div>

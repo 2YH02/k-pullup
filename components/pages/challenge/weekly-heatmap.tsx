@@ -7,7 +7,7 @@ import { useMemo } from "react";
 const DAY_LABELS = ["월", "화", "수", "목", "금", "토", "일"] as const;
 
 const INTENSITY_CLASSES: Record<0 | 1 | 2 | 3, string> = {
-  0: "bg-primary/5 dark:bg-white/5",
+  0: "bg-primary-subtle dark:bg-white/5",
   1: "bg-primary/20 dark:bg-primary-light/25",
   2: "bg-primary/45 dark:bg-primary-light/50",
   3: "bg-primary/75 dark:bg-primary-light/75",
@@ -48,7 +48,7 @@ const WeeklyHeatmap = ({ className = "" }: WeeklyHeatmapProps) => {
 
   return (
     <div
-      className={`rounded-3xl border border-primary/14 bg-side-main p-5 dark:border-white/12 dark:bg-black/30 ${className}`}
+      className={`rounded-3xl border border-border bg-white p-5 dark:border-white/12 dark:bg-black-light ${className}`}
     >
       <h2 className="mb-3 text-sm font-semibold text-text-on-surface dark:text-white">
         방문 히트맵
@@ -91,7 +91,7 @@ const WeeklyHeatmap = ({ className = "" }: WeeklyHeatmapProps) => {
 
       {/* Selected cell info */}
       {selectedCell && (
-        <div className="mt-3 flex items-center justify-between rounded-xl border border-primary/14 bg-primary/5 px-3 py-2 dark:border-white/12 dark:bg-white/5">
+        <div className="mt-3 flex items-center justify-between rounded-xl border border-border bg-primary-subtle px-3 py-2 dark:border-white/12 dark:bg-white/5">
           <span className="text-xs font-medium text-text-on-surface dark:text-white">
             {formatDisplayDate(selectedCell.date)}
           </span>

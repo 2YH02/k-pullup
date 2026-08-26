@@ -16,11 +16,11 @@ const Loading = () => {
         <Section className="px-9">
           <div>
             <Skeleton className="mb-1 h-4 w-12 rounded-md" />
-            <Skeleton className="h-10 w-full rounded-md bg-location-badge-bg/58 dark:bg-location-badge-bg-dark/38" />
+            <Skeleton className="h-10 w-full rounded-md bg-surface/58 dark:bg-black-light/38" />
             <Skeleton className="mt-1 mb-2 h-3.5 w-32 rounded-md" />
 
             <Skeleton className="mb-1 h-4 w-16 rounded-md" />
-            <Skeleton className="h-10 w-full rounded-md bg-location-badge-bg/58 dark:bg-location-badge-bg-dark/38" />
+            <Skeleton className="h-10 w-full rounded-md bg-surface/58 dark:bg-black-light/38" />
             <Skeleton className="mt-1 h-3.5 w-32 rounded-md" />
           </div>
 

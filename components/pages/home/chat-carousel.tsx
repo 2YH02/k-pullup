@@ -85,9 +85,9 @@ const ChatCarousel = () => {
   };
 
   const cardClassName = cn(
-    "group shrink-0 w-58 h-22 rounded-2xl border border-primary/12 bg-side-main dark:border-grey-dark dark:bg-black/35",
+    "group shrink-0 w-58 h-22 rounded-2xl border border-border bg-white dark:border-grey-dark dark:bg-black-light",
     "px-3 py-2.5 text-left transition-all duration-200",
-    "web:hover:border-primary/30 web:hover:bg-white/55",
+    "web:hover:border-border web:hover:bg-white/55",
     "active:scale-[0.99] active:bg-white/65",
     "dark:web:hover:bg-black/35 dark:active:bg-black/45"
   );
@@ -100,7 +100,7 @@ const ChatCarousel = () => {
         rel="noreferrer"
         className={cn(cardClassName, "flex items-center gap-3")}
       >
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-lg">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-subtle text-lg">
           💬
         </div>
         <div className="min-w-0">
@@ -120,7 +120,7 @@ const ChatCarousel = () => {
             className={cn(cardClassName, "flex items-center gap-3")}
             type="button"
           >
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-lg">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-subtle text-lg">
               {v.icon}
             </div>
             <div className="min-w-0">

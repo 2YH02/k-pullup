@@ -63,7 +63,7 @@ const Description = ({ description, markerId, isAdmin }: DescriptionProps) => {
           placeholder="해당 위치에 대한 설명을 40자 이내로 작성해주세요."
           value={descriptionInput.value}
           onChange={descriptionInput.onChange}
-          className="rounded-lg border-primary/45 bg-search-input-bg/45 p-2.5 focus:ring-2 focus:ring-primary/35 dark:border-grey-dark dark:bg-black/35"
+          className="rounded-lg border-primary/45 bg-surface/45 p-2.5 focus:ring-2 focus:ring-primary/35 dark:border-grey-dark dark:bg-black-light"
         />
         <div className="mt-2 flex items-center">
           <Button

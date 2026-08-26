@@ -79,7 +79,7 @@ const FacilitiesClient = ({ markerId }: { markerId: number }) => {
   return (
     <div className="flex min-h-full flex-col">
       <Section className="pb-0 pt-4">
-        <div className="mb-5 rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/50 px-3.5 py-3 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/35">
+        <div className="mb-5 rounded-xl border border-border/80 bg-surface/50 px-3.5 py-3 dark:border-black-light/70 dark:bg-black-light/35">
           <Text
             fontWeight="bold"
             className="text-text-on-surface dark:text-grey-light"
@@ -94,7 +94,7 @@ const FacilitiesClient = ({ markerId }: { markerId: number }) => {
           </Text>
         </div>
 
-        <div className="rounded-xl border border-primary/25 bg-search-input-bg/45 px-3 py-2 dark:border-primary-dark/50 dark:bg-black/30">
+        <div className="rounded-xl border border-border bg-surface/45 px-3 py-2 dark:border-primary/40/50 dark:bg-black-light">
           <FacilityList
             name="철봉"
             count={facilities.철봉}

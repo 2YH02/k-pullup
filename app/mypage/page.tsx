@@ -50,7 +50,7 @@ const Mypage = async () => {
         {noUser ? (
           <Link
             href="/signin?returnUrl=/mypage"
-            className="group flex items-center justify-between rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-primary/8 active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black dark:web:hover:border-primary-dark dark:web:hover:bg-primary-dark/15"
+            className="group flex items-center justify-between rounded-xl border border-border bg-surface/80 px-4 py-3 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-border web:hover:bg-primary-subtle active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black dark:web:hover:border-primary/40 dark:web:hover:bg-primary-dark/15"
           >
             <div>
               <Text fontWeight="bold" className="text-primary dark:text-primary-light">
@@ -71,10 +71,10 @@ const Mypage = async () => {
       </Section>
 
       <Section className="pt-0">
-        <div className="grid grid-cols-2 gap-2 rounded-xl border border-primary/10 bg-surface/70 p-1.5 dark:border-grey-dark dark:bg-black">
+        <div className="grid grid-cols-2 gap-2 rounded-xl border border-border bg-surface/70 p-1.5 dark:border-grey-dark dark:bg-black">
           <Link
             href={noUser ? "/signin?returnUrl=/mypage" : "/mypage/user"}
-            className="rounded-lg border border-primary/10 bg-search-input-bg/50 px-2.5 py-2.5 text-center transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-search-input-bg active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black/35 dark:web:hover:border-grey dark:web:hover:bg-black/45"
+            className="rounded-lg border border-border bg-surface/50 px-2.5 py-2.5 text-center transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-border web:hover:bg-surface active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-grey dark:web:hover:bg-black/45"
           >
             <Text typography="t6" className="font-semibold text-primary dark:text-primary-light">
               내 정보 관리
@@ -82,7 +82,7 @@ const Mypage = async () => {
           </Link>
           <Link
             href="mypage/config"
-            className="rounded-lg border border-primary/10 bg-search-input-bg/50 px-2.5 py-2.5 text-center transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-search-input-bg active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black/35 dark:web:hover:border-grey dark:web:hover:bg-black/45"
+            className="rounded-lg border border-border bg-surface/50 px-2.5 py-2.5 text-center transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-border web:hover:bg-surface active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-grey dark:web:hover:bg-black/45"
           >
             <Text typography="t6" className="font-semibold text-primary dark:text-primary-light">
               설정
@@ -94,14 +94,14 @@ const Mypage = async () => {
       {/* 기여 등급 */}
       {!noUser && (
         <Section>
-          <div className="rounded-xl border border-primary/10 bg-surface/80 p-4 dark:border-grey-dark dark:bg-black">
+          <div className="rounded-xl border border-border bg-surface/80 p-4 dark:border-grey-dark dark:bg-black">
             <div className="flex flex-col items-center">
               <Text typography="t6" className="mb-2 text-grey-dark dark:text-grey">
                 기여 등급
               </Text>
               <div className="group relative mb-2">
-                <div className="pointer-events-none absolute inset-2 -z-10 rounded-full bg-primary/10 blur-md transition-opacity duration-180 ease-out web:group-hover:opacity-100 motion-reduce:transition-none dark:bg-primary-light/10" />
-                <div className="rounded-full border border-primary/10 bg-white/55 p-1.5 transition-transform duration-180 ease-out web:group-hover:scale-[1.02] motion-reduce:transform-none dark:border-grey-dark dark:bg-black-light">
+                <div className="pointer-events-none absolute inset-2 -z-10 rounded-full bg-primary-subtle blur-md transition-opacity duration-180 ease-out web:group-hover:opacity-100 motion-reduce:transition-none dark:bg-primary-light/10" />
+                <div className="rounded-full border border-border bg-white/55 p-1.5 transition-transform duration-180 ease-out web:group-hover:scale-[1.02] motion-reduce:transform-none dark:border-grey-dark dark:bg-black-light">
                   <Image
                     src={getContributionLevelImage(user.contributionLevel)}
                     alt="등급"

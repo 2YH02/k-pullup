@@ -13,7 +13,7 @@ const Loading = () => {
   return (
     <SideMain headerTitle="모먼트" fullHeight hasBackButton deviceType={deviceType}>
       <div className="px-4 pt-4 pb-2">
-        <div className="rounded-2xl border border-location-badge-bg/85 bg-location-badge-bg/45 px-4 py-4 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/30">
+        <div className="rounded-2xl border border-border/85 bg-surface/45 px-4 py-4 dark:border-black-light/75 dark:bg-black-light/30">
           <Skeleton className="h-5 w-42 rounded-md" />
           <Skeleton className="mt-1 h-4 w-56 rounded-md" />
         </div>
@@ -21,7 +21,7 @@ const Loading = () => {
 
       <div className="px-4">
         <Skeleton className="mb-2 h-5 w-28 rounded-md" />
-        <div className="rounded-xl border border-location-badge-bg/85 bg-location-badge-bg/45 p-1.5 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/30">
+        <div className="rounded-xl border border-border/85 bg-surface/45 p-1.5 dark:border-black-light/75 dark:bg-black-light/30">
           <Skeleton className="h-12 w-full rounded-lg" />
           <Skeleton className="mt-1.5 h-12 w-full rounded-lg" />
           <Skeleton className="mt-1.5 h-12 w-full rounded-lg" />

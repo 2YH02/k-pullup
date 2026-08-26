@@ -58,10 +58,10 @@ const UsernameCard = ({ user }: UsernameCardProps) => {
 
   return (
     <Section>
-      <div className="rounded-xl border border-primary/10 bg-surface/80 p-4 dark:border-grey-dark dark:bg-black">
+      <div className="rounded-xl border border-border bg-surface/80 p-4 dark:border-grey-dark dark:bg-black">
         <div className="mb-2 flex items-center justify-center">
           {edit ? (
-            <div className="w-full max-w-72 rounded-lg border border-primary/10 bg-white/60 p-3 dark:border-grey-dark dark:bg-black-light">
+            <div className="w-full max-w-72 rounded-lg border border-border bg-white/60 p-3 dark:border-grey-dark dark:bg-black-light">
               <Text
                 display="block"
                 textAlign="center"
@@ -117,7 +117,7 @@ const UsernameCard = ({ user }: UsernameCardProps) => {
               </Text>
               <button
                 onClick={() => setEdit(true)}
-                className="rounded-md p-1 transition-colors duration-150 web:hover:bg-primary/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
+                className="rounded-md p-1 transition-colors duration-150 web:hover:bg-primary-subtle active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
                 aria-label="닉네임 수정"
               >
                 <EditIcon size={16} color="primary" />

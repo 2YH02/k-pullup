@@ -187,36 +187,18 @@ const SearchClient = ({
               className={cn(
                 "relative isolate overflow-hidden",
                 "w-full p-4 rounded-2xl border border-white/70 dark:border-white/10",
-                "bg-search-input-bg/70 dark:bg-black/35 backdrop-blur-md",
-                "shadow-[0_8px_24px_rgba(64,64,56,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.28)]",
+                "bg-surface/70 dark:bg-black-light backdrop-blur-md",
+                "shadow-[0_8px_24px_rgba(15,23,42,0.06)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.28)]",
                 "flex items-center gap-3 text-left group",
                 "transition-[transform,box-shadow,border-color] duration-180 ease-out motion-reduce:transition-none",
                 "hover:border-primary/45 dark:hover:border-primary-light/35",
-                "hover:shadow-[0_12px_28px_rgba(64,64,56,0.14)] dark:hover:shadow-[0_12px_28px_rgba(0,0,0,0.35)]",
+                "hover:shadow-[0_12px_28px_rgba(15,23,42,0.10)] dark:hover:shadow-[0_12px_28px_rgba(0,0,0,0.35)]",
                 "active:scale-[0.99] active:border-primary/60 dark:active:border-primary-light/40",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 dark:focus-visible:ring-primary-light/35",
                 "focus-visible:ring-offset-2 focus-visible:ring-offset-side-main dark:focus-visible:ring-offset-black"
               )}
             >
-              <div
-                aria-hidden
-                className={cn(
-                  "absolute inset-0 pointer-events-none",
-                  "bg-linear-to-br from-white/35 via-transparent to-primary/10",
-                  "dark:from-white/10 dark:to-primary-dark/25"
-                )}
-              />
-              <div
-                aria-hidden
-                className={cn(
-                  "absolute -top-10 -left-8 h-28 w-28 rounded-full blur-2xl pointer-events-none",
-                  "bg-primary/20 dark:bg-primary-light/15",
-                  "transition-transform duration-220 ease-out motion-reduce:transition-none",
-                  "group-hover:translate-x-1 group-hover:-translate-y-1"
-                )}
-              />
-
-              <div className="relative shrink-0 w-12 h-12 rounded-full border border-white/45 dark:border-white/10 bg-white/35 dark:bg-white/5 flex items-center justify-center transition-transform duration-180 ease-out motion-reduce:transition-none group-hover:scale-[1.03] group-hover:-translate-y-0.5">
+              <div className="relative shrink-0 w-12 h-12 rounded-full border border-border dark:border-grey-dark bg-surface dark:bg-black-light flex items-center justify-center transition-transform duration-180 ease-out motion-reduce:transition-none group-hover:scale-[1.03] group-hover:-translate-y-0.5">
                 <LocationIcon size={24} color="primary" />
               </div>
               <div className="relative flex-1">
@@ -252,7 +234,7 @@ const SearchClient = ({
                   aria-label="최근 검색 전체 삭제"
                   className={cn(
                     "rounded-full px-3 py-1.5",
-                    "bg-search-input-bg/70 dark:bg-white/5",
+                    "bg-surface/70 dark:bg-white/5",
                     "border border-white/70 dark:border-white/10",
                     "transition-all duration-180 ease-out motion-reduce:transition-none",
                     "hover:border-primary/40 dark:hover:border-primary-light/35",
@@ -273,7 +255,7 @@ const SearchClient = ({
                 className={cn(
                   "mt-3 rounded-2xl overflow-hidden",
                   "border border-white/70 dark:border-white/10",
-                  "bg-search-input-bg/55 dark:bg-black/25",
+                  "bg-surface/55 dark:bg-black/25",
                   "backdrop-blur-sm"
                 )}
               >
@@ -352,7 +334,7 @@ const SearchClient = ({
                   className={cn(
                     "w-full mt-3 py-2.5 rounded-xl",
                     "border border-white/70 dark:border-white/10",
-                    "bg-search-input-bg/70 dark:bg-white/5",
+                    "bg-surface/70 dark:bg-white/5",
                     "text-text-on-surface-muted dark:text-grey-light",
                     "transition-all duration-180 ease-out motion-reduce:transition-none",
                     "hover:border-primary/45 dark:hover:border-primary-light/35 hover:bg-white/50 dark:hover:bg-white/8",
@@ -373,7 +355,7 @@ const SearchClient = ({
                 className={cn(
                   "relative isolate overflow-hidden mt-3 rounded-2xl p-3 space-y-2.5",
                   "border border-white/70 dark:border-white/10",
-                  "bg-search-input-bg/55 dark:bg-black/25",
+                  "bg-surface/55 dark:bg-black/25",
                   "backdrop-blur-sm"
                 )}
               >
@@ -381,8 +363,6 @@ const SearchClient = ({
                   aria-hidden
                   className={cn(
                     "absolute inset-0 pointer-events-none",
-                    "bg-linear-to-br from-white/35 via-transparent to-primary/10",
-                    "dark:from-white/8 dark:to-primary-dark/18"
                   )}
                 />
                 <div className="flex gap-2.5 rounded-xl p-2.5 transition-colors duration-180 ease-out hover:bg-white/45 dark:hover:bg-white/5">

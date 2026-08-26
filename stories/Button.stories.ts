@@ -9,7 +9,7 @@ const meta = {
   argTypes: {
     color: {
       control: { type: "select" },
-      options: ["coral", "blue", "black", "primary"],
+      options: ["blue", "black", "primary"],
     },
     size: {
       control: { type: "select" },

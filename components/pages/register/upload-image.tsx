@@ -104,7 +104,7 @@ const UploadImage = ({
 
   return (
     <Section className="flex h-full flex-col pb-4">
-      <div className="my-4 rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/45 px-3.5 py-3 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/35">
+      <div className="my-4 rounded-xl border border-border/80 bg-surface/45 px-3.5 py-3 dark:border-black-light/70 dark:bg-black-light/35">
         {title && (
           <>
             <Text
@@ -140,7 +140,7 @@ const UploadImage = ({
               return (
                 <div
                   key={`${file.previewURL} ${file.file} ${i}`}
-                  className="relative h-16 w-16 rounded-lg border border-location-badge-bg/75 bg-location-badge-bg/40 shadow-xs dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/40"
+                  className="relative h-16 w-16 rounded-lg border border-border/75 bg-surface/40 shadow-xs dark:border-black-light/70 dark:bg-black-light/40"
                 >
                   <button
                     className="absolute -top-2 -right-2 z-50 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-white transition-colors duration-150 active:scale-[0.97] active:bg-primary-dark focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/30 dark:bg-primary-dark dark:active:bg-primary"
@@ -203,7 +203,7 @@ const AddImageButton = ({ onClick }: { onClick: VoidFunction }) => {
   return (
     <button
       type="button"
-      className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-lg border-2 border-dashed border-text-on-surface-muted/45 bg-location-badge-bg/40 text-text-on-surface-muted transition-colors duration-150 active:scale-[0.98] active:border-primary/60 active:text-primary focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/30 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/30 dark:text-grey dark:active:border-primary-light/70 dark:active:text-primary-light"
+      className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-lg border-2 border-dashed border-text-on-surface-muted/45 bg-surface/40 text-text-on-surface-muted transition-colors duration-150 active:scale-[0.98] active:border-primary/60 active:text-primary focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/30 dark:border-black-light/75 dark:bg-black-light/30 dark:text-grey dark:active:border-primary-light/70 dark:active:text-primary-light"
       onClick={onClick}
     >
       <BsPlusLg size={24} />

@@ -21,16 +21,16 @@ const Loading = () => {
     >
       <div className="flex min-h-full flex-col">
         <Section className="pb-0 pt-4">
-          <div className="mb-5 rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/50 px-3.5 py-3 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/35">
+          <div className="mb-5 rounded-xl border border-border/80 bg-surface/50 px-3.5 py-3 dark:border-black-light/70 dark:bg-black-light/35">
             <Skeleton className="h-5 w-44 rounded-md" />
             <Skeleton className="mt-1 h-4 w-56 rounded-md" />
           </div>
 
-          <div className="rounded-xl border border-primary/25 bg-search-input-bg/45 px-3 py-2 dark:border-primary-dark/50 dark:bg-black/30">
+          <div className="rounded-xl border border-border bg-surface/45 px-3 py-2 dark:border-primary/40/50 dark:bg-black-light">
             <div className="my-1.5 flex items-center rounded-lg px-1.5 py-1">
               <Skeleton className="h-4 w-10 rounded-md" />
               <div className="grow" />
-              <div className="flex items-center rounded-full border border-grey-light/80 bg-side-main px-1 py-0.5 dark:border-grey-dark/80 dark:bg-black/35">
+              <div className="flex items-center rounded-full border border-grey-light/80 bg-white px-1 py-0.5 dark:border-grey-dark/80 dark:bg-black-light">
                 <Skeleton className="h-6 w-6 rounded-full" />
                 <Skeleton className="mx-1 h-4 w-8 rounded-md" />
                 <Skeleton className="h-6 w-6 rounded-full" />
@@ -39,7 +39,7 @@ const Loading = () => {
             <div className="my-1.5 flex items-center rounded-lg px-1.5 py-1">
               <Skeleton className="h-4 w-12 rounded-md" />
               <div className="grow" />
-              <div className="flex items-center rounded-full border border-grey-light/80 bg-side-main px-1 py-0.5 dark:border-grey-dark/80 dark:bg-black/35">
+              <div className="flex items-center rounded-full border border-grey-light/80 bg-white px-1 py-0.5 dark:border-grey-dark/80 dark:bg-black-light">
                 <Skeleton className="h-6 w-6 rounded-full" />
                 <Skeleton className="mx-1 h-4 w-8 rounded-md" />
                 <Skeleton className="h-6 w-6 rounded-full" />
@@ -51,7 +51,7 @@ const Loading = () => {
 
         <div className="grow" />
 
-        <div className="sticky bottom-0 z-30 w-full border-t border-primary/10 bg-side-main/95 p-4 backdrop-blur-xs dark:border-grey-dark dark:bg-black/90">
+        <div className="sticky bottom-0 z-30 w-full border-t border-border bg-white/95 p-4 backdrop-blur-xs dark:border-grey-dark dark:bg-black/90">
           <Skeleton className="h-11 w-full rounded-md" />
         </div>
       </div>
