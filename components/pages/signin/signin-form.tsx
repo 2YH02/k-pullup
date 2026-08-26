@@ -125,7 +125,7 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
       }
       setLoading(false);
     }
-  }, [emailValue.value, passwordValue.value, loading, errors, router, returnUrl, setUser, toast]);
+  }, [emailValue.value, passwordValue.value, loading, errors, returnUrl, setUser, toast]);
 
   // Enter 키 핸들러
   useEffect(() => {
