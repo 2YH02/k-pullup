@@ -469,7 +469,7 @@ Pretendard를 기본으로 사용합니다. 한/영 모두 깔끔하게 처리�
 모든 텍스트/배경 조합은 최소 WCAG AA(4.5:1) 충족:
 - ink-dark(#f8fafc) on canvas-dark(#0f172a) → 15.4:1 ✓
 - muted-dark(#94a3b8) on canvas-dark(#0f172a) → 5.7:1 ✓
-- primary-light(#a1a1aa) on canvas-dark(#0f172a) → 6.3:1 ✓ (다크모드에서는 primary-light 사용)
+- primary-light(#a1a1aa) on canvas-dark(#0f172a) → 7.2:1 ✓ (다크모드에서는 primary-light 사용)
 
 ## Implementation Notes
 
