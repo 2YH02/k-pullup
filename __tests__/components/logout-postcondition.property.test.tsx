@@ -74,26 +74,29 @@ const userArbitrary: fc.Arbitrary<User> = fc.record({
 });
 
 describe("Feature: auth-flow-improvements, Property 12: Logout post-condition invariant", () => {
-  let locationHrefSpy: ReturnType<typeof vi.spyOn>;
+  let originalLocation: Location;
 
   beforeEach(() => {
     mockSignout.mockReset();
     mockReplace.mockReset();
     sessionStorage.clear();
-    // window.location.href mock
-    locationHrefSpy = vi.spyOn(window, "location", "get").mockReturnValue({
-      ...window.location,
-      href: "http://localhost",
-    } as Location);
+    // 원본 location 보관 후, href 기록 가능한 스텁으로 교체
+    originalLocation = window.location;
     Object.defineProperty(window, "location", {
+      configurable: true,
       writable: true,
-      value: { ...window.location, href: "" },
+      value: { ...originalLocation, href: "" },
     });
   });
 
   afterEach(() => {
     cleanup();
-    locationHrefSpy?.mockRestore?.();
+    // 원본 location getter 완전 복원
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      writable: true,
+      value: originalLocation,
+    });
   });
 
   it(
