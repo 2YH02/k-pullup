@@ -86,6 +86,11 @@ const KakaoMap = () => {
   const longPressTimer = useRef<NodeJS.Timeout | null>(null);
   const touchStartPos = useRef<{ x: number; y: number } | null>(null);
 
+  // pathname 을 effect deps 에 직접 넣으면 클라이언트 네비게이션마다 마커를
+  // 전량 재요청하게 되므로, 가드용으로만 ref 로 읽는다. (P2-2)
+  const pathnameRef = useRef(pathname);
+  pathnameRef.current = pathname;
+
   useEffect(() => {
     if (!isMounted || pathname === "/admin") return;
 
@@ -117,21 +122,26 @@ const KakaoMap = () => {
   }, [isMounted, pathname]);
 
   useEffect(() => {
-    if (!isMounted || pathname === "/admin" || !shouldLoadMapSdk) return;
+    if (!isMounted || pathnameRef.current === "/admin" || !shouldLoadMapSdk)
+      return;
 
     let disposed = false;
 
     const fetch = async () => {
-      const data = await getAllMarker();
+      try {
+        const data = await getAllMarker();
 
-      if (disposed) return;
+        if (disposed) return;
 
-      const imageMarker = data.filter((marker) => {
-        return !!marker.hasPhoto;
-      });
+        const imageMarker = data.filter((marker) => {
+          return !!marker.hasPhoto;
+        });
 
-      setCount(imageMarker.length);
-      replaceMarker(data);
+        setCount(imageMarker.length);
+        replaceMarker(data);
+      } catch {
+        // 마커 로딩 실패 시 조용히 실패 (unhandled rejection 방지)
+      }
     };
 
     const cancelIdleTask = scheduleIdleTask(() => {
@@ -142,12 +152,18 @@ const KakaoMap = () => {
       disposed = true;
       cancelIdleTask();
     };
-  }, [isMounted, pathname, replaceMarker, setCount, shouldLoadMapSdk]);
+  }, [isMounted, replaceMarker, setCount, shouldLoadMapSdk]);
 
   useEffect(() => {
     if (!window.ReactNativeWebView || !map) return;
     const handleMessage = (e: any) => {
-      const data = JSON.parse(e.data);
+      if (typeof e.data !== "string") return;
+      let data: any;
+      try {
+        data = JSON.parse(e.data);
+      } catch {
+        return;
+      }
 
       if (data.latitude && data.longitude) {
         setMyLocation({ lat: data.latitude, lng: data.longitude });

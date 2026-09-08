@@ -54,15 +54,17 @@ const useMapStore = create<MapState>()((set) => ({
         marker.setMap(null);
       });
 
-      return { ...prev };
+      return { markers: [] };
     }),
   deleteOverlays: () =>
     set((prev) => {
       prev.overlays.forEach((overlay) => {
         overlay.setMap(null);
+        // 클러스터 오버레이가 보유한 React root 를 unmount 하여 누수 방지 (P2-1)
+        overlay.__reactRoot?.unmount();
       });
 
-      return { ...prev };
+      return { overlays: [] };
     }),
 }));
 

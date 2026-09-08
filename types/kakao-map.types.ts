@@ -21,6 +21,7 @@ export interface KakaoMap {
   getLevel: () => number;
   relayout: VoidFunction;
   addOverlayMapTypeId: (data: any) => void;
+  removeOverlayMapTypeId: (data: any) => void;
   getProjection: () => any;
   setDraggable: (draggable: boolean) => void;
 }
@@ -38,6 +39,11 @@ export interface KakaoMarker {
 
 export interface KakaoOverlay {
   setMap: (map: KakaoMap | null) => void;
+  /**
+   * 클러스터 오버레이가 createRoot 로 렌더한 React root.
+   * deleteOverlays 시 unmount 하여 React root 누수를 방지한다. (내부 전용)
+   */
+  __reactRoot?: { unmount: () => void };
 }
 
 export interface Qa {

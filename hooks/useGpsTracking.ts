@@ -49,8 +49,10 @@ const useGpsTracking = ({
   const [gpsState, setGpsState] = useState<GpsState>("idle");
   const hasReceivedFirstLocation = useRef(false);
 
-  // Get compass heading (works even when stationary)
-  const compassHeading = useCompass();
+  // 추적 중일 때만 나침반을 구독해 센서 속도 리렌더를 막는다. (P2-4)
+  const isTracking = useMapStore((state) => state.isTrackingLocation);
+  const { heading: compassHeading, requestPermission: requestCompassPermission } =
+    useCompass(isTracking);
 
   // Create or update user location marker
   const updateUserLocationMarker = useCallback(
@@ -97,6 +99,11 @@ const useGpsTracking = ({
 
     setGpsState("locating");
     hasReceivedFirstLocation.current = false;
+
+    // iOS 나침반 권한은 사용자 제스처(이 클릭) 안에서 요청해야 허용된다. (P2-5)
+    if (isMobile) {
+      requestCompassPermission();
+    }
 
     // Handle React Native WebView
     if (window.ReactNativeWebView) {
@@ -282,6 +289,7 @@ const useGpsTracking = ({
     setGpsWatchId,
     setIsTrackingLocation,
     compassHeading,
+    requestCompassPermission,
   ]);
 
   // Update marker rotation when compass heading changes (stationary device)
@@ -295,18 +303,11 @@ const useGpsTracking = ({
     }
   }, [compassHeading, myLocation, map, updateUserLocationMarker]);
 
-  // Cleanup: Stop tracking location when component unmounts
-  // Only clean up if map is being destroyed (not just navigating between pages)
+  // Cleanup: 컴포넌트 언마운트 시 활성 watch/마커를 정리한다.
+  // 기존 구현은 `map` 이 null 일 때만 정리했는데 map 은 스토어에 계속 유지되어
+  // 사실상 dead 였다. gpsWatchId 존재 여부를 기준으로 정리한다. (P2-6)
   useEffect(() => {
     return () => {
-      // Don't clean up if map still exists (just navigation)
-      // Map will persist across page navigations
-      if (map) {
-        // Map still exists, keep tracking and marker
-        return;
-      }
-
-      // Map is being destroyed, clean up everything
       const currentWatchId = useMapStore.getState().gpsWatchId;
       const currentMarker = useMapStore.getState().userLocationMarker;
 
@@ -322,7 +323,7 @@ const useGpsTracking = ({
 
       setIsTrackingLocation(false);
     };
-  }, [map, setGpsWatchId, setUserLocationMarker, setIsTrackingLocation]);
+  }, [setGpsWatchId, setUserLocationMarker, setIsTrackingLocation]);
 
   return {
     gpsState,

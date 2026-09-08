@@ -41,6 +41,19 @@ const Roadview = () => {
     if (!map || !open || !lat || !lng) return;
     if (!mapContainer.current || !roadviewContainer.current) return;
 
+    let disposed = false;
+    // 이 effect 에서 등록한 kakao 리스너들을 모아 cleanup 에서 해제한다. (P2-8)
+    const listeners: { target: any; type: string; handler: (...a: any[]) => void }[] =
+      [];
+    const addListener = (
+      target: any,
+      type: string,
+      handler: (...a: any[]) => void
+    ) => {
+      window.kakao.maps.event.addListener(target, type, handler);
+      listeners.push({ target, type, handler });
+    };
+
     const mapCenter = new window.kakao.maps.LatLng(lat, lng);
     const mapOption = {
       center: mapCenter,
@@ -72,6 +85,8 @@ const Roadview = () => {
     const position = new window.kakao.maps.LatLng(lat, lng);
 
     roadviewClient.getNearestPanoId(position, 50, (panoId: number) => {
+      // 콜백이 모달이 닫힌 뒤 실행될 수 있으므로 disposed 가드 (P2-8)
+      if (disposed) return;
       if (panoId === null) {
         toast({ description: "로드뷰를 지원하지 않는 주소입니다." });
         closeModal();
@@ -82,7 +97,7 @@ const Roadview = () => {
 
     let mapWalker: any = null;
 
-    window.kakao.maps.event.addListener(roadview, "init", () => {
+    addListener(roadview, "init", () => {
       // 로드뷰에 마커 표시
       const rMarker = new window.kakao.maps.Marker({
         position: mapCenter,
@@ -110,17 +125,25 @@ const Roadview = () => {
       mapWalker.setMap();
       mapWalker.init();
 
-      window.kakao.maps.event.addListener(roadview, "viewpoint_changed", () => {
+      addListener(roadview, "viewpoint_changed", () => {
         const viewpoint = roadview.getViewpoint();
         mapWalker.setAngle(viewpoint.pan);
       });
 
-      window.kakao.maps.event.addListener(roadview, "position_changed", () => {
+      addListener(roadview, "position_changed", () => {
         const position = roadview.getPosition();
         mapWalker.setPosition(position);
         miniMap.setCenter(position);
       });
     });
+
+    return () => {
+      disposed = true;
+      listeners.forEach(({ target, type, handler }) => {
+        window.kakao.maps.event.removeListener(target, type, handler);
+      });
+      marker.setMap(null);
+    };
   }, [map, open, lng, lat, toast, closeModal]);
 
   useEffect(() => {
@@ -128,7 +151,9 @@ const Roadview = () => {
 
     if (mapHover)
       mapData.addOverlayMapTypeId(window.kakao.maps.MapTypeId.ROADVIEW);
-    else mapData.addOverlayMapTypeId(window.kakao.maps.MapTypeId.ROADMAP);
+    // leave 시에는 ROADVIEW 오버레이를 제거해야 한다. ROADMAP 은 베이스 타입이라
+    // 추가해도 ROADVIEW 오버레이가 벗겨지지 않는 버그가 있었다. (P2-7)
+    else mapData.removeOverlayMapTypeId(window.kakao.maps.MapTypeId.ROADVIEW);
   }, [mapHover, mapData]);
 
   // Fetch and display roadview date for 5 seconds

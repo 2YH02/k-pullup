@@ -4,9 +4,9 @@ import BottomSheet, { BottomSheetItem } from "@/components/common/bottom-sheet";
 import { useBottomSheetStore } from "@/store/useBottomSheetStore";
 import convertWgs from "@api/marker/convert-wgs";
 import IconButton from "@common/icon-button";
-import useGps from "@hooks/useGps";
 import { useToast } from "@hooks/useToast";
 import downloadPdf from "@lib/api/marker/download-pdf";
+import getMyLocation from "@lib/get-my-location";
 import { FileDown, Link2, MapPinned, Route, Share2 } from "lucide-react";
 import { useState } from "react";
 
@@ -20,7 +20,6 @@ interface ShareButtonProps {
 const ShareButton = ({ markerId, lat, lng, address }: ShareButtonProps) => {
   const { show } = useBottomSheetStore();
   const { toast } = useToast();
-  const { handleGps } = useGps();
 
   const [downLoading, setDownLoading] = useState(false);
 
@@ -53,31 +52,29 @@ const ShareButton = ({ markerId, lat, lng, address }: ShareButtonProps) => {
 
   const downloadMap = async () => {
     setDownLoading(true);
-    const response = await downloadPdf({ lat, lng });
+    try {
+      const response = await downloadPdf({ lat, lng });
 
-    if (!response.ok) {
-      setDownLoading(false);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+
+      a.href = url;
+      a.download = `${markerId}.pdf`;
+
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {
       toast({
         description: "잠시 후 다시 시도해주세요.",
       });
-      return;
+    } finally {
+      setDownLoading(false);
     }
-
-    const blob = await response.blob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-
-    a.href = url;
-    a.download = `${markerId}.pdf`;
-
-    setDownLoading(false);
-
-    a.click();
-    URL.revokeObjectURL(url);
   };
 
   const openLocation = async () => {
-    const myLocate = handleGps();
+    const myLocate = await getMyLocation();
     if (myLocate) {
       const sp = await convertWgs(myLocate.lat, myLocate.lng);
       const dst = await convertWgs(lat, lng);

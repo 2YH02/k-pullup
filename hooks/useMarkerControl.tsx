@@ -108,6 +108,9 @@ const useMarkerControl = () => {
 
       overlay.setMap(map);
 
+      // deleteOverlays 시 unmount 할 수 있도록 root 를 오버레이에 보관 (P2-1 누수 방지)
+      overlay.__reactRoot = root;
+
       appendOverlay(overlay);
     },
     [appendOverlay]
