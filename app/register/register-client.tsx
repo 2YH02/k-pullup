@@ -177,7 +177,9 @@ const RegisterClient = ({
         } catch {
           setErrorMessage("잠시 후 다시 시도해주세요.");
           setUploadStatus("error");
-          submitRequestedRef.current = false;
+          // 락을 여기서 풀면 uploadStatus 변경으로 effect 가 재실행되며 setNewMarker 를
+          // 다시 호출해 마커가 중복 생성될 수 있다. 락 해제는 step 이 4 에서 벗어나는
+          // 사용자 액션에서만 수행한다.
           return;
         }
 
@@ -216,7 +218,8 @@ const RegisterClient = ({
           setErrorMessage("잠시 후 다시 시도해주세요");
         }
         setUploadStatus("error");
-        submitRequestedRef.current = false;
+        // 락 해제는 step 이 4 에서 벗어나는 사용자 액션에서만 (자동 재시도로 인한
+        // 마커 중복 생성 방지)
       }
     };
 

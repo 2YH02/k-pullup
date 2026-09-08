@@ -87,7 +87,16 @@ const PullupChatClient = ({
   }, []);
 
   useEffect(() => {
-    ws.current?.close();
+    // 의도적 교체/정리로 소켓을 닫을 때는 onclose/onerror 를 먼저 제거해
+    // 에러 상태로 잘못 전환되는 것을 막는다.
+    const closeSocket = (socket: WebSocket | null) => {
+      if (!socket) return;
+      socket.onclose = null;
+      socket.onerror = null;
+      socket.close();
+    };
+
+    closeSocket(ws.current);
 
     if (!cid) return;
 
@@ -97,6 +106,7 @@ const PullupChatClient = ({
 
     ws.current.onopen = () => {
       setMessages([]);
+      setIsChatError(false);
       setConnection(true);
       setConnectionMsg(
         "비속어 사용에 주의해주세요. 이후 서비스 사용이 제한될 수 있습니다!"
@@ -145,7 +155,7 @@ const PullupChatClient = ({
 
     return () => {
       clearInterval(pingInterval);
-      ws.current?.close();
+      closeSocket(ws.current);
     };
   }, [cid, markerId]);
 

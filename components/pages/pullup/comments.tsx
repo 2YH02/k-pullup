@@ -178,7 +178,17 @@ const Comments = ({ markerId, initialComments }: CommentsProps) => {
     setDeleteLoading(true);
     try {
       await deleteComment(commentId);
+    } catch {
+      toast({ description: "잠시 후 다시 시도해주세요" });
+      setDeleteLoading(false);
+      return;
+    }
 
+    // 삭제 성공 시 로컬 목록에서 즉시 제거 (새로고침 실패와 무관하게 반영)
+    setComments((prev) => prev.filter((comment) => comment.commentId !== commentId));
+
+    // 목록 새로고침은 별도 try/catch — 실패해도 삭제 성공 상태를 오염시키지 않는다.
+    try {
       const newComment = await getComments({
         id: markerId,
         pageParam: 1,
@@ -193,7 +203,7 @@ const Comments = ({ markerId, initialComments }: CommentsProps) => {
       setTotalPages(newComment.totalPages);
       setCurrentPage(1);
     } catch {
-      toast({ description: "잠시 후 다시 시도해주세요" });
+      // 새로고침 실패: 위에서 로컬 제거는 이미 반영됨. 조용히 무시.
     } finally {
       setDeleteLoading(false);
     }

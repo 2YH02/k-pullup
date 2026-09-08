@@ -62,7 +62,9 @@ const ChatDetailClient = ({
 
     if (cidJson) {
       try {
-        newCid = JSON.parse(cidJson)?.cid ?? null;
+        const value = JSON.parse(cidJson)?.cid;
+        // 비어 있지 않은 문자열만 유효한 cid 로 인정 (숫자/빈 문자열/기타 값 방어)
+        newCid = typeof value === "string" && value.length > 0 ? value : null;
       } catch {
         newCid = null;
       }

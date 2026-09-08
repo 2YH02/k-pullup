@@ -44,6 +44,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
   // Mini map references
   const miniMapRef = useRef<HTMLDivElement | null>(null);
   const miniMapInstanceRef = useRef<any>(null);
+  const centerMarkerRef = useRef<any>(null);
   const circleOverlayRef = useRef<any>(null);
 
   // 전역 map 이 준비되면 kakao SDK 도 로드됐다는 신호로 사용한다. (P2-10)
@@ -139,9 +140,10 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
 
     const center = new window.kakao.maps.LatLng(Number(lat), Number(lng));
 
-    // 이미 생성돼 있으면 재생성하지 않고 center 만 이동한다. (P2-10)
+    // 이미 생성돼 있으면 재생성하지 않고 center 와 마커 위치만 이동한다. (P2-10)
     if (miniMapInstanceRef.current) {
       miniMapInstanceRef.current.setCenter(center);
+      centerMarkerRef.current?.setPosition(center);
       return;
     }
 
@@ -159,8 +161,8 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
     const miniMap = new window.kakao.maps.Map(container, options);
     miniMapInstanceRef.current = miniMap;
 
-    // Add center marker
-    new window.kakao.maps.Marker({
+    // Add center marker (위치 변경 시 재사용하기 위해 ref 에 보관)
+    centerMarkerRef.current = new window.kakao.maps.Marker({
       position: center,
       map: miniMap,
     });

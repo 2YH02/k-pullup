@@ -48,15 +48,18 @@ const UserSetting = () => {
         try {
           await deleteUser();
 
+          // 성공 시 상태/세션/뷰 정리를 즉시 수행한다. 알럿 onClick 에 의존하면
+          // Escape 등으로 알럿을 닫았을 때 정리가 스킵될 수 있으므로 알럿은 정보성으로만 둔다.
+          setUser(null);
+          clearSessionCache();
+          router.replace("/");
+          router.refresh();
+
           openAlert({
             title: "회원 탈퇴가 완료되었습니다.",
             description:
               "그동안 이용해주셔서 감사합니다. 언제든 다시 찾아주세요!",
-            onClick: () => {
-              router.replace("/");
-              router.refresh();
-              setUser(null);
-            },
+            onClick: () => {},
           });
         } catch (e) {
           if (e instanceof FetchError && e.status === 401) {

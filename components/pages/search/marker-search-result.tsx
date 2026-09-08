@@ -22,17 +22,23 @@ const MarkerSearchResult = ({ address, markerId }: MarkerSearchResultProps) => {
   useEffect(() => {
     const fetch = async () => {
       setLoading(true);
-      const data = await markerDetail({ id: markerId });
+      try {
+        const data = await markerDetail({ id: markerId });
 
-      if (data.error) {
+        // 성공 응답에 error 필드가 오는 경우도 방어적으로 처리
+        if (data.error) {
+          setError(true);
+          return;
+        }
+
+        setMarker(data);
+        setError(false);
+      } catch {
+        // markerDetail 은 non-2xx 에서 throw → 에러 상태로 표시
         setError(true);
+      } finally {
         setLoading(false);
-        return;
       }
-
-      setMarker(data);
-      setError(false);
-      setLoading(false);
     };
 
     fetch();

@@ -86,8 +86,11 @@ const KakaoMap = () => {
 
   // pathname 을 effect deps 에 직접 넣으면 클라이언트 네비게이션마다 마커를
   // 전량 재요청하게 되므로, 가드용으로만 ref 로 읽는다. (P2-2)
+  // ref 갱신은 렌더 본문이 아니라 커밋 이후 effect 에서 수행한다(버려지는 렌더 방지).
   const pathnameRef = useRef(pathname);
-  pathnameRef.current = pathname;
+  useEffect(() => {
+    pathnameRef.current = pathname;
+  }, [pathname]);
 
   useEffect(() => {
     if (!isMounted || pathname === "/admin") return;
@@ -162,6 +165,9 @@ const KakaoMap = () => {
       } catch {
         return;
       }
+
+      // null / 비객체(숫자, 문자열 등) 파싱 결과는 무시 (data.latitude 접근 시 크래시 방지)
+      if (typeof data !== "object" || data === null) return;
 
       if (data.latitude && data.longitude) {
         setMyLocation({ lat: data.latitude, lng: data.longitude });
