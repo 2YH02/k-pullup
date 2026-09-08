@@ -38,10 +38,16 @@ const GeoProvider = ({ children }: GeoProviderProps) => {
     if (window.ReactNativeWebView) {
       window.ReactNativeWebView.postMessage("gps-permission");
       const handleMessage = (e: any) => {
-        const data = JSON.parse(e.data);
+        if (typeof e.data !== "string") return;
 
-        if (data.latitude && data.longitude) {
-          setMyLocation({ lat: data.latitude, lng: data.longitude });
+        try {
+          const data = JSON.parse(e.data);
+
+          if (data.latitude && data.longitude) {
+            setMyLocation({ lat: data.latitude, lng: data.longitude });
+          }
+        } catch {
+          return;
         }
       };
 

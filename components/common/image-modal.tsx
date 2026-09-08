@@ -36,7 +36,7 @@ const ImageModal = ({
   const { closeModal } = useImageModalStore();
 
   const [imageSize, setImageSize] = useState(DEFAULT_IMAGE_SIZE);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [loadedUrls, setLoadedUrls] = useState<Set<string>>(new Set());
 
   const zoomIn = () => {
     if (
@@ -61,7 +61,7 @@ const ImageModal = ({
   };
 
   const handleClose = () => {
-    setIsLoaded(false);
+    setLoadedUrls(new Set());
     setImageSize(DEFAULT_IMAGE_SIZE);
     closeModal();
   };
@@ -86,29 +86,38 @@ const ImageModal = ({
         className="web:w-[80%] mo:w-dvw absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
       >
         <CarouselContent>
-          {imageUrl.map((image) => (
-            <CarouselItem
-              key={image}
-              className="flex items-center justify-center"
-            >
-              {!isLoaded && (
-                <LoadingIcon className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-              )}
-              <Image
+          {imageUrl.map((image) => {
+            const isLoaded = loadedUrls.has(image);
+            return (
+              <CarouselItem
                 key={image}
-                src={image}
-                alt="상세"
-                width={imageSize}
-                height={imageSize}
-                className={cn(
-                  `mx-auto transition-opacity duration-500 ease-in-out`,
-                  isLoaded ? "opacity-100" : "opacity-0"
+                className="flex items-center justify-center"
+              >
+                {!isLoaded && (
+                  <LoadingIcon className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
                 )}
-                onLoadingComplete={() => setIsLoaded(true)}
-                unoptimized
-              />
-            </CarouselItem>
-          ))}
+                <Image
+                  key={image}
+                  src={image}
+                  alt="상세"
+                  width={imageSize}
+                  height={imageSize}
+                  className={cn(
+                    `mx-auto transition-opacity duration-500 ease-in-out`,
+                    isLoaded ? "opacity-100" : "opacity-0"
+                  )}
+                  onLoadingComplete={() =>
+                    setLoadedUrls((prev) => {
+                      const next = new Set(prev);
+                      next.add(image);
+                      return next;
+                    })
+                  }
+                  unoptimized
+                />
+              </CarouselItem>
+            );
+          })}
         </CarouselContent>
         {imageUrl.length > 1 && (
           <>

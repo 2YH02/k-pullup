@@ -40,7 +40,11 @@ export const getSessionCache = (): User | null => {
 export const setSessionCache = (user: User): void => {
   if (typeof window === "undefined") return;
 
-  sessionStorage.setItem(SESSION_CACHE_KEY, JSON.stringify(user));
+  try {
+    sessionStorage.setItem(SESSION_CACHE_KEY, JSON.stringify(user));
+  } catch {
+    // 저장 실패(용량 초과/직렬화 오류 등)는 조용히 무시한다.
+  }
 };
 
 /**

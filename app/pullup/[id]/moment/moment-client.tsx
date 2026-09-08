@@ -74,7 +74,10 @@ const MomentClient = ({
 
       setSelectedFile(optimizedFile);
       const url = URL.createObjectURL(optimizedFile);
-      setPreviewURL(url);
+      setPreviewURL((prev) => {
+        if (prev) URL.revokeObjectURL(prev);
+        return url;
+      });
       setErrorMessage("");
     } catch (error) {
       if (error instanceof ImageValidationError) {
@@ -105,7 +108,10 @@ const MomentClient = ({
 
   const clearSelect = () => {
     setSelectedFile(null);
-    setPreviewURL(null);
+    setPreviewURL((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return null;
+    });
   };
 
   if (selectedFile && previewURL) {

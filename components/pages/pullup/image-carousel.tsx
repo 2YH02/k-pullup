@@ -12,7 +12,7 @@ interface ImageCarouselProps {
 }
 
 const ImageCarousel = ({ photos }: ImageCarouselProps) => {
-  const [loading, setLoading] = useState(false);
+  const [loadedUrls, setLoadedUrls] = useState<Set<string>>(new Set());
 
   const [emblaRef] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 4000 }),
@@ -24,25 +24,34 @@ const ImageCarousel = ({ photos }: ImageCarouselProps) => {
   return (
     <div className="rounded-md overflow-hidden embla" ref={emblaRef}>
       <div className="embla__container">
-        {photos.map((photo, index) => (
-          <div key={photo.photoId} className="h-44 w-full embla__slide mt-2 px-2">
-            <div className="h-full w-full rounded-md overflow-hidden">
-              {!loading && <Skeleton className="h-full w-full rounded-md" />}
-              <Image
-                src={photo.photoUrl}
-                alt="상세"
-                width={0}
-                height={0}
-                sizes="100vw"
-                className={`w-full h-full object-cover ${
-                  !loading ? "invisible" : "visible"
-                }`}
-                onLoad={() => setLoading(true)}
-                priority={index === 0}
-              />
+        {photos.map((photo, index) => {
+          const isLoaded = loadedUrls.has(photo.photoUrl);
+          return (
+            <div key={photo.photoId} className="h-44 w-full embla__slide mt-2 px-2">
+              <div className="h-full w-full rounded-md overflow-hidden">
+                {!isLoaded && <Skeleton className="h-full w-full rounded-md" />}
+                <Image
+                  src={photo.photoUrl}
+                  alt="상세"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  className={`w-full h-full object-cover ${
+                    !isLoaded ? "invisible" : "visible"
+                  }`}
+                  onLoad={() =>
+                    setLoadedUrls((prev) => {
+                      const next = new Set(prev);
+                      next.add(photo.photoUrl);
+                      return next;
+                    })
+                  }
+                  priority={index === 0}
+                />
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

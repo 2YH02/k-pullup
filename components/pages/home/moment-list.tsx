@@ -52,7 +52,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
     });
   }, [data, isMounted]);
 
-  let animationFrameId: number;
+  const animationFrameId = useRef<number | null>(null);
 
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     if (!sliderRef.current) return;
@@ -90,9 +90,9 @@ const MomentList = ({ data }: { data: Moment[] }) => {
       minTranslateX
     );
 
-    if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
 
-    animationFrameId = requestAnimationFrame(() => {
+    animationFrameId.current = requestAnimationFrame(() => {
       setStyle({ transform: `translateX(${translateX.current}px)` });
     });
   };
@@ -129,6 +129,19 @@ const MomentList = ({ data }: { data: Moment[] }) => {
 
   if (viewMoment && curMoment) {
     const { hours, minutes } = minutesAgo(curMoment.createdAt);
+
+    let curBlurDataURL = "/placeholder_image.png";
+    if (isMounted) {
+      try {
+        curBlurDataURL = pixelsToDataUrl(
+          decodeBlurhash(curMoment.blurhash, 100, 200),
+          100,
+          200
+        );
+      } catch {
+        curBlurDataURL = "/placeholder_image.png";
+      }
+    }
 
     return (
       <div className="absolute mo:fixed top-0 left-0 z-50 flex h-full w-full flex-col bg-black/95 web:rounded-lg">
@@ -194,15 +207,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
               alt={curMoment.caption}
               className="object-contain z-10"
               placeholder="blur"
-              blurDataURL={
-                isMounted
-                  ? pixelsToDataUrl(
-                      decodeBlurhash(curMoment.blurhash, 100, 200),
-                      100,
-                      200
-                    )
-                  : "/placeholder_image.png"
-              }
+              blurDataURL={curBlurDataURL}
             />
           </div>
           <div className="w-full p-4 text-sm leading-relaxed text-white/95">

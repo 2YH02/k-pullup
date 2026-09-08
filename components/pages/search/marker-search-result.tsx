@@ -24,7 +24,7 @@ const MarkerSearchResult = ({ address, markerId }: MarkerSearchResultProps) => {
       setLoading(true);
       const data = await markerDetail({ id: markerId });
 
-      if (marker?.error) {
+      if (data.error) {
         setError(true);
         setLoading(false);
         return;
@@ -36,7 +36,7 @@ const MarkerSearchResult = ({ address, markerId }: MarkerSearchResultProps) => {
     };
 
     fetch();
-  }, [marker?.error, markerId]);
+  }, [markerId]);
 
   if (loading) {
     return (
@@ -62,11 +62,7 @@ const MarkerSearchResult = ({ address, markerId }: MarkerSearchResultProps) => {
               >
                 <div className="w-24 h-24 mr-4 shrink-0">
                   <Image
-                    src={
-                      marker.photos
-                        ? marker.photos[0].photoUrl
-                        : "/metaimg.webp"
-                    }
+                    src={marker.photos?.[0]?.photoUrl ?? "/metaimg.webp"}
                     alt={`${marker.markerId} 상세`}
                     width={0}
                     height={0}

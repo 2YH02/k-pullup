@@ -11,9 +11,9 @@ const UserInfo = ({ user }: { user: MyInfo }) => {
         <Text>님</Text>
       </div>
       <Text typography="t6">안녕하세요.</Text>
-      {(user.reportCount || user.markerCount) && (
+      {((user.reportCount ?? 0) > 0 || (user.markerCount ?? 0) > 0) && (
         <div className="mt-2">
-          {user.reportCount && (
+          {(user.reportCount ?? 0) > 0 && (
             <Text
               display="block"
               className="text-grey-dark dark:text-grey text-[10px]"
@@ -23,7 +23,7 @@ const UserInfo = ({ user }: { user: MyInfo }) => {
             </Text>
           )}
 
-          {user.markerCount && (
+          {(user.markerCount ?? 0) > 0 && (
             <Text
               display="block"
               className="text-grey-dark dark:text-grey text-[10px]"

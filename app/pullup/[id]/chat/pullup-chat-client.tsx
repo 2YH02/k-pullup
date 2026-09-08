@@ -65,8 +65,23 @@ const PullupChatClient = ({
   }, [inputRef]);
 
   useEffect(() => {
-    const cid = localStorage.getItem("cid");
-    setCid(cid);
+    const raw = localStorage.getItem("cid");
+    let parsedCid: string | null = null;
+
+    if (raw) {
+      try {
+        parsedCid = JSON.parse(raw)?.cid ?? null;
+      } catch {
+        parsedCid = null;
+      }
+    }
+
+    if (!parsedCid) {
+      parsedCid = v4();
+      localStorage.setItem("cid", JSON.stringify({ cid: parsedCid }));
+    }
+
+    setCid(parsedCid);
   }, []);
 
   useEffect(() => {
@@ -122,21 +137,15 @@ const PullupChatClient = ({
       setIsChatError(true);
     };
 
-    return () => {
-      ws.current?.close();
-    };
-  }, [cid, markerId]);
-
-  useEffect(() => {
-    if (!ws) return;
     const pingInterval = setInterval(() => {
       ws.current?.send(JSON.stringify({ type: "ping" }));
     }, 30000);
 
     return () => {
       clearInterval(pingInterval);
+      ws.current?.close();
     };
-  }, []);
+  }, [cid, markerId]);
 
   useEffect(() => {
     const scrollBox = chatBox.current;

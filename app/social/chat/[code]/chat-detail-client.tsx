@@ -9,6 +9,7 @@ import useInput from "@hooks/useInput";
 import LoadingIcon from "@icons/loading-icon";
 import { SendHorizontal } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { v4 } from "uuid";
 
 export interface ChatMessage {
   uid: string;
@@ -57,8 +58,21 @@ const ChatDetailClient = ({
 
   useEffect(() => {
     const cidJson = localStorage.getItem("cid");
-    if (!cidJson) return;
-    const newCid = JSON.parse(cidJson).cid;
+    let newCid: string | null = null;
+
+    if (cidJson) {
+      try {
+        newCid = JSON.parse(cidJson)?.cid ?? null;
+      } catch {
+        newCid = null;
+      }
+    }
+
+    if (!newCid) {
+      newCid = v4();
+      localStorage.setItem("cid", JSON.stringify({ cid: newCid }));
+    }
+
     setCid(newCid);
   }, []);
 
@@ -102,21 +116,15 @@ const ChatDetailClient = ({
       setIsConnectionError(true);
     };
 
-    return () => {
-      ws.current?.close();
-    };
-  }, [cid, code]);
-
-  useEffect(() => {
-    if (!ws.current) return;
     const pingInterval = setInterval(() => {
       ws.current?.send(JSON.stringify({ type: "ping" }));
     }, 30000);
 
     return () => {
       clearInterval(pingInterval);
+      ws.current?.close();
     };
-  }, []);
+  }, [cid, code]);
 
   useEffect(() => {
     const scrollBox = chatBox.current;
