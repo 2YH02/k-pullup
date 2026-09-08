@@ -124,17 +124,7 @@ const AdminClient = ({ data }: { data: AllReportRes }) => {
         setProcessingIds((prev) => new Set(prev).add(reportId));
 
         try {
-          const response = await approveReport(reportId);
-
-          if (!response.ok) {
-            closeAlert();
-            openAlert({
-              title: "승인할 수 없습니다.",
-              description: "잠시 후 다시 시도해주세요.",
-              onClick: () => {},
-            });
-            return;
-          }
+          await approveReport(reportId);
 
           closeAlert();
           openAlert({
@@ -175,17 +165,7 @@ const AdminClient = ({ data }: { data: AllReportRes }) => {
         setProcessingIds((prev) => new Set(prev).add(reportId));
 
         try {
-          const response = await denyReport(reportId);
-
-          if (!response.ok) {
-            closeAlert();
-            openAlert({
-              title: "거절할 수 없습니다.",
-              description: "잠시 후 다시 시도해주세요.",
-              onClick: () => {},
-            });
-            return;
-          }
+          await denyReport(reportId);
 
           closeAlert();
           openAlert({

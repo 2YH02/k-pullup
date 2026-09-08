@@ -4,7 +4,7 @@ import { type Device } from "@/app/mypage/page";
 import BottomFixedButton from "@/components/common/bottom-fixed-button";
 import MoveMap from "@/components/pages/pullup/move-map";
 import type { Nullable } from "@/types";
-import type { KaKaoMapMouseEvent, KakaoMarker } from "@/types/kakao-map.types";
+import type { KaKaoMapMouseEvent, KakaoMap, KakaoMarker } from "@/types/kakao-map.types";
 import { Marker } from "@/types/marker.types";
 import Button from "@common/button";
 import GrowBox from "@common/grow-box";
@@ -15,11 +15,12 @@ import Textarea from "@common/textarea";
 import WarningText from "@common/warning-text";
 import { useToast } from "@hooks/useToast";
 import reportMarker, { ReportValue } from "@lib/api/report/report-marker";
+import { FetchError } from "@lib/fetchData";
 import ReportCompleted from "@pages/pullup/report/report-completed";
 import UploadImage from "@pages/pullup/upload-image";
 import useAlertStore from "@store/useAlertStore";
 import useMapStore from "@store/useMapStore";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface ReportClientProps {
   marker: Marker;
@@ -50,6 +51,10 @@ const ReportClient = ({
 
   const [newLatLng, setNewLatLng] =
     useState<Nullable<{ lat: number; lng: number }>>(null);
+
+  // #change-map 을 매 newLatLng 마다 새로 생성하지 않고 1회 생성 후 재사용한다. (P2-9)
+  const changeMapRef = useRef<KakaoMap | null>(null);
+  const changeMarkerRef = useRef<KakaoMarker | null>(null);
 
   useEffect(() => {
     if (!markers) return;
@@ -87,36 +92,42 @@ const ReportClient = ({
   useEffect(() => {
     if (!newLatLng || !map) return;
 
-    const mapContainer = document.getElementById("change-map");
-    const mapOption = {
-      center: new window.kakao.maps.LatLng(newLatLng.lat, newLatLng.lng),
-      level: map.getLevel(),
-    };
-
-    const newMap = new window.kakao.maps.Map(mapContainer, mapOption);
-    newMap.setDraggable(false);
-    newMap.setZoomable(false);
-
-    const imageSize = new window.kakao.maps.Size(32, 45);
-    const imageOption = { offset: new window.kakao.maps.Point(16, 47) };
-
-    const imageUrl = "/active-selected.png";
-
-    const pin = new window.kakao.maps.MarkerImage(
-      imageUrl,
-      imageSize,
-      imageOption
-    );
-
     const position = new window.kakao.maps.LatLng(newLatLng.lat, newLatLng.lng);
 
-    new window.kakao.maps.Marker({
-      map: newMap,
-      position: position,
-      image: pin,
-      clickable: false,
-      zIndex: 5,
-    });
+    // 최초 1회만 지도/마커 생성, 이후에는 center/position 만 갱신한다. (P2-9)
+    if (!changeMapRef.current) {
+      const mapContainer = document.getElementById("change-map");
+      if (!mapContainer) return;
+
+      const newMap = new window.kakao.maps.Map(mapContainer, {
+        center: position,
+        level: map.getLevel(),
+      });
+      newMap.setDraggable(false);
+      newMap.setZoomable(false);
+
+      const imageSize = new window.kakao.maps.Size(32, 45);
+      const imageOption = { offset: new window.kakao.maps.Point(16, 47) };
+      const pin = new window.kakao.maps.MarkerImage(
+        "/active-selected.png",
+        imageSize,
+        imageOption
+      );
+
+      const pinMarker = new window.kakao.maps.Marker({
+        map: newMap,
+        position: position,
+        image: pin,
+        clickable: false,
+        zIndex: 5,
+      });
+
+      changeMapRef.current = newMap;
+      changeMarkerRef.current = pinMarker;
+    } else {
+      changeMapRef.current.setCenter(position);
+      changeMarkerRef.current?.setPosition(position);
+    }
   }, [map, newLatLng]);
 
   useEffect(() => {
@@ -225,37 +236,40 @@ const ReportClient = ({
         }
       : reportValue;
 
-    const response = await reportMarker(data);
-
-    if (!response.ok) {
-      if (response.status === 400) {
-        toast({
-          description: "유효하지 않은 입력 정보입니다.",
-        });
-      } else if (response.status === 403) {
-        toast({
-          description: "한국 내부에서만 위치를 지정할 수 있습니다.",
-        });
-      } else if (response.status === 406) {
-        toast({
-          description: "새로운 위치가 기존 위치와 너무 멀리 떨어져 있습니다.",
-        });
-      } else if (response.status === 409) {
-        toast({
-          description: "이미지를 등록해주세요.",
-        });
+    try {
+      await reportMarker(data);
+      setCompleted(true);
+    } catch (e) {
+      if (e instanceof FetchError) {
+        if (e.status === 400) {
+          toast({
+            description: "유효하지 않은 입력 정보입니다.",
+          });
+        } else if (e.status === 403) {
+          toast({
+            description: "한국 내부에서만 위치를 지정할 수 있습니다.",
+          });
+        } else if (e.status === 406) {
+          toast({
+            description: "새로운 위치가 기존 위치와 너무 멀리 떨어져 있습니다.",
+          });
+        } else if (e.status === 409) {
+          toast({
+            description: "이미지를 등록해주세요.",
+          });
+        } else {
+          toast({
+            description: "잠시 후 다시 시도해주세요",
+          });
+        }
       } else {
         toast({
           description: "잠시 후 다시 시도해주세요",
         });
       }
-
+    } finally {
       setLoading(false);
-      return;
     }
-
-    setLoading(false);
-    setCompleted(true);
   };
 
   if (completed) {

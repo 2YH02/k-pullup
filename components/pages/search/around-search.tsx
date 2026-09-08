@@ -7,6 +7,7 @@ import Skeleton from "@common/skeleton";
 import Text from "@common/text";
 import LocationIcon from "@icons/location-icon";
 import PinIcon from "@icons/pin-icon";
+import useMapStore from "@store/useMapStore";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -43,28 +44,31 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
   // Mini map references
   const miniMapRef = useRef<HTMLDivElement | null>(null);
   const miniMapInstanceRef = useRef<any>(null);
+  const centerMarkerRef = useRef<any>(null);
   const circleOverlayRef = useRef<any>(null);
+
+  // 전역 map 이 준비되면 kakao SDK 도 로드됐다는 신호로 사용한다. (P2-10)
+  const globalMap = useMapStore((state) => state.map);
 
   const loadMoreMarkers = useCallback(async () => {
     if (isLoading || currentPage >= totalPages || currentPage === 0) return;
 
     setIsLoading(true);
-    const newData = await closeMarker({
-      lat: Number(lat),
-      lng: Number(lng),
-      distance: distance,
-      pageParam: currentPage + 1,
-    });
+    try {
+      const newData = await closeMarker({
+        lat: Number(lat),
+        lng: Number(lng),
+        distance: distance,
+        pageParam: currentPage + 1,
+      });
 
-    if (newData.error || newData.message) {
+      setMarkers((prevMarkers) => [...prevMarkers, ...newData.markers]);
+      setCurrentPage(newData.currentPage);
+    } catch {
+      // 추가 로딩 실패 시 조용히 중단
+    } finally {
       setIsLoading(false);
-      return;
     }
-
-    setMarkers((prevMarkers) => [...prevMarkers, ...newData.markers]);
-    setCurrentPage(newData.currentPage);
-
-    setIsLoading(false);
   }, [currentPage, isLoading, totalPages, lat, lng, distance]);
 
   useEffect(() => {
@@ -112,14 +116,6 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
 
       const results = await Promise.all(pagePromises);
 
-      // Check if first request failed
-      if (results[0].error || results[0].message) {
-        setIsLoading(false);
-        setMarkers([]);
-        setHasSearched(true);
-        return;
-      }
-
       // Combine all markers from loaded pages
       const allMarkers = results.flatMap(result =>
         result.markers || []
@@ -128,22 +124,30 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
       setMarkers(allMarkers);
       setCurrentPage(initialPagesToLoad);
       setTotalPages(results[0].totalPages || 0);
-      setIsLoading(false);
       setHasSearched(true);
     } catch (error) {
-      setIsLoading(false);
       setMarkers([]);
       setHasSearched(true);
+    } finally {
+      setIsLoading(false);
     }
   }, [lat, lng, distance]);
 
-  // Initialize mini Kakao Map
+  // Initialize mini Kakao Map (SDK 준비 후 1회 생성, 이후 center 만 갱신)
   useEffect(() => {
-    if (!miniMapRef.current || !window.kakao?.maps) return;
+    if (!miniMapRef.current) return;
+    if (!globalMap || !window.kakao?.maps) return;
 
-    const container = miniMapRef.current;
     const center = new window.kakao.maps.LatLng(Number(lat), Number(lng));
 
+    // 이미 생성돼 있으면 재생성하지 않고 center 와 마커 위치만 이동한다. (P2-10)
+    if (miniMapInstanceRef.current) {
+      miniMapInstanceRef.current.setCenter(center);
+      centerMarkerRef.current?.setPosition(center);
+      return;
+    }
+
+    const container = miniMapRef.current;
     const options = {
       center: center,
       level: 7, // Zoom level
@@ -157,10 +161,9 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
     const miniMap = new window.kakao.maps.Map(container, options);
     miniMapInstanceRef.current = miniMap;
 
-    // Add center marker
-    const markerPosition = new window.kakao.maps.LatLng(Number(lat), Number(lng));
-    new window.kakao.maps.Marker({
-      position: markerPosition,
+    // Add center marker (위치 변경 시 재사용하기 위해 ref 에 보관)
+    centerMarkerRef.current = new window.kakao.maps.Marker({
+      position: center,
       map: miniMap,
     });
 
@@ -169,7 +172,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
         circleOverlayRef.current.setMap(null);
       }
     };
-  }, [lat, lng]);
+  }, [lat, lng, globalMap]);
 
   // Update circle overlay when distance changes
   useEffect(() => {
@@ -495,7 +498,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
                           {marker.address}
                         </Text>
                       </div>
-                      {marker.distance && (
+                      {marker.distance > 0 && (
                         <div className="flex items-center gap-2 mt-1">
                           <div className="w-1 h-1 rounded-full bg-primary dark:bg-primary-dark" />
                           <Text typography="t7" className="text-primary dark:text-primary-light font-medium">

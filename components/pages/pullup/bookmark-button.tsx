@@ -3,6 +3,7 @@
 import IconButton from "@common/icon-button";
 import { useToast } from "@hooks/useToast";
 import deleteFavorite from "@lib/api/favorite/delete-favorite";
+import { FetchError } from "@lib/fetchData";
 import setFavorite from "@lib/api/favorite/set-favorite";
 import useAlertStore from "@store/useAlertStore";
 import { useRouter } from "next/navigation";
@@ -30,54 +31,58 @@ const BookmarkButton = ({
   const [isActive, setIsActive] = useState(favorited);
 
   const handleBookmark = async () => {
-    let response;
     let description;
-    if (isActive) {
-      response = await deleteFavorite(markerId);
-      description = "삭제가 완료되었습니다.";
-    } else {
-      response = await setFavorite(markerId);
-      description = "저장이 완료되었습니다.";
-    }
+    try {
+      if (isActive) {
+        await deleteFavorite(markerId);
+        description = "삭제가 완료되었습니다.";
+      } else {
+        await setFavorite(markerId);
+        description = "저장이 완료되었습니다.";
+      }
 
-    if (!response.ok) {
-      if (response.status === 401) {
-        openAlert({
-          title: "로그인이 필요합니다.",
-          description: "로그인 페이지로 이동하시겠습니까?",
-          onClick: () => {
-            router.push(`/signin?returnUrl=/pullup/${markerId}`);
-          },
-          cancel: true,
-        });
-      } else if (response.status === 403) {
-        openAlert({
-          title: "개수 초과",
-          description: "즐겨찾기는 최대 10개까지 가능합니다.",
-          onClick: () => {},
-        });
+      toast({
+        description: description,
+      });
+
+      closeAlert();
+
+      if (isActive) {
+        decreaseFavCount();
+      } else {
+        increaseFavCount();
+      }
+      setIsActive((prev) => !prev);
+    } catch (e) {
+      if (e instanceof FetchError) {
+        if (e.status === 401) {
+          openAlert({
+            title: "로그인이 필요합니다.",
+            description: "로그인 페이지로 이동하시겠습니까?",
+            onClick: () => {
+              router.push(`/signin?returnUrl=/pullup/${markerId}`);
+            },
+            cancel: true,
+          });
+        } else if (e.status === 403) {
+          openAlert({
+            title: "개수 초과",
+            description: "즐겨찾기는 최대 10개까지 가능합니다.",
+            onClick: () => {},
+          });
+        } else {
+          toast({
+            description: "잠시 후 다시 시도해주세요.",
+          });
+          closeAlert();
+        }
       } else {
         toast({
           description: "잠시 후 다시 시도해주세요.",
         });
         closeAlert();
-        return;
       }
-      return;
     }
-
-    toast({
-      description: description,
-    });
-
-    closeAlert();
-
-    if (isActive) {
-      decreaseFavCount();
-    } else {
-      increaseFavCount();
-    }
-    setIsActive((prev) => !prev);
   };
 
   const handleClick = () => {

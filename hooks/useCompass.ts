@@ -1,8 +1,17 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 // Extend DeviceOrientationEvent to include iOS-specific webkitCompassHeading
 interface DeviceOrientationEventWithWebkit extends DeviceOrientationEvent {
   webkitCompassHeading?: number;
+}
+
+interface UseCompassReturn {
+  heading: number | null;
+  /**
+   * iOS 13+ 에서 나침반 권한을 요청한다.
+   * 반드시 사용자 제스처(버튼 클릭 등) 안에서 호출해야 iOS 가 허용한다. (P2-5)
+   */
+  requestPermission: () => Promise<void>;
 }
 
 /**
@@ -10,75 +19,73 @@ interface DeviceOrientationEventWithWebkit extends DeviceOrientationEvent {
  * Works even when device is stationary (unlike GPS heading)
  * Requires HTTPS and user permission on iOS 13+
  *
- * @returns Current compass heading in degrees (0-360, where 0 = North)
+ * @param enabled - true 일 때만 deviceorientation 을 구독한다.
+ *                   (추적 중이 아닐 때 센서 속도 리렌더 방지, P2-4)
  */
-const useCompass = (): number | null => {
+const useCompass = (enabled: boolean = true): UseCompassReturn => {
   const [heading, setHeading] = useState<number | null>(null);
 
-  useEffect(() => {
-    // Check if DeviceOrientationEvent is supported
-    if (!window.DeviceOrientationEvent) {
-      console.warn("Device Orientation API not supported");
-      return;
+  // iOS 권한이 허용된 뒤에만 구독을 시작하기 위한 플래그
+  const [permissionGranted, setPermissionGranted] = useState(false);
+
+  const handleOrientation = useCallback((event: DeviceOrientationEvent) => {
+    const alpha = event.alpha;
+    if (alpha === null) return;
+
+    let compassHeading = alpha;
+    const webkitEvent = event as DeviceOrientationEventWithWebkit;
+    if (webkitEvent.webkitCompassHeading !== undefined) {
+      compassHeading = webkitEvent.webkitCompassHeading;
+    } else {
+      compassHeading = (360 - alpha) % 360;
     }
 
-    const handleOrientation = (event: DeviceOrientationEvent) => {
-      // alpha: 0-360 degrees (compass heading)
-      // 0 = North, 90 = East, 180 = South, 270 = West
-      const alpha = event.alpha;
+    // 센서는 초당 수십 회 float 값을 쏟아내므로 정수로 반올림하고,
+    // 값이 바뀌지 않으면 setState 를 건너뛰어 불필요한 리렌더를 막는다. (P2-4)
+    const rounded = Math.round(compassHeading);
+    setHeading((prev) => (prev === rounded ? prev : rounded));
+  }, []);
 
-      if (alpha !== null) {
-        // On iOS, alpha is relative to device orientation
-        // For proper compass, we need to adjust based on screen orientation
-        let compassHeading = alpha;
+  const requestPermission = useCallback(async () => {
+    if (typeof window === "undefined" || !window.DeviceOrientationEvent) return;
 
-        // Adjust for screen orientation (iOS Safari)
-        const webkitEvent = event as DeviceOrientationEventWithWebkit;
-        if (webkitEvent.webkitCompassHeading !== undefined) {
-          // iOS provides webkitCompassHeading (true compass heading)
-          compassHeading = webkitEvent.webkitCompassHeading;
-        } else {
-          // Android: alpha is already compass heading
-          // Ensure 0-360 range
-          compassHeading = (360 - alpha) % 360;
-        }
-
-        setHeading(compassHeading);
-      }
+    const DOE = DeviceOrientationEvent as unknown as {
+      requestPermission?: () => Promise<"granted" | "denied">;
     };
 
-    // Request permission on iOS 13+
-    const requestPermission = async () => {
-      if (
-        typeof DeviceOrientationEvent !== "undefined" &&
-        typeof (DeviceOrientationEvent as any).requestPermission === "function"
-      ) {
-        try {
-          const permission = await (
-            DeviceOrientationEvent as any
-          ).requestPermission();
-          if (permission === "granted") {
-            window.addEventListener("deviceorientation", handleOrientation);
-          } else {
-            console.warn("Device orientation permission denied");
-          }
-        } catch (error) {
-          console.error("Error requesting device orientation permission:", error);
-        }
-      } else {
-        // Non-iOS or older iOS - no permission needed
-        window.addEventListener("deviceorientation", handleOrientation);
+    if (typeof DOE.requestPermission === "function") {
+      try {
+        const permission = await DOE.requestPermission();
+        setPermissionGranted(permission === "granted");
+      } catch {
+        // 사용자가 거부했거나 제스처 밖에서 호출된 경우 — 조용히 무시
+        setPermissionGranted(false);
       }
+    } else {
+      // 비 iOS 또는 구형 iOS: 권한 불필요
+      setPermissionGranted(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.DeviceOrientationEvent) return;
+    if (!enabled) return;
+
+    const DOE = DeviceOrientationEvent as unknown as {
+      requestPermission?: () => Promise<"granted" | "denied">;
     };
+    const needsPermission = typeof DOE.requestPermission === "function";
 
-    requestPermission();
+    // iOS 는 권한이 허용된 뒤에만 구독한다.
+    if (needsPermission && !permissionGranted) return;
 
+    window.addEventListener("deviceorientation", handleOrientation);
     return () => {
       window.removeEventListener("deviceorientation", handleOrientation);
     };
-  }, []);
+  }, [enabled, permissionGranted, handleOrientation]);
 
-  return heading;
+  return { heading, requestPermission };
 };
 
 export default useCompass;

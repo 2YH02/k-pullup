@@ -21,7 +21,7 @@ const Overlay = ({ title, position }: OverlayProps) => {
   return (
     <div
       className={cn(
-        "opacity-80 absolut -bottom-3 -left-10 w-15 h-15 flex items-center justify-center rounded-full shadow-full",
+        "opacity-80 absolute -bottom-3 -left-10 w-15 h-15 flex items-center justify-center rounded-full shadow-full",
         getTailwindColorClass(convertToNumber(title))
       )}
     >
@@ -45,8 +45,6 @@ const getTailwindColorClass = (count: number): string => {
     return "bg-blue";
   } else if (count < 1000) {
     return "bg-yellow";
-  } else if (count < 5000) {
-    return "bg-red";
   } else {
     return "bg-red";
   }

@@ -1,6 +1,7 @@
 import { type Device } from "@/app/mypage/page";
 import markerDetail from "@api/marker/marker-detail";
 import getDeviceType from "@lib/get-device-type";
+import guardServerFetch from "@lib/server-fetch-guard";
 import NotFound from "@layout/not-found";
 import { cookies, headers } from "next/headers";
 import ReportClient from "./report-client";
@@ -16,9 +17,11 @@ const PullupReport = async ({ params }: { params: { id: string } }) => {
 
   const deviceType: Device = getDeviceType(userAgent as string);
 
-  const marker = await markerDetail({ id: ~~id, cookie: decodeCookie });
+  const { status, data: marker } = await guardServerFetch(() =>
+    markerDetail({ id: ~~id, cookie: decodeCookie })
+  );
 
-  if (marker.error === "Marker not found") {
+  if (status !== "ok" || !marker) {
     return (
       <NotFound
         hasBackButton

@@ -311,20 +311,16 @@ const MainHeader = ({
     >
       {hasBackButton ? (
         <button
-          className={`flex items-center justify-center shrink-0 w-10 h-10 ${
-            hasBackButton ? "cursor-pointer" : "cursor-default"
-          }`}
+          className="flex items-center justify-center shrink-0 w-10 h-10 cursor-pointer"
           onClick={
-            hasBackButton
+            prevClick
               ? prevClick
-                ? prevClick
-                : referrer
-                ? () => router.back()
-                : () => router.push(backFallbackUrl)
-              : undefined
+              : referrer
+              ? () => router.back()
+              : () => router.push(backFallbackUrl)
           }
         >
-          {hasBackButton && <ArrowLeftIcon color="black" />}
+          <ArrowLeftIcon color="black" />
         </button>
       ) : (
         <div className="w-10 h-10" />

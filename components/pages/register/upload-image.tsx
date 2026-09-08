@@ -139,7 +139,7 @@ const UploadImage = ({
               if (!file.previewURL || !file.id) return null;
               return (
                 <div
-                  key={`${file.previewURL} ${file.file} ${i}`}
+                  key={file.id}
                   className="relative h-16 w-16 rounded-lg border border-border/75 bg-surface/40 shadow-xs dark:border-black-light/70 dark:bg-black-light/40"
                 >
                   <button

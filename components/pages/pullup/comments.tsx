@@ -11,6 +11,7 @@ import Textarea from "@common/textarea";
 import useInput from "@hooks/useInput";
 import { useToast } from "@hooks/useToast";
 import cn from "@lib/cn";
+import { FetchError } from "@lib/fetchData";
 import { formatDate } from "@lib/format-date";
 import useAlertStore from "@store/useAlertStore";
 import { useBottomSheetStore } from "@store/useBottomSheetStore";
@@ -52,20 +53,20 @@ const Comments = ({ markerId, initialComments }: CommentsProps) => {
     if (commentsLoading || currentPage >= totalPages) return;
 
     setCommentsLoading(true);
-    const newData = await getComments({
-      id: markerId,
-      pageParam: currentPage + 1,
-    });
+    try {
+      const newData = await getComments({
+        id: markerId,
+        pageParam: currentPage + 1,
+      });
 
-    if (newData.error) {
-      return;
+      setComments((prev) => [...prev, ...newData.comments]);
+      setCurrentPage(newData.currentPage);
+    } catch {
+      toast({ description: "잠시 후 다시 시도해주세요" });
+    } finally {
+      setCommentsLoading(false);
     }
-
-    setComments((prev) => [...prev, ...newData.comments]);
-    setCurrentPage(newData.currentPage);
-
-    setCommentsLoading(false);
-  }, [currentPage, commentsLoading, totalPages, markerId]);
+  }, [currentPage, commentsLoading, totalPages, markerId, toast]);
 
   useEffect(() => {
     // Use server-provided initial data instead of fetching on mount
@@ -116,74 +117,96 @@ const Comments = ({ markerId, initialComments }: CommentsProps) => {
       return;
     }
     setCreateLoading(true);
-    const response = await createComment({
-      markerId: markerId,
-      commentText: commentValue.value,
-    });
+    try {
+      const response = await createComment({
+        markerId: markerId,
+        commentText: commentValue.value,
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!response.ok) {
-      if (data.error === "Comment contains inappropriate content.") {
-        toast({ description: "댓글에 비속어를 포함할 수 없습니다." });
-        setCreateLoading(false);
-        return;
-      } else if (response.status === 400) {
-        toast({ description: "이미 3개의 댓들을 작성하였습니다." });
-        setCreateLoading(false);
-        return;
-      } else if (response.status === 401) {
-        openAlert({
-          title: "로그인이 필요합니다.",
-          description: "로그인 페이지로 이동하시겠습니까?",
-          onClick: () => {
-            router.push(`/signin?returnUrl=/pullup/${markerId}`);
-          },
-          cancel: true,
+      if (data.username === "k-pullup") {
+        // provider 안내 행은 providerInfo 로 분리 (updater 밖에서 사이드 이펙트 처리)
+        setProviderInfo([...providerInfo, data]);
+      } else {
+        setComments((prev) => {
+          const nonKIndex = prev.findIndex(
+            (comment) => comment.username !== "k-pullup"
+          );
+          if (nonKIndex === -1) {
+            return [data, ...prev];
+          }
+          return [...prev.slice(0, nonKIndex), data, ...prev.slice(nonKIndex)];
         });
-        setCreateLoading(false);
-        return;
       }
-      toast({ description: "잠시 후 다시 시도해주세요" });
-      setCreateLoading(false);
-      return;
-    }
-
-    setComments((prev) => {
-      if (data.username !== "k-pullup") {
-        const nonKIndex = prev.findIndex(
-          (comment) => comment.username !== "k-pullup"
-        );
-        if (nonKIndex === -1) {
-          return [data, ...prev];
+      hide();
+      commentValue.resetValue();
+    } catch (e) {
+      if (e instanceof FetchError) {
+        let errorBody: { error?: string } | null = null;
+        try {
+          errorBody = e.responseBody ? JSON.parse(e.responseBody) : null;
+        } catch {
+          errorBody = null;
         }
-        return [...prev.slice(0, nonKIndex), data, ...prev.slice(nonKIndex)];
+
+        if (errorBody?.error === "Comment contains inappropriate content.") {
+          toast({ description: "댓글에 비속어를 포함할 수 없습니다." });
+        } else if (e.status === 400) {
+          toast({ description: "이미 3개의 댓들을 작성하였습니다." });
+        } else if (e.status === 401) {
+          openAlert({
+            title: "로그인이 필요합니다.",
+            description: "로그인 페이지로 이동하시겠습니까?",
+            onClick: () => {
+              router.push(`/signin?returnUrl=/pullup/${markerId}`);
+            },
+            cancel: true,
+          });
+        } else {
+          toast({ description: "잠시 후 다시 시도해주세요" });
+        }
+      } else {
+        toast({ description: "잠시 후 다시 시도해주세요" });
       }
-      setProviderInfo([...providerInfo, data]);
-      return [...prev];
-    });
-    setCreateLoading(false);
-    hide();
-    commentValue.resetValue();
+    } finally {
+      setCreateLoading(false);
+    }
   };
 
   const handleDelete = async (commentId: number) => {
     setDeleteLoading(true);
-    const response = await deleteComment(commentId);
-
-    if (!response.ok) {
+    try {
+      await deleteComment(commentId);
+    } catch {
       toast({ description: "잠시 후 다시 시도해주세요" });
       setDeleteLoading(false);
       return;
     }
 
-    const newComment = await getComments({
-      id: markerId,
-      pageParam: 1,
-    });
-    setComments(newComment.comments);
-    setCurrentPage(1);
-    setDeleteLoading(false);
+    // 삭제 성공 시 로컬 목록에서 즉시 제거 (새로고침 실패와 무관하게 반영)
+    setComments((prev) => prev.filter((comment) => comment.commentId !== commentId));
+
+    // 목록 새로고침은 별도 try/catch — 실패해도 삭제 성공 상태를 오염시키지 않는다.
+    try {
+      const newComment = await getComments({
+        id: markerId,
+        pageParam: 1,
+      });
+      // 초기 로드와 동일하게 provider(k-pullup) 행을 분리하고 totalPages 도 갱신한다.
+      setComments(
+        newComment.comments.filter((comment) => comment.username !== "k-pullup")
+      );
+      setProviderInfo(
+        newComment.comments.filter((comment) => comment.username === "k-pullup")
+      );
+      setTotalPages(newComment.totalPages);
+      setCurrentPage(1);
+    } catch {
+      // 새로고침 실패: 위에서 로컬 제거는 이미 반영됨. 조용히 무시.
+    } finally {
+      setDeleteLoading(false);
+    }
   };
 
   return (

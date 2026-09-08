@@ -76,9 +76,7 @@ export const coordToAddress = async (
           : address.address_name;
 
         // Extract short address (시/도 + 시/군/구)
-        const shortAddress = roadAddress
-          ? `${address.region_1depth_name} ${address.region_2depth_name}`
-          : `${address.region_1depth_name} ${address.region_2depth_name}`;
+        const shortAddress = `${address.region_1depth_name} ${address.region_2depth_name}`;
 
         const result: GeocodingResult = {
           address: fullAddress,

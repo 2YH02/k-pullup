@@ -35,25 +35,28 @@ const ResetPasswordForm = ({ token }: { token: string }) => {
       title: "정말 초기화하시겠습니까?",
       onClick: async () => {
         setLoading(true);
-        const response = await resetPassword({
-          password: inputValue.value,
-          token,
-        });
+        try {
+          await resetPassword({
+            password: inputValue.value,
+            token,
+          });
 
-        if (!response.ok) {
+          try {
+            await signout();
+          } catch {
+            // 로그아웃 실패는 흡수하고 로그인 페이지로 계속 진행한다.
+          }
+
+          router.replace("/signin");
+          router.refresh();
+        } catch {
           openAlert({
             title: "잠시 후 다시 시도해주세요",
             onClick: () => {},
           });
+        } finally {
           setLoading(false);
-          return;
         }
-
-        await signout();
-
-        router.replace("/signin");
-        router.refresh();
-        setLoading(false);
       },
       cancel: true,
     });

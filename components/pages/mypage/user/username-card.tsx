@@ -42,18 +42,17 @@ const UsernameCard = ({ user }: UsernameCardProps) => {
       setLoading(false);
       return;
     }
-    const response = await updateUserName(username.value);
+    try {
+      await updateUserName(username.value);
 
-    if (!response.ok) {
+      setUsernameValue(username.value);
+      setEdit(false);
+      router.refresh();
+    } catch {
       setEditError("잠시 후 다시 시도해주세요");
+    } finally {
       setLoading(false);
-      return;
     }
-
-    setUsernameValue(username.value);
-    setLoading(false);
-    setEdit(false);
-    router.refresh();
   };
 
   return (

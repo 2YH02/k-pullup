@@ -1,7 +1,8 @@
-import mySuggested, { type ReportsRes } from "@api/report/my-suggested";
+import mySuggested from "@api/report/my-suggested";
 import AuthError from "@layout/auth-error";
 import NotFound from "@layout/not-found";
 import getDeviceType from "@lib/get-device-type";
+import guardServerFetch from "@lib/server-fetch-guard";
 import { cookies, headers } from "next/headers";
 import { type Device } from "../page";
 import ReportClient from "./report-client";
@@ -16,9 +17,11 @@ const ReportPage = async () => {
 
   const deviceType: Device = getDeviceType(userAgent as string);
 
-  const reports = await mySuggested(decodeCookie);
+  const { status, data: reports } = await guardServerFetch(() =>
+    mySuggested(decodeCookie)
+  );
 
-  if (reports.error === "No authorization token provided") {
+  if (status === "unauthorized") {
     return (
       <AuthError
         headerTitle="내 정보 수정 제안"
@@ -30,7 +33,7 @@ const ReportPage = async () => {
       />
     );
   }
-  if (!reports.data || reports.error === "No reports found") {
+  if (!reports?.data || reports.data.length <= 0) {
     return (
       <NotFound
         headerTitle="내 정보 수정 제안"
@@ -46,7 +49,7 @@ const ReportPage = async () => {
   return (
     <>
       <ReportClient
-        data={reports.data as ReportsRes[]}
+        data={reports.data}
         referrer={!!referrer}
         deviceType={deviceType}
       />

@@ -21,8 +21,10 @@ const AroundMarkerCarousel = () => {
 
   const [data, setData] = useState<CloseMarker[] | null>(null);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
 
   const [geolocationError, setGeolocationError] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
 
   useEffect(() => {
     if (!myLocation) {
@@ -34,19 +36,27 @@ const AroundMarkerCarousel = () => {
     setGeolocationError(false);
 
     const fetchMarker = async () => {
-      const data = await closeMarker({
-        lat: myLocation.lat,
-        lng: myLocation.lng,
-        distance: 2000,
-        pageParam: 1,
-      });
+      setLoading(true);
+      setFetchError(false);
+      try {
+        const data = await closeMarker({
+          lat: myLocation.lat,
+          lng: myLocation.lng,
+          distance: 2000,
+          pageParam: 1,
+        });
 
-      setData(data.markers);
-      setLoading(false);
+        setData(data.markers);
+      } catch {
+        // 요청 실패는 "철봉 없음"과 구분해 에러 상태로 표시한다.
+        setFetchError(true);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchMarker();
-  }, [myLocation]);
+  }, [myLocation, retryKey]);
 
   if (loading) {
     return (
@@ -93,6 +103,35 @@ const AroundMarkerCarousel = () => {
             className="w-28 rounded-full"
           >
             주변 검색
+          </Button>
+        </div>
+      </Section>
+    );
+  }
+
+  if (fetchError) {
+    return (
+      <Section>
+        <SectionTitle title="내 주변 철봉" subTitle="현재 위치 기준 2km" />
+        <div className="rounded-2xl border border-border bg-white p-4 dark:border-grey-dark dark:bg-black-light">
+          <div className="mb-3">
+            <Text display="block" typography="t6" className="text-text-on-surface">
+              주변 철봉 정보를 불러오지 못했습니다.
+            </Text>
+            <Text
+              display="block"
+              typography="t6"
+              className="text-text-on-surface-muted dark:text-grey"
+            >
+              잠시 후 다시 시도해 주세요.
+            </Text>
+          </div>
+          <Button
+            onClick={() => setRetryKey((prev) => prev + 1)}
+            size="sm"
+            className="w-28 rounded-full"
+          >
+            다시 시도
           </Button>
         </div>
       </Section>

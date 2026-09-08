@@ -17,7 +17,6 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
 
   const routesMap = [
     "",
-    "/home",
     "/mypage",
     "/search",
     "/signin",

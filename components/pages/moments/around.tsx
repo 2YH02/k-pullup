@@ -41,24 +41,23 @@ const Around = () => {
 
     const handleSearch = async () => {
       setIsLoading(true);
-      const data = await closeMarker({
-        lat: myLocation.lat,
-        lng: myLocation.lng,
-        distance: 1500,
-        pageParam: 1,
-      });
+      try {
+        const data = await closeMarker({
+          lat: myLocation.lat,
+          lng: myLocation.lng,
+          distance: 1500,
+          pageParam: 1,
+        });
 
-      if (data.error || data.message) {
+        if (cancelled) return;
+        const deduped = dedupeMarkersByAddress(data.markers);
+        setMarkers(deduped.slice(0, 5));
+      } catch {
         if (cancelled) return;
         setMarkers([]);
-        setIsLoading(false);
-        return;
+      } finally {
+        if (!cancelled) setIsLoading(false);
       }
-
-      if (cancelled) return;
-      const deduped = dedupeMarkersByAddress(data.markers);
-      setMarkers(deduped.slice(0, 5));
-      setIsLoading(false);
     };
 
     handleSearch();

@@ -24,17 +24,17 @@ const MomentItem = ({ moment, filterMoment }: MomentItem) => {
       description: "정말 삭제하시겠습니까?",
       cancel: true,
       onClickAsync: async () => {
-        const res = await deleteMoment(moment.markerID, moment.storyID);
-        if (!res.ok) {
+        try {
+          await deleteMoment(moment.markerID, moment.storyID);
+          filterMoment(moment.storyID);
+          closeAlert();
+        } catch {
           openAlert({
             title: "실패",
             description: "잠시 후 다시 시도해주세요.",
             cancel: true,
             onClick: () => {},
           });
-        } else {
-          filterMoment(moment.storyID);
-          closeAlert();
         }
       },
     });

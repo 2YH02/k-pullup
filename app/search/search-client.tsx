@@ -9,7 +9,7 @@ import useInput from "@hooks/useInput";
 import useMapControl from "@hooks/useMapControl";
 import ArrowRightIcon from "@icons/arrow-right-icon";
 import LocationIcon from "@icons/location-icon";
-import type { KakaoPlace } from "@layout/move-map-input";
+import type { KakaoPlace } from "@/types/kakao-place.types";
 import SearchHeader from "@pages/search/search-header";
 import SearchList, {
   extractMarkedText,
@@ -262,7 +262,7 @@ const SearchClient = ({
                 {searches.slice(0, visibleCount).map((search, index) => {
                   return (
                     <li
-                      key={`${search}-${index}`}
+                      key={search.addr ?? `search-${index}`}
                       className={cn(
                         "group flex border-b border-white/60 dark:border-white/8 last:border-b-0",
                         "transition-colors duration-180 ease-out"

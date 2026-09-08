@@ -13,7 +13,9 @@ export interface SearchRes {
 }
 
 const search = async (query: string): Promise<SearchRes> => {
-  const response = await fetchData(`/api/v1/search/marker?term=${query}`);
+  const response = await fetchData(
+    `/api/v1/search/marker?term=${encodeURIComponent(query)}`
+  );
 
   const data = await response.json();
 

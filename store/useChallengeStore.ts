@@ -6,7 +6,7 @@ import {
   loadChallengeData,
   saveChallengeData,
 } from "@lib/challenge-storage";
-import { calculateStreak, getWeekIdentifier } from "@lib/challenge-streak";
+import { calculateStreak, getToday, getWeekIdentifier } from "@lib/challenge-streak";
 
 interface ChallengeState {
   // State
@@ -21,14 +21,6 @@ interface ChallengeState {
   selectCell: (cell: { date: string; count: number } | null) => void;
   markCelebrationShown: () => void;
 }
-
-const getToday = (): string => {
-  const now = new Date();
-  const year = String(now.getFullYear()).padStart(4, "0");
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
 
 const useChallengeStore = create<ChallengeState>()((set, get) => ({
   data: getDefaultData(),

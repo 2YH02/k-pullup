@@ -18,16 +18,15 @@ const DeleteButton = ({ markerId }: DeleteButtonProps) => {
   const { toast } = useToast();
 
   const handleDelete = async () => {
-    const response = await deleteMarker(markerId);
+    try {
+      await deleteMarker(markerId);
 
-    if (!response.ok) {
+      deleteOne(markerId);
+      closeAlert();
+      router.replace("/");
+    } catch {
       toast({ description: "잠시 후 다시 시도해주세요" });
-      return;
     }
-
-    deleteOne(markerId);
-    closeAlert();
-    router.replace("/");
   };
 
   const handleClick = () => {

@@ -7,7 +7,6 @@ import useClientDeviceType from "@hooks/useClientDeviceType";
 import useGpsTracking from "@hooks/useGpsTracking";
 import useIsMounted from "@hooks/useIsMounted";
 import { useToast } from "@hooks/useToast";
-import LoadingIcon from "@icons/loading-icon";
 import cn from "@lib/cn";
 import useGeolocationStore from "@store/useGeolocationStore";
 import useImageCountStore from "@store/useImageCountStore";
@@ -64,7 +63,6 @@ const KakaoMap = () => {
   const { openRoadview } = useRoadviewStore();
   const { toast } = useToast();
 
-  const [loading, setLoading] = useState(false);
   const [shouldLoadMapSdk, setShouldLoadMapSdk] = useState(false);
 
   // Use GPS tracking hook
@@ -85,6 +83,14 @@ const KakaoMap = () => {
   const mapRef = useRef<Nullable<HTMLDivElement>>(null);
   const longPressTimer = useRef<NodeJS.Timeout | null>(null);
   const touchStartPos = useRef<{ x: number; y: number } | null>(null);
+
+  // pathname 을 effect deps 에 직접 넣으면 클라이언트 네비게이션마다 마커를
+  // 전량 재요청하게 되므로, 가드용으로만 ref 로 읽는다. (P2-2)
+  // ref 갱신은 렌더 본문이 아니라 커밋 이후 effect 에서 수행한다(버려지는 렌더 방지).
+  const pathnameRef = useRef(pathname);
+  useEffect(() => {
+    pathnameRef.current = pathname;
+  }, [pathname]);
 
   useEffect(() => {
     if (!isMounted || pathname === "/admin") return;
@@ -117,21 +123,26 @@ const KakaoMap = () => {
   }, [isMounted, pathname]);
 
   useEffect(() => {
-    if (!isMounted || pathname === "/admin" || !shouldLoadMapSdk) return;
+    if (!isMounted || pathnameRef.current === "/admin" || !shouldLoadMapSdk)
+      return;
 
     let disposed = false;
 
     const fetch = async () => {
-      const data = await getAllMarker();
+      try {
+        const data = await getAllMarker();
 
-      if (disposed) return;
+        if (disposed) return;
 
-      const imageMarker = data.filter((marker) => {
-        return !!marker.hasPhoto;
-      });
+        const imageMarker = data.filter((marker) => {
+          return !!marker.hasPhoto;
+        });
 
-      setCount(imageMarker.length);
-      replaceMarker(data);
+        setCount(imageMarker.length);
+        replaceMarker(data);
+      } catch {
+        // 마커 로딩 실패 시 조용히 실패 (unhandled rejection 방지)
+      }
     };
 
     const cancelIdleTask = scheduleIdleTask(() => {
@@ -142,12 +153,21 @@ const KakaoMap = () => {
       disposed = true;
       cancelIdleTask();
     };
-  }, [isMounted, pathname, replaceMarker, setCount, shouldLoadMapSdk]);
+  }, [isMounted, replaceMarker, setCount, shouldLoadMapSdk]);
 
   useEffect(() => {
     if (!window.ReactNativeWebView || !map) return;
     const handleMessage = (e: any) => {
-      const data = JSON.parse(e.data);
+      if (typeof e.data !== "string") return;
+      let data: any;
+      try {
+        data = JSON.parse(e.data);
+      } catch {
+        return;
+      }
+
+      // null / 비객체(숫자, 문자열 등) 파싱 결과는 무시 (data.latitude 접근 시 크래시 방지)
+      if (typeof data !== "object" || data === null) return;
 
       if (data.latitude && data.longitude) {
         setMyLocation({ lat: data.latitude, lng: data.longitude });
@@ -352,13 +372,6 @@ const KakaoMap = () => {
           strategy="lazyOnload"
           onLoad={handleLoadMap}
         />
-      )}
-      {loading && (
-        <div className="z-60 absolute top-0 left-0 w-dvw h-dvh bg-[#ffffffb2] flex items-center justify-center">
-          <div>
-            <LoadingIcon className="m-0" />
-          </div>
-        </div>
       )}
       <div ref={mapRef} id="map" className="relative w-full h-dvh [touch-action:pan-x_pan-y] [-webkit-touch-callout:none] [-webkit-user-select:none] [user-select:none]">
         {/* GPS FAB for Desktop only */}

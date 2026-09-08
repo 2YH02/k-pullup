@@ -22,10 +22,15 @@ const MarkerRankingList = ({ allRanking }: { allRanking: RankingInfo[] }) => {
     if (!myLocation || rankingType === "all") return;
     const fetchData = async () => {
       setLoading(true);
-      const data = await areaRanking(myLocation.lat, myLocation.lng);
+      try {
+        const data = await areaRanking(myLocation.lat, myLocation.lng);
 
-      setAroundMarker(data);
-      setLoading(false);
+        setAroundMarker(data);
+      } catch {
+        setAroundMarker(null);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchData();
   }, [myLocation, rankingType]);

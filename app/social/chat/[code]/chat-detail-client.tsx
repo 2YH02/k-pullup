@@ -9,6 +9,7 @@ import useInput from "@hooks/useInput";
 import LoadingIcon from "@icons/loading-icon";
 import { SendHorizontal } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { v4 } from "uuid";
 
 export interface ChatMessage {
   uid: string;
@@ -57,8 +58,23 @@ const ChatDetailClient = ({
 
   useEffect(() => {
     const cidJson = localStorage.getItem("cid");
-    if (!cidJson) return;
-    const newCid = JSON.parse(cidJson).cid;
+    let newCid: string | null = null;
+
+    if (cidJson) {
+      try {
+        const value = JSON.parse(cidJson)?.cid;
+        // 비어 있지 않은 문자열만 유효한 cid 로 인정 (숫자/빈 문자열/기타 값 방어)
+        newCid = typeof value === "string" && value.length > 0 ? value : null;
+      } catch {
+        newCid = null;
+      }
+    }
+
+    if (!newCid) {
+      newCid = v4();
+      localStorage.setItem("cid", JSON.stringify({ cid: newCid }));
+    }
+
     setCid(newCid);
   }, []);
 
@@ -68,7 +84,7 @@ const ChatDetailClient = ({
     if (!cid) return;
 
     ws.current = new WebSocket(
-      `wss://api.k-pullup.com/ws/${code}?request-id=${cid}`
+      `wss://api.k-pullup.com/ws/${code}?request-id=${encodeURIComponent(cid)}`
     );
 
     ws.current.onopen = () => {
@@ -102,21 +118,15 @@ const ChatDetailClient = ({
       setIsConnectionError(true);
     };
 
-    return () => {
-      ws.current?.close();
-    };
-  }, [cid, code]);
-
-  useEffect(() => {
-    if (!ws.current) return;
     const pingInterval = setInterval(() => {
       ws.current?.send(JSON.stringify({ type: "ping" }));
     }, 30000);
 
     return () => {
       clearInterval(pingInterval);
+      ws.current?.close();
     };
-  }, []);
+  }, [cid, code]);
 
   useEffect(() => {
     const scrollBox = chatBox.current;
@@ -206,7 +216,7 @@ const ChatDetailClient = ({
               {messages.map((message) => {
                 return (
                   <MessageBubble
-                    key={`${message.timestamp} ${message.message} ${message.userNickname}`}
+                    key={message.uid}
                     message={message}
                     cid={cid}
                   />

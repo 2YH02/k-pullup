@@ -51,29 +51,28 @@ const FacilitiesClient = ({ markerId }: { markerId: number }) => {
       return;
     }
 
-    const response = await setNewFacilities({
-      markerId: markerId,
-      facilities: [
-        {
-          facilityId: 1,
-          quantity: facilities.철봉,
-        },
-        {
-          facilityId: 2,
-          quantity: facilities.평행봉,
-        },
-      ],
-    });
+    try {
+      await setNewFacilities({
+        markerId: markerId,
+        facilities: [
+          {
+            facilityId: 1,
+            quantity: facilities.철봉,
+          },
+          {
+            facilityId: 2,
+            quantity: facilities.평행봉,
+          },
+        ],
+      });
 
-    if (!response.ok) {
+      router.push(`/pullup/${markerId}`);
+      router.refresh();
+    } catch {
       setErrorMessage("잠시 후 다시 시도해주세요.");
+    } finally {
       setLoading(false);
-      return;
     }
-
-    router.push(`/pullup/${markerId}`);
-    router.refresh();
-    setLoading(false);
   };
 
   return (

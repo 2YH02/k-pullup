@@ -45,6 +45,25 @@ const subtractDays = (dateStr: string, n: number): string => {
 };
 
 /**
+ * dateStr("YYYY-MM-DD")에서 n일 더한 날짜 문자열 반환. (윤년/월말 처리 포함)
+ */
+const addDays = (dateStr: string, n: number): string => {
+  let { year, month, day } = parseDate(dateStr);
+  for (let i = 0; i < n; i++) {
+    day += 1;
+    if (day > daysInMonth(year, month)) {
+      day = 1;
+      month += 1;
+      if (month > 12) {
+        month = 1;
+        year += 1;
+      }
+    }
+  }
+  return formatDate(year, month, day);
+};
+
+/**
  * Get ISO day of week (1=Monday, 7=Sunday).
  * Uses new Date(year, month-1, day) which is timezone-safe for day-of-week only.
  */
@@ -56,6 +75,18 @@ const getIsoDayOfWeek = (dateStr: string): number => {
 };
 
 // --- Exported pure functions ---
+
+/**
+ * 오늘 날짜를 로컬 기준 "YYYY-MM-DD" 문자열로 반환한다.
+ * (챌린지 방문 기록 키로 사용 — celebration-motion, useChallengeStore 공용)
+ */
+const getToday = (): string => {
+  const now = new Date();
+  const year = String(now.getFullYear()).padStart(4, "0");
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
 
 /**
  * 연속 방문 일수 계산.
@@ -131,20 +162,7 @@ const getCurrentWeekDays = (today: string): string[] => {
   for (let i = 0; i < 7; i++) {
     days.push(current);
     if (i < 6) {
-      // Add one day
-      const { year, month, day } = parseDate(current);
-      let nextDay = day + 1;
-      let nextMonth = month;
-      let nextYear = year;
-      if (nextDay > daysInMonth(nextYear, nextMonth)) {
-        nextDay = 1;
-        nextMonth += 1;
-        if (nextMonth > 12) {
-          nextMonth = 1;
-          nextYear += 1;
-        }
-      }
-      current = formatDate(nextYear, nextMonth, nextDay);
+      current = addDays(current, 1);
     }
   }
 
@@ -180,19 +198,7 @@ const getHeatmapDates = (today: string): string[] => {
   let endDate = today;
   // Advance to Sunday
   for (let i = 0; i < daysToSunday; i++) {
-    const { year, month, day } = parseDate(endDate);
-    let nextDay = day + 1;
-    let nextMonth = month;
-    let nextYear = year;
-    if (nextDay > daysInMonth(nextYear, nextMonth)) {
-      nextDay = 1;
-      nextMonth += 1;
-      if (nextMonth > 12) {
-        nextMonth = 1;
-        nextYear += 1;
-      }
-    }
-    endDate = formatDate(nextYear, nextMonth, nextDay);
+    endDate = addDays(endDate, 1);
   }
 
   // Start from 48 days before endDate (total 49 days)
@@ -203,19 +209,7 @@ const getHeatmapDates = (today: string): string[] => {
   for (let i = 0; i < 49; i++) {
     dates.push(current);
     if (i < 48) {
-      const { year, month, day } = parseDate(current);
-      let nextDay = day + 1;
-      let nextMonth = month;
-      let nextYear = year;
-      if (nextDay > daysInMonth(nextYear, nextMonth)) {
-        nextDay = 1;
-        nextMonth += 1;
-        if (nextMonth > 12) {
-          nextMonth = 1;
-          nextYear += 1;
-        }
-      }
-      current = formatDate(nextYear, nextMonth, nextDay);
+      current = addDays(current, 1);
     }
   }
 
@@ -229,4 +223,5 @@ export {
   getCurrentWeekDays,
   getWeeklyAchievedCount,
   getHeatmapDates,
+  getToday,
 };

@@ -26,23 +26,34 @@ const RegisteredLocateList = ({ data }: RegisteredListProps) => {
   const [currentPage, setCurrentPage] = useState(data.currentPage);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [loadError, setLoadError] = useState(false);
 
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   const loadMoreMarkers = useCallback(async () => {
-    if (isLoading || currentPage >= data.totalPages) return;
+    if (isLoading || loadError || currentPage >= data.totalPages) return;
 
     setIsLoading(true);
-    const newData = await myRegisteredLocation({
-      pageParam: currentPage + 1,
-    });
+    try {
+      const newData = await myRegisteredLocation({
+        pageParam: currentPage + 1,
+      });
 
-    setMarkers((prevMarkers) => [...prevMarkers, ...newData.markers]);
-    setCurrentPage(newData.currentPage);
+      setMarkers((prevMarkers) => [...prevMarkers, ...newData.markers]);
+      setCurrentPage(newData.currentPage);
+    } catch {
+      // 실패 시 loadError 로 표시해 observer 의 자동 재요청 루프를 막고
+      // 명시적 재시도 액션에서만 다시 시도한다.
+      setLoadError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [currentPage, isLoading, loadError, data.totalPages]);
 
-    setIsLoading(false);
-  }, [currentPage, isLoading, data.totalPages]);
+  const retryLoadMore = useCallback(() => {
+    setLoadError(false);
+  }, []);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
@@ -115,7 +126,23 @@ const RegisteredLocateList = ({ data }: RegisteredListProps) => {
           ))}
         </div>
       )}
-      {data.totalPages > currentPage && <div ref={loadMoreRef} className="h-16 w-full" />}
+      {loadError && (
+        <div className="rounded-xl border border-border bg-surface/80 px-3 py-3 text-center dark:border-grey-dark dark:bg-black">
+          <Text typography="t7" className="mb-2 block text-grey-dark dark:text-grey">
+            목록을 더 불러오지 못했습니다.
+          </Text>
+          <button
+            type="button"
+            className="text-[13px] font-semibold text-primary underline transition-colors duration-150 active:text-primary-dark focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 rounded-sm dark:text-primary-light"
+            onClick={retryLoadMore}
+          >
+            다시 시도
+          </button>
+        </div>
+      )}
+      {!loadError && data.totalPages > currentPage && (
+        <div ref={loadMoreRef} className="h-16 w-full" />
+      )}
     </div>
   );
 };

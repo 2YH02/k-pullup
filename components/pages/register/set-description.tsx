@@ -63,11 +63,11 @@ const SetDescription = ({
 
       <Button
         onClick={() => {
-          next(description === "" ? null : description);
+          next(!description ? null : description);
         }}
         className="h-12"
       >
-        {description === "" ? "설명 없이 다음으로" : "다음"}
+        {!description ? "설명 없이 다음으로" : "다음"}
       </Button>
     </Section>
   );

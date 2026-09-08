@@ -18,8 +18,10 @@ export const generateMetadata = () => {
 };
 
 const Social = async () => {
-  const rankingData = await markerRanking();
-  const moment = await getAllMoment();
+  const [rankingData, moment] = await Promise.all([
+    markerRanking().catch(() => []),
+    getAllMoment().catch(() => []),
+  ]);
 
   const headersList = headers();
   const userAgent = headersList.get("user-agent");

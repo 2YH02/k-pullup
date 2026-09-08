@@ -36,21 +36,7 @@ const mySuggested = async (cookie?: string) => {
     credentials: "include",
   });
 
-  if (!response.ok) {
-    const msg = await response.json();
-    if (response.status === 401) {
-      const data: Response = {
-        error: msg.error,
-      };
-      return data;
-    } else {
-      const data: Response = {
-        error: msg.message,
-      };
-      return data;
-    }
-  }
-
+  // fetchData 가 non-2xx 에서 throw 하므로 여기 도달하면 항상 성공.
   const data: Response = {
     data: await response.json(),
   };

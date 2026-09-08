@@ -52,7 +52,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
     });
   }, [data, isMounted]);
 
-  let animationFrameId: number;
+  const animationFrameId = useRef<number | null>(null);
 
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     if (!sliderRef.current) return;
@@ -90,9 +90,9 @@ const MomentList = ({ data }: { data: Moment[] }) => {
       minTranslateX
     );
 
-    if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
 
-    animationFrameId = requestAnimationFrame(() => {
+    animationFrameId.current = requestAnimationFrame(() => {
       setStyle({ transform: `translateX(${translateX.current}px)` });
     });
   };
@@ -129,6 +129,19 @@ const MomentList = ({ data }: { data: Moment[] }) => {
 
   if (viewMoment && curMoment) {
     const { hours, minutes } = minutesAgo(curMoment.createdAt);
+
+    let curBlurDataURL = "/placeholder_image.png";
+    if (isMounted) {
+      try {
+        curBlurDataURL = pixelsToDataUrl(
+          decodeBlurhash(curMoment.blurhash, 100, 200),
+          100,
+          200
+        );
+      } catch {
+        curBlurDataURL = "/placeholder_image.png";
+      }
+    }
 
     return (
       <div className="absolute mo:fixed top-0 left-0 z-50 flex h-full w-full flex-col bg-black/95 web:rounded-lg">
@@ -194,15 +207,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
               alt={curMoment.caption}
               className="object-contain z-10"
               placeholder="blur"
-              blurDataURL={
-                isMounted
-                  ? pixelsToDataUrl(
-                      decodeBlurhash(curMoment.blurhash, 100, 200),
-                      100,
-                      200
-                    )
-                  : "/placeholder_image.png"
-              }
+              blurDataURL={curBlurDataURL}
             />
           </div>
           <div className="w-full p-4 text-sm leading-relaxed text-white/95">
@@ -241,7 +246,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
         {data.map((moment, i) => (
           <div
             className="flex flex-col justify-center items-center"
-            key={`${moment.caption} ${moment.createdAt}`}
+            key={moment.storyID}
           >
             <button
               className="group relative h-12 w-12 shrink-0 rounded-full border border-border bg-white transition-all duration-200 active:scale-[0.97] web:hover:border-primary/40 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-primary-light/35"

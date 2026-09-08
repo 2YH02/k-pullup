@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Proposal } from "../mypage/link-list";
 import locateVerify from "@/lib/api/marker/locate-verify";
+import { FetchError } from "@lib/fetchData";
 
 interface SelectLocationProps {
   next: ({
@@ -72,30 +73,33 @@ const SelectLocation = ({
   const handleNext = async () => {
     if (!position.lat || !position.lng) return;
     setLoading(true);
-    const res = await locateVerify(position.lat, position.lng);
+    try {
+      await locateVerify(position.lat, position.lng);
 
-    if (res.error) {
-      if (res.error === "there is a marker already nearby") {
-        setErrorMessage("주변에 이미 철봉이 있습니다.");
-      } else if (res.error.includes("marker is in restricted area")) {
-        setErrorMessage("위치 등록이 제한된 구역입니다.");
-      } else if (res.error === "operation is only allowed within South Korea") {
-        setErrorMessage("위치는 대한민국에만 등록 가능합니다.");
-      } else if (res.error === "invalid latitude (Must be between 32 and 39)") {
-        setErrorMessage("위치 등록이 제한된 구역입니다.");
+      next({
+        latitude: position.lat as number,
+        longitude: position.lng as number,
+      });
+    } catch (e) {
+      if (e instanceof FetchError) {
+        const body = e.responseBody ?? "";
+        if (body.includes("there is a marker already nearby")) {
+          setErrorMessage("주변에 이미 철봉이 있습니다.");
+        } else if (body.includes("marker is in restricted area")) {
+          setErrorMessage("위치 등록이 제한된 구역입니다.");
+        } else if (body.includes("operation is only allowed within South Korea")) {
+          setErrorMessage("위치는 대한민국에만 등록 가능합니다.");
+        } else if (body.includes("invalid latitude (Must be between 32 and 39)")) {
+          setErrorMessage("위치 등록이 제한된 구역입니다.");
+        } else {
+          setErrorMessage("잠시 후 다시 시도해주세요.");
+        }
       } else {
         setErrorMessage("잠시 후 다시 시도해주세요.");
       }
-
+    } finally {
       setLoading(false);
-      return;
     }
-
-    setLoading(false);
-    next({
-      latitude: position.lat as number,
-      longitude: position.lng as number,
-    });
   };
 
   return (

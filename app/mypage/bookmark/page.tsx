@@ -5,6 +5,7 @@ import WarningText from "@common/warning-text";
 import AuthError from "@layout/auth-error";
 import NotFound from "@layout/not-found";
 import getDeviceType from "@lib/get-device-type";
+import guardServerFetch from "@lib/server-fetch-guard";
 import BookmarkList from "@pages/mypage/bookmark/bookmark-list";
 import { cookies, headers } from "next/headers";
 import { type Device } from "../page";
@@ -19,9 +20,11 @@ const RankingPage = async () => {
 
   const deviceType: Device = getDeviceType(userAgent as string);
 
-  const markers = await favorites(decodeCookie);
+  const { status, data: markers } = await guardServerFetch(() =>
+    favorites(decodeCookie)
+  );
 
-  if (markers.error === "No authorization token provided") {
+  if (status === "unauthorized") {
     return (
       <AuthError
         headerTitle="즐겨찾기"
@@ -33,7 +36,7 @@ const RankingPage = async () => {
     );
   }
 
-  if (!markers.data || markers.data.length <= 0) {
+  if (!markers?.data || markers.data.length <= 0) {
     return (
       <NotFound
         headerTitle="즐겨찾기"

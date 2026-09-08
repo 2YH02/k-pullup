@@ -141,7 +141,7 @@ const Alert = ({
 
         {description && <Text typography="t6">{description}</Text>}
 
-        {(onClick || cancel) && (
+        {(onClick || onClickAsync || cancel) && (
           <div className="flex justify-end mt-3">
             <div className="flex">
               {cancel && (

@@ -6,6 +6,7 @@ import setNewMarker, { SetMarkerRes } from "@api/marker/set-new-marker";
 import Skeleton from "@common/skeleton";
 import SideMain from "@common/side-main";
 import useIsMounted from "@hooks/useIsMounted";
+import { FetchError } from "@lib/fetchData";
 import AuthError from "@layout/auth-error";
 import SelectLocation from "@pages/register/select-location";
 import SetDescription from "@pages/register/set-description";
@@ -138,79 +139,88 @@ const RegisterClient = ({
         return;
       }
 
-      const response = await setNewMarker({
-        description: registerValue.description || "",
-        latitude: registerValue.latitude,
-        longitude: registerValue.longitude,
-        photos: registerValue.photos || [],
-      });
+      try {
+        const response = await setNewMarker({
+          description: registerValue.description || "",
+          latitude: registerValue.latitude,
+          longitude: registerValue.longitude,
+          photos: registerValue.photos || [],
+        });
 
-      if (!response.ok) {
-        if (response.status === 409) {
-          setErrorMessage(registerError[409]);
-        } else if (response.status === 401) {
-          setErrorMessage(registerError[401]);
-        } else if (response.status === 403) {
-          setErrorMessage(registerError[403]);
-        } else if (response.status === 400) {
-          setErrorMessage(registerError[400]);
-        } else if (response.status === 422) {
-          setErrorMessage(registerError[422]);
+        const newMarker = (await response.json()) as SetMarkerRes;
+        if (uploadStatus === "image") {
+          await wait(1.2);
+          setUploadStatus("location");
+        }
+        await wait(0.6);
+        if (
+          registerValue.facilities[0].quantity > 0 ||
+          registerValue.facilities[1].quantity > 0
+        ) {
+          setUploadStatus("facilities");
+        }
+
+        try {
+          await setNewFacilities({
+            markerId: newMarker.markerId,
+            facilities: [
+              {
+                facilityId: 1,
+                quantity: registerValue.facilities[0].quantity,
+              },
+              {
+                facilityId: 2,
+                quantity: registerValue.facilities[1].quantity,
+              },
+            ],
+          });
+        } catch {
+          setErrorMessage("잠시 후 다시 시도해주세요.");
+          setUploadStatus("error");
+          // 락을 여기서 풀면 uploadStatus 변경으로 effect 가 재실행되며 setNewMarker 를
+          // 다시 호출해 마커가 중복 생성될 수 있다. 락 해제는 step 이 4 에서 벗어나는
+          // 사용자 액션에서만 수행한다.
+          return;
+        }
+
+        setNewMarkerId(newMarker.markerId);
+
+        marker?.setMap(null);
+
+        if (registerValue.photos && registerValue.photos.length > 0) {
+          setMarkerToStore([{ ...newMarker, hasPhoto: true }]);
+        } else {
+          setMarkerToStore([newMarker]);
+        }
+
+        map.setCenter(
+          new window.kakao.maps.LatLng(newMarker.latitude, newMarker.longitude)
+        );
+
+        await wait(0.7);
+        setUploadStatus("complete");
+      } catch (e) {
+        if (e instanceof FetchError) {
+          if (e.status === 409) {
+            setErrorMessage(registerError[409]);
+          } else if (e.status === 401) {
+            setErrorMessage(registerError[401]);
+          } else if (e.status === 403) {
+            setErrorMessage(registerError[403]);
+          } else if (e.status === 400) {
+            setErrorMessage(registerError[400]);
+          } else if (e.status === 422) {
+            setErrorMessage(registerError[422]);
+          } else {
+            setErrorMessage("잠시 후 다시 시도해주세요");
+          }
         } else {
           setErrorMessage("잠시 후 다시 시도해주세요");
         }
         setUploadStatus("error");
-        return;
+        // 락 해제는 step 이 4 에서 벗어나는 사용자 액션에서만 (자동 재시도로 인한
+        // 마커 중복 생성 방지)
       }
-
-      const newMarker = (await response.json()) as SetMarkerRes;
-      if (uploadStatus === "image") {
-        await wait(1.2);
-        setUploadStatus("location");
-      }
-      await wait(0.6);
-      if (
-        registerValue.facilities[0].quantity > 0 ||
-        registerValue.facilities[1].quantity > 0
-      ) {
-        setUploadStatus("facilities");
-      }
-      const responseFac = await setNewFacilities({
-        markerId: newMarker.markerId,
-        facilities: [
-          {
-            facilityId: 1,
-            quantity: registerValue.facilities[0].quantity,
-          },
-          {
-            facilityId: 2,
-            quantity: registerValue.facilities[1].quantity,
-          },
-        ],
-      });
-
-      if (!responseFac.ok) {
-        setErrorMessage("잠시 후 다시 시도해주세요.");
-        setUploadStatus("error");
-        return;
-      }
-
-      setNewMarkerId(newMarker.markerId);
-
-      marker?.setMap(null);
-
-      if (registerValue.photos && registerValue.photos.length > 0) {
-        setMarkerToStore([{ ...newMarker, hasPhoto: true }]);
-      } else {
-        setMarkerToStore([newMarker]);
-      }
-
-      map.setCenter(
-        new window.kakao.maps.LatLng(newMarker.latitude, newMarker.longitude)
-      );
-
-      await wait(0.7);
-      setUploadStatus("complete");
     };
 
     fetch();

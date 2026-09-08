@@ -65,21 +65,48 @@ const PullupChatClient = ({
   }, [inputRef]);
 
   useEffect(() => {
-    const cid = localStorage.getItem("cid");
-    setCid(cid);
+    const raw = localStorage.getItem("cid");
+    let parsedCid: string | null = null;
+
+    if (raw) {
+      try {
+        const value = JSON.parse(raw)?.cid;
+        // 비어 있지 않은 문자열만 유효한 cid 로 인정 (숫자/빈 문자열/기타 값 방어)
+        parsedCid = typeof value === "string" && value.length > 0 ? value : null;
+      } catch {
+        parsedCid = null;
+      }
+    }
+
+    if (!parsedCid) {
+      parsedCid = v4();
+      localStorage.setItem("cid", JSON.stringify({ cid: parsedCid }));
+    }
+
+    setCid(parsedCid);
   }, []);
 
   useEffect(() => {
-    ws.current?.close();
+    // 의도적 교체/정리로 소켓을 닫을 때는 onclose/onerror 를 먼저 제거해
+    // 에러 상태로 잘못 전환되는 것을 막는다.
+    const closeSocket = (socket: WebSocket | null) => {
+      if (!socket) return;
+      socket.onclose = null;
+      socket.onerror = null;
+      socket.close();
+    };
+
+    closeSocket(ws.current);
 
     if (!cid) return;
 
     ws.current = new WebSocket(
-      `wss://api.k-pullup.com/ws/${markerId}?request-id=${cid}`
+      `wss://api.k-pullup.com/ws/${markerId}?request-id=${encodeURIComponent(cid)}`
     );
 
     ws.current.onopen = () => {
       setMessages([]);
+      setIsChatError(false);
       setConnection(true);
       setConnectionMsg(
         "비속어 사용에 주의해주세요. 이후 서비스 사용이 제한될 수 있습니다!"
@@ -122,21 +149,15 @@ const PullupChatClient = ({
       setIsChatError(true);
     };
 
-    return () => {
-      ws.current?.close();
-    };
-  }, [cid, markerId]);
-
-  useEffect(() => {
-    if (!ws) return;
     const pingInterval = setInterval(() => {
       ws.current?.send(JSON.stringify({ type: "ping" }));
     }, 30000);
 
     return () => {
       clearInterval(pingInterval);
+      closeSocket(ws.current);
     };
-  }, []);
+  }, [cid, markerId]);
 
   useEffect(() => {
     const scrollBox = chatBox.current;

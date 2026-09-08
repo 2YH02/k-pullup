@@ -108,6 +108,9 @@ const useMarkerControl = () => {
 
       overlay.setMap(map);
 
+      // deleteOverlays 시 unmount 할 수 있도록 root 를 오버레이에 보관 (P2-1 누수 방지)
+      overlay.__reactRoot = root;
+
       appendOverlay(overlay);
     },
     [appendOverlay]
@@ -148,39 +151,22 @@ const useMarkerControl = () => {
         }
       } else {
         for (let i = 0; i < nearbyMarker.length; i++) {
-          if (options.selectId) {
-            let image: "pending" | "active" | "selected";
-            if (nearbyMarker[i].markerId === options.selectId) {
-              image = "selected";
-            } else {
-              image = "active";
-            }
-            createMarker({
-              map,
-              options: {
-                image: image,
-                markerId: nearbyMarker[i].markerId,
-                position: new window.kakao.maps.LatLng(
-                  nearbyMarker[i].latitude,
-                  nearbyMarker[i].longitude
-                ),
-                hasPhoto: nearbyMarker[i].hasPhoto,
-              },
-            });
-          } else {
-            createMarker({
-              map,
-              options: {
-                image: "active",
-                markerId: nearbyMarker[i].markerId,
-                position: new window.kakao.maps.LatLng(
-                  nearbyMarker[i].latitude,
-                  nearbyMarker[i].longitude
-                ),
-                hasPhoto: nearbyMarker[i].hasPhoto,
-              },
-            });
-          }
+          const image: "active" | "selected" =
+            options.selectId && nearbyMarker[i].markerId === options.selectId
+              ? "selected"
+              : "active";
+          createMarker({
+            map,
+            options: {
+              image,
+              markerId: nearbyMarker[i].markerId,
+              position: new window.kakao.maps.LatLng(
+                nearbyMarker[i].latitude,
+                nearbyMarker[i].longitude
+              ),
+              hasPhoto: nearbyMarker[i].hasPhoto,
+            },
+          });
         }
       }
     },

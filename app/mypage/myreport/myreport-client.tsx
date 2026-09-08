@@ -62,8 +62,22 @@ const MyreportClient = ({
       title: "정말 거절하시겠습니까?",
       description: "다시 승인할 수 없습니다.",
       onClickAsync: async () => {
-        const response = await denyReport(curData.reportID);
-        if (!response.ok) {
+        try {
+          await denyReport(curData.reportID);
+
+          openAlert({
+            title: "거절 완료",
+            description: "거절이 완료되었습니다.",
+            onClick: () => {},
+          });
+
+          setCurData((prev) => {
+            if (!prev) return null;
+            return { ...prev, status: "DENIED" };
+          });
+
+          router.refresh();
+        } catch {
           closeAlert();
           openAlert({
             title: "거절할 수 없습니다.",
@@ -72,21 +86,7 @@ const MyreportClient = ({
           });
 
           router.refresh();
-          return;
         }
-
-        openAlert({
-          title: "거절 완료",
-          description: "거절이 완료되었습니다.",
-          onClick: () => {},
-        });
-
-        setCurData((prev) => {
-          if (!prev) return null;
-          return { ...prev, status: "DENIED" };
-        });
-
-        router.refresh();
       },
       cancel: true,
     });
@@ -106,8 +106,22 @@ const MyreportClient = ({
       title: "정말 승인하시겠습니까?",
       description: "해당 위치의 정보가 바뀝니다.",
       onClickAsync: async () => {
-        const response = await approveReport(curData.reportID);
-        if (!response.ok) {
+        try {
+          await approveReport(curData.reportID);
+
+          openAlert({
+            title: "승인 완료",
+            description: "승인이 완료되었습니다.",
+            onClick: () => {},
+          });
+
+          setCurData((prev) => {
+            if (!prev) return null;
+            return { ...prev, status: "APPROVED" };
+          });
+
+          router.refresh();
+        } catch {
           closeAlert();
           openAlert({
             title: "승인할 수 없습니다.",
@@ -116,21 +130,7 @@ const MyreportClient = ({
           });
 
           router.refresh();
-          return;
         }
-
-        openAlert({
-          title: "승인 완료",
-          description: "승인이 완료되었습니다.",
-          onClick: () => {},
-        });
-
-        setCurData((prev) => {
-          if (!prev) return null;
-          return { ...prev, status: "APPROVED" };
-        });
-
-        router.refresh();
       },
       cancel: true,
     });

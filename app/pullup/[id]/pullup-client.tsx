@@ -57,19 +57,18 @@ const PullupClient = ({
 
   const handleDelete = async (commentId: number) => {
     setDeleteLoading(true);
-    const response = await deleteComment(commentId);
+    try {
+      await deleteComment(commentId);
 
-    if (!response.ok) {
+      const newComment = providerInfo.filter(
+        (comment) => comment.commentId !== commentId
+      );
+      setProviderInfo([...newComment]);
+    } catch {
       toast({ description: "잠시 후 다시 시도해주세요" });
+    } finally {
       setDeleteLoading(false);
-      return;
     }
-
-    const newComment = providerInfo.filter(
-      (comment) => comment.commentId !== commentId
-    );
-    setProviderInfo([...newComment]);
-    setDeleteLoading(false);
   };
 
   const handlePhotoDeleted = (photoId: number) => {
@@ -138,15 +137,15 @@ const PullupClient = ({
 
       <Section className="py-0">
         <div className="my-2 flex flex-wrap items-center gap-2">
-          {!철봉 ||
+          {(!철봉 ||
             !평행봉 ||
-            (철봉.quantity <= 0 && 평행봉.quantity <= 0 && (
-              <Badge
-                text={`기구 개수 정보 없음`}
-                className="flex h-7 items-center justify-center border-none bg-surface/75 pr-3.5 pl-3.5 shadow-full dark:bg-black-light dark:shadow-[rgba(255,255,255,0.1)]"
-                textStyle="leading-3 text-text-on-surface-muted dark:text-grey-light"
-              />
-            ))}
+            (철봉.quantity <= 0 && 평행봉.quantity <= 0)) && (
+            <Badge
+              text={`기구 개수 정보 없음`}
+              className="flex h-7 items-center justify-center border-none bg-surface/75 pr-3.5 pl-3.5 shadow-full dark:bg-black-light dark:shadow-[rgba(255,255,255,0.1)]"
+              textStyle="leading-3 text-text-on-surface-muted dark:text-grey-light"
+            />
+          )}
           {철봉 && 철봉.quantity > 0 && (
             <Badge
               text={`철봉 ${철봉?.quantity}개`}

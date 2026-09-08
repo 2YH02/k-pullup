@@ -8,6 +8,7 @@ import Textarea from "@common/textarea";
 import useInput from "@hooks/useInput";
 import EditIcon from "@icons/edit-icon";
 import LoadingIcon from "@icons/loading-icon";
+import { FetchError } from "@lib/fetchData";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -38,20 +39,23 @@ const Description = ({ description, markerId, isAdmin }: DescriptionProps) => {
     if (description === descriptionInput.value) return;
 
     setLoading(true);
-    const data = await updateDescription(descriptionInput.value, markerId);
-    if (data.error || data.message) {
-      if (data.error === "Description contains profanity") {
+    try {
+      await updateDescription(descriptionInput.value, markerId);
+      setDescriptionValue(descriptionInput.value);
+      setEdit(false);
+      router.refresh();
+    } catch (e) {
+      if (
+        e instanceof FetchError &&
+        e.responseBody?.includes("Description contains profanity")
+      ) {
         setEditError("설명에 비속어를 포함할 수 없습니다.");
       } else {
         setEditError("잠시 후 다시 시도해주세요.");
       }
+    } finally {
       setLoading(false);
-      return;
     }
-    setDescriptionValue(descriptionInput.value);
-    setLoading(false);
-    setEdit(false);
-    router.refresh();
   };
 
   if (edit) {

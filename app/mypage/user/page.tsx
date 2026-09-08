@@ -2,6 +2,7 @@ import myInfo from "@api/user/myInfo";
 import SideMain from "@common/side-main";
 import AuthError from "@layout/auth-error";
 import getDeviceType from "@lib/get-device-type";
+import guardServerFetch from "@lib/server-fetch-guard";
 import UserinfoCard from "@pages/mypage/user/userinfo-card";
 import UsernameCard from "@pages/mypage/user/username-card";
 import { cookies, headers } from "next/headers";
@@ -17,11 +18,11 @@ const UserPage = async () => {
 
   const deviceType: Device = getDeviceType(userAgent as string);
 
-  const user = await myInfo(decodeCookie);
+  const { status, data: user } = await guardServerFetch(() =>
+    myInfo(decodeCookie)
+  );
 
-  const noUser = !user || user.error;
-
-  if (noUser) {
+  if (status !== "ok" || !user) {
     return (
       <AuthError
         headerTitle="내 정보 관리"

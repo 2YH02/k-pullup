@@ -18,7 +18,7 @@ import useAlertStore from "@store/useAlertStore";
 import useUserStore from "@store/useUserStore";
 import { ImagePlus, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const MomentClient = ({
   deviceType,
@@ -37,6 +37,15 @@ const MomentClient = ({
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewURL, setPreviewURL] = useState<string | null>(null);
+
+  // previewURL 이 교체되거나 컴포넌트가 언마운트될 때 이전 object URL 을 해제한다.
+  // (revoke 사이드 이펙트는 setState updater 대신 effect cleanup 에서 처리)
+  useEffect(() => {
+    if (!previewURL) return;
+    return () => {
+      URL.revokeObjectURL(previewURL);
+    };
+  }, [previewURL]);
 
   // 로딩/에러 상태
   const [loading, setLoading] = useState(false);
@@ -220,7 +229,7 @@ const MomentClient = ({
       {moments.map((moment, i) => {
         return (
           <div
-            key={`${moment.caption} ${moment.createdAt}`}
+            key={moment.storyID}
             className="motion-safe:animate-page-enter motion-reduce:animate-none"
           >
             <MomentItem moment={moment} filterMoment={deleteMoment} />

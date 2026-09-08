@@ -7,6 +7,7 @@ import SideMain from "@common/side-main";
 import Text from "@common/text";
 import NotFound from "@layout/not-found";
 import ReportListItem from "@pages/mypage/report/report-list-item";
+import useAlertStore from "@store/useAlertStore";
 import { useState } from "react";
 import { type Device } from "../page";
 
@@ -21,17 +22,27 @@ const ReportClient = ({
   referrer,
   deviceType = "desktop",
 }: ReportClientProps) => {
+  const { openAlert } = useAlertStore();
+
   const [reports, setReports] = useState<ReportsRes[]>(data);
 
   const handleDelete = async (markerId: number, reportId: number) => {
-    await deleteReport(markerId, reportId);
+    try {
+      await deleteReport(markerId, reportId);
 
-    setReports((prev) => {
-      return prev.filter((item) => item.reportId !== reportId);
-    });
+      setReports((prev) => {
+        return prev.filter((item) => item.reportId !== reportId);
+      });
+    } catch {
+      openAlert({
+        title: "삭제할 수 없습니다.",
+        description: "잠시 후 다시 시도해주세요.",
+        onClick: () => {},
+      });
+    }
   };
 
-  if (reports.length <= 0 || !reports) {
+  if (reports.length <= 0) {
     return (
       <NotFound
         headerTitle="내 정보 수정 제안"
