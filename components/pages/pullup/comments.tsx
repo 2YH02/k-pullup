@@ -125,8 +125,11 @@ const Comments = ({ markerId, initialComments }: CommentsProps) => {
 
       const data = await response.json();
 
-      setComments((prev) => {
-        if (data.username !== "k-pullup") {
+      if (data.username === "k-pullup") {
+        // provider 안내 행은 providerInfo 로 분리 (updater 밖에서 사이드 이펙트 처리)
+        setProviderInfo([...providerInfo, data]);
+      } else {
+        setComments((prev) => {
           const nonKIndex = prev.findIndex(
             (comment) => comment.username !== "k-pullup"
           );
@@ -134,10 +137,8 @@ const Comments = ({ markerId, initialComments }: CommentsProps) => {
             return [data, ...prev];
           }
           return [...prev.slice(0, nonKIndex), data, ...prev.slice(nonKIndex)];
-        }
-        setProviderInfo([...providerInfo, data]);
-        return [...prev];
-      });
+        });
+      }
       hide();
       commentValue.resetValue();
     } catch (e) {
@@ -182,7 +183,14 @@ const Comments = ({ markerId, initialComments }: CommentsProps) => {
         id: markerId,
         pageParam: 1,
       });
-      setComments(newComment.comments);
+      // 초기 로드와 동일하게 provider(k-pullup) 행을 분리하고 totalPages 도 갱신한다.
+      setComments(
+        newComment.comments.filter((comment) => comment.username !== "k-pullup")
+      );
+      setProviderInfo(
+        newComment.comments.filter((comment) => comment.username === "k-pullup")
+      );
+      setTotalPages(newComment.totalPages);
       setCurrentPage(1);
     } catch {
       toast({ description: "잠시 후 다시 시도해주세요" });
