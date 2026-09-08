@@ -52,6 +52,7 @@ const Tooltip = ({
 
   return (
     <Container
+      aria-label={as === "button" ? title : undefined}
       onMouseEnter={!isMobile ? () => setIsVisible(true) : undefined}
       onMouseLeave={!isMobile ? () => setIsVisible(false) : undefined}
       onMouseDown={isMobile ? () => setIsVisible(true) : undefined}

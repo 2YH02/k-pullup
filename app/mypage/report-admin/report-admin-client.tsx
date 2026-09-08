@@ -145,7 +145,7 @@ const MyreportClient = ({
             {reports.reports.map((report, index) => (
               <CarouselItem
                 className="p-0"
-                key={`${reports.reports[0].reportId}-${index}`}
+                key={report.reportId}
               >
                 <ShadowBox
                   onClick={() => {

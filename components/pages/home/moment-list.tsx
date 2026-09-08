@@ -246,7 +246,7 @@ const MomentList = ({ data }: { data: Moment[] }) => {
         {data.map((moment, i) => (
           <div
             className="flex flex-col justify-center items-center"
-            key={`${moment.caption} ${moment.createdAt}`}
+            key={moment.storyID}
           >
             <button
               className="group relative h-12 w-12 shrink-0 rounded-full border border-border bg-white transition-all duration-200 active:scale-[0.97] web:hover:border-primary/40 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-primary-light/35"

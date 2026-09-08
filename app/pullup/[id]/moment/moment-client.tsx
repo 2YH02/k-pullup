@@ -226,7 +226,7 @@ const MomentClient = ({
       {moments.map((moment, i) => {
         return (
           <div
-            key={`${moment.caption} ${moment.createdAt}`}
+            key={moment.storyID}
             className="motion-safe:animate-page-enter motion-reduce:animate-none"
           >
             <MomentItem moment={moment} filterMoment={deleteMoment} />

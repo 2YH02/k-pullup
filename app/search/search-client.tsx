@@ -262,7 +262,7 @@ const SearchClient = ({
                 {searches.slice(0, visibleCount).map((search, index) => {
                   return (
                     <li
-                      key={`${search}-${index}`}
+                      key={search.addr ?? `search-${index}`}
                       className={cn(
                         "group flex border-b border-white/60 dark:border-white/8 last:border-b-0",
                         "transition-colors duration-180 ease-out"

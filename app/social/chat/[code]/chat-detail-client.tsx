@@ -214,7 +214,7 @@ const ChatDetailClient = ({
               {messages.map((message) => {
                 return (
                   <MessageBubble
-                    key={`${message.timestamp} ${message.message} ${message.userNickname}`}
+                    key={message.uid}
                     message={message}
                     cid={cid}
                   />
