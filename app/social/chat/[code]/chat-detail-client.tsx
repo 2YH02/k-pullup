@@ -84,7 +84,7 @@ const ChatDetailClient = ({
     if (!cid) return;
 
     ws.current = new WebSocket(
-      `wss://api.k-pullup.com/ws/${code}?request-id=${cid}`
+      `wss://api.k-pullup.com/ws/${code}?request-id=${encodeURIComponent(cid)}`
     );
 
     ws.current.onopen = () => {

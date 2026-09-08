@@ -101,7 +101,7 @@ const PullupChatClient = ({
     if (!cid) return;
 
     ws.current = new WebSocket(
-      `wss://api.k-pullup.com/ws/${markerId}?request-id=${cid}`
+      `wss://api.k-pullup.com/ws/${markerId}?request-id=${encodeURIComponent(cid)}`
     );
 
     ws.current.onopen = () => {
