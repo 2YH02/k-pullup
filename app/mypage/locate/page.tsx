@@ -5,6 +5,7 @@ import Text from "@common/text";
 import AuthError from "@layout/auth-error";
 import NotFound from "@layout/not-found";
 import getDeviceType from "@lib/get-device-type";
+import guardServerFetch from "@lib/server-fetch-guard";
 import RegisteredLocateList from "@pages/mypage/locate/registered-locate-list";
 import { cookies, headers } from "next/headers";
 import { type Device } from "../page";
@@ -19,18 +20,20 @@ const RankingPage = async () => {
 
   const deviceType: Device = getDeviceType(userAgent as string);
 
-  const markers = await myRegisteredLocation({
-    pageParam: 1,
-    cookie: decodeCookie,
-  });
+  const { status, data: markers } = await guardServerFetch(() =>
+    myRegisteredLocation({
+      pageParam: 1,
+      cookie: decodeCookie,
+    })
+  );
 
-  if (markers.error === "No authorization token provided") {
+  if (status === "unauthorized") {
     return (
       <AuthError
         headerTitle="내가 등록한 위치"
         hasBackButton
         errorTitle="로그인 후 철봉 위치를 등록해보세요."
-        returnUrl="mypage/locate"
+        returnUrl="/mypage/locate"
         deviceType={deviceType}
       />
     );
