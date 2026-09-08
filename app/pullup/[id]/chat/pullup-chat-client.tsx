@@ -70,7 +70,9 @@ const PullupChatClient = ({
 
     if (raw) {
       try {
-        parsedCid = JSON.parse(raw)?.cid ?? null;
+        const value = JSON.parse(raw)?.cid;
+        // 비어 있지 않은 문자열만 유효한 cid 로 인정 (숫자/빈 문자열/기타 값 방어)
+        parsedCid = typeof value === "string" && value.length > 0 ? value : null;
       } catch {
         parsedCid = null;
       }
