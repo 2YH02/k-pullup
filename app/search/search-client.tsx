@@ -9,7 +9,7 @@ import useInput from "@hooks/useInput";
 import useMapControl from "@hooks/useMapControl";
 import ArrowRightIcon from "@icons/arrow-right-icon";
 import LocationIcon from "@icons/location-icon";
-import type { KakaoPlace } from "@layout/move-map-input";
+import type { KakaoPlace } from "@/types/kakao-place.types";
 import SearchHeader from "@pages/search/search-header";
 import SearchList, {
   extractMarkedText,

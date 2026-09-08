@@ -5,7 +5,7 @@ import Section from "@common/section";
 import Text from "@common/text";
 import useMapControl from "@hooks/useMapControl";
 import PinIcon from "@icons/pin-icon";
-import { type KakaoPlace } from "@layout/move-map-input";
+import { type KakaoPlace } from "@/types/kakao-place.types";
 import useSearchStore from "@store/useSearchStore";
 import useSheetHeightStore from "@store/useSheetHeightStore";
 import { useRouter } from "next/navigation";

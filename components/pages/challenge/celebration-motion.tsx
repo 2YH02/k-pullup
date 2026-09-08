@@ -41,13 +41,8 @@ const CelebrationMotion = () => {
     }
   }, [goalAchieved, alreadyShown, markCelebrationShown]);
 
-  // 목표 미달성이면 안 보임
-  if (!goalAchieved && !alreadyShown) return null;
-  // 달성했거나 이미 이번 주에 mark된 상태면 계속 보임
-  if (!goalAchieved && alreadyShown) {
-    // 이번 주에 mark는 됐지만 현재 시점에 달성 안 된 경우 (목표를 올린 경우)
-    return null;
-  }
+  // 목표를 달성하지 않았으면 (이번 주 mark 여부와 무관하게) 표시하지 않는다.
+  if (!goalAchieved) return null;
 
   const reducedMotion =
     typeof window !== "undefined" &&

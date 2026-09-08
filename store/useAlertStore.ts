@@ -31,11 +31,7 @@ const useAlertStore = create<AlertState>()((set) => ({
               onClick();
             }
           : undefined,
-        onClickAsync: onClickAsync
-          ? async () => {
-              await onClickAsync();
-            }
-          : undefined,
+        onClickAsync: onClickAsync ? onClickAsync : undefined,
         open: true,
       },
     }),
