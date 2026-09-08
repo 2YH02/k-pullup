@@ -19,7 +19,10 @@ const UserSetting = () => {
     setUser(null);
     clearSessionCache();
 
-    // 2. 서버 로그아웃 API 호출 (5초 타임아웃, 실패해도 진행)
+    // 2. 서버 로그아웃 API 호출
+    //    signout은 keepalive:true라서 이후 하드 네비게이션으로 페이지가
+    //    언로드되어도 요청이 취소되지 않고 서버 세션 무효화가 보장된다.
+    //    UX 지연 방지를 위해 최대 5초까지만 대기한다.
     try {
       await Promise.race([
         signout(),
@@ -28,11 +31,11 @@ const UserSetting = () => {
         ),
       ]);
     } catch {
-      // API 실패 또는 타임아웃: 무시하고 진행
+      // API 실패 또는 타임아웃: keepalive 요청은 백그라운드에서 계속 진행
     }
 
-    // 3. 홈으로 이동
-    router.replace("/");
+    // 3. 홈으로 이동 (하드 네비게이션 — Next.js Router Cache 무효화)
+    window.location.href = "/";
   };
 
   const handleResign = () => {
