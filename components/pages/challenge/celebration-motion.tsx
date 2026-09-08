@@ -2,17 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { getWeekIdentifier, getWeeklyAchievedCount } from "@lib/challenge-streak";
+import { getToday, getWeekIdentifier, getWeeklyAchievedCount } from "@lib/challenge-streak";
 import useChallengeStore from "@store/useChallengeStore";
 import { PartyPopper } from "lucide-react";
-
-const getToday = (): string => {
-  const now = new Date();
-  const year = String(now.getFullYear()).padStart(4, "0");
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
 
 const CelebrationMotion = () => {
   const records = useChallengeStore((s) => s.data.records);

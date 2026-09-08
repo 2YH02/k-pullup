@@ -58,6 +58,18 @@ const getIsoDayOfWeek = (dateStr: string): number => {
 // --- Exported pure functions ---
 
 /**
+ * 오늘 날짜를 로컬 기준 "YYYY-MM-DD" 문자열로 반환한다.
+ * (챌린지 방문 기록 키로 사용 — celebration-motion, useChallengeStore 공용)
+ */
+const getToday = (): string => {
+  const now = new Date();
+  const year = String(now.getFullYear()).padStart(4, "0");
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+/**
  * 연속 방문 일수 계산.
  * - 오늘 방문 기록이 있으면 오늘부터 역순 카운트
  * - 오늘 기록이 없으면 어제부터 역순 카운트
@@ -229,4 +241,5 @@ export {
   getCurrentWeekDays,
   getWeeklyAchievedCount,
   getHeatmapDates,
+  getToday,
 };

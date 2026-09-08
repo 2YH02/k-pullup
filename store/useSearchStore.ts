@@ -23,17 +23,11 @@ const useSearchStore = create<SearchState>()(
       addSearch: (data: SearchData) =>
         set((state) => {
           const MAX_SEARCHES = 50;
-          const item = state.searches.findIndex((search) => {
-            return search.addr === data.addr;
+          // 같은 주소가 있으면 제거 후 맨 앞으로 올린다. (중복 방지 + 최신 우선)
+          const deduped = state.searches.filter((search) => {
+            return search.addr !== data.addr;
           });
-
-          if (item !== -1) {
-            const newSearch = [...state.searches].filter((search) => {
-              return search.addr !== data.addr;
-            });
-            return { searches: [data, ...newSearch].slice(0, MAX_SEARCHES) };
-          }
-          return { searches: [data, ...state.searches].slice(0, MAX_SEARCHES) };
+          return { searches: [data, ...deduped].slice(0, MAX_SEARCHES) };
         }),
       removeItem: (addr: string) =>
         set((state) => {
@@ -41,11 +35,7 @@ const useSearchStore = create<SearchState>()(
             return addr !== search.addr;
           });
 
-          if (newSearches) {
-            return { searches: newSearches };
-          }
-
-          return { searches: state.searches };
+          return { searches: newSearches };
         }),
       clearSearches: () => set({ searches: [] }),
     }),

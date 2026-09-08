@@ -7,7 +7,6 @@ import useClientDeviceType from "@hooks/useClientDeviceType";
 import useGpsTracking from "@hooks/useGpsTracking";
 import useIsMounted from "@hooks/useIsMounted";
 import { useToast } from "@hooks/useToast";
-import LoadingIcon from "@icons/loading-icon";
 import cn from "@lib/cn";
 import useGeolocationStore from "@store/useGeolocationStore";
 import useImageCountStore from "@store/useImageCountStore";
@@ -64,7 +63,6 @@ const KakaoMap = () => {
   const { openRoadview } = useRoadviewStore();
   const { toast } = useToast();
 
-  const [loading, setLoading] = useState(false);
   const [shouldLoadMapSdk, setShouldLoadMapSdk] = useState(false);
 
   // Use GPS tracking hook
@@ -368,13 +366,6 @@ const KakaoMap = () => {
           strategy="lazyOnload"
           onLoad={handleLoadMap}
         />
-      )}
-      {loading && (
-        <div className="z-60 absolute top-0 left-0 w-dvw h-dvh bg-[#ffffffb2] flex items-center justify-center">
-          <div>
-            <LoadingIcon className="m-0" />
-          </div>
-        </div>
       )}
       <div ref={mapRef} id="map" className="relative w-full h-dvh [touch-action:pan-x_pan-y] [-webkit-touch-callout:none] [-webkit-user-select:none] [user-select:none]">
         {/* GPS FAB for Desktop only */}
