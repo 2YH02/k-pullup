@@ -1,4 +1,4 @@
-import { Device } from "@/app/mypage/page";
+import { Device } from "@/types/device";
 
 const getDeviceType = (userAgent: string): Device => {
   if (userAgent.includes("android-mobile-app")) {

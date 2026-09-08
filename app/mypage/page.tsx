@@ -13,12 +13,9 @@ import { cookies, headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
-export type Device =
-  | "android-mobile-app"
-  | "ios-mobile-app"
-  | "android-mobile-web"
-  | "ios-mobile-web"
-  | "desktop";
+import { type Device } from "@/types/device";
+
+export type { Device };
 
 export const generateMetadata = () => {
   return {

@@ -15,7 +15,6 @@ export const useAddressResolver = () => {
   const [error, setError] = useState<string | null>(null);
 
   const debounceTimer = useRef<NodeJS.Timeout | null>(null);
-  const abortController = useRef<AbortController | null>(null);
   const requestToken = useRef<number>(0);
 
   /**
@@ -39,18 +38,11 @@ export const useAddressResolver = () => {
           clearTimeout(debounceTimer.current);
         }
 
-        // Abort previous fetch
-        if (abortController.current) {
-          abortController.current.abort();
-        }
-
         // Increment token to track latest request
         const currentToken = ++requestToken.current;
 
         // Start debounce
         debounceTimer.current = setTimeout(async () => {
-          // Create new abort controller for this request
-          abortController.current = new AbortController();
           setLoading(true);
           setError(null);
 
@@ -133,10 +125,9 @@ export const useAddressResolver = () => {
       clearTimeout(debounceTimer.current);
       debounceTimer.current = null;
     }
-    if (abortController.current) {
-      abortController.current.abort();
-      abortController.current = null;
-    }
+    // 최신 요청 판별은 requestToken 으로 처리한다. cancel 이후 진행 중이던
+    // 요청 결과는 token 불일치로 무시된다.
+    requestToken.current++;
     setLoading(false);
   }, []);
 

@@ -29,11 +29,7 @@ const noticeCopy = ALL_NOTICE.map((notice) => {
 });
 
 const NoticeList = ({ tab }: NoticeListProps) => {
-  const [noticeData, setNoticeData] = useState<NoticeWithActive[]>(
-    noticeCopy.map((notice) => {
-      return { ...notice, active: false };
-    })
-  );
+  const [noticeData, setNoticeData] = useState<NoticeWithActive[]>(noticeCopy);
 
   useEffect(() => {
     if (tab === "업데이트") {
@@ -45,11 +41,7 @@ const NoticeList = ({ tab }: NoticeListProps) => {
       const newData = noticeCopy.filter((notice) => notice.category === "일반");
       setNoticeData(newData);
     } else {
-      setNoticeData(
-        noticeCopy.map((notice) => {
-          return { ...notice, active: false };
-        })
-      );
+      setNoticeData(noticeCopy);
     }
   }, [tab]);
 

@@ -69,5 +69,4 @@ const fetchData = async (
   throw new FetchError(response.status, url, message, responseBody);
 };
 
-export { getErrorMessage };
 export default fetchData;
