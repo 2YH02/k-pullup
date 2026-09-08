@@ -3,6 +3,7 @@ import getComments from "@api/comment/get-comments";
 import getFacilities from "@api/marker/get-facilities";
 import markerDetail from "@api/marker/marker-detail";
 import getDeviceType from "@lib/get-device-type";
+import guardServerFetch from "@lib/server-fetch-guard";
 import NotFoud from "@pages/pullup/not-foud";
 import { cookies, headers } from "next/headers";
 import { cache } from "react";
@@ -22,10 +23,17 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
 
-  const { address, description, favCount } = await getCachedMarkerDetail(
-    ~~id,
-    decodeCookie
+  const { status, data: marker } = await guardServerFetch(() =>
+    getCachedMarkerDetail(~~id, decodeCookie)
   );
+
+  if (status !== "ok" || !marker) {
+    return {
+      title: "대한민국 철봉 지도",
+    };
+  }
+
+  const { address, description, favCount } = marker;
 
   const shortDesc =
     description.length > 80 ? description.slice(0, 80) + "…" : description;
@@ -65,15 +73,23 @@ const PullupPage = async ({ params }: { params: Params }) => {
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
 
-  const [marker, facilities, initialComments] = await Promise.all([
-    getCachedMarkerDetail(~~id, decodeCookie),
-    getFacilities(~~id),
-    getComments({ id: ~~id, pageParam: 1 }),
-  ]);
+  const { status, data: marker } = await guardServerFetch(() =>
+    getCachedMarkerDetail(~~id, decodeCookie)
+  );
 
-  if (marker.error === "Marker not found") {
-    return <NotFoud addr={marker.addr} />;
+  if (status === "notfound" || status === "unauthorized" || !marker) {
+    return <NotFoud />;
   }
+
+  const [facilities, initialComments] = await Promise.all([
+    getFacilities(~~id).catch(() => []),
+    getComments({ id: ~~id, pageParam: 1 }).catch(() => ({
+      currentPage: 1,
+      comments: [],
+      totalComments: 0,
+      totalPages: 0,
+    })),
+  ]);
 
   return (
     <PullupClient

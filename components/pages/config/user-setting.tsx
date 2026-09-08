@@ -3,6 +3,7 @@
 import signout from "@api/auth/signout";
 import deleteUser from "@api/user/deleteUser";
 import { clearSessionCache } from "@lib/session-cache";
+import { FetchError } from "@lib/fetchData";
 import List, { ListItem } from "@pages/config/config-list";
 import useAlertStore from "@store/useAlertStore";
 import useUserStore from "@store/useUserStore";
@@ -44,10 +45,21 @@ const UserSetting = () => {
       description:
         "추가하신 마커는 유지되고, 작성한 댓글 밑 사진은 모두 삭제됩니다!",
       onClickAsync: async () => {
-        const response = await deleteUser();
+        try {
+          await deleteUser();
 
-        if (!response.ok) {
-          if (response.status === 401) {
+          openAlert({
+            title: "회원 탈퇴가 완료되었습니다.",
+            description:
+              "그동안 이용해주셔서 감사합니다. 언제든 다시 찾아주세요!",
+            onClick: () => {
+              router.replace("/");
+              router.refresh();
+              setUser(null);
+            },
+          });
+        } catch (e) {
+          if (e instanceof FetchError && e.status === 401) {
             openAlert({
               title: "접근 권한이 없습니다.",
               description: "로그인 후 다시 시도해 주세요.",
@@ -62,20 +74,7 @@ const UserSetting = () => {
               onClick: () => {},
             });
           }
-
-          return;
         }
-
-        openAlert({
-          title: "회원 탈퇴가 완료되었습니다.",
-          description:
-            "그동안 이용해주셔서 감사합니다. 언제든 다시 찾아주세요!",
-          onClick: () => {
-            router.replace("/");
-            router.refresh();
-            setUser(null);
-          },
-        });
       },
       cancel: true,
     });

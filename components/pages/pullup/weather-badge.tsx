@@ -19,10 +19,15 @@ const WeatherBadge = ({ lat, lng }: WeatherBadgeProps) => {
   useEffect(() => {
     const fetch = async () => {
       setLoading(true);
-      const weather = await getWeather(lat, lng);
+      try {
+        const weather = await getWeather(lat, lng);
 
-      setWeather(weather);
-      setLoading(false);
+        setWeather(weather);
+      } catch {
+        setWeather(null);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetch();

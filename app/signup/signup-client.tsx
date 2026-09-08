@@ -61,22 +61,21 @@ const SignupClient = ({
 
   useEffect(() => {
     const fetchSignup = async () => {
-      const response = await signup({
-        email: signupValue.email,
-        username: signupValue.username,
-        password: signupValue.password,
-      });
+      try {
+        await signup({
+          email: signupValue.email,
+          username: signupValue.username,
+          password: signupValue.password,
+        });
 
-      if (!response.ok) {
+        setTimeout(() => {
+          setSignupStatus("complete");
+        }, 1100);
+      } catch {
         setTimeout(() => {
           setSignupStatus("error");
         }, 1100);
-        return;
       }
-
-      setTimeout(() => {
-        setSignupStatus("complete");
-      }, 1100);
     };
     if (signupValue.step === 3) {
       fetchSignup();

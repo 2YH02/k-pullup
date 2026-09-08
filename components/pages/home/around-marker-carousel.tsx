@@ -34,15 +34,20 @@ const AroundMarkerCarousel = () => {
     setGeolocationError(false);
 
     const fetchMarker = async () => {
-      const data = await closeMarker({
-        lat: myLocation.lat,
-        lng: myLocation.lng,
-        distance: 2000,
-        pageParam: 1,
-      });
+      try {
+        const data = await closeMarker({
+          lat: myLocation.lat,
+          lng: myLocation.lng,
+          distance: 2000,
+          pageParam: 1,
+        });
 
-      setData(data.markers);
-      setLoading(false);
+        setData(data.markers);
+      } catch {
+        setData([]);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchMarker();

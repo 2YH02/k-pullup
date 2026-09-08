@@ -5,6 +5,7 @@ import type { Photo } from "@/types/marker.types";
 import Text from "@common/text";
 import { useToast } from "@hooks/useToast";
 import deleteMarkerPhoto from "@lib/api/marker/delete-marker-photo";
+import { FetchError } from "@lib/fetchData";
 import useAlertStore from "@store/useAlertStore";
 import useImageModalStore from "@store/useImageModalStore";
 import useUserStore from "@store/useUserStore";
@@ -110,19 +111,6 @@ const ImageList = ({
     try {
       const response = await deleteMarkerPhoto(markerId, photoId);
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-
-        if (response.status === 403) {
-          toast({ description: "사진을 삭제할 권한이 없습니다" });
-        } else if (response.status === 400) {
-          toast({ description: "잘못된 요청입니다" });
-        } else {
-          toast({ description: "잠시 후 다시 시도해주세요" });
-        }
-        return;
-      }
-
       const data = await response.json();
 
       // Handle both success and idempotent cases
@@ -139,7 +127,17 @@ const ImageList = ({
 
       closeAlert();
     } catch (error) {
-      toast({ description: "사진 삭제 중 오류가 발생했습니다" });
+      if (error instanceof FetchError) {
+        if (error.status === 403) {
+          toast({ description: "사진을 삭제할 권한이 없습니다" });
+        } else if (error.status === 400) {
+          toast({ description: "잘못된 요청입니다" });
+        } else {
+          toast({ description: "잠시 후 다시 시도해주세요" });
+        }
+      } else {
+        toast({ description: "사진 삭제 중 오류가 발생했습니다" });
+      }
     } finally {
       setDeletingPhotoId(null);
     }

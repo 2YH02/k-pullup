@@ -6,6 +6,7 @@ import SideMain from "@common/side-main";
 import Text from "@common/text";
 import ArrowRightIcon from "@icons/arrow-right-icon";
 import getDeviceType from "@lib/get-device-type";
+import guardServerFetch from "@lib/server-fetch-guard";
 import LinkList from "@pages/mypage/link-list";
 import UserInfo from "@pages/mypage/user-info";
 import { cookies, headers } from "next/headers";
@@ -34,9 +35,11 @@ const Mypage = async () => {
 
   const deviceType: Device = getDeviceType(userAgent as string);
 
-  const user = await myInfo(decodeCookie);
+  const { status, data: user } = await guardServerFetch(() =>
+    myInfo(decodeCookie)
+  );
 
-  const noUser = !user || user.error;
+  const noUser = status !== "ok" || !user;
 
   return (
     <SideMain
@@ -66,7 +69,7 @@ const Mypage = async () => {
             />
           </Link>
         ) : (
-            <UserInfo user={user} />
+            user && <UserInfo user={user} />
         )}
       </Section>
 
@@ -81,7 +84,7 @@ const Mypage = async () => {
             </Text>
           </Link>
           <Link
-            href="mypage/config"
+            href="/mypage/config"
             className="rounded-lg border border-border bg-surface/50 px-2.5 py-2.5 text-center transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-border web:hover:bg-surface active:scale-[0.99] motion-reduce:transform-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 dark:border-grey-dark dark:bg-black-light dark:web:hover:border-grey dark:web:hover:bg-black/45"
           >
             <Text typography="t6" className="font-semibold text-primary dark:text-primary-light">
@@ -92,7 +95,7 @@ const Mypage = async () => {
       </Section>
 
       {/* 기여 등급 */}
-      {!noUser && (
+      {user && (
         <Section>
           <div className="rounded-xl border border-border bg-surface/80 p-4 dark:border-grey-dark dark:bg-black">
             <div className="flex flex-col items-center">
@@ -128,7 +131,7 @@ const Mypage = async () => {
       )}
 
       {/* 링크 버튼 */}
-      {!noUser && <LinkList isAdmin={user.chulbong} />}
+      {user && <LinkList isAdmin={user.chulbong} />}
 
       <GrowBox />
       <Footer />

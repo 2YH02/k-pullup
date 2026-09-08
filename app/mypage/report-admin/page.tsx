@@ -1,6 +1,7 @@
 import getAllReports from "@/lib/api/report/get-all-reports";
 import myInfo from "@api/user/myInfo";
 import getDeviceType from "@lib/get-device-type";
+import guardServerFetch from "@lib/server-fetch-guard";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { type Device } from "../page";
@@ -17,12 +18,17 @@ const ReportAdminPage = async () => {
   const deviceType: Device = getDeviceType(userAgent as string);
 
   // 관리자 권한 체크: chulbong이 아니면 마이페이지로 리다이렉트
-  const user = await myInfo(decodeCookie);
-  if (!user || user.error || !user.chulbong) {
+  const { status, data: user } = await guardServerFetch(() =>
+    myInfo(decodeCookie)
+  );
+  if (status !== "ok" || !user || !user.chulbong) {
     redirect("/mypage");
   }
 
-  const data = await getAllReports(decodeCookie);
+  const { data } = await guardServerFetch(() => getAllReports(decodeCookie));
+  if (!data) {
+    redirect("/mypage");
+  }
 
   return (
     <>

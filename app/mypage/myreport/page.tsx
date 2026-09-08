@@ -2,6 +2,7 @@ import reportForMymarker from "@api/report/report-for-mymarker";
 import AuthError from "@layout/auth-error";
 import NotFound from "@layout/not-found";
 import getDeviceType from "@lib/get-device-type";
+import guardServerFetch from "@lib/server-fetch-guard";
 import { cookies, headers } from "next/headers";
 import { type Device } from "../page";
 import MyreportClient from "./myreport-client";
@@ -16,7 +17,22 @@ const MyreportPage = async () => {
 
   const deviceType: Device = getDeviceType(userAgent as string);
 
-  const reports = await reportForMymarker(decodeCookie);
+  const { status, data: reports } = await guardServerFetch(() =>
+    reportForMymarker(decodeCookie)
+  );
+
+  if (status === "unauthorized") {
+    return (
+      <AuthError
+        headerTitle="받은 정보 수정 제안"
+        errorTitle="로그인 후 받은 정보 수정 제안을 확인해보세요."
+        returnUrl="/mypage/myreport"
+        hasBackButton
+        fullHeight
+        deviceType={deviceType}
+      />
+    );
+  }
 
   if (!reports || reports.message === "No reports found") {
     return (
@@ -26,19 +42,6 @@ const MyreportPage = async () => {
         hasBackButton
         fullHeight
         backFallbackUrl="/mypage"
-        deviceType={deviceType}
-      />
-    );
-  }
-
-  if (reports.error === "No authorization token provided") {
-    return (
-      <AuthError
-        headerTitle="받은 정보 수정 제안"
-        errorTitle="로그인 후 받은 정보 수정 제안을 확인해보세요."
-        returnUrl="/mypage/myreport"
-        hasBackButton
-        fullHeight
         deviceType={deviceType}
       />
     );

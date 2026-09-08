@@ -71,16 +71,17 @@ const ListItem = ({
 
   const handleDelete = async () => {
     setLoading(true);
-    const res = await deleteFavorite(id);
-
-    if (!res.ok) {
+    try {
+      await deleteFavorite(id);
+      deleteMarker(id);
+    } catch {
       toast({
         description: "잠시 후 다시 시도해주세요.",
       });
-    } else deleteMarker(id);
-
-    hide();
-    setLoading(false);
+    } finally {
+      hide();
+      setLoading(false);
+    }
   };
 
   return (

@@ -32,15 +32,19 @@ const PageClient = ({ data, userName }: Props) => {
     if (isLoading || currentPage >= data.totalPages) return;
 
     setIsLoading(true);
-    const newData = await userMarkers({
-      userName: userName,
-      page: currentPage + 1,
-    });
+    try {
+      const newData = await userMarkers({
+        userName: userName,
+        page: currentPage + 1,
+      });
 
-    setMarkers((prevMarkers) => [...prevMarkers, ...newData.markers]);
-    setCurrentPage(newData.currentPage);
-
-    setIsLoading(false);
+      setMarkers((prevMarkers) => [...prevMarkers, ...newData.markers]);
+      setCurrentPage(newData.currentPage);
+    } catch {
+      // 추가 로딩 실패 시 조용히 중단
+    } finally {
+      setIsLoading(false);
+    }
   }, [userName, currentPage, isLoading, data.totalPages]);
 
   useEffect(() => {

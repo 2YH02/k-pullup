@@ -9,6 +9,7 @@ import Timer from "@common/timer";
 import useInput from "@hooks/useInput";
 import LoadingIcon from "@icons/loading-icon";
 import { validateCode, validateEmail, validateMassage } from "@lib/validate";
+import { FetchError } from "@lib/fetchData";
 import { useEffect, useState } from "react";
 
 interface VerifyEmailProps {
@@ -60,70 +61,59 @@ const VerifyEmail = ({ next }: VerifyEmailProps) => {
 
     setEmailLoading(true);
 
-    const response = await sendSignupCode(email.value);
+    try {
+      await sendSignupCode(email.value);
 
-    if (!response.ok) {
-      if (response.status === 409) {
+      setViewCode(true);
+
+      setCompleted((prev) => ({
+        ...prev,
+        email: true,
+      }));
+
+      setTimerReset(true);
+    } catch (e) {
+      if (e instanceof FetchError && e.status === 409) {
         setErrorMessage((prev) => ({
           ...prev,
           email: "이미 가입되어 있는 이메일입니다.",
         }));
-
-        setEmailLoading(false);
-        return;
+      } else {
+        setErrorMessage((prev) => ({
+          ...prev,
+          email: "잠시 후 다시 시도해주세요",
+        }));
       }
-      setErrorMessage((prev) => ({
-        ...prev,
-        email: "잠시 후 다시 시도해주세요",
-      }));
-
+    } finally {
       setEmailLoading(false);
-      return;
     }
-
-    setViewCode(true);
-
-    setCompleted((prev) => ({
-      ...prev,
-      email: true,
-    }));
-
-    setEmailLoading(false);
-
-    setTimerReset(true);
   };
 
   const verify = async () => {
     setCodeLoading(true);
 
-    const response = await verifyCode({ email: email.value, code: code.value });
+    try {
+      await verifyCode({ email: email.value, code: code.value });
 
-    if (!response.ok) {
-      if (response.status === 400) {
+      setCompleted((prev) => ({
+        ...prev,
+        code: true,
+      }));
+    } catch (e) {
+      if (e instanceof FetchError && e.status === 400) {
         setErrorMessage((prev) => ({
           ...prev,
           code: "유효하지 않은 인증 코드입니다.",
         }));
-
-        setCodeLoading(false);
-        return;
+      } else {
+        setErrorMessage((prev) => ({
+          ...prev,
+          code: "잠시 후 다시 시도해주세요.",
+        }));
       }
-
-      setErrorMessage((prev) => ({
-        ...prev,
-        code: "잠시 후 다시 시도해주세요.",
-      }));
-
+    } finally {
       setCodeLoading(false);
-      return;
     }
-
-    setCompleted((prev) => ({
-      ...prev,
-      code: true,
-    }));
-
-    setCodeLoading(false);
   };
 
   return (

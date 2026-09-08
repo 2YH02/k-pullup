@@ -25,15 +25,9 @@ const SendPasswordForm = () => {
   }, [inputValue.value]);
 
   const onSubmit = async () => {
-    const response = await sendPasswordResetEmail(inputValue.value);
+    try {
+      await sendPasswordResetEmail(inputValue.value);
 
-    if (!response.ok) {
-      openAlert({
-        title: "정확한 정보를 입력해주세요",
-        description: "이메일 정보를 다시 확인해주세요",
-        onClick: () => {},
-      });
-    } else {
       openAlert({
         title: "메일 전송 완료",
         description: "이메일을 확인한 후 비밀번호 초기화를 완료해주세요",
@@ -41,6 +35,12 @@ const SendPasswordForm = () => {
           inputValue.resetValue();
           setViewError(false);
         },
+      });
+    } catch {
+      openAlert({
+        title: "정확한 정보를 입력해주세요",
+        description: "이메일 정보를 다시 확인해주세요",
+        onClick: () => {},
       });
     }
   };

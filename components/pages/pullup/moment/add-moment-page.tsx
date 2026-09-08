@@ -5,6 +5,7 @@ import postMoment from "@api/moment/post-moment";
 import SideMain from "@common/side-main";
 import useInput from "@hooks/useInput";
 import LoadingIcon from "@icons/loading-icon";
+import { FetchError } from "@lib/fetchData";
 import { ChevronLeft, SendHorizontal } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -42,10 +43,15 @@ const AddMomentPage = ({
       photo: imageFile,
     };
 
-    const res = await postMoment(data);
+    try {
+      const res = await postMoment(data);
 
-    if (!res.ok) {
-      if (res.status === 401) {
+      const moment: Moment = await res.json();
+      if (!moment) return;
+      addMoment(moment);
+      clear();
+    } catch (e) {
+      if (e instanceof FetchError && e.status === 401) {
         openAlert({
           title: "접근 권한이 없습니다.",
           description: "로그인 후 다시 시도해 주세요.",
@@ -62,14 +68,9 @@ const AddMomentPage = ({
           onClick: () => {},
         });
       }
-    } else {
-      const data: Moment = await res.json();
-      if (!data) return;
-      addMoment(data);
-      clear();
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
