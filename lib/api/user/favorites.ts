@@ -1,4 +1,5 @@
 import fetchData from "@lib/fetchData";
+import { getApiBase } from "@lib/api-base";
 
 export interface Favorite {
   latitude: number;
@@ -16,7 +17,7 @@ interface Response {
 
 const favorites = async (cookie?: string) => {
   const response = await fetchData(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/users/favorites`,
+    `${getApiBase()}/users/favorites`,
     {
       headers: {
         Cookie: cookie || "",

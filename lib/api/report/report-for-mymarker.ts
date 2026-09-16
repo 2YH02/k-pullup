@@ -1,4 +1,5 @@
 import fetchData from "@lib/fetchData";
+import { getApiBase } from "@lib/api-base";
 import { ReportStatus } from "./my-suggested";
 
 export interface Report {
@@ -21,9 +22,7 @@ export interface MyMarkerReportRes {
 }
 
 const reportForMymarker = async (cookie?: string) => {
-  const isServer = typeof window === "undefined";
-
-  const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
+  const url = getApiBase();
 
   const response = await fetchData(`${url}/users/reports/for-my-markers`, {
     headers: {

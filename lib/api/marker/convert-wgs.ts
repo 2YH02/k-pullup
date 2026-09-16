@@ -1,9 +1,8 @@
 import fetchData from "@lib/fetchData";
+import { getApiBase } from "@lib/api-base";
 
 const convertWgs = async (lat: number, lng: number) => {
-  const isServer = typeof window === "undefined";
-
-  const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
+  const url = getApiBase();
 
   const response = await fetchData(
     `${url}/markers/convert?latitude=${lat}&longitude=${lng}`

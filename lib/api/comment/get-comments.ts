@@ -1,4 +1,5 @@
 import fetchData from "@lib/fetchData";
+import { getApiBase } from "@lib/api-base";
 
 export interface Comment {
   commentId: number;
@@ -24,8 +25,7 @@ export interface CommentsRes {
 }
 
 const getComments = async ({ id, pageParam }: Props): Promise<CommentsRes> => {
-  const isServer = typeof window === "undefined";
-  const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
+  const url = getApiBase();
 
   const response = await fetchData(
     `${url}/comments/${id}/comments?page=${pageParam}&pageSize=10`

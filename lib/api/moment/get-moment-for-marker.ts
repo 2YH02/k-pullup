@@ -1,4 +1,5 @@
 import fetchData from "@lib/fetchData";
+import { getApiBase } from "@lib/api-base";
 
 export interface Moment {
   blurhash: string;
@@ -14,9 +15,7 @@ export interface Moment {
 }
 
 const getMomentForMarker = async (markerId: number) => {
-  const isServer = typeof window === "undefined";
-
-  const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
+  const url = getApiBase();
 
   const response = await fetchData(`${url}/markers/${markerId}/stories`);
 

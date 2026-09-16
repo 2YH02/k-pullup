@@ -1,4 +1,5 @@
 import fetchData from "@lib/fetchData";
+import { getApiBase } from "@lib/api-base";
 
 export type ContributionLevel =
   | "초보 운동자"
@@ -25,9 +26,7 @@ export interface MyInfo {
 }
 
 const myInfo = async (cookie?: string): Promise<MyInfo> => {
-  const isServer = typeof window === "undefined";
-
-  const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
+  const url = getApiBase();
 
   const response = await fetchData(`${url}/users/me`, {
     headers: {

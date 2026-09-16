@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("로그인 페이지 테스트", () => {
+test.describe("로그인/회원가입 페이지 테스트", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/signin/email");
     await page.waitForLoadState("load");

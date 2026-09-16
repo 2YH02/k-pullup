@@ -3,6 +3,7 @@ import {
   getCachedRoadviewDate,
 } from "@lib/cache/roadview-date-cache";
 import fetchData from "@lib/fetchData";
+import { getApiBase } from "@lib/api-base";
 
 export interface RoadviewDateRes {
   shot_date: string;
@@ -18,9 +19,7 @@ const getRoadviewDate = async (
     return { shot_date: cached };
   }
 
-  const isServer = typeof window === "undefined";
-
-  const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
+  const url = getApiBase();
 
   try {
     const response = await fetchData(

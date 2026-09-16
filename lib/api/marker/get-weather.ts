@@ -1,4 +1,5 @@
 import fetchData from "@lib/fetchData";
+import { getApiBase } from "@lib/api-base";
 
 export interface WeatherRes {
   temperature: string;
@@ -10,9 +11,7 @@ export interface WeatherRes {
 }
 
 const getWeather = async (lat: number, lng: number): Promise<WeatherRes> => {
-  const isServer = typeof window === "undefined";
-
-  const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
+  const url = getApiBase();
 
   const response = await fetchData(
     `${url}/markers/weather?latitude=${lat}&longitude=${lng}`

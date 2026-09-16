@@ -1,4 +1,5 @@
 import fetchData from "@lib/fetchData";
+import { getApiBase } from "@lib/api-base";
 
 export interface NewPictures {
   markerId: number;
@@ -11,7 +12,7 @@ export type NewPicturesResponse = NewPictures[] | NewPicturesError;
 
 const newPictures = async (): Promise<NewPicturesResponse> => {
   const response = await fetchData(
-    `https://api.k-pullup.com/api/v1/markers/new-pictures`,
+    `${getApiBase()}/markers/new-pictures`,
     {
       next: {
         revalidate: 3600,

@@ -1,4 +1,5 @@
 import fetchData from "@lib/fetchData";
+import { getApiBase } from "@lib/api-base";
 
 export interface AllReport {
   reportId: number;
@@ -31,9 +32,7 @@ export interface AllReportRes {
 }
 
 const getAllReports = async (cookie?: string) => {
-  const isServer = typeof window === "undefined";
-
-  const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
+  const url = getApiBase();
 
   const response = await fetchData(`${url}/reports/all`, {
     headers: {

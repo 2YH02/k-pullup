@@ -24,8 +24,24 @@ test.describe("챌린지 페이지 테스트", () => {
   });
 
   test("페이지 진입 시 오늘 방문이 기록됨 (localStorage)", async ({ page }) => {
-    // hydration + recordVisit 완료 대기
-    await page.waitForTimeout(1000);
+    const today = new Date().toISOString().split("T")[0];
+
+    // hydration + recordVisit 완료까지 polling
+    await expect
+      .poll(
+        async () => {
+          const raw = await page.evaluate(() =>
+            localStorage.getItem("k-pullup-challenge")
+          );
+          if (!raw) return null;
+          const parsed = JSON.parse(raw);
+          return parsed.records?.find(
+            (r: { date: string }) => r.date === today
+          );
+        },
+        { timeout: 5000 }
+      )
+      .toBeTruthy();
 
     const storageData = await page.evaluate(() => {
       const raw = localStorage.getItem("k-pullup-challenge");
@@ -35,7 +51,6 @@ test.describe("챌린지 페이지 테스트", () => {
     expect(storageData).not.toBeNull();
     expect(storageData.records.length).toBeGreaterThanOrEqual(1);
 
-    const today = new Date().toISOString().split("T")[0];
     const todayRecord = storageData.records.find(
       (r: { date: string }) => r.date === today
     );

@@ -1,4 +1,5 @@
 import fetchData from "@lib/fetchData";
+import { getApiBase } from "@lib/api-base";
 
 export interface UserMarker {
   latitude: number;
@@ -26,9 +27,7 @@ const userMarkers = async ({
   pageSize?: number;
   cookie?: string;
 }): Promise<UserMarkerRes> => {
-  const isServer = typeof window === "undefined";
-
-  const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
+  const url = getApiBase();
 
   const response = await fetchData(
     `${url}/markers/user/${encodeURIComponent(userName)}?page=${page}&pageSize=${pageSize}`,

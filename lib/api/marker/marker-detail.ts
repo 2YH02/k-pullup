@@ -1,5 +1,6 @@
 import type { Marker } from "@/types/marker.types";
 import fetchData from "@lib/fetchData";
+import { getApiBase } from "@lib/api-base";
 
 const markerDetail = async ({
   id,
@@ -8,9 +9,7 @@ const markerDetail = async ({
   id: number;
   cookie?: string;
 }): Promise<Marker> => {
-  const isServer = typeof window === "undefined";
-
-  const url = isServer ? process.env.NEXT_PUBLIC_BASE_URL : "/api/v1";
+  const url = getApiBase();
 
   const response = await fetchData(`${url}/markers/${id}/details`, {
     headers: {

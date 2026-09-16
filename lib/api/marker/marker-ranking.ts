@@ -1,4 +1,5 @@
 import fetchData from "@lib/fetchData";
+import { getApiBase } from "@lib/api-base";
 
 export interface RankingInfo {
   address: string;
@@ -9,7 +10,7 @@ export interface RankingInfo {
 
 const markerRanking = async (): Promise<RankingInfo[]> => {
   const response = await fetchData(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/markers/ranking`,
+    `${getApiBase()}/markers/ranking`,
     {
       cache: "no-store",
     }
