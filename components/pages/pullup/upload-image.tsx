@@ -147,6 +147,7 @@ const UploadImage = ({
                 className="relative rounded-lg w-16 h-16 shadow-xs dark:border border-solid border-grey-dark"
               >
                 <button
+                  aria-label="이미지 삭제"
                   className={`absolute -top-2 -right-2 rounded-full w-6 h-6 z-50 flex items-center justify-center bg-primary text-white`}
                   onClick={() => deleteImage(file.id as string)}
                 >
@@ -203,12 +204,14 @@ const UploadImage = ({
 
 const AddImageButton = ({ onClick }: { onClick: VoidFunction }) => {
   return (
-    <div
-      className="relative rounded-lg flex items-center justify-center shrink-0 h-16 w-16 cursor-pointer border-2 border-dashed border-grey-dark text-black dark:text-white"
+    <button
+      type="button"
+      aria-label="이미지 추가"
+      className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-lg border-2 border-dashed border-text-on-surface-muted/45 bg-surface/40 text-text-on-surface-muted transition-colors duration-150 active:scale-[0.98] active:border-primary/60 active:text-primary focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/30 dark:border-black-light/75 dark:bg-black-light/30 dark:text-grey dark:active:border-primary-light/70 dark:active:text-primary-light"
       onClick={onClick}
     >
       <BsPlusLg size={24} />
-    </div>
+    </button>
   );
 };
 

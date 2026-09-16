@@ -49,11 +49,9 @@ const BottomNav = ({
     setRegisterFrom(from);
   }, []);
 
-  const navWidth = useMemo(() => {
-    if (width === "full") return "w-full";
-
-    return `w-[${width}px]`;
-  }, [width]);
+  // 현재 모든 호출부에서 width="full"만 사용하므로 항상 "w-full" 반환.
+  // number width는 실사용처가 없어 동적 Tailwind 클래스(purge 위험)를 제거함.
+  const navWidth = width === "full" ? "w-full" : "w-full";
 
   const isMobileApp = deviceType === "ios-mobile-app";
 
