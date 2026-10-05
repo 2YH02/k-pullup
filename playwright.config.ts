@@ -27,5 +27,11 @@ export default defineConfig({
       name: "firefox",
       use: { ...devices["Desktop Firefox"] },
     },
+
+    // mo: (max-width 484px) 반응형 레이아웃 회귀 감지용. CI 에 이미 설치된 chromium 사용.
+    {
+      name: "mobile-chrome",
+      use: { ...devices["Pixel 5"] },
+    },
   ],
 });
