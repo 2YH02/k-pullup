@@ -10,6 +10,11 @@ interface ResolveResult {
   error?: string;
 }
 
+/**
+ * 좌표 → 주소 변환 API 호출 훅 (캐시 + debounce + 최신 요청만 반영).
+ * GeoProvider 에서 사용하며, 결과는 useGeolocationStore.region 에 저장된다.
+ * 화면 표시용 텍스트가 필요하면 store 를 읽는 useRegionAddress 를 사용할 것.
+ */
 export const useAddressResolver = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

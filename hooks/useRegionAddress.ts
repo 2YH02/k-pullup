@@ -14,6 +14,7 @@ const FALLBACK_TEXT = "위치 정보 없음";
 /**
  * Geolocation store의 region 데이터를 표시용 주소 텍스트로 변환하는 훅.
  * location-badge, around-client 등에서 공통으로 사용.
+ * API 호출은 하지 않는다 — region 조회·캐싱은 useAddressResolver(GeoProvider) 담당.
  */
 const useRegionAddress = (): UseRegionAddress => {
   const region = useGeolocationStore((s) => s.region);
