@@ -2,7 +2,6 @@ import { type Device } from "@/app/mypage/page";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Skeleton from "@common/skeleton";
-import getChatRegion from "@lib/get-chat-region";
 import getDeviceType from "@lib/get-device-type";
 import { Upload } from "lucide-react";
 import { headers } from "next/headers";
@@ -18,16 +17,14 @@ const MessageBubbleSkeleton = ({ mine = false }: { mine?: boolean }) => {
   );
 };
 
-const Loading = ({ params }: { params: { code: string } }) => {
+const Loading = () => {
   const headersList = headers();
   const userAgent = headersList.get("user-agent");
   const deviceType: Device = getDeviceType(userAgent as string);
-  const { getTitle } = getChatRegion();
-  const title = getTitle(params.code);
 
   return (
     <SideMain
-      headerTitle={title === 404 ? "채팅방" : `${title} 채팅`}
+      headerTitle="채팅방"
       fullHeight
       hasBackButton
       deviceType={deviceType}
