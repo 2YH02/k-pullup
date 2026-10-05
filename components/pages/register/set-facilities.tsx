@@ -2,7 +2,7 @@ import Button from "@common/button";
 import GrowBox from "@common/grow-box";
 import Section from "@common/section";
 import Text from "@common/text";
-import MinusIcon from "@icons/minuse-icon";
+import MinusIcon from "@icons/minus-icon";
 import PlusIcon from "@icons/plus-icon";
 
 interface SetFacilitiesProps {
