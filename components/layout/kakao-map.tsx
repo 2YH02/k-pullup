@@ -369,7 +369,7 @@ const KakaoMap = () => {
       {shouldLoadMapSdk && (
         <Script
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_APP_KEY}&libraries=clusterer,services&autoload=false`}
-          strategy="lazyOnload"
+          strategy="afterInteractive"
           onLoad={handleLoadMap}
         />
       )}
