@@ -85,13 +85,13 @@ const RegisteredLocateList = ({ data }: RegisteredListProps) => {
           return (
             <li key={marker.markerId}>
               <button
-                className="group flex w-full cursor-pointer items-center gap-3 rounded-xl border border-border bg-surface/80 px-3 py-2.5 text-left transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-border web:hover:bg-white/70 active:scale-[0.995] dark:border-grey-dark dark:bg-black dark:web:hover:bg-black-light"
+                className="group flex w-full cursor-pointer items-center gap-3 rounded-xl border border-primary/10 bg-surface/80 px-3 py-2.5 text-left transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-white/70 active:scale-[0.995] dark:border-grey-dark dark:bg-black dark:web:hover:bg-black-light"
                 onClick={() => {
                   move({ lat: marker.latitude, lng: marker.longitude });
                   router.push(`/pullup/${marker.markerId}`);
                 }}
               >
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary-subtle dark:bg-primary-dark/20">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/8 dark:bg-primary-dark/20">
                   <PinIcon size={24} />
                 </span>
                 <span className="min-w-0 grow">
@@ -127,7 +127,7 @@ const RegisteredLocateList = ({ data }: RegisteredListProps) => {
         </div>
       )}
       {loadError && (
-        <div className="rounded-xl border border-border bg-surface/80 px-3 py-3 text-center dark:border-grey-dark dark:bg-black">
+        <div className="rounded-xl border border-primary/10 bg-surface/80 px-3 py-3 text-center dark:border-grey-dark dark:bg-black">
           <Text typography="t7" className="mb-2 block text-grey-dark dark:text-grey">
             목록을 더 불러오지 못했습니다.
           </Text>

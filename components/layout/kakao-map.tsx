@@ -400,12 +400,19 @@ const KakaoMap = () => {
           ) : (
             <Navigation
               size={26}
-              className={cn(
-                "transition-colors duration-300",
-                gpsState === "success" && "fill-green stroke-green",
-                gpsState === "error" && "fill-red stroke-red",
-                gpsState === "idle" && "fill-black stroke-black dark:fill-grey-light dark:stroke-grey-light"
-              )}
+              style={{
+                fill: gpsState === "success"
+                  ? "#22c55e"
+                  : gpsState === "error"
+                  ? "#ef4444"
+                  : "#f9b4ab",
+                stroke: gpsState === "success"
+                  ? "#22c55e"
+                  : gpsState === "error"
+                  ? "#ef4444"
+                  : "#f9b4ab",
+                transition: "all 0.3s ease-out",
+              }}
             />
           )}
         </Tooltip>

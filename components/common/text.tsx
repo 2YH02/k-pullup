@@ -1,13 +1,13 @@
 import cn from "@lib/cn";
 
 const typographyMap = {
-  t1: "text-[28px] leading-[1.25] tracking-tight",
-  t2: "text-[24px] leading-[1.28] tracking-tight",
-  t3: "text-[20px] leading-[1.32] tracking-tight",
-  t4: "text-[18px] leading-[1.35] tracking-[-0.01em]",
-  t5: "text-[15px] leading-[1.45] tracking-[-0.01em]",
-  t6: "text-[13px] leading-[1.45]",
-  t7: "text-[11px] leading-[1.4]",
+  t1: "text-[30px] leading-[1.35]",
+  t2: "text-[26px] leading-[1.34]",
+  t3: "text-[22px] leading-[1.4]",
+  t4: "text-[20px] leading-[1.45]",
+  t5: "text-[16px] leading-normal",
+  t6: "text-[14px] leading-normal",
+  t7: "text-[12px] leading-normal",
 };
 
 export type Typography = keyof typeof typographyMap;
@@ -22,7 +22,7 @@ interface TextProps extends React.ComponentProps<"span"> {
    * 버튼 정렬
    */
   textAlign?: "left" | "center" | "right";
-  fontWeight?: "normal" | "medium" | "semibold" | "bold" | "lighter" | "bolder";
+  fontWeight?: "normal" | "bold" | "lighter" | "bolder";
 }
 
 const Text = ({
@@ -48,19 +48,15 @@ const Text = ({
       : "text-right",
     fontWeight === "normal"
       ? "font-normal"
-      : fontWeight === "medium"
-      ? "font-medium"
-      : fontWeight === "semibold"
-      ? "font-semibold"
       : fontWeight === "bold"
-      ? "font-semibold"
+      ? "font-bold"
       : fontWeight === "lighter"
       ? "font-light"
-      : "font-bold"
+      : "font-extrabold"
   );
 
   return (
-    <span className={cn(textStyle, "text-text-on-surface dark:text-grey-light", className)} {...props}>
+    <span className={cn(textStyle, "text-black dark:text-white", className)} {...props}>
       {children}
     </span>
   );

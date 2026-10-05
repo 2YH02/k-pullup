@@ -12,24 +12,24 @@ const GPS_GUIDE_KEY = "gps-guide-shown";
 const BADGE_CLASS_NAME = cn(
   "flex items-center gap-2",
   "px-3 py-2 rounded-full",
-  "bg-surface dark:bg-black-light"
+  "bg-location-badge-bg dark:bg-location-badge-bg-dark"
 );
 const BADGE_TEXT_CLASS_NAME = cn(
   "text-[14px] font-bold leading-none whitespace-nowrap",
-  "text-primary dark:text-primary-light"
+  "text-location-badge-text dark:text-location-badge-text-dark"
 );
 const GPS_BUTTON_BASE_CLASS_NAME =
-  "w-7 h-7 rounded-full border border-border dark:border-grey-dark bg-white/70 dark:bg-black-light flex items-center justify-center transition-colors active:bg-grey-light dark:active:bg-grey-dark disabled:opacity-60";
+  "w-7 h-7 rounded-full border border-location-badge-text/15 dark:border-location-badge-text-dark/25 bg-white/70 dark:bg-black/35 flex items-center justify-center transition-colors active:bg-grey-light dark:active:bg-grey-dark disabled:opacity-60";
 const GUIDE_BUBBLE_CLASS_NAME =
   "absolute -bottom-12 right-0 bg-black/80 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap animate-fade-in pointer-events-none z-50";
 const GPS_LOCATING_STROKE_CLASS_NAME =
-  "stroke-primary dark:stroke-primary-light animate-spin";
+  "stroke-location-badge-text dark:stroke-location-badge-text-dark animate-spin";
 const BADGE_ICON_CLASS_NAME =
-  "fill-primary dark:fill-primary-light";
+  "fill-location-badge-text dark:fill-location-badge-text-dark";
 
 const GPS_ICON_COLOR_BY_STATE: Record<GpsState, string> = {
-  idle: "var(--color-primary)",
-  locating: "var(--color-primary)",
+  idle: "var(--color-location-badge-text)",
+  locating: "var(--color-location-badge-text)",
   success: "var(--color-green)",
   error: "var(--color-red)",
 };

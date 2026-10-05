@@ -42,7 +42,7 @@ const Loading = () => {
       }
     >
       <Section className="py-2">
-        <div className="rounded-xl border border-grey-light/85 bg-surface/35 px-3 py-2 dark:border-grey-dark/85 dark:bg-black-light">
+        <div className="rounded-xl border border-grey-light/85 bg-search-input-bg/35 px-3 py-2 dark:border-grey-dark/85 dark:bg-black/30">
           <Skeleton className="h-4 w-44 rounded-md" />
         </div>
       </Section>

@@ -54,7 +54,7 @@ const ToggleButton = ({
           `relative bg-gray-200 peer-focus:outline-hidden rounded-full peer dark:bg-gray-700
         peer-checked:after:translate-x-full peer-checked:rtl:after:-translate-x-full peer-checked:after:border-white 
         after:content-[''] after:absolute after:bg-white after:border-gray-300 after:border after:rounded-full 
-        after:transition-all dark:border-gray-600 peer-checked:bg-primary`,
+        after:transition-all dark:border-gray-600 peer-checked:bg-blue`,
           buttonStyle
         )}
       />

@@ -31,7 +31,7 @@ const LocationComparison = ({
   return (
     <div className={className}>
       <div className="flex items-center gap-2 mb-3">
-        <MapPin className="h-4 w-4 text-primary" />
+        <MapPin className="h-4 w-4 text-blue" />
         <span className="text-sm font-medium text-gray-700">위치 변경</span>
         {hasMoved && (
           <span
@@ -54,7 +54,7 @@ const LocationComparison = ({
             href={`https://map.kakao.com/link/map/${oldLat},${oldLng}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-primary hover:underline mt-1 inline-block"
+            className="text-xs text-blue hover:underline mt-1 inline-block"
           >
             지도에서 보기 →
           </a>
@@ -95,7 +95,7 @@ const LocationComparison = ({
             href={`https://map.kakao.com/link/map/${newLat},${newLng}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-primary hover:underline mt-1 inline-block"
+            className="text-xs text-blue hover:underline mt-1 inline-block"
           >
             지도에서 보기 →
           </a>

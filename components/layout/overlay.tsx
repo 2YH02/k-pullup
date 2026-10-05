@@ -42,7 +42,7 @@ const getTailwindColorClass = (count: number): string => {
   if (count < 100) {
     return "bg-green";
   } else if (count < 500) {
-    return "bg-primary";
+    return "bg-blue";
   } else if (count < 1000) {
     return "bg-yellow";
   } else {
