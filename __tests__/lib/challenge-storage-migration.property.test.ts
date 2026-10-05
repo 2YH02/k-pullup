@@ -52,7 +52,7 @@ describe("Feature: challenge-local-streak, Property 9: Version migration correct
   // Arbitrary for a stored object with different version but valid sub-fields
   const validDataWithDifferentVersionArb = fc.record({
     version: nonCurrentVersionArb,
-    lastSyncedAt: fc.oneof(fc.constant(null), fc.date().map((d) => d.toISOString())),
+    lastSyncedAt: fc.oneof(fc.constant(null), fc.date({ noInvalidDate: true }).map((d) => d.toISOString())),
     records: fc.array(visitRecordArb, { minLength: 0, maxLength: 20 }),
     streakData: streakDataArb,
     goalSettings: goalSettingsArb,

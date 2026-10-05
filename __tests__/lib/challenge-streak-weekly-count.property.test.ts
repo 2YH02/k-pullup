@@ -25,6 +25,7 @@ describe("Feature: challenge-local-streak, Property 6: Weekly achieved count acc
   const dateArb = fc.date({
     min: new Date(2020, 0, 1),
     max: new Date(2030, 11, 31),
+    noInvalidDate: true,
   }).map(formatDate);
 
   /** Arbitrary that generates an array of VisitRecords with unique dates */
