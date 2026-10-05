@@ -6,14 +6,12 @@ import getAllMoment from "@api/moment/get-all-moment";
 import Footer from "@common/footer";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
-import getDeviceType from "@lib/get-device-type";
 import AroundMarkerCarousel from "@pages/home/around-marker-carousel";
 import HeroStickyHeader from "@pages/home/hero-sticky-header";
 import MomentList from "@pages/home/moment-list";
 import NewImageSection from "@pages/home/new-image-section";
 import SearchInput from "@pages/home/search-input";
-import { headers } from "next/headers";
-import type { Device } from "@/types/device";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 const Home = async () => {
   const [images, moment] = await Promise.all([
@@ -21,10 +19,8 @@ const Home = async () => {
     getAllMoment().catch(() => []),
   ]);
 
-  const headersList = headers();
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   return (
     <SideMain withNav deviceType={deviceType} bodyStyle="pb-0">

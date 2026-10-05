@@ -1,8 +1,6 @@
-import type { Device } from "@/types/device";
 import Skeleton from "@common/skeleton";
 import SideMain from "@common/side-main";
-import getDeviceType from "@lib/get-device-type";
-import { headers } from "next/headers";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 const PageLoading = ({
   fullHeight = false,
@@ -11,10 +9,8 @@ const PageLoading = ({
   fullHeight?: boolean;
   withNav?: boolean;
 }) => {
-  const headersList = headers();
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
   return (
     <SideMain
       headerTitle=" "

@@ -5,15 +5,14 @@ import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import ArrowRightIcon from "@icons/arrow-right-icon";
-import getDeviceType from "@lib/get-device-type";
 import guardServerFetch from "@lib/server-fetch-guard";
 import LinkList from "@pages/mypage/link-list";
 import UserInfo from "@pages/mypage/user-info";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
+import getServerDeviceType from "@lib/get-server-device-type";
 
-import { type Device } from "@/types/device";
 
 
 export const generateMetadata = () => {
@@ -26,10 +25,8 @@ const Mypage = async () => {
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
 
-  const headersList = headers();
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   const { status, data: user } = await guardServerFetch(() =>
     myInfo(decodeCookie)

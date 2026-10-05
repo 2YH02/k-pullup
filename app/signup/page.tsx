@@ -1,7 +1,6 @@
-import getDeviceType from "@lib/get-device-type";
 import { headers } from "next/headers";
-import type { Device } from "@/types/device";
 import SignupClient from "./signup-client";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 interface PageProps {
   searchParams: {
@@ -21,9 +20,8 @@ const SignupPage = ({ searchParams }: PageProps) => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   return (
     <>

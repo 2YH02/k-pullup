@@ -1,13 +1,12 @@
-import type { Device } from "@/types/device";
 import getComments from "@api/comment/get-comments";
 import getFacilities from "@api/marker/get-facilities";
 import markerDetail from "@api/marker/marker-detail";
-import getDeviceType from "@lib/get-device-type";
 import guardServerFetch from "@lib/server-fetch-guard";
 import PullupNotFound from "@pages/pullup/not-found";
 import { cookies, headers } from "next/headers";
 import { cache } from "react";
 import PullupClient from "./pullup-client";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 type Params = {
   id: string;
@@ -66,9 +65,8 @@ const PullupPage = async ({ params }: { params: Params }) => {
   const { id } = params;
   const headersList = headers();
   const referrer = headersList.get("referer");
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());

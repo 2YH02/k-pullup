@@ -1,10 +1,9 @@
-import type { Device } from "@/types/device";
 import markerDetail from "@api/marker/marker-detail";
-import getDeviceType from "@lib/get-device-type";
 import guardServerFetch from "@lib/server-fetch-guard";
 import NotFound from "@layout/not-found";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import ReportClient from "./report-client";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 const PullupReport = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -12,10 +11,8 @@ const PullupReport = async ({ params }: { params: { id: string } }) => {
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
 
-  const headersList = headers();
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   const { status, data: marker } = await guardServerFetch(() =>
     markerDetail({ id: ~~id, cookie: decodeCookie })

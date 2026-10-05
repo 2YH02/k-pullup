@@ -1,9 +1,7 @@
 import SideMain from "@common/side-main";
 import NoticeList from "@components/notice/notice-list";
-import getDeviceType from "@lib/get-device-type";
 import Tabs from "@common/tabs";
-import { headers } from "next/headers";
-import type { Device } from "@/types/device";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 export const generateMetadata = () => {
   return {
@@ -12,10 +10,8 @@ export const generateMetadata = () => {
 };
 
 const NoticePage = () => {
-  const headersList = headers();
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   const tabData = [
     { title: "전체", contents: <NoticeList tab="전체" /> },

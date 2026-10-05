@@ -1,18 +1,16 @@
-import type { Device } from "@/types/device";
 import NotFound from "@layout/not-found";
 import SideMain from "@common/side-main";
-import getDeviceType from "@lib/get-device-type";
 import { headers } from "next/headers";
 import FacilitiesClient from "./facilities-client";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 const FacilitiesPage = ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
   const headersList = headers();
   const referrer = headersList.get("referer");
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   if (!id) {
     return (

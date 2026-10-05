@@ -3,12 +3,10 @@ import getAllMoment from "@api/moment/get-all-moment";
 import Footer from "@common/footer";
 import Section, { SectionTitle } from "@common/section";
 import SideMain from "@common/side-main";
-import getDeviceType from "@lib/get-device-type";
 import ChatCarousel from "@pages/home/chat-carousel";
 import MomentList from "@pages/home/moment-list";
 import MarkerRankingList from "@pages/social/marker-ranking-list";
-import { headers } from "next/headers";
-import type { Device } from "@/types/device";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 export const generateMetadata = () => {
   return {
@@ -23,10 +21,8 @@ const Social = async () => {
     getAllMoment().catch(() => []),
   ]);
 
-  const headersList = headers();
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   return (
     <SideMain headerTitle="소셜" withNav fullHeight deviceType={deviceType} bodyStyle="pb-0">

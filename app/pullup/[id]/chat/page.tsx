@@ -1,15 +1,11 @@
-import { headers } from "next/headers";
 import PullupChatClient from "./pullup-chat-client";
-import type { Device } from "@/types/device";
-import getDeviceType from "@lib/get-device-type";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 const PullupChat = ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
-  const headersList = headers();
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   return (
     <>

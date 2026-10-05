@@ -1,12 +1,11 @@
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
-import getDeviceType from "@lib/get-device-type";
 import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
-import type { Device } from "@/types/device";
 import KakaoLoginButton from "@/components/pages/signin/kakao-login-button";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 interface PageProps {
   searchParams: {
@@ -25,11 +24,10 @@ const SigninPage = ({ searchParams }: PageProps) => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
-  const userAgent = headersList.get("user-agent");
   const safeReturnUrl =
     returnUrl && returnUrl.startsWith("/") ? returnUrl : "/";
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   return (
     <SideMain

@@ -1,16 +1,12 @@
-import type { Device } from "@/types/device";
 import getChatRegion from "@lib/get-chat-region";
-import getDeviceType from "@lib/get-device-type";
 import NotFound from "@layout/not-found";
-import { headers } from "next/headers";
 import ChatDetailClient from "./chat-detail-client";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 const ChatDetailpage = ({ params }: { params: { code: string } }) => {
   const { code } = params;
-  const headersList = headers();
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   const { getTitle } = getChatRegion();
 

@@ -3,15 +3,11 @@ import Section from "@common/section";
 import ShadowBox from "@common/shadow-box";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
-import getDeviceType from "@lib/get-device-type";
-import { headers } from "next/headers";
-import type { Device } from "@/types/device";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 const InquiryPage = () => {
-  const headersList = headers();
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
   return (
     <SideMain
       headerTitle="문의"

@@ -1,10 +1,8 @@
-import type { Device } from "@/types/device";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Skeleton from "@common/skeleton";
-import getDeviceType from "@lib/get-device-type";
 import { Upload } from "lucide-react";
-import { headers } from "next/headers";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 const MessageBubbleSkeleton = ({ mine = false }: { mine?: boolean }) => {
   return (
@@ -18,9 +16,7 @@ const MessageBubbleSkeleton = ({ mine = false }: { mine?: boolean }) => {
 };
 
 const Loading = () => {
-  const headersList = headers();
-  const userAgent = headersList.get("user-agent");
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   return (
     <SideMain

@@ -1,11 +1,10 @@
 import reportForMymarker from "@api/report/report-for-mymarker";
 import AuthError from "@layout/auth-error";
 import NotFound from "@layout/not-found";
-import getDeviceType from "@lib/get-device-type";
 import guardServerFetch from "@lib/server-fetch-guard";
 import { cookies, headers } from "next/headers";
-import type { Device } from "@/types/device";
 import MyreportClient from "./myreport-client";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 const MyreportPage = async () => {
   const cookieStore = cookies();
@@ -13,9 +12,8 @@ const MyreportPage = async () => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   const { status, data: reports } = await guardServerFetch(() =>
     reportForMymarker(decodeCookie)

@@ -1,13 +1,9 @@
-import type { Device } from "@/types/device";
 import SideMain from "@common/side-main";
 import Skeleton from "@common/skeleton";
-import getDeviceType from "@lib/get-device-type";
-import { headers } from "next/headers";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 const Loading = () => {
-  const headersList = headers();
-  const userAgent = headersList.get("user-agent");
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   return (
     <SideMain headerTitle="챌린지" withNav fullHeight deviceType={deviceType}>

@@ -1,16 +1,12 @@
-import type { Device } from "@/types/device";
 import getMomentForMarker from "@api/moment/get-moment-for-marker";
-import getDeviceType from "@lib/get-device-type";
 import NotFound from "@layout/not-found";
-import { headers } from "next/headers";
 import MomentClient from "./moment-client";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 const MomentPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
-  const headersList = headers();
-  const userAgent = headersList.get("user-agent");
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   if (!id) {
     return (

@@ -1,8 +1,7 @@
-import getDeviceType from "@lib/get-device-type";
 import { headers } from "next/headers";
-import type { Device } from "@/types/device";
 import SearchClient from "./search-client";
 import SearchResult from "./search-result";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 interface PageProps {
   searchParams: {
@@ -26,9 +25,8 @@ const SearchPage = ({ searchParams }: PageProps) => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   if (addr || d) {
     if (d) {

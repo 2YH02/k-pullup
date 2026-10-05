@@ -1,12 +1,11 @@
 import myInfo from "@api/user/myInfo";
 import SideMain from "@common/side-main";
 import AuthError from "@layout/auth-error";
-import getDeviceType from "@lib/get-device-type";
 import guardServerFetch from "@lib/server-fetch-guard";
 import UserinfoCard from "@pages/mypage/user/userinfo-card";
 import UsernameCard from "@pages/mypage/user/username-card";
 import { cookies, headers } from "next/headers";
-import type { Device } from "@/types/device";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 const UserPage = async () => {
   const cookieStore = cookies();
@@ -14,9 +13,8 @@ const UserPage = async () => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   const { status, data: user } = await guardServerFetch(() =>
     myInfo(decodeCookie)

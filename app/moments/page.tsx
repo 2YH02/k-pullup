@@ -1,16 +1,12 @@
 import markerRanking, { type RankingInfo } from "@/lib/api/marker/marker-ranking";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
-import getDeviceType from "@lib/get-device-type";
 import Around from "@pages/moments/around";
 import Hot from "@pages/moments/hot";
-import { headers } from "next/headers";
-import type { Device } from "@/types/device";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 const MomentsPage = async () => {
-  const headersList = headers();
-  const userAgent = headersList.get("user-agent");
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
   let rankingData: RankingInfo[] = [];
 
   try {

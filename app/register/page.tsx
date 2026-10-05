@@ -1,7 +1,6 @@
-import getDeviceType from "@lib/get-device-type";
 import { headers } from "next/headers";
-import type { Device } from "@/types/device";
 import RegisterClient from "./register-client";
+import getServerDeviceType from "@lib/get-server-device-type";
 
 export const generateMetadata = () => {
   return {
@@ -13,9 +12,8 @@ export const generateMetadata = () => {
 const Register = () => {
   const headersList = headers();
   const referrer = headersList.get("referer");
-  const userAgent = headersList.get("user-agent");
 
-  const deviceType: Device = getDeviceType(userAgent as string);
+  const deviceType = getServerDeviceType();
 
   return <RegisterClient referrer={!!referrer} deviceType={deviceType} />;
 };
