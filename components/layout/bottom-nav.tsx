@@ -1,6 +1,6 @@
 "use client";
 
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import Text from "@common/text";
 import cn from "@lib/cn";
 import Link from "next/link";

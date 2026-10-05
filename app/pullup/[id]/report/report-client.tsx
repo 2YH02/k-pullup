@@ -1,6 +1,6 @@
 "use client";
 
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import BottomFixedButton from "@/components/common/bottom-fixed-button";
 import MoveMap from "@/components/pages/pullup/move-map";
 import type { Nullable } from "@/types";

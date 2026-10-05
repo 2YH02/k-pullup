@@ -1,6 +1,6 @@
 "use client";
 
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import Section from "@/components/common/section";
 import Text from "@/components/common/text";
 import SideMain from "@common/side-main";

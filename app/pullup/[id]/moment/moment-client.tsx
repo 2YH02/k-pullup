@@ -1,6 +1,6 @@
 "use client";
 
-import type { Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import { type Moment } from "@api/moment/get-moment-for-marker";
 import Button from "@common/button";
 import Divider from "@common/divider";

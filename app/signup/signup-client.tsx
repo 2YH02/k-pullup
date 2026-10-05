@@ -15,7 +15,7 @@ import { useBottomSheetStore } from "@store/useBottomSheetStore";
 import useTermsStore from "@store/useTermsStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { type Device } from "../mypage/page";
+import type { Device } from "@/types/device";
 
 interface SignupClientProps {
   returnUrl?: string;

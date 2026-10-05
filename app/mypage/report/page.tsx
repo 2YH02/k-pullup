@@ -4,7 +4,7 @@ import NotFound from "@layout/not-found";
 import getDeviceType from "@lib/get-device-type";
 import guardServerFetch from "@lib/server-fetch-guard";
 import { cookies, headers } from "next/headers";
-import { type Device } from "../page";
+import type { Device } from "@/types/device";
 import ReportClient from "./report-client";
 
 const ReportPage = async () => {

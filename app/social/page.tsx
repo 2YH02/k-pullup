@@ -8,7 +8,7 @@ import ChatCarousel from "@pages/home/chat-carousel";
 import MomentList from "@pages/home/moment-list";
 import MarkerRankingList from "@pages/social/marker-ranking-list";
 import { headers } from "next/headers";
-import { type Device } from "../mypage/page";
+import type { Device } from "@/types/device";
 
 export const generateMetadata = () => {
   return {

@@ -1,6 +1,6 @@
 "use client";
 
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import { type Marker } from "@/types/marker.types";
 import { type CommentsRes } from "@api/comment/get-comments";
 import { type FacilitiesRes } from "@api/marker/get-facilities";

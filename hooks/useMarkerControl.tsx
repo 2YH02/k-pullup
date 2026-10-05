@@ -21,7 +21,7 @@ interface CreateOverlayOption {
   title: string;
 }
 
-interface ReloadMarkersOprion {
+interface ReloadMarkersOption {
   maxLevel: number;
   selectId?: number;
 }
@@ -37,7 +37,7 @@ interface CreateOverlay {
 }
 
 interface ReloadMarkers {
-  options: ReloadMarkersOprion;
+  options: ReloadMarkersOption;
   map: KakaoMap;
 }
 

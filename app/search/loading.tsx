@@ -1,4 +1,4 @@
-import type { Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import SearchInput from "@/components/pages/home/search-input";
 import Section from "@common/section";
 import SideMain from "@common/side-main";

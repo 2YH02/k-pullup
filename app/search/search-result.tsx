@@ -6,7 +6,7 @@ import Text from "@common/text";
 import AroundSearch from "@pages/search/around-search";
 import MarkerSearchResult from "@pages/search/marker-search-result";
 import { useRouter } from "next/navigation";
-import { type Device } from "../mypage/page";
+import type { Device } from "@/types/device";
 
 interface SearchResultProps {
   address: string;

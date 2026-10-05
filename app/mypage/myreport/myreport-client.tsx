@@ -17,7 +17,7 @@ import useAlertStore from "@store/useAlertStore";
 import { ChevronRight, FilePenLine } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import { type Device } from "../page";
+import type { Device } from "@/types/device";
 
 interface MyreportClientProps {
   data: MyMarkerReportRes;

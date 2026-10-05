@@ -4,7 +4,7 @@ import NotFound from "@layout/not-found";
 import useSearchStore from "@/store/useSearchStore";
 import { useEffect } from "react";
 
-const NotFoud = ({ addr }: { addr?: string }) => {
+const PullupNotFound = ({ addr }: { addr?: string }) => {
   const removeItem = useSearchStore((state) => state.removeItem);
 
   useEffect(() => {
@@ -22,4 +22,4 @@ const NotFoud = ({ addr }: { addr?: string }) => {
   );
 };
 
-export default NotFoud;
+export default PullupNotFound;

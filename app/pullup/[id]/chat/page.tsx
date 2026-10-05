@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import PullupChatClient from "./pullup-chat-client";
-import { Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import getDeviceType from "@lib/get-device-type";
 
 const PullupChat = ({ params }: { params: { id: string } }) => {

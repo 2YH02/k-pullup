@@ -1,6 +1,6 @@
 "use client";
 
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import cn from "@/lib/cn";
 import CloseIcon from "@icons/close-icon";
 import useImageModalStore from "@store/useImageModalStore";

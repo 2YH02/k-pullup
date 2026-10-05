@@ -1,6 +1,6 @@
 "use client";
 
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import Section from "@common/section";
 import SearchIcon from "@icons/search-icon";
 import cn from "@lib/cn";

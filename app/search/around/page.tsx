@@ -1,4 +1,4 @@
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import getDeviceType from "@lib/get-device-type";
 import { headers } from "next/headers";
 import AroundClient from "./around-client";

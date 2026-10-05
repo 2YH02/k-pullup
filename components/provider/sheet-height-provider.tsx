@@ -1,6 +1,6 @@
 "use client";
 
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import useSheetHeightStore from "@store/useSheetHeightStore";
 import { useEffect } from "react";
 

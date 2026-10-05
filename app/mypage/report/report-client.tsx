@@ -9,7 +9,7 @@ import NotFound from "@layout/not-found";
 import ReportListItem from "@pages/mypage/report/report-list-item";
 import useAlertStore from "@store/useAlertStore";
 import { useState } from "react";
-import { type Device } from "../page";
+import type { Device } from "@/types/device";
 
 interface ReportClientProps {
   data: ReportsRes[];

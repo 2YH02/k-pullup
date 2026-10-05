@@ -3,7 +3,7 @@ import NoticeList from "@components/notice/notice-list";
 import getDeviceType from "@lib/get-device-type";
 import Tabs from "@common/tabs";
 import { headers } from "next/headers";
-import type { Device } from "../mypage/page";
+import type { Device } from "@/types/device";
 
 export const generateMetadata = () => {
   return {

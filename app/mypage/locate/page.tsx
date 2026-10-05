@@ -8,7 +8,7 @@ import getDeviceType from "@lib/get-device-type";
 import guardServerFetch from "@lib/server-fetch-guard";
 import RegisteredLocateList from "@pages/mypage/locate/registered-locate-list";
 import { cookies, headers } from "next/headers";
-import { type Device } from "../page";
+import type { Device } from "@/types/device";
 
 const RankingPage = async () => {
   const cookieStore = cookies();

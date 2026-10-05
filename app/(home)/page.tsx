@@ -13,7 +13,7 @@ import MomentList from "@pages/home/moment-list";
 import NewImageSection from "@pages/home/new-image-section";
 import SearchInput from "@pages/home/search-input";
 import { headers } from "next/headers";
-import { type Device } from "../mypage/page";
+import type { Device } from "@/types/device";
 
 const Home = async () => {
   const [images, moment] = await Promise.all([

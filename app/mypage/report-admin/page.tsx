@@ -4,7 +4,7 @@ import getDeviceType from "@lib/get-device-type";
 import guardServerFetch from "@lib/server-fetch-guard";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { type Device } from "../page";
+import type { Device } from "@/types/device";
 import ReportAdminClient from "./report-admin-client";
 
 const ReportAdminPage = async () => {

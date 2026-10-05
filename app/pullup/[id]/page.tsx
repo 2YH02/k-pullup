@@ -1,10 +1,10 @@
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import getComments from "@api/comment/get-comments";
 import getFacilities from "@api/marker/get-facilities";
 import markerDetail from "@api/marker/marker-detail";
 import getDeviceType from "@lib/get-device-type";
 import guardServerFetch from "@lib/server-fetch-guard";
-import NotFoud from "@pages/pullup/not-foud";
+import PullupNotFound from "@pages/pullup/not-found";
 import { cookies, headers } from "next/headers";
 import { cache } from "react";
 import PullupClient from "./pullup-client";
@@ -78,7 +78,7 @@ const PullupPage = async ({ params }: { params: Params }) => {
   );
 
   if (status === "notfound" || status === "unauthorized" || !marker) {
-    return <NotFoud />;
+    return <PullupNotFound />;
   }
 
   const [facilities, initialComments] = await Promise.all([

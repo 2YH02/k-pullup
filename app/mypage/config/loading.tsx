@@ -1,4 +1,4 @@
-import type { Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import SideMain from "@common/side-main";
 import Skeleton from "@common/skeleton";
 import getDeviceType from "@lib/get-device-type";

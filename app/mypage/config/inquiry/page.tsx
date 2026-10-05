@@ -1,11 +1,11 @@
-import ImageWrap from "@common/Image-wrap";
+import ImageWrap from "@common/image-wrap";
 import Section from "@common/section";
 import ShadowBox from "@common/shadow-box";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import getDeviceType from "@lib/get-device-type";
 import { headers } from "next/headers";
-import { type Device } from "../../page";
+import type { Device } from "@/types/device";
 
 const InquiryPage = () => {
   const headersList = headers();

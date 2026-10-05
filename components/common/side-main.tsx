@@ -1,6 +1,6 @@
 "use client";
 
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import ArrowLeftIcon from "@icons/arrow-left-icon";
 import ArrowRightIcon from "@icons/arrow-right-icon";
 import useDrawerGesture from "@hooks/useDrawerGesture";
@@ -187,7 +187,7 @@ const SideMain = ({
 
         {headerTitle && (
           <MainHeader
-            titile={headerTitle}
+            title={headerTitle}
             headerIcon={headerIcon}
             hasBackButton={hasBackButton}
             headerPosition={headerPosition}
@@ -266,7 +266,7 @@ const SideMain = ({
 };
 
 interface MainHeaderProps {
-  titile: string;
+  title: string;
   headerIcon?: React.ReactNode;
   hasBackButton?: boolean;
   headerPosition?: "sticky" | "fixed";
@@ -278,7 +278,7 @@ interface MainHeaderProps {
 }
 
 const MainHeader = ({
-  titile,
+  title,
   hasBackButton = false,
   headerIcon,
   headerPosition,
@@ -331,7 +331,7 @@ const MainHeader = ({
         fontWeight="bold"
         className="grow text-center truncate select-none"
       >
-        {titile}
+        {title}
       </Text>
 
       {iconClick ? (

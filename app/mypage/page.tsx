@@ -15,7 +15,6 @@ import Link from "next/link";
 
 import { type Device } from "@/types/device";
 
-export type { Device };
 
 export const generateMetadata = () => {
   return {

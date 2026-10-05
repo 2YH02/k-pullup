@@ -4,7 +4,7 @@ import getDeviceType from "@lib/get-device-type";
 import ResetPasswordForm from "@pages/reset-password/reset-password-form";
 import SendPasswordForm from "@pages/reset-password/send-password-form";
 import { headers } from "next/headers";
-import { type Device } from "../mypage/page";
+import type { Device } from "@/types/device";
 
 interface PageProps {
   searchParams: {

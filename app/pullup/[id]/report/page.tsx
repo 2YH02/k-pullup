@@ -1,4 +1,4 @@
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import markerDetail from "@api/marker/marker-detail";
 import getDeviceType from "@lib/get-device-type";
 import guardServerFetch from "@lib/server-fetch-guard";

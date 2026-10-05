@@ -1,6 +1,6 @@
 "use client";
 
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import Button from "@common/button";
 import Input from "@common/input";
 import SideMain from "@common/side-main";

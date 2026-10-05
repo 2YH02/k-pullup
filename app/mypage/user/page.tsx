@@ -6,7 +6,7 @@ import guardServerFetch from "@lib/server-fetch-guard";
 import UserinfoCard from "@pages/mypage/user/userinfo-card";
 import UsernameCard from "@pages/mypage/user/username-card";
 import { cookies, headers } from "next/headers";
-import { type Device } from "../page";
+import type { Device } from "@/types/device";
 
 const UserPage = async () => {
   const cookieStore = cookies();

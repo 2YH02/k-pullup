@@ -1,4 +1,4 @@
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import getChatRegion from "@lib/get-chat-region";
 import getDeviceType from "@lib/get-device-type";
 import NotFound from "@layout/not-found";

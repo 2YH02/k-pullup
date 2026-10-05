@@ -1,6 +1,6 @@
 import getDeviceType from "@lib/get-device-type";
 import { headers } from "next/headers";
-import { type Device } from "../mypage/page";
+import type { Device } from "@/types/device";
 import SignupClient from "./signup-client";
 
 interface PageProps {

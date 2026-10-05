@@ -5,7 +5,7 @@ import getDeviceType from "@lib/get-device-type";
 import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
-import { type Device } from "../mypage/page";
+import type { Device } from "@/types/device";
 import KakaoLoginButton from "@/components/pages/signin/kakao-login-button";
 
 interface PageProps {

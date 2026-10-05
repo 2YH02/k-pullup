@@ -5,7 +5,7 @@ import getDeviceType from "@lib/get-device-type";
 import Around from "@pages/moments/around";
 import Hot from "@pages/moments/hot";
 import { headers } from "next/headers";
-import { type Device } from "../mypage/page";
+import type { Device } from "@/types/device";
 
 const MomentsPage = async () => {
   const headersList = headers();

@@ -22,7 +22,7 @@ import useMarkerStore from "@store/useMarkerStore";
 import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { type Device } from "../mypage/page";
+import type { Device } from "@/types/device";
 
 export const registerError = {
   400: "설명에 비속어가 포함되어 있습니다.",

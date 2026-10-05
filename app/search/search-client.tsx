@@ -20,7 +20,7 @@ import useSearchStore from "@store/useSearchStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BsXLg } from "react-icons/bs";
-import { type Device } from "../mypage/page";
+import type { Device } from "@/types/device";
 
 export interface SearchData {
   address: string;

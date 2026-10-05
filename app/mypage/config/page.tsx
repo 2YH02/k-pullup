@@ -4,7 +4,7 @@ import AppSetting from "@pages/config/app-setting";
 import EtcSetting from "@pages/config/etc-setting";
 import UserSetting from "@pages/config/user-setting";
 import { headers } from "next/headers";
-import { type Device } from "../page";
+import type { Device } from "@/types/device";
 // TODO: referror 가끔 적용 안되는 문제 확인 필요
 
 const ConfigPage = () => {

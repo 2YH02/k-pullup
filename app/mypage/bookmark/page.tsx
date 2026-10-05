@@ -8,7 +8,7 @@ import getDeviceType from "@lib/get-device-type";
 import guardServerFetch from "@lib/server-fetch-guard";
 import BookmarkList from "@pages/mypage/bookmark/bookmark-list";
 import { cookies, headers } from "next/headers";
-import { type Device } from "../page";
+import type { Device } from "@/types/device";
 
 const RankingPage = async () => {
   const cookieStore = cookies();

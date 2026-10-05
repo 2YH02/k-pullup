@@ -16,7 +16,7 @@ import { StatusBadge } from "@pages/mypage/report/report-list-item";
 import useAlertStore from "@store/useAlertStore";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import { type Device } from "../page";
+import type { Device } from "@/types/device";
 
 interface MyreportClientProps {
   data: AllReportRes;

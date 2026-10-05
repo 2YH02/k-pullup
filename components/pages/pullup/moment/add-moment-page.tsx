@@ -1,4 +1,4 @@
-import { type Device } from "@/app/mypage/page";
+import type { Device } from "@/types/device";
 import useAlertStore from "@/store/useAlertStore";
 import type { Moment } from "@api/moment/get-moment-for-marker";
 import postMoment from "@api/moment/post-moment";
