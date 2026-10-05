@@ -10,6 +10,9 @@ env:
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 jobs:
+  quality:
+    uses: ./.github/workflows/quality.yml
+
   unit-test:
     uses: ./.github/workflows/vitest.yml
 
@@ -17,7 +20,7 @@ jobs:
     uses: ./.github/workflows/playwright-test.yml
 
   deploy:
-    needs: [unit-test, test]
+    needs: [quality, unit-test, test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
