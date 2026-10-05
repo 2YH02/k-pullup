@@ -61,15 +61,6 @@ yarn test:e2e:headed
 yarn test:e2e:ci
 ```
 
-### Storybook
-```bash
-# Run Storybook development server (port 6006)
-yarn storybook
-
-# Build Storybook for production
-yarn build-storybook
-```
-
 ## Architecture & Structure
 
 ### Project Organization

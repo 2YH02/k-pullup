@@ -52,7 +52,7 @@
 - Go언어 Fiber v2, MySQL, AWS S3, LavinMQ (RabbitMQ), Redis, Bleve (Apache Lucene-like, ZincSearch에서 직접 검색 인덱싱으로 변경)
 - 메인: Go, 서브: Java (전체 프로젝트 자바로도 작성 중)
 ### 프론트엔드
-- NextJS (TypeScript), Tailwind css, Storybook, Zustand, Yarn Berry (현재)
+- NextJS (TypeScript), Tailwind css, Zustand, Yarn Berry (현재)
 - React (TypeScript), Tailwind css, React Testing Library, Jest, NPM, Tanstack Query (변경 전)
 ### 개발 & 운영 효율성
 - pprof, flamegraph, Uber's zap logger, Swagger OpenAPI, Prometheus+Grafana, Sentry

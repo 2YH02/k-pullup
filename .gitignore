@@ -48,7 +48,6 @@ certificates
 
 .env
 
-*storybook.log
 
 # Playwright
 node_modules/
