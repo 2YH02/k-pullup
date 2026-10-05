@@ -1,9 +1,16 @@
 "use client";
 
 import cn from "@lib/cn";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
 type Ads = "square" | "horizon" | "feed";
+
+// dark 5674732571 light 2864736407
+const AD_SLOT: Record<Ads, string> = {
+  horizon: "1184823224",
+  square: "2098557446",
+  feed: "2864736407",
+};
 
 const Ads = ({
   type = "square",
@@ -12,17 +19,6 @@ const Ads = ({
   type?: Ads;
   className?: React.ComponentProps<"ins">["className"];
 }) => {
-  const AdSlot = useMemo(() => {
-    switch (type) {
-      case "horizon":
-        return "1184823224";
-      case "square":
-        return "2098557446";
-      default:
-        return "2098557446";
-    }
-  }, [type]);
-
   useEffect(() => {
     const pushAds = async () => {
       try {
@@ -35,8 +31,6 @@ const Ads = ({
     pushAds();
   }, []);
 
-  // dark 5674732571 light 2864736407
-
   if (type === "feed") {
     return (
       <ins
@@ -44,7 +38,7 @@ const Ads = ({
         data-ad-format="fluid"
         data-ad-layout-key="-fb+5w+4e-db+86"
         data-ad-client="ca-pub-7114697513685043"
-        data-ad-slot="2864736407"
+        data-ad-slot={AD_SLOT.feed}
       ></ins>
     );
   }
@@ -54,7 +48,7 @@ const Ads = ({
       <ins
         className={cn("adsbygoogle w-full block", className)}
         data-ad-client="ca-pub-7114697513685043"
-        data-ad-slot={AdSlot}
+        data-ad-slot={AD_SLOT[type]}
         data-ad-format="auto"
         data-full-width-responsive="true"
       ></ins>
