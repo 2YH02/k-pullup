@@ -22,7 +22,6 @@ const createMockMarker = (): KakaoMarker => ({
   getTitle: () => "",
   setVisible: () => {},
   setClickable: () => {},
-  Gb: "",
 });
 
 const createMockOverlay = (): KakaoOverlay => ({

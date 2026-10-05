@@ -32,7 +32,7 @@ regions.forEach(({ name, code, title }) => {
 
 interface ChatRegion {
   getCode: (name: string) => string;
-  getTitle: (code: string) => string | number;
+  getTitle: (code: string) => string | null;
 }
 
 const getChatRegion = (): ChatRegion => {
@@ -40,8 +40,8 @@ const getChatRegion = (): ChatRegion => {
     return nameToCodeMap[name] || "";
   };
 
-  const getTitle = (code: string): string | number => {
-    return codeToTitleMap[code] || 404;
+  const getTitle = (code: string): string | null => {
+    return codeToTitleMap[code] ?? null;
   };
 
   return { getCode, getTitle };

@@ -277,8 +277,8 @@ const SearchClient = ({
                           "focus-visible:outline-none focus-visible:bg-white/65 dark:focus-visible:bg-white/8"
                         )}
                         onClick={() => {
-                          if (search.d) {
-                            router.push(`/pullup/${search.d}`);
+                          if (search.markerId) {
+                            router.push(`/pullup/${search.markerId}`);
                           } else {
                             move({
                               lat: Number(search.lat),

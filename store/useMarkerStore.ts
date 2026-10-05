@@ -3,14 +3,14 @@ import { create } from "zustand";
 
 interface MarkerState {
   marker: MarkerRes[];
-  setMarker: (marker: MarkerRes[]) => void;
+  appendMarker: (marker: MarkerRes[]) => void;
   replaceMarker: (marker: MarkerRes[]) => void;
   deleteMarker: (markerId: number) => void;
 }
 
 const useMarkerStore = create<MarkerState>()((set) => ({
   marker: [],
-  setMarker: (marker: MarkerRes[]) =>
+  appendMarker: (marker: MarkerRes[]) =>
     set((prev) => ({ marker: [...prev.marker, ...marker] })),
   replaceMarker: (marker: MarkerRes[]) => set({ marker }),
   deleteMarker: (markerId: number) =>

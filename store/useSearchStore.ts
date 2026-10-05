@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 interface SearchData {
   addr?: string;
   place?: string;
-  d?: number | null;
+  markerId?: number | null;
   lat?: string | null;
   lng?: string | null;
 }
@@ -15,6 +15,9 @@ interface SearchState {
   removeItem: (addr: string) => void;
   clearSearches: VoidFunction;
 }
+
+// v0: markerId 를 `d` 필드에 저장하던 기존 포맷
+type LegacySearchData = Omit<SearchData, "markerId"> & { d?: number | null };
 
 const useSearchStore = create<SearchState>()(
   persist(
@@ -41,6 +44,22 @@ const useSearchStore = create<SearchState>()(
     }),
     {
       name: "search-history",
+      version: 1,
+      migrate: (persistedState, version) => {
+        const state = persistedState as { searches?: LegacySearchData[] };
+
+        if (version === 0 && Array.isArray(state?.searches)) {
+          return {
+            ...state,
+            searches: state.searches.map(({ d, ...rest }) => ({
+              ...rest,
+              markerId: d ?? null,
+            })),
+          } as SearchState;
+        }
+
+        return state as SearchState;
+      },
     }
   )
 );

@@ -3,7 +3,7 @@ import GrowBox from "@common/grow-box";
 import InputField from "@common/input-field";
 import Section from "@common/section";
 import useInput from "@hooks/useInput";
-import { validateMassage, validatePassword } from "@lib/validate";
+import { validateMessage, validatePassword } from "@lib/validate";
 import { useEffect, useState } from "react";
 
 interface EnterPasswordProps {
@@ -92,11 +92,11 @@ const validateSignupPassword = (values: {
   }
 
   if (!validatePassword(values.password)) {
-    errors.password = validateMassage.password;
+    errors.password = validateMessage.password;
   }
 
   if (!validatePassword(values.confirm)) {
-    errors.confirm = validateMassage.password;
+    errors.confirm = validateMessage.password;
   }
 
   return errors;

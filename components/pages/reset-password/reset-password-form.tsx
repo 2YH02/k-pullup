@@ -7,7 +7,7 @@ import Button from "@common/button";
 import InputField from "@common/input-field";
 import Text from "@common/text";
 import useInput from "@hooks/useInput";
-import { validateMassage, validatePassword } from "@lib/validate";
+import { validateMessage, validatePassword } from "@lib/validate";
 import useAlertStore from "@store/useAlertStore";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -24,7 +24,7 @@ const ResetPasswordForm = ({ token }: { token: string }) => {
 
   const errorMessage = useMemo(() => {
     if (!validatePassword(inputValue.value)) {
-      return validateMassage.password;
+      return validateMessage.password;
     }
 
     return null;

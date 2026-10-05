@@ -16,7 +16,7 @@ const ChatDetailpage = ({ params }: { params: { code: string } }) => {
 
   const headerTitle = getTitle(code);
 
-  if (headerTitle === 404)
+  if (headerTitle === null)
     return (
       <NotFound
         errorTitle="존재하지 않는 채팅방입니다."
@@ -36,7 +36,7 @@ const ChatDetailpage = ({ params }: { params: { code: string } }) => {
     <>
       <ChatDetailClient
         code={code}
-        headerTitle={headerTitle as string}
+        headerTitle={headerTitle}
         deviceType={deviceType}
       />
     </>

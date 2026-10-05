@@ -8,7 +8,7 @@ import Section from "@common/section";
 import Timer from "@common/timer";
 import useInput from "@hooks/useInput";
 import LoadingIcon from "@icons/loading-icon";
-import { validateCode, validateEmail, validateMassage } from "@lib/validate";
+import { validateCode, validateEmail, validateMessage } from "@lib/validate";
 import { FetchError } from "@lib/fetchData";
 import { useEffect, useState } from "react";
 
@@ -214,11 +214,11 @@ const validateSignupEmail = (values: {
   let errors: Errors = {};
 
   if (!validateEmail(values.email)) {
-    errors.email = validateMassage.email;
+    errors.email = validateMessage.email;
   }
 
   if (!validateCode(values.code)) {
-    errors.code = validateMassage.emailCode;
+    errors.code = validateMessage.emailCode;
   }
 
   return errors;

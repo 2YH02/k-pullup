@@ -5,7 +5,7 @@ import Button from "@common/button";
 import InputField from "@common/input-field";
 import Text from "@common/text";
 import useInput from "@hooks/useInput";
-import { validateEmail, validateMassage } from "@lib/validate";
+import { validateEmail, validateMessage } from "@lib/validate";
 import useAlertStore from "@store/useAlertStore";
 import { useMemo, useState } from "react";
 
@@ -18,7 +18,7 @@ const SendPasswordForm = () => {
 
   const errorMessage = useMemo(() => {
     if (!validateEmail(inputValue.value)) {
-      return validateMassage.email;
+      return validateMessage.email;
     }
 
     return null;

@@ -132,7 +132,7 @@ const SearchList = ({
                     onClick={() => {
                       addSearch({
                         addr: item.address,
-                        d: item.markerId || null,
+                        markerId: item.markerId || null,
                         lat: item.position?.lat || null,
                         lng: item.position?.lng || null,
                       });

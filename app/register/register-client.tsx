@@ -67,7 +67,7 @@ const RegisterClient = ({
 
   const { user, setUser } = useUserStore();
 
-  const { setMarker: setMarkerToStore } = useMarkerStore();
+  const { appendMarker: appendMarkerToStore } = useMarkerStore();
 
   const { map } = useMapStore();
   const { openAlert } = useAlertStore();
@@ -188,9 +188,9 @@ const RegisterClient = ({
         marker?.setMap(null);
 
         if (registerValue.photos && registerValue.photos.length > 0) {
-          setMarkerToStore([{ ...newMarker, hasPhoto: true }]);
+          appendMarkerToStore([{ ...newMarker, hasPhoto: true }]);
         } else {
-          setMarkerToStore([newMarker]);
+          appendMarkerToStore([newMarker]);
         }
 
         map.setCenter(
@@ -226,7 +226,7 @@ const RegisterClient = ({
     fetch();
   }, [
     setUser,
-    setMarkerToStore,
+    appendMarkerToStore,
     registerValue.step,
     registerValue.description,
     registerValue.latitude,

@@ -69,7 +69,7 @@ vi.mock("@lib/validate", () => ({
   validateSigin: () => ({}),
   validateEmail: () => true,
   validatePassword: () => true,
-  validateMassage: { email: "", password: "", emailCode: "" },
+  validateMessage: { email: "", password: "", emailCode: "" },
 }));
 
 // Mock fetchData's FetchError
