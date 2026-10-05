@@ -5,7 +5,7 @@ import cn from "@lib/cn";
 import Image from "next/image";
 import { useState } from "react";
 
-const ImageWrap = ({
+const FadeInImage = ({
   src,
   h,
   w,
@@ -42,4 +42,4 @@ const ImageWrap = ({
   );
 };
 
-export default ImageWrap;
+export default FadeInImage;

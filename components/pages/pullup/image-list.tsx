@@ -1,6 +1,6 @@
 "use client";
 
-import ImageWrap from "@/app/article/2/image-wrap";
+import FadeInImage from "@pages/pullup/fade-in-image";
 import type { Photo } from "@/types/marker.types";
 import Text from "@common/text";
 import { useToast } from "@hooks/useToast";
@@ -175,7 +175,7 @@ const ImageList = ({
                         openModal({ images, curIndex: i });
                       }}
                     >
-                      <ImageWrap
+                      <FadeInImage
                         src={photo.photoUrl}
                         w={230}
                         h={230}
@@ -217,7 +217,7 @@ const ImageList = ({
                         openModal({ images, curIndex: i });
                       }}
                     >
-                      <ImageWrap
+                      <FadeInImage
                         src={photo.photoUrl}
                         w={230}
                         h={230}
