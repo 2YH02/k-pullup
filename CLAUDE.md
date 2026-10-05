@@ -124,7 +124,7 @@ The following path aliases are configured in tsconfig.json:
 - `@hooks/*` - hooks directory
 - `@api/*` - lib/api
 - `@constant/*` - constant directory
-- `@types/*` - types directory
+- `@/types/*` - types directory (`@types/*` 별칭은 node_modules/@types 와 충돌해 사용하지 않음)
 
 ### State Management
 

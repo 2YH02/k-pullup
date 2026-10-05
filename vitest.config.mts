@@ -22,7 +22,6 @@ export default defineConfig({
       "@hooks": path.resolve(__dirname, "./hooks"),
       "@api": path.resolve(__dirname, "./lib/api"),
       "@constant": path.resolve(__dirname, "./constant"),
-      "@types": path.resolve(__dirname, "./types"),
     },
   },
   test: {
