@@ -215,7 +215,7 @@ const AdminClient = ({ data }: { data: AllReportRes }) => {
             </p>
           </div>
           <div className="text-left md:text-right">
-            <div className="text-3xl md:text-4xl font-bold text-blue">
+            <div className="text-3xl md:text-4xl font-bold text-primary">
               {data.totalReports}
             </div>
             <div className="text-sm text-gray-500">총 신고 건수</div>
@@ -286,7 +286,7 @@ const AdminClient = ({ data }: { data: AllReportRes }) => {
               <div key={report.reportId} className="relative">
                 {processingIds.has(report.reportId) && (
                   <div className="absolute inset-0 bg-white/80 backdrop-blur-xs z-10 rounded-xl flex items-center justify-center">
-                    <Loader2 className="h-8 w-8 animate-spin text-blue" />
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
                   </div>
                 )}
                 <ReportCard

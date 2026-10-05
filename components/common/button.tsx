@@ -10,9 +10,9 @@ const buttonColorMap = {
     "disabled:text-grey-dark"
   ),
   blue: cn(
-    "bg-blue",
+    "bg-primary",
     "text-white",
-    "disabled:bg-blue/50",
+    "disabled:bg-primary/50",
     "disabled:text-white/70"
   ),
   black: cn(
@@ -34,11 +34,11 @@ const buttonContrastColorMap = {
   ),
   blue: cn(
     "bg-white dark:bg-black-light",
-    "text-blue dark:text-blue",
+    "text-primary dark:text-primary",
     "border",
-    "border-blue dark:border-blue/65",
-    "disabled:text-blue/50",
-    "disabled:border-blue/50 dark:disabled:border-blue/35"
+    "border-primary dark:border-primary/65",
+    "disabled:text-primary/50",
+    "disabled:border-primary/50 dark:disabled:border-primary/35"
   ),
   black: cn(
     "bg-white dark:bg-black-light",

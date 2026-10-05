@@ -285,7 +285,7 @@ const ReportCard = ({ report, onApprove, onReject }: ReportCardProps) => {
                 <Link
                   href={`https://www.k-pullup.com/pullup/${report.markerId}`}
                   target="_blank"
-                  className="flex items-center gap-2 text-sm text-blue hover:underline"
+                  className="flex items-center gap-2 text-sm text-primary hover:underline"
                 >
                   <ExternalLink className="h-4 w-4" />
                   {`https://www.k-pullup.com/pullup/${report.markerId}`}

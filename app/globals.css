@@ -27,7 +27,6 @@
 
   /* === Semantic === */
   --color-red: #dc2626;
-  --color-blue: #18181b;
   --color-green: #16a34a;
   --color-yellow: #ca8a04;
   --color-yellow-dark: #eab308;
@@ -383,6 +382,15 @@
 @media (prefers-reduced-motion: reduce) {
   .page-transition {
     animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

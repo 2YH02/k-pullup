@@ -9,6 +9,6 @@
 export const getApiBase = (): string => {
   const isServer = typeof window === "undefined";
   return isServer
-    ? (process.env.NEXT_PUBLIC_BASE_URL ?? "https://api.k-pullup.com/api/v1")
+    ? (process.env.NEXT_PUBLIC_BASE_URL || "https://api.k-pullup.com/api/v1")
     : "/api/v1";
 };

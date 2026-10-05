@@ -41,6 +41,17 @@ interface ReloadMarkers {
   map: KakaoMap;
 }
 
+const getMarkerImageUrl = (
+  hasPhoto?: boolean,
+  image?: CreateMarkerOption["image"]
+): string => {
+  if (hasPhoto) {
+    return image === "selected" ? "/camera-selected.png" : "/active-camera.png";
+  }
+  // pending, active 는 동일 이미지
+  return image === "selected" ? "/active-selected.png" : "/active.png";
+};
+
 const useMarkerControl = () => {
   const router = useRouter();
 
@@ -64,15 +75,7 @@ const useMarkerControl = () => {
           ? { offset: new window.kakao.maps.Point(21, 60) }
           : { offset: new window.kakao.maps.Point(21, 39) };
 
-      const imageUrl = options.hasPhoto
-        ? options.image === "selected"
-          ? "/camera-selected.png"
-          : "/active-camera.png"
-        : options.image === "pending"
-        ? "/active.png"
-        : options.image === "selected"
-        ? "/active-selected.png"
-        : "/active.png";
+      const imageUrl = getMarkerImageUrl(options.hasPhoto, options.image);
 
       const marker = new window.kakao.maps.Marker({
         map: map,
