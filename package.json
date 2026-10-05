@@ -49,6 +49,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/uuid": "^10",
+    "@typescript-eslint/eslint-plugin": "7.2.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "fast-check": "^4.8.0",

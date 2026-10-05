@@ -145,7 +145,6 @@ const PullupChatClient = ({
       setConnectionMsg(
         "채팅방에 참여 중 에러가 발생하였습니다. 잠시 후 다시 시도해 주세요!"
       );
-      console.log("연결 종료");
       setIsChatError(true);
     };
 
