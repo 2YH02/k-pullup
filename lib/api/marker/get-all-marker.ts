@@ -9,10 +9,6 @@ export type MarkerRes = Pick<
 const getAllMarker = async (): Promise<MarkerRes[]> => {
   const response = await fetchData(`/api/v1/markers`);
 
-  if (!response.ok) {
-    return [];
-  }
-
   const data: MarkerRes[] = await response.json();
 
   return data;

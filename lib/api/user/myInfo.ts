@@ -36,7 +36,7 @@ const myInfo = async (cookie?: string): Promise<MyInfo> => {
     credentials: "include",
   });
 
-  const data = response.json();
+  const data = await response.json();
 
   return data;
 };
