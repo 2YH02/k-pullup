@@ -112,10 +112,14 @@ const PullupClient = ({
 
   const 철봉 = facilities.find((item) => item.facilityId === 1);
   const 평행봉 = facilities.find((item) => item.facilityId === 2);
+  const facilitySummary = [
+    { label: "철봉", value: 철봉?.quantity ?? 0 },
+    { label: "평행봉", value: 평행봉?.quantity ?? 0 },
+  ];
 
   return (
     <SideMain
-      headerTitle={marker.address || "위치 상세"}
+      headerTitle={marker.address || marker.addr || "위치 상세"}
       hasBackButton
       referrer={!!referrer}
       deviceType={deviceType}
@@ -135,44 +139,47 @@ const PullupClient = ({
 
       <ImageCarousel photos={markerPhotos} />
 
-      <Section className="py-0">
-        <div className="my-2 flex flex-wrap items-center gap-2">
-          {(!철봉 ||
-            !평행봉 ||
-            (철봉.quantity <= 0 && 평행봉.quantity <= 0)) && (
+      <Section className="pt-3 pb-2">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            <AddressButton
+                address={marker.address || marker.addr || "정보가 제공되지 않는 주소입니다."}
+              lat={marker.latitude}
+              lng={marker.longitude}
+            />
+          </div>
+          <WeatherBadge lat={marker.latitude} lng={marker.longitude} />
+        </div>
+
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          {(!철봉 || !평행봉 || (철봉.quantity <= 0 && 평행봉.quantity <= 0)) && (
             <Badge
-              text={`기구 개수 정보 없음`}
+              text="기구 정보 없음"
               className="flex h-7 items-center justify-center border-none bg-search-input-bg/75 pr-3.5 pl-3.5 shadow-full dark:bg-black/35 dark:shadow-[rgba(255,255,255,0.1)]"
               textStyle="leading-3 text-text-on-surface-muted dark:text-grey-light"
             />
           )}
-          {철봉 && 철봉.quantity > 0 && (
-            <Badge
-              text={`철봉 ${철봉?.quantity}개`}
-              className="flex h-7 items-center justify-center border-none bg-search-input-bg/75 pr-3.5 pl-3.5 shadow-full dark:bg-black/35 dark:shadow-[rgba(255,255,255,0.1)]"
-              textStyle="leading-3 text-text-on-surface dark:text-grey-light"
-            />
-          )}
-          {평행봉 && 평행봉.quantity > 0 && (
-            <Badge
-              text={`평행봉 ${평행봉?.quantity}개`}
-              className="flex h-7 items-center justify-center border-none bg-search-input-bg/75 pr-3.5 pl-3.5 shadow-full dark:bg-black/35 dark:shadow-[rgba(255,255,255,0.1)]"
-              textStyle="leading-3 text-text-on-surface dark:text-grey-light"
-            />
-          )}
-          <WeatherBadge lat={marker.latitude} lng={marker.longitude} />
         </div>
 
-        <AddressButton
-          address={marker.address || "정보가 제공되지 않는 주소입니다."}
-          lat={marker.latitude}
-          lng={marker.longitude}
-        />
         <Description
           description={marker.description}
           markerId={marker.markerId}
           isAdmin={marker.isChulbong || false}
         />
+
+        <div className="mt-4 grid grid-cols-2 divide-x divide-primary/10 border-y border-primary/10 py-3 dark:divide-white/10 dark:border-white/10">
+          {facilitySummary.map(({ label, value }) => (
+            <div key={label} className="px-3 first:pl-0 last:pr-0">
+              <Text typography="t7" className="text-grey-dark dark:text-grey">
+                {label}
+              </Text>
+              <Text typography="t5" fontWeight="bold" className="mt-0.5 text-text-on-surface dark:text-grey-light">
+                {value > 0 ? `${value}개` : "정보 없음"}
+              </Text>
+            </div>
+          ))}
+        </div>
+
         <Text className="mt-3 text-grey dark:text-grey" typography="t7">
           최종 수정일: {formatDate(marker.updatedAt)}
         </Text>

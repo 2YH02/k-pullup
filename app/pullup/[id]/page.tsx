@@ -32,7 +32,9 @@ export const generateMetadata = async ({ params }: { params: Params }) => {
     };
   }
 
-  const { address, description, favCount } = marker;
+  const address = marker.address?.trim() || marker.addr?.trim() || "철봉 위치";
+  const description = marker.description?.trim() || "";
+  const { favCount } = marker;
 
   const shortDesc =
     description.length > 80 ? description.slice(0, 80) + "…" : description;

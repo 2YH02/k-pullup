@@ -14,18 +14,25 @@ const Loading = () => {
       </div>
 
       <Section className="pt-3">
-        <div className="flex flex-wrap gap-2">
+        <div className="flex items-start justify-between gap-3">
+          <Skeleton className="h-6 w-4/5 rounded-md" />
+          <Skeleton className="h-7 w-20 shrink-0 rounded-3xl" />
+        </div>
+        <div className="mt-3 flex flex-wrap gap-2">
           <Skeleton className="h-7 w-24 rounded-3xl" />
-          <Skeleton className="h-7 w-22 rounded-3xl" />
-          <Skeleton className="h-7 w-20 rounded-3xl" />
         </div>
-        <Skeleton className="mt-2 h-6 w-full rounded-md" />
         <Skeleton className="mt-2 h-4 w-4/5 rounded-md" />
-        <Skeleton className="mt-2 h-3.5 w-30 rounded-md" />
-        <div className="mt-3 flex items-center gap-2">
-          <Skeleton className="h-3.5 w-18 rounded-md" />
-          <Skeleton className="h-3.5 w-18 rounded-md" />
+        <div className="mt-4 grid grid-cols-2 divide-x divide-primary/10 border-y border-primary/10 py-3 dark:divide-white/10 dark:border-white/10">
+          <div className="px-3 pl-0">
+            <Skeleton className="h-3.5 w-12 rounded-md" />
+            <Skeleton className="mt-1 h-5 w-14 rounded-md" />
+          </div>
+          <div className="px-3 pr-0">
+            <Skeleton className="h-3.5 w-12 rounded-md" />
+            <Skeleton className="mt-1 h-5 w-14 rounded-md" />
+          </div>
         </div>
+        <Skeleton className="mt-3 h-3.5 w-30 rounded-md" />
       </Section>
 
       <Section className="pb-2">
