@@ -61,7 +61,7 @@ const AroundMarkerCarousel = () => {
   if (loading) {
     return (
       <Section>
-        <SectionTitle title="내 주변 철봉" subTitle="현재 위치 기준 2km" />
+        <SectionTitle title="내 주변 철봉" subTitle="반경 2km" />
         <div className="flex gap-3">
           {[0, 1].map((key) => (
             <div
@@ -81,18 +81,18 @@ const AroundMarkerCarousel = () => {
   if (geolocationError) {
     return (
       <Section>
-        <SectionTitle title="내 주변 철봉" subTitle="현재 위치 기준 2km" />
+        <SectionTitle title="내 주변 철봉" subTitle="반경 2km" />
         <div className="rounded-2xl border border-primary/12 bg-side-main p-4 dark:border-grey-dark dark:bg-black/35">
           <div className="mb-3">
             <Text display="block" typography="t6" className="text-text-on-surface">
-              현재 위치 정보를 확인할 수 없습니다.
+              현재 위치를 확인할 수 없습니다.
             </Text>
             <Text
               display="block"
               typography="t6"
               className="text-text-on-surface-muted dark:text-grey"
             >
-              위치 접근을 허용한 뒤 다시 시도해 주세요.
+              위치 권한을 허용해 주세요.
             </Text>
           </div>
           <Button
@@ -112,7 +112,7 @@ const AroundMarkerCarousel = () => {
   if (fetchError) {
     return (
       <Section>
-        <SectionTitle title="내 주변 철봉" subTitle="현재 위치 기준 2km" />
+        <SectionTitle title="내 주변 철봉" subTitle="반경 2km" />
         <div className="rounded-2xl border border-primary/12 bg-side-main p-4 dark:border-grey-dark dark:bg-black/35">
           <div className="mb-3">
             <Text display="block" typography="t6" className="text-text-on-surface">
@@ -141,18 +141,18 @@ const AroundMarkerCarousel = () => {
   if (!data || data.length === 0) {
     return (
       <Section>
-        <SectionTitle title="내 주변 철봉" subTitle="현재 위치 기준 2km" />
+        <SectionTitle title="내 주변 철봉" subTitle="반경 2km" />
         <div className="rounded-2xl border border-primary/12 bg-side-main p-4 dark:border-grey-dark dark:bg-black/35">
           <div className="mb-3">
             <Text display="block" typography="t6">
-              현재 위치 주변 2,000m 내에 철봉이 없습니다.
+              반경 2km 안에 철봉이 없습니다.
             </Text>
             <Text
               display="block"
               typography="t6"
               className="text-text-on-surface-muted dark:text-grey"
             >
-              검색 반경을 넓혀 다른 위치를 확인해 보세요.
+              검색 반경을 넓혀 다른 곳을 찾아보세요.
             </Text>
           </div>
           <Button
@@ -171,10 +171,15 @@ const AroundMarkerCarousel = () => {
 
   return (
     <Section>
-      <SectionTitle title="내 주변 철봉" subTitle="현재 위치 기준 2km" />
+      <SectionTitle
+        title="내 주변 철봉"
+        subTitle="반경 2km"
+        buttonTitle="전체 보기"
+        onClickButton={() => router.push("/search/around")}
+      />
       <HorizontalScroll className="pb-1">
         {data.map((marker, index) => (
-          <ScrollItem className="p-0 w-64" key={`${marker.markerId}-${index}`}>
+          <ScrollItem className="w-[min(76vw,18rem)] p-0" key={`${marker.markerId}-${index}`}>
             <button
               className="group w-full text-left focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2 focus-visible:ring-offset-surface active:scale-[0.99] transition-transform duration-150"
               onClick={() => {
@@ -187,7 +192,7 @@ const AroundMarkerCarousel = () => {
                 <div className="relative h-40 w-full overflow-hidden">
                   <Image
                     src={marker.thumbnail ? marker.thumbnail : "/metaimg.webp"}
-                    alt="주변 철봉 이미지"
+                    alt={`${splitAddress(marker.address)} 철봉 사진`}
                     width={640}
                     height={420}
                     sizes="(max-width: 484px) 70vw, 256px"

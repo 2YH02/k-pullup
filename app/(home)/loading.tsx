@@ -8,7 +8,6 @@ const Loading = () => {
   const deviceType = getServerDeviceType();
   const isMobileApp =
     deviceType === "ios-mobile-app" || deviceType === "android-mobile-app";
-  const searchPositionStyle = isMobileApp ? "mo:top-12" : "";
 
   return (
     <SideMain withNav deviceType={deviceType} bodyStyle="pb-0">
@@ -24,36 +23,50 @@ const Loading = () => {
 
       <Section
         className={cn(
-          "mo:bg-transparent mo:dark:bg-transparent mo:fixed mo:w-full mo:top-4 mo:left-1/2 mo:-translate-x-1/2 mo:py-0",
-          searchPositionStyle
+          "pb-2 pt-3 web:pb-3",
+          isMobileApp && "pt-4"
         )}
       >
+        <div className="mb-3 flex items-end justify-between gap-3">
+          <div>
+            <Skeleton className="h-3 w-16 rounded-md" />
+            <Skeleton className="mt-2 h-6 w-44 rounded-md" />
+          </div>
+          <Skeleton className="h-7 w-20 rounded-md" />
+        </div>
         <Skeleton className="h-12 w-full rounded-2xl" />
       </Section>
 
+      <Section className="pb-5 pt-2">
+        <Skeleton className="h-3 w-16 rounded-md" />
+        <Skeleton className="mt-2 h-6 w-52 max-w-full rounded-md" />
+        <div className="mt-3 grid grid-cols-2 gap-2.5">
+          <Skeleton className="col-span-2 h-16 rounded-2xl" />
+          <Skeleton className="h-16 rounded-2xl" />
+          <Skeleton className="h-16 rounded-2xl" />
+        </div>
+      </Section>
+
       <Section className="pb-0">
-        <SectionTitle title="모먼트" subTitle="지금 이 순간을 기록해보세요." />
-        <div className="flex gap-3 pb-2">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <div key={`moment-skeleton-${index}`} className="flex flex-col items-center">
-              <Skeleton className="h-12 w-12 rounded-full" />
-              <Skeleton className="mt-1 h-3 w-10 rounded-md" />
+        <SectionTitle title="내 주변 철봉" subTitle="반경 2km" />
+        <div className="flex gap-3">
+          {Array.from({ length: 2 }).map((_, index) => (
+            <div key={`around-skeleton-${index}`} className="w-64 shrink-0 rounded-2xl border border-primary/10 bg-side-main p-2">
+              <Skeleton className="h-40 w-full rounded-xl" />
+              <Skeleton className="mt-3 h-4 w-3/4 rounded-md" />
+              <Skeleton className="mt-2 h-3 w-1/3 rounded-md" />
             </div>
           ))}
         </div>
       </Section>
 
       <Section>
-        <SectionTitle title="내 주변 철봉" subTitle="현재 위치 기준 2km" />
-        <div className="flex gap-3">
-          {Array.from({ length: 2 }).map((_, index) => (
-            <div
-              key={`around-skeleton-${index}`}
-              className="w-64 shrink-0 rounded-2xl border border-primary/10 bg-side-main p-2"
-            >
-              <Skeleton className="h-40 w-full rounded-xl" />
-              <Skeleton className="mt-3 h-4 w-3/4 rounded-md" />
-              <Skeleton className="mt-2 h-3 w-1/3 rounded-md" />
+        <SectionTitle title="최근 활동" subTitle="새로운 기록" />
+        <div className="flex gap-3 pb-2">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div key={`moment-skeleton-${index}`} className="flex flex-col items-center">
+              <Skeleton className="h-12 w-12 rounded-full" />
+              <Skeleton className="mt-1 h-3 w-10 rounded-md" />
             </div>
           ))}
         </div>

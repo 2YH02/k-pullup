@@ -41,6 +41,7 @@ export const SectionTitle = ({
       <GrowBox />
       {buttonTitle && (
         <button
+          type="button"
           className="text-[10px] text-primary underline font-normal transition-colors duration-150 active:text-primary-dark focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 rounded-sm"
           onClick={onClickButton}
         >

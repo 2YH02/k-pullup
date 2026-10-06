@@ -13,10 +13,11 @@ const NewImageSection = ({ data }: { data: NewPictures[] }) => {
   return (
     <Section>
       <SectionTitle
-        title="최근 10개 이미지"
-        subTitle={count ? `총 등록된 이미지 ${count}개` : ""}
+        title="새로 등록된 사진"
+        subTitle={count ? `전체 ${count}장` : ""}
       />
       <ImageGallery
+        imageAltPrefix="새로 등록된 사진"
         images={data.map((item) => ({
           url: item.photoURL,
           markerId: item.markerId,

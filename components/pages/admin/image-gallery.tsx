@@ -17,12 +17,17 @@ type ImageGalleryItem = string | GalleryImageItem;
 interface ImageGalleryProps {
   images: ImageGalleryItem[];
   className?: string;
+  imageAltPrefix?: string;
 }
 
 /**
  * Image gallery with thumbnail grid and lightbox viewer
  */
-const ImageGallery = ({ images, className }: ImageGalleryProps) => {
+const ImageGallery = ({
+  images,
+  className,
+  imageAltPrefix = "이미지",
+}: ImageGalleryProps) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const touchStartXRef = useRef<number | null>(null);
   const SWIPE_THRESHOLD = 40;
@@ -101,7 +106,7 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
             >
               <Image
                 src={item.url}
-                alt={`Report photo ${index + 1}`}
+                alt={`${imageAltPrefix} ${index + 1}`}
                 width={1200}
                 height={800}
                 sizes="(max-width: 768px) 50vw, 50vw"
@@ -175,7 +180,7 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
               >
                 <Image
                   src={selectedImage?.url || ""}
-                  alt={`Report photo ${selectedIndex + 1}`}
+                  alt={`${imageAltPrefix} ${selectedIndex + 1}`}
                   fill
                   sizes="100vw"
                   priority
@@ -225,7 +230,7 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
                       >
                         <Image
                           src={item.url}
-                          alt={`Thumbnail ${index + 1}`}
+                          alt={`${imageAltPrefix} 썸네일 ${index + 1}`}
                           fill
                           sizes="64px"
                           className="object-cover"
