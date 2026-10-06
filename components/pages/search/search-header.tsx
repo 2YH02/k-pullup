@@ -48,7 +48,7 @@ const SearchHeader = ({
   };
 
   return (
-    <div className="mo:fixed sticky top-0 left-0 z-40 flex h-14 w-full items-center justify-center border-b border-primary/10 bg-surface/92 py-3 backdrop-blur-sm dark:border-white/10 dark:bg-black/75">
+    <div className="mo:fixed sticky top-0 left-0 z-40 flex items-center justify-center w-full h-14 bg-white/45 dark:bg-black/45 backdrop-blur-[2px] py-3">
       <button
         className="px-3"
         onClick={() => (isInternal ? router.back() : router.push("/"))}
@@ -70,7 +70,7 @@ const SearchHeader = ({
         <Input
           isInvalid={false}
           className={cn(
-            "rounded-xl border-white/80 dark:border-white/10",
+            "rounded-xl border-white/70 dark:border-white/10",
             "bg-search-input-bg dark:bg-black/35",
             "shadow-[0_1px_2px_rgba(64,64,56,0.08)]"
           )}
