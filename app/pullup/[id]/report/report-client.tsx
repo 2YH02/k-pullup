@@ -27,6 +27,11 @@ interface ReportClientProps {
   deviceType: Device;
 }
 
+interface KakaoAddressResult {
+  road_address?: { address_name?: string } | null;
+  address?: { address_name?: string } | null;
+}
+
 const ReportClient = ({
   marker,
   deviceType = "desktop",
@@ -40,21 +45,34 @@ const ReportClient = ({
 
   const [mapMarker, setMapMarker] = useState<Nullable<KakaoMarker>>(null);
   const [changeAddr, setChangeAddr] = useState<Nullable<string>>(null);
+  const isDesktop = deviceType === "desktop";
+  const [isChangingLocation, setIsChangingLocation] = useState(isDesktop);
 
   const [reportValue, setReportValue] = useState<ReportValue>({
     markerId: marker.markerId,
     latitude: marker.latitude,
     longitude: marker.longitude,
-    description: marker.description,
+    description: marker.description || "",
     photos: [],
   });
 
   const [newLatLng, setNewLatLng] =
     useState<Nullable<{ lat: number; lng: number }>>(null);
 
+  const setMainMapLayer = useCallback(
+    (zIndex: string) => {
+      const mapElement = mapEl ?? document.getElementById("map");
+      if (mapElement instanceof HTMLDivElement) {
+        mapElement.style.zIndex = zIndex;
+      }
+    },
+    [mapEl]
+  );
+
   // #change-map 을 매 newLatLng 마다 새로 생성하지 않고 1회 생성 후 재사용한다. (P2-9)
   const changeMapRef = useRef<KakaoMap | null>(null);
   const changeMarkerRef = useRef<KakaoMarker | null>(null);
+  const geocodeRequestIdRef = useRef(0);
 
   useEffect(() => {
     if (!markers) return;
@@ -62,6 +80,12 @@ const ReportClient = ({
     markers.forEach((marker) => {
       marker.setClickable(false);
     });
+
+    return () => {
+      markers.forEach((marker) => {
+        marker.setClickable(true);
+      });
+    };
   }, [markers]);
 
   useEffect(() => {
@@ -131,33 +155,45 @@ const ReportClient = ({
   }, [map, newLatLng]);
 
   useEffect(() => {
-    if (!mapMarker || !map) return;
+    if (!mapMarker || !map || !isChangingLocation) return;
 
     const geocoder = new window.kakao.maps.services.Geocoder();
 
-    const handleMapClick = async (e: KaKaoMapMouseEvent) => {
+    const handleMapClick = (e: KaKaoMapMouseEvent) => {
       const latlng = e.latLng;
+      const selectedPosition = {
+        lat: latlng.getLat(),
+        lng: latlng.getLng(),
+      };
+      const requestId = geocodeRequestIdRef.current + 1;
+      geocodeRequestIdRef.current = requestId;
 
       mapMarker.setVisible(true);
       mapMarker.setPosition(latlng);
 
+      setNewLatLng(selectedPosition);
+      if (!isDesktop) {
+        setChangeAddr("주소를 확인하고 있습니다.");
+      }
+      setIsChangingLocation(isDesktop);
+      setMainMapLayer("1");
+
       geocoder.coord2Address(
-        latlng.getLng(),
-        latlng.getLat(),
-        (result: any, status: any) => {
-          let addr = "";
+        selectedPosition.lng,
+        selectedPosition.lat,
+        (result: KakaoAddressResult[], status: string) => {
+          if (geocodeRequestIdRef.current !== requestId) return;
+
+          let address = "주소 정보 없음";
           if (status === window.kakao.maps.services.Status.OK) {
-            addr = !!result[0].road_address
-              ? result[0].road_address.address_name
-              : "";
-            addr += result[0].address.address_name;
-          } else {
-            addr = "위치 제공 안됨";
+            const firstResult = result[0];
+            address =
+              firstResult?.road_address?.address_name ||
+              firstResult?.address?.address_name ||
+              "주소 정보 없음";
           }
 
-          setChangeAddr(addr);
-          setNewLatLng({ lat: latlng.getLat(), lng: latlng.getLng() });
-          if (mapEl) mapEl.style.zIndex = "1";
+          setChangeAddr(address);
         }
       );
     };
@@ -167,7 +203,7 @@ const ReportClient = ({
     return () => {
       window.kakao.maps.event.removeListener(map, "click", handleMapClick);
     };
-  }, [mapMarker, map, mapEl]);
+  }, [isDesktop, mapMarker, map, isChangingLocation, setMainMapLayer]);
 
   const handleImageChange = useCallback((photos?: File[] | null) => {
     const nextPhotos = photos ?? [];
@@ -202,9 +238,20 @@ const ReportClient = ({
   };
 
   const changeLocation = () => {
-    if (!mapEl) return;
-    mapEl.style.zIndex = "20";
+    const mapElement = mapEl ?? document.getElementById("map");
+    if (!(mapElement instanceof HTMLDivElement)) {
+      toast({ description: "지도를 불러오는 중입니다. 잠시 후 다시 시도해주세요." });
+      return;
+    }
+    setIsChangingLocation(true);
+    setMainMapLayer("20");
   };
+
+  useEffect(() => {
+    return () => {
+      setMainMapLayer("1");
+    };
+  }, [setMainMapLayer]);
 
   const onSubmit = async () => {
     if (loading) return;
@@ -344,7 +391,7 @@ const ReportClient = ({
               현재 위치:{" "}
             </Text>
             <Text typography="t6" className="wrap-break-word text-grey-dark dark:text-grey">
-              {marker.address}
+              {marker.address || marker.addr || "주소 정보 없음"}
             </Text>
           </div>
           <div className="mt-2 rounded-xl border border-primary/25 bg-primary/8 px-3 py-2 dark:border-primary-light/25 dark:bg-primary-dark/20">
@@ -360,7 +407,11 @@ const ReportClient = ({
             )}
             {!changeAddr && (
               <Text typography="t6" className="text-grey-dark dark:text-grey">
-                지도를 클릭해서 수정할 위치를 선택해주세요.
+                {isChangingLocation
+                  ? isDesktop
+                    ? "오른쪽 지도에서 수정할 위치를 클릭해주세요."
+                    : "지도를 클릭하면 새 위치가 선택됩니다."
+                  : "아래 버튼을 눌러 새 위치를 선택해주세요."}
               </Text>
             )}
           </div>
@@ -368,15 +419,23 @@ const ReportClient = ({
             className="my-2 web:hidden"
             onClick={changeLocation}
           >
-            위치 변경하기
+            {newLatLng ? "다시 위치 선택하기" : "지도에서 새 위치 선택"}
           </Button>
-          <WarningText className="text-sm mt-1.5 mo:hidden rounded-lg bg-search-input-bg/35 px-2 py-1 dark:bg-black/30">
-            지도에서 위치를 수정할 위치를 클릭해 주세요!
+          <WarningText className="text-sm mt-1.5 rounded-lg bg-search-input-bg/35 px-2 py-1 dark:bg-black/30">
+            {isChangingLocation
+              ? isDesktop
+                ? "오른쪽 지도에서 새 위치를 클릭해주세요. 다시 클릭하면 위치를 바꿀 수 있습니다."
+                : "지도를 클릭하면 새 위치가 선택됩니다."
+              : newLatLng
+              ? "선택한 위치가 맞는지 주소와 지도를 확인해주세요."
+              : "위치 변경이 필요할 때만 새 위치를 선택하면 됩니다."}
           </WarningText>
-          <div
-            id="change-map"
-            className="mt-2 h-52 w-full overflow-hidden rounded-xl border border-grey-light/80 web:hidden dark:border-grey-dark/85"
-          />
+          {newLatLng && (
+            <div
+              id="change-map"
+              className="mt-2 h-52 w-full overflow-hidden rounded-xl border border-grey-light/80 web:hidden dark:border-grey-dark/85"
+            />
+          )}
         </Section>
 
         {/* 버튼 */}
