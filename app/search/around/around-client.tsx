@@ -20,7 +20,7 @@ const AroundClient = ({ deviceType }: Props) => {
 
   if (!hasRegion) {
     return (
-      <SideMain headerTitle="주변 검색" hasBackButton deviceType={deviceType}>
+      <SideMain headerTitle="내 주변 철봉" hasBackButton deviceType={deviceType}>
         <Section>
           {/* Error State Card */}
           <div
@@ -49,16 +49,14 @@ const AroundClient = ({ deviceType }: Props) => {
               display="block"
               className="relative mb-2 text-text-on-surface dark:text-grey-light"
             >
-              위치 정보를 찾을 수 없습니다
+              현재 위치를 찾을 수 없습니다
             </Text>
             <Text
               typography="t6"
               display="block"
               className="relative text-text-on-surface-muted dark:text-grey mb-4"
             >
-              지도를 움직이거나
-              <br />
-              잠시 후 다시 시도해주세요
+              위치 권한을 허용한 뒤 다시 시도해 주세요
             </Text>
             <div className="relative w-full max-w-xs space-y-2 text-left mt-2">
               <div className="flex items-start gap-2.5 rounded-xl p-2.5 bg-white/45 dark:bg-white/5">
@@ -73,7 +71,7 @@ const AroundClient = ({ deviceType }: Props) => {
                   1
                 </Text>
                 <Text typography="t7" className="text-text-on-surface-muted dark:text-grey">
-                  브라우저의 위치 권한을 확인해주세요
+                  브라우저의 위치 권한을 확인해 주세요
                 </Text>
               </div>
               <div className="flex items-start gap-2.5 rounded-xl p-2.5 bg-white/45 dark:bg-white/5">
@@ -88,7 +86,7 @@ const AroundClient = ({ deviceType }: Props) => {
                   2
                 </Text>
                 <Text typography="t7" className="text-text-on-surface-muted dark:text-grey">
-                  지도를 원하는 위치로 이동한 후 다시 시도해주세요
+                  위치 권한을 허용하면 주변 철봉을 찾을 수 있어요
                 </Text>
               </div>
             </div>
@@ -99,7 +97,7 @@ const AroundClient = ({ deviceType }: Props) => {
   }
 
   return (
-    <SideMain headerTitle="주변 검색" hasBackButton deviceType={deviceType}>
+    <SideMain headerTitle="내 주변 철봉" hasBackButton deviceType={deviceType}>
       <AroundSearch
         address={addressText}
         lat={curLocation.lat.toString()}

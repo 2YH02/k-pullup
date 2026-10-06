@@ -328,7 +328,7 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
               typography="t7"
               className="text-text-on-surface-muted dark:text-grey mb-1"
             >
-              현재 위치
+            검색 위치
             </Text>
             <div className="truncate" title={address}>
               <Text className="truncate" fontWeight="bold" typography="t6">
@@ -339,81 +339,45 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
         </div>
       </div>
 
-      {/* Visual Radius Selector with Mini Map */}
-      <div
-        className={cn(
-          "relative isolate overflow-hidden",
-          "p-5 rounded-2xl border border-white/70 dark:border-white/10",
-          "bg-search-input-bg/65 dark:bg-black/32 backdrop-blur-md",
-          "shadow-[0_10px_24px_rgba(64,64,56,0.08)] dark:shadow-[0_10px_24px_rgba(0,0,0,0.3)]",
-          "mb-6"
-        )}
-      >
-        <div
-          aria-hidden
-          className={cn(
-            "absolute inset-0 pointer-events-none",
-            "bg-linear-to-br from-white/35 via-transparent to-primary/8",
-            "dark:from-white/8 dark:to-primary-dark/20"
-          )}
-        />
-        {/* Kakao Map with Radius Overlay */}
-        <div className="relative w-full aspect-square max-w-72 mx-auto mb-5 rounded-2xl overflow-hidden border border-white/55 dark:border-white/10 shadow-[0_12px_24px_rgba(64,64,56,0.12)] dark:shadow-[0_12px_24px_rgba(0,0,0,0.32)]">
-          <div ref={miniMapRef} className="w-full h-full" />
-          {/* Distance overlay badge */}
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-white/85 dark:bg-black/65 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/70 dark:border-white/12 shadow-[0_6px_16px_rgba(64,64,56,0.18)] dark:shadow-[0_6px_16px_rgba(0,0,0,0.4)]">
-            <Text
-              typography="t7"
-              fontWeight="bold"
-              className="text-primary dark:text-primary-light"
-            >
+      <div className="mb-6 rounded-2xl border border-white/70 bg-search-input-bg/65 p-4 shadow-[0_8px_20px_rgba(64,64,56,0.07)] dark:border-white/10 dark:bg-black/32 dark:shadow-[0_8px_20px_rgba(0,0,0,0.24)]">
+        <div className="relative aspect-[1.15] min-h-52 overflow-hidden rounded-xl border border-white/55 shadow-[0_8px_18px_rgba(64,64,56,0.1)] dark:border-white/10 dark:shadow-[0_8px_18px_rgba(0,0,0,0.28)]">
+          <div ref={miniMapRef} className="h-full w-full" />
+          <div className="absolute left-3 top-3 rounded-full border border-white/70 bg-white/85 px-3 py-1.5 shadow-[0_4px_12px_rgba(64,64,56,0.14)] backdrop-blur-sm dark:border-white/12 dark:bg-black/65">
+            <Text typography="t7" fontWeight="bold" className="text-primary dark:text-primary-light">
               {formatDistance(distance)} 반경
             </Text>
           </div>
         </div>
 
-        {/* Distance Display */}
-        <div className="relative text-center mb-5">
-          <Text
-            typography="t6"
-            className="text-text-on-surface-muted dark:text-grey mb-1.5"
-          >
+        <div className="mt-4">
+          <Text typography="t7" className="text-text-on-surface-muted dark:text-grey">
             검색 반경
           </Text>
-          <div className="flex items-baseline justify-center gap-2">
-            <Text
-              typography="t2"
-              fontWeight="bold"
-              className="text-primary dark:text-primary-light"
-            >
-              {formatDistance(distance)}
-            </Text>
-          </div>
-          <Text typography="t7" className="text-text-on-surface-muted dark:text-grey mt-1">
-            이내의 철봉을 찾습니다
+          <Text typography="t2" fontWeight="bold" className="mt-1 text-primary dark:text-primary-light">
+            {formatDistance(distance)}
           </Text>
-        </div>
-
-        {/* Preset Distance Buttons */}
-        <div className="relative grid grid-cols-4 gap-2">
-          {DISTANCE_PRESETS.map((preset) => (
-            <button
-              type="button"
-              key={preset.value}
-              onClick={() => setDistance(preset.value)}
-              aria-label={`${preset.label} 반경으로 설정`}
-              className={cn(
-                "py-2.5 px-2 rounded-xl text-sm font-semibold",
-                "border transition-all duration-180 ease-out motion-reduce:transition-none",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 dark:focus-visible:ring-primary-light/35",
-                distance === preset.value
-                  ? "bg-primary dark:bg-primary-light text-white dark:text-black border-primary dark:border-primary-light shadow-[0_8px_16px_rgba(64,64,56,0.22)] dark:shadow-[0_8px_16px_rgba(0,0,0,0.32)] scale-[1.02]"
-                  : "bg-white/55 dark:bg-white/6 border-white/70 dark:border-white/10 text-text-on-surface dark:text-grey-light hover:border-primary/45 dark:hover:border-primary-light/35 hover:bg-white/80 dark:hover:bg-white/10 active:scale-[0.98]"
-              )}
-            >
-              {preset.label}
-            </button>
-          ))}
+          <Text typography="t7" className="mt-1 text-text-on-surface-muted dark:text-grey">
+            이 거리 안의 철봉을 찾아요
+          </Text>
+          <div className="mt-4 grid grid-cols-4 gap-2">
+            {DISTANCE_PRESETS.map((preset) => (
+              <button
+                type="button"
+                key={preset.value}
+                onClick={() => setDistance(preset.value)}
+                aria-label={`${preset.label} 반경으로 설정`}
+                className={cn(
+                  "rounded-xl border px-2 py-2.5 text-sm font-semibold transition-all duration-180 ease-out motion-reduce:transition-none",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 dark:focus-visible:ring-primary-light/35",
+                  distance === preset.value
+                    ? "scale-[1.02] border-primary bg-primary text-white shadow-[0_6px_14px_rgba(64,64,56,0.18)] dark:border-primary-light dark:bg-primary-light dark:text-black"
+                    : "border-white/70 bg-white/55 text-text-on-surface hover:border-primary/45 hover:bg-white/80 active:scale-[0.98] dark:border-white/10 dark:bg-white/6 dark:text-grey-light dark:hover:border-primary-light/35 dark:hover:bg-white/10"
+                )}
+              >
+                {preset.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -444,27 +408,13 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
                 fontWeight="bold"
                 className="text-text-on-surface dark:text-grey-light"
               >
-                가까운 순
+                가까운 철봉
               </Text>
               <Text typography="t7" className="text-text-on-surface-muted dark:text-grey">
-                {displayMarkers.length}개 표시
-                {hasMoreNearby && ` (총 ${markers.length}개)`}
+                {displayMarkers.length}개
+                {hasMoreNearby && ` / 전체 ${markers.length}개`}
               </Text>
             </div>
-
-            {/* Distance info badge */}
-            {displayMarkers.length > 0 && (
-              <div className="mb-3 p-2.5 rounded-xl bg-primary/8 dark:bg-primary-dark/12 border border-primary/18 dark:border-primary-light/18 backdrop-blur-sm">
-                <Text
-                  typography="t7"
-                  className="text-text-on-surface-muted dark:text-grey text-center"
-                >
-                  {distance <= 1000
-                    ? "가까운 철봉부터 표시됩니다"
-                    : "넓은 반경에서 가까운 철봉부터 표시됩니다"}
-                </Text>
-              </div>
-            )}
 
             {/* Results List */}
             <ul className="space-y-2">
@@ -525,10 +475,10 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
             {hasMoreNearby && (
               <div className="mt-4 p-4 rounded-xl border border-dashed border-primary/30 dark:border-primary-light/28 bg-primary/6 dark:bg-primary-dark/10 text-center">
                 <Text typography="t6" display="block" className="text-text-on-surface-muted dark:text-grey mb-2">
-                  더 먼 곳에 {markers.length - displayMarkers.length}개의 철봉이 있습니다
+                  더 먼 곳에 {markers.length - displayMarkers.length}개가 더 있어요
                 </Text>
                 <Text typography="t7" className="text-text-on-surface-muted dark:text-grey">
-                  아래로 스크롤하여 더 보기
+                  아래로 스크롤해 더 보기
                 </Text>
               </div>
             )}
@@ -564,9 +514,9 @@ const AroundSearch = ({ address, lat, lng }: AroundSearchProps) => {
               textAlign="center"
               className="text-text-on-surface-muted dark:text-grey"
             >
-              검색 반경을 늘려보시거나
+              반경을 늘리거나 다른 위치에서
               <br />
-              다른 위치에서 시도해보세요
+              다시 검색해 보세요
             </Text>
           </div>
         ) : null}
