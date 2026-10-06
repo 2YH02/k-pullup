@@ -8,8 +8,14 @@ const Loading = () => {
 
   return (
     <SideMain headerTitle="소셜" withNav fullHeight deviceType={deviceType} bodyStyle="pb-0">
+      <Section className="pb-3 pt-5">
+        <Skeleton className="h-3 w-20 rounded-md" />
+        <Skeleton className="mt-2 h-6 w-64 max-w-full rounded-md" />
+        <Skeleton className="mt-2 h-3.5 w-72 max-w-full rounded-md" />
+      </Section>
+
       <Section className="pb-0">
-        <SectionTitle title="모먼트" subTitle="당신의 순간을 공유해보세요." />
+        <SectionTitle title="모먼트" subTitle="최근 운동 기록" />
         <div className="flex gap-3 pb-2">
           {Array.from({ length: 6 }).map((_, index) => (
             <div key={`social-moment-skeleton-${index}`} className="flex flex-col items-center">
@@ -22,8 +28,8 @@ const Loading = () => {
 
       <Section>
         <SectionTitle
-          title="지역 채팅 및 오픈 채팅"
-          subTitle="다른 사람들과 소통해보세요."
+          title="지역 커뮤니티"
+          subTitle="가까운 사람들과 이야기해요."
         />
         <div className="flex w-full gap-3 overflow-x-scroll overflow-y-hidden px-1 py-1 scrollbar-hidden">
           {Array.from({ length: 4 }).map((_, index) => (
@@ -48,7 +54,7 @@ const Loading = () => {
       </Section>
 
       <Section>
-        <SectionTitle title="인기 많은 철봉" />
+        <SectionTitle title="인기 철봉" subTitle="많이 찾는 장소" />
         <div className="mb-3 inline-flex rounded-full border border-primary/12 bg-side-main p-1 dark:border-white/10">
           <Skeleton className="h-7 w-14 rounded-full" />
           <Skeleton className="ml-1 h-7 w-16 rounded-full" />
