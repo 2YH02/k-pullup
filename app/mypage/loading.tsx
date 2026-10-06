@@ -14,7 +14,7 @@ const Loading = () => {
       deviceType={deviceType}
       bodyStyle="pb-0 flex flex-col"
     >
-      <Section>
+      <Section className="pb-3 pt-5">
         <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
           <Skeleton className="h-6 w-40 rounded-md" />
           <Skeleton className="mt-2 h-4 w-56 rounded-md" />
@@ -23,7 +23,7 @@ const Loading = () => {
         </div>
       </Section>
 
-      <Section className="pt-0">
+      <Section className="pb-3 pt-0">
         <div className="grid grid-cols-2 gap-2 rounded-xl border border-primary/10 bg-surface/70 p-1.5 dark:border-grey-dark dark:bg-black">
           <Skeleton className="h-10 w-full rounded-lg" />
           <Skeleton className="h-10 w-full rounded-lg" />
@@ -42,11 +42,14 @@ const Loading = () => {
       </Section>
 
       <Section className="pt-0">
-        <div className="space-y-2 rounded-xl border border-primary/10 bg-surface/70 p-2 dark:border-grey-dark dark:bg-black">
-          <Skeleton className="h-13 w-full rounded-lg" />
-          <Skeleton className="h-13 w-full rounded-lg" />
-          <Skeleton className="h-13 w-full rounded-lg" />
-          <Skeleton className="h-13 w-full rounded-lg" />
+        <div className="px-6 pb-4 pt-2">
+          <Skeleton className="mb-2 h-4 w-16 rounded-md" />
+          <div className="space-y-2">
+            <Skeleton className="h-[54px] w-full rounded-lg border border-primary/10 bg-search-input-bg/50 dark:border-grey-dark dark:bg-black/35" />
+            <Skeleton className="h-[54px] w-full rounded-lg border border-primary/10 bg-search-input-bg/50 dark:border-grey-dark dark:bg-black/35" />
+            <Skeleton className="h-[54px] w-full rounded-lg border border-primary/10 bg-search-input-bg/50 dark:border-grey-dark dark:bg-black/35" />
+            <Skeleton className="h-[54px] w-full rounded-lg border border-primary/10 bg-search-input-bg/50 dark:border-grey-dark dark:bg-black/35" />
+          </div>
         </div>
       </Section>
     </SideMain>

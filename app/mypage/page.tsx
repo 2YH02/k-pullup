@@ -13,8 +13,6 @@ import Image from "next/image";
 import Link from "next/link";
 import getServerDeviceType from "@lib/get-server-device-type";
 
-
-
 export const generateMetadata = () => {
   return {
     title: `대한민국 철봉 지도 | 마이 페이지`,
@@ -42,7 +40,7 @@ const Mypage = async () => {
       deviceType={deviceType}
       bodyStyle="pb-0 flex flex-col"
     >
-      <Section>
+      <Section className="pb-3 pt-5">
         {noUser ? (
           <Link
             href="/signin?returnUrl=/mypage"
@@ -62,11 +60,11 @@ const Mypage = async () => {
             />
           </Link>
         ) : (
-            user && <UserInfo user={user} />
+          user && <UserInfo user={user} />
         )}
       </Section>
 
-      <Section className="pt-0">
+      <Section className="pb-3 pt-0">
         <div className="grid grid-cols-2 gap-2 rounded-xl border border-primary/10 bg-surface/70 p-1.5 dark:border-grey-dark dark:bg-black">
           <Link
             href={noUser ? "/signin?returnUrl=/mypage" : "/mypage/user"}
@@ -113,7 +111,7 @@ const Mypage = async () => {
               </Text>
               <Text typography="t6" className="text-grey-dark dark:text-grey">
                 정보 기여 점수{" "}
-                <span className="text-primary font-bold">
+                <span className="font-bold text-primary">
                   {user.contributionCount || 0}
                 </span>
                 점

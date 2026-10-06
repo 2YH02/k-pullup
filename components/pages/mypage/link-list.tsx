@@ -16,8 +16,9 @@ const iconClass = "text-primary/85 dark:text-primary-light";
 
 const LinkList = ({ isAdmin }: { isAdmin?: boolean }) => {
   return (
-    <div className="px-4 pb-2">
-      <div className="space-y-2 rounded-xl border border-primary/10 bg-surface/70 p-2 dark:border-grey-dark dark:bg-black">
+    <div className="px-6 pb-4 pt-2">
+      <p className="mb-2 text-sm font-bold text-text-on-surface dark:text-grey-light">내 활동</p>
+      <div className="space-y-2">
         <LinkButton url="/mypage/bookmark" icon={<BookmarkLine size={18} strokeWidth={2.1} className={iconClass} />}>
           즐겨찾기
         </LinkButton>
