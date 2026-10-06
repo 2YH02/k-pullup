@@ -152,7 +152,7 @@ const SearchList = ({
                       <PinIcon />
                     </div>
                     <div className="relative min-w-0 flex-1">
-                      <Text typography="t6" className="break-all text-text-on-surface dark:text-grey-light">
+                      <Text typography="t6" className="break-keep break-words text-text-on-surface dark:text-grey-light">
                         {highlightText(
                           removeMarkTags(item.address),
                           extractMarkedText(item.address).marked
@@ -204,12 +204,12 @@ const SearchList = ({
                       <BsPinMapFill className="fill-primary dark:fill-primary-light" />
                     </div>
                     <div className="relative min-w-0 flex-1 flex flex-col">
-                      <Text typography="t6" className="break-all text-text-on-surface dark:text-grey-light">
+                      <Text typography="t6" className="break-keep break-words text-text-on-surface dark:text-grey-light">
                         {item.address_name}
                       </Text>
                       <Text
                         typography="t7"
-                        className="break-all text-text-on-surface-muted dark:text-grey mt-0.5"
+                        className="break-keep break-words text-text-on-surface-muted dark:text-grey mt-0.5"
                       >
                         {item.place_name}
                       </Text>

@@ -24,7 +24,7 @@ test.describe("검색 페이지 테스트", () => {
   });
 
   test("검색어 입력 시 철봉 위치 결과가 표시됨", async ({ page }) => {
-    await page.getByPlaceholder("철봉 위치 주소로 검색").fill("세종대로");
+    await page.getByPlaceholder("주소·공원명 검색").fill("세종대로");
 
     await expect(page.getByText("철봉 위치", { exact: true })).toBeVisible();
     await expect(page.getByText("서울특별시 중구 세종대로 110")).toBeVisible();
@@ -34,7 +34,7 @@ test.describe("검색 페이지 테스트", () => {
   test("결과 클릭 시 상세 페이지로 이동하고 최근 검색에 markerId 로 저장됨", async ({
     page,
   }) => {
-    await page.getByPlaceholder("철봉 위치 주소로 검색").fill("세종대로");
+    await page.getByPlaceholder("주소·공원명 검색").fill("세종대로");
     await page.getByText("서울특별시 중구 세종대로 110").click();
 
     await expect(page).toHaveURL(/\/pullup\/9001$/);
@@ -48,7 +48,7 @@ test.describe("검색 페이지 테스트", () => {
   });
 
   test("결과가 없으면 빈 상태 문구가 표시됨", async ({ page }) => {
-    await page.getByPlaceholder("철봉 위치 주소로 검색").fill("zzqx없는주소qxzz");
+    await page.getByPlaceholder("주소·공원명 검색").fill("zzqx없는주소qxzz");
 
     await expect(page.getByText("검색 결과가 없습니다")).toBeVisible();
     await expect(page.getByText("철봉 위치", { exact: true })).not.toBeVisible();

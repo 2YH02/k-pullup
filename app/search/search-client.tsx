@@ -169,17 +169,7 @@ const SearchClient = ({
         />
       ) : (
         <>
-          <Section>
-            <Text
-              className="mb-4 text-text-on-surface-muted dark:text-grey-light"
-              typography="t6"
-              display="block"
-              fontWeight="bold"
-            >
-              원하는 주소에 철봉이 있는지 확인해 보세요.
-            </Text>
-
-            {/* Around Search Card */}
+          <Section className="pt-5">
             <button
               type="button"
               onClick={() => router.push("/search/around")}
@@ -226,13 +216,13 @@ const SearchClient = ({
                   display="block"
                   className="mb-1 text-text-on-surface dark:text-grey-light"
                 >
-                  주변 검색
+                  주변 철봉 찾기
                 </Text>
                 <Text
                   typography="t7"
                   className="text-text-on-surface-muted dark:text-grey"
                 >
-                  지도를 움직여 원하는 위치 주변의 철봉을 찾아보세요
+                  내 위치 주변의 철봉을 확인해 보세요
                 </Text>
               </div>
 
@@ -264,7 +254,7 @@ const SearchClient = ({
                     typography="t6"
                     className="text-text-on-surface-muted dark:text-grey-light"
                   >
-                    목록 전체 삭제
+                    전체 삭제
                   </Text>
                 </button>
               </div>
@@ -400,7 +390,7 @@ const SearchClient = ({
                     typography="t6"
                     className="relative text-text-on-surface-muted dark:text-grey"
                   >
-                    동, 구, 시 단위로 검색하면 더 정확한 결과를 얻을 수 있어요
+                    동·구·시로 검색하면 더 정확해요
                   </Text>
                 </div>
                 <div className="flex gap-2.5 rounded-xl p-2.5 transition-colors duration-180 ease-out hover:bg-white/45 dark:hover:bg-white/5">
@@ -418,7 +408,7 @@ const SearchClient = ({
                     typography="t6"
                     className="relative text-text-on-surface-muted dark:text-grey"
                   >
-                    건물명이나 공원 이름으로도 검색할 수 있어요
+                    건물명·공원명도 검색할 수 있어요
                   </Text>
                 </div>
                 <div className="flex gap-2.5 rounded-xl p-2.5 transition-colors duration-180 ease-out hover:bg-white/45 dark:hover:bg-white/5">
@@ -436,7 +426,7 @@ const SearchClient = ({
                     typography="t6"
                     className="relative text-text-on-surface-muted dark:text-grey"
                   >
-                    원하는 위치에 철봉이 없다면 주변 검색을 이용해보세요
+                    철봉이 없으면 주변 검색을 이용해 보세요
                   </Text>
                 </div>
               </div>
