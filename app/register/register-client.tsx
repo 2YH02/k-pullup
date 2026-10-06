@@ -65,7 +65,7 @@ const RegisterClient = ({
 
   const isMounted = useIsMounted();
 
-  const { user, setUser } = useUserStore();
+  const { user } = useUserStore();
 
   const { appendMarker: appendMarkerToStore } = useMarkerStore();
 
@@ -105,9 +105,9 @@ const RegisterClient = ({
 
   const headerTitle = useMemo(() => {
     if (registerValue.step === 0) return "위치 선택";
-    if (registerValue.step === 1) return "기구 개수 등록";
-    if (registerValue.step === 2) return "설명 등록";
-    if (registerValue.step === 3) return "이미지 등록";
+    if (registerValue.step === 1) return "기구 정보";
+    if (registerValue.step === 2) return "현장 설명";
+    if (registerValue.step === 3) return "사진 추가";
   }, [registerValue.step]);
 
   useEffect(() => {
@@ -225,7 +225,6 @@ const RegisterClient = ({
 
     fetch();
   }, [
-    setUser,
     appendMarkerToStore,
     registerValue.step,
     registerValue.description,
@@ -463,7 +462,10 @@ const RegisterClient = ({
     >
       <div className="flex h-full flex-col">
         {registerValue.step < 4 && (
-          <StepIndicator currentStep={registerValue.step} />
+          <StepIndicator
+            currentStep={registerValue.step}
+            labels={["위치 선택", "기구 정보", "현장 설명", "사진 추가"]}
+          />
         )}
         <div className="page-transition min-h-0 flex-1">
         {registerValue.step === 0 && (

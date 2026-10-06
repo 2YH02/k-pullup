@@ -79,13 +79,6 @@ const SetFacilities = ({
 
       <GrowBox />
 
-      {/* <BottomFixedButton
-        onClick={next}
-        className="flex items-center justify-center h-12"
-        containerStyle="px-0"
-      >
-        다음
-      </BottomFixedButton> */}
       <Button onClick={next} className="h-12">
         다음
       </Button>

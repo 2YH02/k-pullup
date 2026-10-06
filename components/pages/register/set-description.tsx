@@ -51,16 +51,6 @@ const SetDescription = ({
       </div>
       <GrowBox />
 
-      {/* <BottomFixedButton
-        onClick={() => {
-          next(description === "" ? null : description);
-        }}
-        className="flex items-center justify-center h-12"
-        containerStyle="px-0"
-      >
-        {description === "" ? "설명 없이 다음으로" : "다음"}
-      </BottomFixedButton> */}
-
       <Button
         onClick={() => {
           next(!description ? null : description);
