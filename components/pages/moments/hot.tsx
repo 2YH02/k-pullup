@@ -11,12 +11,12 @@ const Hot = ({ data }: { data: RankingInfo[] }) => {
   if (data.length <= 0) return null;
 
   return (
-    <div className="mt-2 mb-5 px-4">
+    <div className="mb-6 px-6">
       <Text
         fontWeight="bold"
         className="mb-2 text-text-on-surface dark:text-grey-light"
       >
-        인기 철봉 TOP3
+        인기 철봉
       </Text>
       <div className="rounded-xl border border-location-badge-bg/85 bg-location-badge-bg/45 p-1.5 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/30">
         {data.map((marker, index) => {
@@ -37,7 +37,7 @@ const Hot = ({ data }: { data: RankingInfo[] }) => {
               <div className="grow">
                 <Text
                   typography="t6"
-                  className="break-all text-text-on-surface dark:text-grey-light"
+                  className="break-keep break-words text-text-on-surface dark:text-grey-light"
                 >
                   {marker.address}
                 </Text>

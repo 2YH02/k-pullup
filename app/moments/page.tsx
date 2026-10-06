@@ -23,24 +23,24 @@ const MomentsPage = async () => {
       hasBackButton
       deviceType={deviceType}
     >
-      <div className="px-4 pt-4 pb-2">
-        <div className="rounded-2xl border border-location-badge-bg/85 bg-location-badge-bg/45 px-4 py-4 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/30">
+      <div className="px-6 pb-4 pt-5">
+        <div className="rounded-2xl border border-primary/15 bg-search-input-bg/45 px-4 py-4 dark:border-white/10 dark:bg-black/30">
           <Text
             fontWeight="bold"
             display="block"
             className="text-text-on-surface dark:text-grey-light"
           >
-            지금 여기서 모먼트 올리기
+            모먼트를 남길 장소를 찾아보세요
           </Text>
-          <Text typography="t6" display="block" className="mt-0.5 text-grey-dark dark:text-grey">
-            인기 위치와 내 주변 위치에서 순간을 공유해보세요.
+          <Text typography="t6" display="block" className="mt-1 text-text-on-surface-muted dark:text-grey">
+            내 주변이나 인기 철봉에서 새로운 기록을 시작할 수 있어요.
           </Text>
         </div>
       </div>
 
-      <Hot data={rankingData.slice(0, 3)} />
-
       <Around />
+
+      <Hot data={rankingData.slice(0, 3)} />
 
       {/* <MomentsGallery /> */}
     </SideMain>

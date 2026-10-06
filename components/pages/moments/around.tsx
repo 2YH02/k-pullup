@@ -69,16 +69,16 @@ const Around = () => {
 
   if (!myLocation) {
     return (
-      <div className="mb-8 px-4">
+      <div className="mb-6 px-6">
         <Text fontWeight="bold" className="mb-2 text-text-on-surface dark:text-grey-light">
           근처 추천 철봉
         </Text>
         <div className="rounded-xl border border-grey-light/85 bg-search-input-bg/45 px-3.5 py-3 dark:border-grey-dark/85 dark:bg-black/30">
           <Text typography="t6" display="block" className="text-grey-dark dark:text-grey">
-            주변 철봉에서 모먼트를 공유해보세요.
+            주변 철봉에서 모먼트를 남겨보세요.
           </Text>
           <Text typography="t6" display="block" className="text-grey-dark dark:text-grey">
-            위치 권한을 허용하면 추천 목록을 볼 수 있어요.
+            위치 권한을 허용하면 가까운 장소를 보여드려요.
           </Text>
         </div>
       </div>
@@ -87,7 +87,7 @@ const Around = () => {
 
   if (isLoading) {
     return (
-      <div className="mb-8 px-4">
+      <div className="mb-6 px-6">
         <Text fontWeight="bold" className="mb-2 text-text-on-surface dark:text-grey-light">
           근처 추천 철봉
         </Text>
@@ -105,7 +105,7 @@ const Around = () => {
   }
 
   return (
-    <div className="mb-8 px-4">
+    <div className="mb-6 px-6">
       <Text fontWeight="bold" className="mb-2 text-text-on-surface dark:text-grey-light">
         근처 추천 철봉
       </Text>
@@ -123,7 +123,7 @@ const Around = () => {
               <div className="grow">
                 <Text
                   typography="t6"
-                  className="break-all text-text-on-surface dark:text-grey-light"
+                  className="break-keep break-words text-text-on-surface dark:text-grey-light"
                   display="block"
                 >
                   {marker.address}
