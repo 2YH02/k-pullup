@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 
-import Section from "@/components/common/section";
 import useChallengeStore from "@store/useChallengeStore";
 
 import CelebrationMotion from "./celebration-motion";
@@ -22,22 +21,23 @@ const ChallengeClient = () => {
   }, []);
 
   return (
-    <div>
-      <Section>
-        <CelebrationMotion />
-      </Section>
+    <div className="space-y-3 px-6 pb-8 pt-5">
+      <div>
+        <p className="text-[11px] font-semibold tracking-[0.08em] text-primary dark:text-primary-light">
+          이번 주 운동
+        </p>
+        <h1 className="mt-1 text-lg font-extrabold tracking-tight text-text-on-surface dark:text-grey-light">
+          꾸준함을 기록해보세요
+        </h1>
+        <p className="mt-1 text-[12px] text-text-on-surface-muted dark:text-grey">
+          작은 방문이 다음 운동을 이어주는 힘이 됩니다.
+        </p>
+      </div>
 
-      <Section>
-        <StreakCounter />
-      </Section>
-
-      <Section>
-        <WeeklyHeatmap />
-      </Section>
-
-      <Section>
-        <GoalCard />
-      </Section>
+      <CelebrationMotion />
+      <GoalCard />
+      <StreakCounter />
+      <WeeklyHeatmap />
     </div>
   );
 };
