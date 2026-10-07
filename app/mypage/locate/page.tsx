@@ -9,7 +9,7 @@ import RegisteredLocateList from "@pages/mypage/locate/registered-locate-list";
 import { cookies, headers } from "next/headers";
 import getServerDeviceType from "@lib/get-server-device-type";
 
-const RankingPage = async () => {
+const MyRegisteredLocationsPage = async () => {
   const cookieStore = cookies();
   const decodeCookie = decodeURIComponent(cookieStore.toString());
 
@@ -59,14 +59,16 @@ const RankingPage = async () => {
       referrer={!!referrer}
       deviceType={deviceType}
     >
-      <Section className="pb-2">
-        <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
-          <Text fontWeight="bold" display="block" className="text-primary dark:text-primary-light">
-            등록한 위치
+      <Section className="pb-3 pt-5">
+        <div className="rounded-2xl border border-primary/12 bg-search-input-bg/45 p-4 dark:border-white/10 dark:bg-black/30">
+          <Text typography="t7" display="block" className="text-grey-dark dark:text-grey">
+            등록 수
           </Text>
-          <Text typography="t6" className="mt-0.5 text-grey-dark dark:text-grey">
-            총 <span className="font-bold text-primary dark:text-primary-light">{markers.totalMarkers}</span>
-            곳을 등록했어요
+          <Text typography="t4" fontWeight="bold" display="block" className="mt-0.5 text-primary dark:text-primary-light">
+            {markers.totalMarkers}곳
+          </Text>
+          <Text typography="t7" display="block" className="mt-2 text-grey-dark dark:text-grey">
+            직접 지도에 추가한 철봉 위치입니다.
           </Text>
         </div>
       </Section>
@@ -78,4 +80,4 @@ const RankingPage = async () => {
   );
 };
 
-export default RankingPage;
+export default MyRegisteredLocationsPage;
