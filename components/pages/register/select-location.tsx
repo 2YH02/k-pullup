@@ -63,15 +63,16 @@ const SelectLocation = ({
   }, [map, marker, setCurHeight, sheetHeight, setPosition]);
 
   const handleClick = () => {
-    if (position.lat && position.lng) {
+    if (position.lat != null || position.lng != null) {
       setPosition({ lat: null, lng: null });
     }
+    marker?.setVisible(false);
     setViewButton(false);
     setCurHeight(sheetHeight.STEP_1.height);
   };
 
   const handleNext = async () => {
-    if (!position.lat || !position.lng) return;
+    if (position.lat == null || position.lng == null) return;
     setLoading(true);
     try {
       await locateVerify(position.lat, position.lng);
@@ -105,7 +106,7 @@ const SelectLocation = ({
   return (
     <Section className="flex h-full flex-col pb-4 pt-0">
       <div className="flex flex-col items-center web:mt-8">
-        {position.lat && position.lng ? (
+          {position.lat != null && position.lng != null ? (
           <div className="h-32.5 w-32.5 translate-y-3 select-none">
             <Image
               src="/gopher.gif"
@@ -122,12 +123,13 @@ const SelectLocation = ({
 
         <div className="mt-8 w-full rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/45 px-3.5 py-3 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/35">
           <Text
+            aria-live="polite"
             className="select-none text-center text-text-on-surface dark:text-grey-light"
             fontWeight="bold"
           >
-            {position.lat && position.lng
-              ? "위치를 확인한 뒤 다음으로 진행해주세요."
-              : "먼저 지도를 클릭해 위치를 선택해주세요."}
+            {position.lat != null && position.lng != null
+              ? "위치를 확인한 뒤 다음으로 진행하세요."
+              : "지도에서 등록할 위치를 선택하세요."}
           </Text>
         </div>
 
@@ -136,15 +138,14 @@ const SelectLocation = ({
           className="mt-4 web:hidden"
           variant="contrast"
         >
-          {position.lat && position.lng ? "다시 선택하기" : "위치 선택하기"}
+          {position.lat != null && position.lng != null ? "다시 선택하기" : "위치 선택하기"}
         </Button>
         <div className="mt-3 flex w-full items-start rounded-lg border border-yellow/35 bg-yellow/10 px-2.5 py-2 dark:border-yellow-dark/45 dark:bg-yellow-dark/10">
           <div className="mr-2 mt-0.5">
             <AlertTriangleIcon size={14} className="text-yellow dark:text-yellow-dark" />
           </div>
           <Text typography="t7" className="text-text-on-surface-muted dark:text-grey">
-            등록된 위치에 철봉이 실제로 존재하지 않거나 부정확한 정보일 경우,
-            사전 안내 없이 삭제될 수 있습니다.
+            실제 철봉이 있는 위치만 등록해주세요. 부정확한 정보는 삭제될 수 있습니다.
           </Text>
         </div>
         {errorMessage !== "" && (
@@ -159,7 +160,7 @@ const SelectLocation = ({
       {viewButton && (
         <Button
           onClick={handleNext}
-          disabled={!position.lat || !position.lng || loading}
+          disabled={position.lat == null || position.lng == null || loading}
           className="h-12"
         >
           다음

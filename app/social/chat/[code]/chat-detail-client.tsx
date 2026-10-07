@@ -36,7 +36,6 @@ const ChatDetailClient = ({
 
   const ws = useRef<WebSocket | null>(null);
   const chatBox = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
   const isComposingRef = useRef(false);
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -50,11 +49,6 @@ const ChatDetailClient = ({
   const latestNotice = [...messages]
     .reverse()
     .find((message) => message.message?.includes("공지:"));
-
-  useEffect(() => {
-    if (!inputRef.current) return;
-    inputRef.current.focus();
-  }, []);
 
   useEffect(() => {
     const cidJson = localStorage.getItem("cid");
@@ -79,25 +73,43 @@ const ChatDetailClient = ({
   }, []);
 
   useEffect(() => {
-    ws.current?.close();
-
     if (!cid) return;
 
-    ws.current = new WebSocket(
+    const socket = new WebSocket(
       `wss://api.k-pullup.com/ws/${code}?request-id=${encodeURIComponent(cid)}`
     );
+    ws.current = socket;
+    setIsLoading(true);
+    setIsConnectionError(false);
+    setMessages([]);
+    setSubTitle("");
 
-    ws.current.onopen = () => {
+    socket.onopen = () => {
+      if (ws.current !== socket) return;
       setIsLoading(false);
-      setMessages([]);
     };
 
-    ws.current.onmessage = async (event) => {
-      const data: ChatMessage = JSON.parse(event.data);
+    socket.onmessage = (event) => {
+      if (typeof event.data !== "string") return;
+
+      let data: ChatMessage;
+      try {
+        data = JSON.parse(event.data) as ChatMessage;
+      } catch {
+        return;
+      }
+
+      if (
+        !data ||
+        typeof data.message !== "string" ||
+        !data.uid ||
+        typeof data.userNickname !== "string"
+      )
+        return;
       if (data.userNickname === "chulbong-kr") {
         const titleArr = data.message.split(" ");
         const subTitle = `${titleArr[1]} ${titleArr[2]} ${titleArr[3]}`;
-        setSubTitle(subTitle);
+        if (subTitle.trim()) setSubTitle(subTitle);
       }
 
       setMessages((prevMessages) => [
@@ -108,23 +120,34 @@ const ChatDetailClient = ({
       ]);
     };
 
-    ws.current.onerror = () => {
+    const handleConnectionError = () => {
+      if (ws.current !== socket) return;
       setIsLoading(false);
       setIsConnectionError(true);
     };
 
-    ws.current.onclose = () => {
-      setIsLoading(false);
-      setIsConnectionError(true);
-    };
+    socket.onerror = handleConnectionError;
+    socket.onclose = handleConnectionError;
 
-    const pingInterval = setInterval(() => {
-      ws.current?.send(JSON.stringify({ type: "ping" }));
+    const pingInterval = window.setInterval(() => {
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify({ type: "ping" }));
+      }
     }, 30000);
 
     return () => {
-      clearInterval(pingInterval);
-      ws.current?.close();
+      window.clearInterval(pingInterval);
+      socket.onopen = null;
+      socket.onmessage = null;
+      socket.onerror = null;
+      socket.onclose = null;
+      if (
+        socket.readyState === WebSocket.CONNECTING ||
+        socket.readyState === WebSocket.OPEN
+      ) {
+        socket.close();
+      }
+      if (ws.current === socket) ws.current = null;
     };
   }, [cid, code]);
 
@@ -137,10 +160,25 @@ const ChatDetailClient = ({
   }, [messages]);
 
   const handleChat = () => {
-    if (chatValue.value === "") return;
-    ws.current?.send(chatValue.value);
-    chatValue.resetValue();
-    inputRef.current?.focus();
+    const message = chatValue.value.trim();
+    const socket = ws.current;
+
+    if (
+      !message ||
+      isLoading ||
+      isConnectionError ||
+      !socket ||
+      socket.readyState !== WebSocket.OPEN
+    ) {
+      return;
+    }
+
+    try {
+      socket.send(message);
+      chatValue.resetValue();
+    } catch {
+      setIsConnectionError(true);
+    }
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -150,6 +188,12 @@ const ChatDetailClient = ({
       event.preventDefault();
       handleChat();
     }
+  };
+
+  const handleReconnect = () => {
+    const nextCid = v4();
+    localStorage.setItem("cid", JSON.stringify({ cid: nextCid }));
+    setCid(nextCid);
   };
   if (!cid) return null;
 
@@ -188,7 +232,7 @@ const ChatDetailClient = ({
                 size="sm"
                 full
                 onClick={() => {
-                  window.location.reload();
+                    handleReconnect();
                 }}
               >
                 다시 시도
@@ -234,6 +278,7 @@ const ChatDetailClient = ({
                     onChange={chatValue.onChange}
                     placeholder="메시지를 입력해 주세요."
                     isInvalid={false}
+                    disabled={isLoading || isConnectionError}
                     onKeyDown={handleKeyPress}
                     onCompositionStart={() => {
                       isComposingRef.current = true;
@@ -246,6 +291,7 @@ const ChatDetailClient = ({
                 <button
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white transition-[transform,background-color] duration-150 active:scale-[0.96] active:bg-primary-dark focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:bg-primary-dark dark:active:bg-primary"
                   onClick={handleChat}
+                  disabled={isLoading || isConnectionError || !chatValue.value.trim()}
                   aria-label="메시지 전송"
                 >
                   <SendHorizontal size={16} strokeWidth={2.4} />
