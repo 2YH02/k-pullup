@@ -22,13 +22,13 @@ const SetDescription = ({
           fontWeight="bold"
           className="text-text-on-surface dark:text-grey-light"
         >
-          정확한 설명을 등록해 주시면,
+          위치를 찾기 쉬운 설명을 남겨주세요.
         </Text>
         <Text
           typography="t6"
           className="text-grey-dark dark:text-grey"
         >
-          다른 사람이 해당 위치를 찾는 데 큰 도움이 됩니다!
+          건물명이나 눈에 띄는 주변 정보를 적어주세요.
         </Text>
       </div>
 

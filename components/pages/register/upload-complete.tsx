@@ -43,7 +43,7 @@ const UploadComplete = ({
               ? "/signup-loading.gif"
               : "/upload.gif"
           }
-          alt="회원가입 로딩"
+          alt={status === "complete" ? "등록 완료" : "위치 등록 진행 중"}
           width={0}
           height={0}
           sizes="100vw"
@@ -68,7 +68,7 @@ const UploadComplete = ({
           })}
         </>
       )}
-      {status == "error" && (
+      {status === "error" && (
         <>
           <Text typography="t4" fontWeight="bold" className="mt-8 text-red">
             {errorMessage || "잠시 후 다시 시도해주세요"}

@@ -126,6 +126,7 @@ const UploadImage = ({
       <div className="mb-4 flex flex-col justify-center">
         <input
           type="file"
+          accept="image/*"
           onChange={handleImageChange}
           ref={fileInputRef}
           data-testid="file-input"
@@ -135,7 +136,7 @@ const UploadImage = ({
         {/* 이미지 미리보기 */}
         <div className="flex flex-wrap justify-start gap-4">
           {initPhotos &&
-            initPhotos.map((file, i) => {
+            initPhotos.map((file) => {
               if (!file.previewURL || !file.id) return null;
               return (
                 <div
@@ -153,7 +154,7 @@ const UploadImage = ({
                   </button>
                   <Image
                     src={file.previewURL}
-                    alt="report"
+                    alt="등록한 위치 사진"
                     className="object-cover rounded-lg"
                     fill
                   />
@@ -203,6 +204,7 @@ const AddImageButton = ({ onClick }: { onClick: VoidFunction }) => {
   return (
     <button
       type="button"
+      aria-label="사진 추가"
       className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-lg border-2 border-dashed border-text-on-surface-muted/45 bg-location-badge-bg/40 text-text-on-surface-muted transition-colors duration-150 active:scale-[0.98] active:border-primary/60 active:text-primary focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/30 dark:border-location-badge-bg-dark/75 dark:bg-location-badge-bg-dark/30 dark:text-grey dark:active:border-primary-light/70 dark:active:text-primary-light"
       onClick={onClick}
     >

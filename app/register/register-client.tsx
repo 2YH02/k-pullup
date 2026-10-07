@@ -48,6 +48,8 @@ interface RegisterValue {
   facilities: { facilityId: number; quantity: number }[];
 }
 
+const MAX_IMAGE_SIZE_MB = 30;
+
 const wait = (sec: number) => {
   return new Promise((resolve) => {
     setTimeout(resolve, sec * 1000);
@@ -134,7 +136,7 @@ const RegisterClient = ({
     submitRequestedRef.current = true;
 
     const fetch = async () => {
-      if (!registerValue.latitude || !registerValue.longitude) {
+      if (registerValue.latitude == null || registerValue.longitude == null) {
         submitRequestedRef.current = false;
         return;
       }
@@ -259,6 +261,7 @@ const RegisterClient = ({
 
     return () => {
       marker.setMap(null);
+      setMarker((current) => (current === marker ? null : current));
     };
   }, [map]);
 
@@ -278,23 +281,23 @@ const RegisterClient = ({
   };
 
   const handleImageChange = (photos?: File[] | null) => {
-    if (photos && photos.length > 0) setUploadStatus("image");
-
     if (photos) {
-      const sizeMap = photos.map((photo) => {
-        return photo.size / (1024 * 1024);
-      });
-      const totalSize = sizeMap.reduce((a, b) => a + b);
+      const totalSize = photos.reduce(
+        (total, photo) => total + photo.size / (1024 * 1024),
+        0
+      );
 
-      if (totalSize > 28) {
+      if (totalSize > MAX_IMAGE_SIZE_MB) {
         openAlert({
           title: "이미지 용량 초과",
-          description: "최대 30MB까지 이미지를 등록할 수 있습니다.",
+          description: `이미지는 최대 ${MAX_IMAGE_SIZE_MB}MB까지 등록할 수 있습니다.`,
           onClick: () => {},
         });
         return;
       }
     }
+
+    if (photos && photos.length > 0) setUploadStatus("image");
 
     setRegisterValue((prev) => ({
       ...prev,
@@ -363,41 +366,22 @@ const RegisterClient = ({
     }));
   };
 
-  const increaseFacilities = (id: number) => {
-    let 철봉 = registerValue.facilities[0].quantity;
-    let 평행봉 = registerValue.facilities[1].quantity;
-    if (id === 1) {
-      let facilities = [
-        { facilityId: 1, quantity: 철봉 + 1 },
-        { facilityId: 2, quantity: 평행봉 },
-      ];
-      setRegisterValue((prev) => ({ ...prev, facilities }));
-    } else {
-      let facilities = [
-        { facilityId: 1, quantity: 철봉 },
-        { facilityId: 2, quantity: 평행봉 + 1 },
-      ];
-      setRegisterValue((prev) => ({ ...prev, facilities }));
-    }
+  const changeFacilityCount = (id: number, delta: number) => {
+    setRegisterValue((prev) => ({
+      ...prev,
+      facilities: prev.facilities.map((facility) =>
+        facility.facilityId === id
+          ? {
+              ...facility,
+              quantity: Math.max(0, Math.min(99, facility.quantity + delta)),
+            }
+          : facility
+      ),
+    }));
   };
 
-  const decreaseFacilities = (id: number) => {
-    let 철봉 = registerValue.facilities[0].quantity;
-    let 평행봉 = registerValue.facilities[1].quantity;
-    if (id === 1) {
-      let facilities = [
-        { facilityId: 1, quantity: 철봉 - 1 },
-        { facilityId: 2, quantity: 평행봉 },
-      ];
-      setRegisterValue((prev) => ({ ...prev, facilities }));
-    } else {
-      let facilities = [
-        { facilityId: 1, quantity: 철봉 },
-        { facilityId: 2, quantity: 평행봉 - 1 },
-      ];
-      setRegisterValue((prev) => ({ ...prev, facilities }));
-    }
-  };
+  const increaseFacilities = (id: number) => changeFacilityCount(id, 1);
+  const decreaseFacilities = (id: number) => changeFacilityCount(id, -1);
 
   const resetStep = () => {
     setRegisterValue((prev) => ({
@@ -499,8 +483,8 @@ const RegisterClient = ({
           <UploadImage
             next={handleImageChange}
             title={[
-              "정확한 이미지를 등록해 주시면,",
-              "다른 사람이 해당 위치를 찾는 데 큰 도움이 됩니다!",
+              "주변 사람이 장소를 찾기 쉽도록",
+              "현장 사진을 추가해주세요.",
             ]}
             initPhotos={initPhotos}
             setInintPhotos={changeInitPhoto}

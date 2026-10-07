@@ -34,13 +34,13 @@ const SetFacilities = ({
           fontWeight="bold"
           className="text-text-on-surface dark:text-grey-light"
         >
-          기구들의 개수를 입력해주시면
+          설치된 기구 수를 알려주시면
         </Text>
         <Text
           typography="t6"
           className="text-grey-dark dark:text-grey"
         >
-          다른 사람이 더욱 정확한 정보를 확인할 수 있습니다.
+          다른 사람도 장소를 더 쉽게 확인할 수 있습니다.
         </Text>
       </div>
 
