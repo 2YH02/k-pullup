@@ -43,7 +43,17 @@ const UploadComplete = ({
               ? "/signup-loading.gif"
               : "/upload.gif"
           }
-          alt={status === "complete" ? "등록 완료" : "위치 등록 진행 중"}
+          alt={
+            status === "complete"
+              ? "등록 완료"
+              : status === "error"
+              ? ""
+              : status === "facilities"
+              ? "기구 정보 등록 중"
+              : status === "image"
+              ? "사진 업로드 중"
+              : "위치 등록 중"
+          }
           width={0}
           height={0}
           sizes="100vw"

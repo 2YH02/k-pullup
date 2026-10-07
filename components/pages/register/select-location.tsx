@@ -72,7 +72,7 @@ const SelectLocation = ({
   };
 
   const handleNext = async () => {
-    if (!position.lat || !position.lng) return;
+    if (position.lat == null || position.lng == null) return;
     setLoading(true);
     try {
       await locateVerify(position.lat, position.lng);

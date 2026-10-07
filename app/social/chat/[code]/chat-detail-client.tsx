@@ -99,7 +99,13 @@ const ChatDetailClient = ({
         return;
       }
 
-      if (!data || typeof data.message !== "string" || !data.uid) return;
+      if (
+        !data ||
+        typeof data.message !== "string" ||
+        !data.uid ||
+        typeof data.userNickname !== "string"
+      )
+        return;
       if (data.userNickname === "chulbong-kr") {
         const titleArr = data.message.split(" ");
         const subTitle = `${titleArr[1]} ${titleArr[2]} ${titleArr[3]}`;
