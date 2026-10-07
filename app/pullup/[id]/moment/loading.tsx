@@ -19,7 +19,7 @@ const MomentItemSkeleton = () => {
         <Skeleton className="h-4 w-full rounded-md" />
         <Skeleton className="mt-1 h-4 w-3/4 rounded-md" />
       </div>
-      <Skeleton className="h-96 w-full rounded-xl" />
+      <Skeleton className="aspect-4/5 w-full rounded-xl" />
     </div>
   );
 };
@@ -41,9 +41,11 @@ const Loading = () => {
         />
       }
     >
-      <Section className="py-2">
-        <div className="rounded-xl border border-grey-light/85 bg-search-input-bg/35 px-3 py-2 dark:border-grey-dark/85 dark:bg-black/30">
-          <Skeleton className="h-4 w-44 rounded-md" />
+      <Section className="pb-2 pt-4">
+        <div className="rounded-2xl border border-primary/12 bg-search-input-bg/45 p-4 dark:border-white/10 dark:bg-black/30">
+          <Skeleton className="h-3.5 w-24 rounded-md" />
+          <Skeleton className="mt-2 h-6 w-12 rounded-md" />
+          <Skeleton className="mt-2 h-3.5 w-52 rounded-md" />
         </div>
       </Section>
 

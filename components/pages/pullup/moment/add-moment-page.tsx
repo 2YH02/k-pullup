@@ -36,10 +36,11 @@ const AddMomentPage = ({
   const [loading, setLoading] = useState(false);
 
   const handleGenerateImage = async () => {
+    if (loading) return;
     setLoading(true);
     const data = {
-      caption: textValue.value,
-      markerId: markerId,
+      caption: textValue.value.trim(),
+      markerId,
       photo: imageFile,
     };
 
@@ -62,9 +63,8 @@ const AddMomentPage = ({
         });
       } else {
         openAlert({
-          title: "실패",
-          description: "잠시 후 다시 시도해주세요.",
-          cancel: true,
+          title: "게시하지 못했습니다.",
+          description: "잠시 후 다시 시도해 주세요.",
           onClick: () => {},
         });
       }
@@ -75,8 +75,8 @@ const AddMomentPage = ({
 
   return (
     <SideMain fullHeight deviceType={deviceType} bodyStyle="p-0">
-      <div className="w-full h-full bg-black">
-        <div className="flex flex-col w-full h-full">
+      <div className="h-full w-full bg-black">
+        <div className="flex h-full w-full flex-col">
           <div className="flex h-12 items-center px-3">
             <button
               onClick={clear}
@@ -94,11 +94,12 @@ const AddMomentPage = ({
             <div className="flex h-[32%] w-full flex-col justify-center px-4">
               <div className="mb-2 text-[13px] text-white/85">내용</div>
               <input
+                aria-label="모먼트 내용"
                 value={textValue.value}
                 onChange={textValue.onChange}
                 maxLength={30}
                 className="w-full rounded-lg border border-white/25 bg-white/12 p-2 text-white placeholder:text-white/55 outline-hidden transition-colors duration-150 focus:border-white/45"
-                placeholder="오운완 🦾"
+                placeholder="오늘의 운동을 짧게 남겨 보세요."
               />
               <div className="mt-1 text-right text-[11px] text-white/60">
                 {textValue.value.length}/30
@@ -109,6 +110,7 @@ const AddMomentPage = ({
           <div className="px-4 pb-3 pt-1">
             <button
               className="flex h-10 w-full items-center justify-center gap-1.5 rounded-md border border-white/35 bg-white/12 text-white transition-[transform,background-color] duration-150 active:scale-[0.98] active:bg-white/20 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/70 disabled:cursor-not-allowed disabled:opacity-55"
+              type="button"
               disabled={loading}
               onClick={handleGenerateImage}
             >
@@ -117,7 +119,7 @@ const AddMomentPage = ({
               ) : (
                 <>
                   <SendHorizontal size={15} strokeWidth={2.2} />
-                  만들기
+                  게시하기
                 </>
               )}
             </button>

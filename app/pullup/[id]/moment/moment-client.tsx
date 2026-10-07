@@ -65,6 +65,7 @@ const MomentClient = ({
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (loading) return;
     setLoading(true);
 
     if (!e.target.files || !e.target.files[0]) {
@@ -89,7 +90,7 @@ const MomentClient = ({
       if (error instanceof ImageValidationError) {
         setErrorMessage(error.message);
       } else {
-        setErrorMessage("이미지 처리 중 오류가 발생했습니다. 다시 시도해주세요.");
+        setErrorMessage("이미지를 처리하지 못했습니다. 다시 시도해 주세요.");
       }
     } finally {
       e.target.value = "";
@@ -98,6 +99,8 @@ const MomentClient = ({
   };
 
   const handleBoxClick = () => {
+    if (loading) return;
+
     if (user?.error || !user) {
       openAlert({
         title: "접근 권한이 없습니다.",
@@ -136,6 +139,7 @@ const MomentClient = ({
         headerTitle="모먼트"
         fullHeight
         hasBackButton
+        backFallbackUrl={`/pullup/${markerId}`}
         deviceType={deviceType}
         headerIcon={
           <Upload size={18} strokeWidth={2.2} className="text-text-on-surface dark:text-grey-light" />
@@ -147,6 +151,8 @@ const MomentClient = ({
           onChange={handleImageChange}
           ref={fileInputRef}
           className="hidden"
+          accept="image/*"
+          aria-label="모먼트 사진 선택"
         />
         <Section className="mt-8">
           <div className="mx-auto max-w-sm rounded-2xl border border-grey-light/85 bg-search-input-bg/40 px-5 py-8 text-center motion-safe:animate-page-enter dark:border-grey-dark/85 dark:bg-black/30">
@@ -159,7 +165,7 @@ const MomentClient = ({
               display="block"
               className="mb-1 text-text-on-surface dark:text-grey-light"
             >
-              등록된 모먼트가 없습니다.
+              아직 등록된 모먼트가 없어요
             </Text>
             <Text
               typography="t6"
@@ -167,7 +173,7 @@ const MomentClient = ({
               display="block"
               className="text-grey-dark dark:text-grey"
             >
-              첫 모먼트를 올려 순간을 공유해보세요.
+              이 장소의 첫 운동 순간을 공유해 보세요.
             </Text>
 
             {errorMessage && (
@@ -202,19 +208,26 @@ const MomentClient = ({
       headerTitle="모먼트"
       fullHeight
       hasBackButton
+      backFallbackUrl={`/pullup/${markerId}`}
       deviceType={deviceType}
       headerIcon={
         <Upload size={18} strokeWidth={2.2} className="text-text-on-surface dark:text-grey-light" />
       }
       headerIconClick={handleBoxClick}
     >
-      <Section className="py-2">
-        <div className="rounded-xl border border-grey-light/85 bg-search-input-bg/35 px-3 py-2 dark:border-grey-dark/85 dark:bg-black/30">
-          <Text typography="t6" className="text-grey-dark dark:text-grey">
-            {loading ? "이미지 처리 중..." : "오늘의 운동 순간을 공유해보세요."}
+      <Section className="pb-2 pt-4">
+        <div className="rounded-2xl border border-primary/12 bg-search-input-bg/45 p-4 dark:border-white/10 dark:bg-black/30">
+          <Text typography="t7" display="block" className="text-grey-dark dark:text-grey">
+            이 장소의 모먼트
+          </Text>
+          <Text typography="t4" fontWeight="bold" display="block" className="mt-0.5 text-primary dark:text-primary-light">
+            {moments.length}개
+          </Text>
+          <Text typography="t7" display="block" className="mt-2 text-grey-dark dark:text-grey">
+            {loading ? "사진을 준비하고 있습니다." : "운동 사진과 짧은 기록을 남겨 보세요."}
           </Text>
           {errorMessage && (
-            <Text typography="t7" className="mt-1 text-red">
+            <Text typography="t7" display="block" className="mt-2 text-red" aria-live="polite">
               {errorMessage}
             </Text>
           )}
@@ -225,6 +238,8 @@ const MomentClient = ({
         onChange={handleImageChange}
         ref={fileInputRef}
         className="hidden"
+        accept="image/*"
+        aria-label="모먼트 사진 선택"
       />
       {moments.map((moment, i) => {
         return (
