@@ -1,12 +1,10 @@
-"use client";
-
-import Text from "@common/text";
-import { ArrowDown, ArrowUp } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+
 import { ALL_NOTICE } from "@/constant";
+import Text from "@common/text";
 
 export type Notice = {
   id: number;
@@ -16,93 +14,75 @@ export type Notice = {
   createdAt: string;
 };
 
-export type NoticeWithActive = Notice & {
-  active: boolean;
-};
-
 interface NoticeListProps {
   tab: "전체" | "업데이트" | "일반";
 }
 
-const noticeCopy = ALL_NOTICE.map((notice) => {
-  return { ...notice, active: false };
-});
-
 const NoticeList = ({ tab }: NoticeListProps) => {
-  const [noticeData, setNoticeData] = useState<NoticeWithActive[]>(noticeCopy);
+  const notices =
+    tab === "전체"
+      ? ALL_NOTICE
+      : ALL_NOTICE.filter(({ category }) => category === tab);
 
-  useEffect(() => {
-    if (tab === "업데이트") {
-      const newData = noticeCopy.filter(
-        (notice) => notice.category === "업데이트"
-      );
-      setNoticeData(newData);
-    } else if (tab === "일반") {
-      const newData = noticeCopy.filter((notice) => notice.category === "일반");
-      setNoticeData(newData);
-    } else {
-      setNoticeData(noticeCopy);
-    }
-  }, [tab]);
-
-  const handleToggle = (id: number) => {
-    const newData = noticeData.map((notice) => {
-      return notice.id === id ? { ...notice, active: !notice.active } : notice;
-    });
-
-    setNoticeData(newData);
-  };
+  if (notices.length === 0) {
+    return (
+      <div className="rounded-2xl border border-primary/10 bg-search-input-bg/45 px-4 py-8 text-center dark:border-grey-dark dark:bg-black/30">
+        <Text typography="t6" display="block" className="text-grey-dark dark:text-grey">
+          등록된 공지사항이 없습니다.
+        </Text>
+      </div>
+    );
+  }
 
   return (
-    <>
-      {noticeData.map((notice) => {
-        return (
-          <div
-            key={notice.id}
-            className="mb-4 p-2 border-2 border-solid border-[#ccc] rounded-md"
-          >
-            <button
-              className="flex items-center w-full text-left"
-              onClick={() => handleToggle(notice.id)}
-            >
-              <div className="grow">
-                <div>
-                  <Text
-                    className="text-coral dark:text-coral mr-1"
-                    fontWeight="bold"
-                    typography="t6"
-                  >
-                    [{notice.category}]
-                  </Text>
-                  <Text fontWeight="bold" typography="t6">
-                    {notice.title}
-                  </Text>
-                </div>
-                <Text typography="t7" className="text-grey dark:text-grey">
-                  {notice.createdAt}
-                </Text>
-              </div>
-              <div className="p-3">
-                {notice.active ? (
-                  <ArrowUp size={20} color="#ccc" />
-                ) : (
-                  <ArrowDown size={20} color="#ccc" />
-                )}
-              </div>
-            </button>
-            {notice.active && (
-              <ReactMarkdown
-                rehypePlugins={[rehypeRaw]}
-                remarkPlugins={[remarkGfm]}
-                className="text-sm text-black dark:text-grey-light"
+    <div className="space-y-2.5">
+      {notices.map((notice) => (
+        <details
+          key={notice.id}
+          className="group overflow-hidden rounded-xl border border-primary/10 bg-search-input-bg/50 open:border-primary/20 open:bg-search-input-bg/65 dark:border-grey-dark dark:bg-black/35 dark:open:border-grey dark:open:bg-black/45"
+        >
+          <summary className="flex min-h-18 cursor-pointer list-none items-center gap-3 px-3.5 py-3 text-left transition-[background-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary/25 motion-reduce:transition-none [&::-webkit-details-marker]:hidden">
+            <div className="min-w-0 grow">
+              <span
+                className={`mb-1 inline-flex rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                  notice.category === "업데이트"
+                    ? "bg-primary/10 text-primary dark:bg-primary-light/10 dark:text-primary-light"
+                    : "bg-location-badge-bg text-location-badge-text dark:bg-location-badge-bg-dark/45 dark:text-location-badge-text-dark"
+                }`}
               >
-                {notice.content}
-              </ReactMarkdown>
-            )}
+                {notice.category}
+              </span>
+              <Text
+                typography="t6"
+                fontWeight="bold"
+                display="block"
+                className="wrap-break-word text-text-on-surface dark:text-grey-light"
+              >
+                {notice.title}
+              </Text>
+              <Text typography="t7" display="block" className="mt-1 text-grey-dark dark:text-grey">
+                {notice.createdAt.replaceAll("-", ".")}
+              </Text>
+            </div>
+            <ChevronDown
+              size={18}
+              strokeWidth={2.2}
+              className="shrink-0 text-grey-dark transition-transform duration-180 group-open:rotate-180 motion-reduce:transition-none dark:text-grey"
+            />
+          </summary>
+
+          <div className="border-t border-primary/10 px-4 pb-4 pt-1 text-sm leading-7 text-text-on-surface dark:border-grey-dark dark:text-grey-light">
+            <ReactMarkdown
+              rehypePlugins={[rehypeRaw]}
+              remarkPlugins={[remarkGfm]}
+              className="wrap-break-word [&_a]:font-semibold [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-4 dark:[&_a]:text-primary-light [&_li]:ml-5 [&_li]:list-disc [&_strong]:font-bold"
+            >
+              {notice.content}
+            </ReactMarkdown>
           </div>
-        );
-      })}
-    </>
+        </details>
+      ))}
+    </div>
   );
 };
 

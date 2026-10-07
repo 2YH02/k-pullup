@@ -10,7 +10,6 @@ export const generateMetadata = () => {
 };
 
 const NoticePage = () => {
-
   const deviceType = getServerDeviceType();
 
   const tabData = [
@@ -31,6 +30,7 @@ const NoticePage = () => {
       hasBackButton
       fullHeight
       deviceType={deviceType}
+      backFallbackUrl="/"
     >
       <Tabs tabs={tabData} />
     </SideMain>

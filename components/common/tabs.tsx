@@ -22,24 +22,39 @@ const Tabs = ({ tabs }: TabsProps) => {
 
   return (
     <div>
-      <div className="bg-white dark:bg-black sticky top-0 flex z-40">
+      <div
+        className="sticky top-0 z-40 flex border-b border-primary/10 bg-side-main/95 px-4 pt-2 backdrop-blur-xs dark:border-grey-dark dark:bg-black/90"
+        role="tablist"
+        aria-label="공지사항 분류"
+      >
         {tabs.map((tab) => {
+          const isActive = curTab === tab.title;
           return (
             <button
               key={tab.title}
-              className={`flex-1 p-2 ${
-                curTab === tab.title
-                  ? "border-b border-solid border-primary-dark"
-                  : "border-b border-solid border-grey-light"
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              className={`relative flex-1 rounded-t-lg px-2 py-2.5 transition-[color,background-color,transform] duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 motion-reduce:transform-none motion-reduce:transition-none ${
+                isActive
+                  ? "bg-primary/8 text-primary dark:bg-primary-light/10 dark:text-primary-light"
+                  : "text-grey-dark web:hover:bg-search-input-bg/60 dark:text-grey dark:web:hover:bg-black/35"
               }`}
               onClick={() => setCurTab(tab.title)}
             >
-              <Text>{tab.title}</Text>
+              <Text typography="t6" fontWeight={isActive ? "bold" : "normal"}>
+                {tab.title}
+              </Text>
+              {isActive && (
+                <span className="absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-primary dark:bg-primary-light" />
+              )}
             </button>
           );
         })}
       </div>
-      <Section>{tabContents}</Section>
+      <Section className="py-4">
+        <div role="tabpanel">{tabContents}</div>
+      </Section>
     </div>
   );
 };
