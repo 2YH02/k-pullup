@@ -67,12 +67,14 @@ const ResetPasswordForm = ({ token }: { token: string }) => {
   };
 
   return (
-    <div className="mt-4">
-      <Text typography="t6" className="mb-2">
-        원하시는 비밀번호를 입력해주세요
+    <div className="mt-4 rounded-2xl border border-primary/10 bg-search-input-bg/45 p-4 dark:border-grey-dark dark:bg-black/30">
+      <Text typography="t6" display="block" className="mb-2 leading-relaxed text-grey-dark dark:text-grey">
+        새로운 비밀번호를 입력해 주세요.
       </Text>
       <InputField
+        label="새 비밀번호"
         type="password"
+        autoComplete="new-password"
         value={inputValue.value}
         onChange={inputValue.onChange}
         onBlur={handleBlur}
@@ -87,7 +89,7 @@ const ResetPasswordForm = ({ token }: { token: string }) => {
         {loading ? (
           <LoadingIcon size="sm" className="mr-0 ml-0 text-black" />
         ) : (
-          "확인"
+        "비밀번호 변경"
         )}
       </Button>
     </div>

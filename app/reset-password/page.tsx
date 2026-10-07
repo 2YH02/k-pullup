@@ -34,7 +34,7 @@ const ResetPasswordPage = ({ searchParams }: PageProps) => {
       referrer={!!referrer}
       deviceType={deviceType}
     >
-      <Section>
+        <Section className="pt-8">
         {token && email ? (
           <ResetPasswordForm token={token} />
         ) : (

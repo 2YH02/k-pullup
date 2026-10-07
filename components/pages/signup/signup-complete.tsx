@@ -43,11 +43,17 @@ const SignupComplete = ({ status, returnUrl }: SignupCompleteProps) => {
       {status !== "pending" && (
         <Button
           onClick={() => {
-            if (returnUrl) {
-              router.replace(`/signin?returnUrl=${returnUrl}`);
-            } else {
-              router.replace(`/signin`);
-            }
+            const safeReturnUrl =
+              returnUrl &&
+              returnUrl.startsWith("/") &&
+              !returnUrl.startsWith("//")
+                ? returnUrl
+                : undefined;
+            router.replace(
+              safeReturnUrl
+                ? `/signin?returnUrl=${encodeURIComponent(safeReturnUrl)}`
+                : "/signin"
+            );
           }}
           full
           className="mt-10"

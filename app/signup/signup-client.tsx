@@ -14,7 +14,7 @@ import useAlertStore from "@store/useAlertStore";
 import { useBottomSheetStore } from "@store/useBottomSheetStore";
 import useTermsStore from "@store/useTermsStore";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Device } from "@/types/device";
 
 interface SignupClientProps {
@@ -42,6 +42,7 @@ const SignupClient = ({
   });
 
   const [signupStatus, setSignupStatus] = useState<SignupStatus>("pending");
+  const signupRequestStarted = useRef(false);
 
   const headerTitle = useMemo(() => {
     if (signupValue.step === 0) return "이메일 확인";
@@ -60,6 +61,9 @@ const SignupClient = ({
   }, [show]);
 
   useEffect(() => {
+    if (signupValue.step !== 3 || signupRequestStarted.current) return;
+    signupRequestStarted.current = true;
+
     const fetchSignup = async () => {
       try {
         await signup({
@@ -68,18 +72,12 @@ const SignupClient = ({
           password: signupValue.password,
         });
 
-        setTimeout(() => {
-          setSignupStatus("complete");
-        }, 1100);
+        setSignupStatus("complete");
       } catch {
-        setTimeout(() => {
-          setSignupStatus("error");
-        }, 1100);
+        setSignupStatus("error");
       }
     };
-    if (signupValue.step === 3) {
-      fetchSignup();
-    }
+    fetchSignup();
   }, [
     signupValue.step,
     signupValue.email,
@@ -93,7 +91,7 @@ const SignupClient = ({
       description: "정말 회원가입을 취소 하시겠습니까?",
       onClick: () => {
         if (returnUrl) {
-          router.replace(returnUrl);
+          router.replace(getSafeReturnUrl(returnUrl));
         } else {
           router.back();
         }
@@ -169,3 +167,10 @@ const SignupClient = ({
 };
 
 export default SignupClient;
+
+const getSafeReturnUrl = (returnUrl?: string) => {
+  if (returnUrl && returnUrl.startsWith("/") && !returnUrl.startsWith("//")) {
+    return returnUrl;
+  }
+  return "/";
+};

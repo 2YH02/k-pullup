@@ -32,8 +32,8 @@ const EmailSigninPage = ({ searchParams }: EmailPageProps) => {
       referrer={!!referrer}
       deviceType={deviceType}
     >
-      <div className="w-full h-full flex flex-col pt-10">
-        <Section className="px-9">
+      <div className="flex h-full w-full flex-col pt-8">
+        <Section className="px-6 mo:px-5">
           <SigninForm returnUrl={returnUrl} />
         </Section>
       </div>

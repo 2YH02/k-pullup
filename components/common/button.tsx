@@ -75,6 +75,10 @@ type ButtonSize = keyof typeof buttonSizeMap;
 
 export interface ButtonProps {
   /**
+   * 버튼 동작 유형
+   */
+  type?: React.ComponentProps<"button">["type"];
+  /**
    * 버튼 색상
    */
   color?: ButtonColor;
@@ -110,6 +114,7 @@ const Button = ({
   className,
   disabled,
   onClick,
+  type = "button",
   children,
 }: ButtonProps) => {
   const colorClass =
@@ -134,6 +139,7 @@ const Button = ({
   return (
     <button
       className={cn(buttonClass, className)}
+      type={type}
       onClick={onClick}
       disabled={disabled}
     >

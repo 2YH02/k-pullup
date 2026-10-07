@@ -6,6 +6,7 @@ import GrowBox from "@common/grow-box";
 import InputField from "@common/input-field";
 import Section from "@common/section";
 import Timer from "@common/timer";
+import Text from "@common/text";
 import useInput from "@hooks/useInput";
 import LoadingIcon from "@icons/loading-icon";
 import { validateCode, validateEmail, validateMessage } from "@lib/validate";
@@ -57,6 +58,7 @@ const VerifyEmail = ({ next }: VerifyEmailProps) => {
   };
 
   const sendEmail = async () => {
+    if (emailLoading || completed.code) return;
     setTimerReset(false);
 
     setEmailLoading(true);
@@ -90,6 +92,7 @@ const VerifyEmail = ({ next }: VerifyEmailProps) => {
   };
 
   const verify = async () => {
+    if (codeLoading || completed.code) return;
     setCodeLoading(true);
 
     try {
@@ -117,12 +120,19 @@ const VerifyEmail = ({ next }: VerifyEmailProps) => {
   };
 
   return (
-    <Section className="h-full pb-0 flex flex-col">
+    <Section className="flex h-full flex-col pb-0 pt-8">
+      <div className="mb-5 rounded-2xl border border-primary/10 bg-search-input-bg/45 p-4 dark:border-grey-dark dark:bg-black/30">
+        <Text typography="t6" display="block" className="leading-relaxed text-grey-dark dark:text-grey">
+          이메일로 인증 코드를 보내 계정을 확인합니다.
+        </Text>
+      </div>
       <div className="mb-10">
         <InputField
           label="이메일"
           name="email"
           placeholder="pullup@pullup.com"
+          type="email"
+          autoComplete="email"
           value={email.value}
           onChange={email.onChange}
           onBlur={handleBlur}

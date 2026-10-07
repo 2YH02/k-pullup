@@ -2,6 +2,7 @@ import BottomFixedButton from "@common/bottom-fixed-button";
 import GrowBox from "@common/grow-box";
 import InputField from "@common/input-field";
 import Section from "@common/section";
+import Text from "@common/text";
 import useInput from "@hooks/useInput";
 import { validateMessage, validatePassword } from "@lib/validate";
 import { useEffect, useState } from "react";
@@ -39,12 +40,18 @@ const EnterPassword = ({ next }: EnterPasswordProps) => {
     }));
   };
   return (
-    <Section className="h-full pb-0 flex flex-col">
+    <Section className="flex h-full flex-col pb-0 pt-8">
+      <div className="mb-5 rounded-2xl border border-primary/10 bg-search-input-bg/45 p-4 dark:border-grey-dark dark:bg-black/30">
+        <Text typography="t6" display="block" className="leading-relaxed text-grey-dark dark:text-grey">
+          영문과 숫자를 포함한 8자 이상의 비밀번호를 설정해 주세요.
+        </Text>
+      </div>
       <InputField
         label="비밀번호"
         type="password"
         name="password"
         value={password.value}
+        autoComplete="new-password"
         onChange={password.onChange}
         onBlur={handleBlur}
         isError={viewError.password && !!errorMessage.password}
@@ -55,6 +62,7 @@ const EnterPassword = ({ next }: EnterPasswordProps) => {
         type="password"
         name="confirm"
         value={confirm.value}
+        autoComplete="new-password"
         onChange={confirm.onChange}
         onBlur={handleBlur}
         isError={viewError.confirm && !!errorMessage.confirm}

@@ -15,7 +15,7 @@ import { useBottomSheetStore } from "@store/useBottomSheetStore";
 import useTermsStore from "@store/useTermsStore";
 import useUserStore from "@store/useUserStore";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import TermsCheckboxForm from "../terms/terms-checkbox-form";
 
 interface SigninValue {
@@ -52,20 +52,6 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
     return validateSigin(formValues);
   }, [emailValue.value, passwordValue.value]);
 
-  useEffect(() => {
-    const images = [
-      "/allCheckedIcon.svg",
-      "/allCheckIcon.svg",
-      "/checkedIcon.svg",
-      "/checkIcon.svg",
-    ];
-
-    images.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
-  }, []);
-
   // 단일 submit 함수 (useCallback으로 안정화)
   const handleSubmit = useCallback(async () => {
     if (loading) return; // 이중 제출 방지
@@ -79,8 +65,6 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
 
       // error 필드 → 인라인 에러 메시지 (Req 2.2)
       if (response.error) {
-        errors.email = "이메일 혹은 비밀번호를 확인해주세요.";
-        errors.password = "이메일 혹은 비밀번호를 확인해주세요.";
         setViewInputError({ email: "true", password: "true" });
         setLoading(false);
         return;
@@ -110,8 +94,6 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
       if (error instanceof FetchError) {
         if (error.status === 401 || error.status === 400) {
           // 잘못된 자격 증명 → 인라인 에러 메시지
-          errors.email = "이메일 혹은 비밀번호를 확인해주세요.";
-          errors.password = "이메일 혹은 비밀번호를 확인해주세요.";
           setViewInputError({ email: "true", password: "true" });
         } else {
           // 기타 서버/네트워크 에러
@@ -125,24 +107,7 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
       }
       setLoading(false);
     }
-  }, [emailValue.value, passwordValue.value, loading, errors, returnUrl, setUser, toast]);
-
-  // Enter 키 핸들러
-  useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
-        const isAvailable = Object.keys(errors).length === 0;
-        if (!isAvailable || loading) return;
-        handleSubmit();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyPress);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-    };
-  }, [errors, loading, handleSubmit]);
+  }, [emailValue.value, passwordValue.value, loading, returnUrl, setUser, toast]);
 
   const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     setViewInputError((prev) => ({
@@ -154,14 +119,24 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
   const isAvailable = Object.keys(errors).length === 0;
 
   return (
-    <div>
+    <form
+      className="rounded-2xl border border-primary/10 bg-search-input-bg/45 p-4 dark:border-grey-dark dark:bg-black/30"
+      onSubmit={(event) => {
+        event.preventDefault();
+        if (isAvailable) void handleSubmit();
+      }}
+    >
       <div>
         <InputField
           label="이메일"
           name="email"
           value={emailValue.value}
           isError={Boolean(viewInputError.email) && Boolean(errors.email)}
-          message={Boolean(viewInputError.email) ? errors.email : ""}
+          message={
+            Boolean(viewInputError.email)
+              ? errors.email || "이메일 혹은 비밀번호를 확인해 주세요."
+              : ""
+          }
           onChange={emailValue.onChange}
           onBlur={handleBlur}
         />
@@ -171,9 +146,16 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
           type="password"
           value={passwordValue.value}
           isError={Boolean(viewInputError.password) && Boolean(errors.password)}
-          message={Boolean(viewInputError.password) ? errors.password : ""}
+          message={
+            Boolean(viewInputError.password)
+              ? errors.password || "이메일 혹은 비밀번호를 확인해 주세요."
+              : ""
+          }
           onBlur={handleBlur}
           onChange={passwordValue.onChange}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") event.currentTarget.form?.requestSubmit();
+          }}
         />
       </div>
       <div className="mt-3">
@@ -225,7 +207,7 @@ const SigninForm = ({ returnUrl }: SinginFormProps) => {
           }}
         />
       </BottomSheet>
-    </div>
+    </form>
   );
 };
 
