@@ -16,14 +16,14 @@ const KakaoLoginButton = () => {
   if (isWebView) {
     return (
       <button
-        className="w-[90%] min-w-75 h-12 rounded-lg bg-[#FFDB6D] flex items-center justify-center
-         web:text-lg mb-4"
+        type="button"
+        className="relative mb-3 flex h-12 w-full max-w-sm items-center justify-center rounded-xl bg-[#FFDB6D] text-[#3D1200] transition-transform duration-150 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 motion-reduce:transition-none"
         onClick={() => window.ReactNativeWebView?.postMessage("kakao-login")}
       >
-        <div className="absolute left-11 flex items-center justify-center shrink-0">
+        <div className="absolute left-10 flex shrink-0 items-center justify-center">
           <Image src="/kakao-logo.svg" alt="카카오 로고" width={36} height={36} />
         </div>
-        <div className="w-full text-center text-[#3D1200]">카카오 로그인</div>
+        <span className="w-full text-center">카카오 로그인</span>
       </button>
     );
   }
@@ -31,13 +31,12 @@ const KakaoLoginButton = () => {
   return (
     <Link
       href={`${process.env.NEXT_PUBLIC_BASE_URL}/auth/kakao`}
-      className="w-[90%] min-w-75 h-12 rounded-lg bg-[#FFDB6D] flex items-center justify-center
-        web:text-lg mb-4"
+      className="relative mb-3 flex h-12 w-full max-w-sm items-center justify-center rounded-xl bg-[#FFDB6D] text-[#3D1200] transition-transform duration-150 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35 motion-reduce:transition-none"
     >
-      <div className="absolute left-11 flex items-center justify-center shrink-0">
+      <div className="absolute left-10 flex shrink-0 items-center justify-center">
         <Image src="/kakao-logo.svg" alt="카카오 로고" width={36} height={36} />
       </div>
-      <div className="w-full text-center text-[#3D1200]">카카오 로그인</div>
+      <span className="w-full text-center">카카오 로그인</span>
     </Link>
   );
 };
