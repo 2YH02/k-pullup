@@ -328,6 +328,7 @@ const ReportClient = ({
       headerTitle="정보 수정 요청"
       fullHeight
       hasBackButton
+      backFallbackUrl={`/pullup/${marker.markerId}`}
       deviceType={deviceType}
       bodyStyle="pb-0"
     >
@@ -337,19 +338,20 @@ const ReportClient = ({
         lng={marker.longitude}
         markerId={marker.markerId}
       />
-      <Section className="pb-1 pt-3 text-sm">
-        <WarningText className="rounded-xl border border-yellow/35 bg-yellow/10 px-3 py-2 dark:border-yellow-dark/45 dark:bg-yellow-dark/10">
+      <Section className="pb-2 pt-4 text-sm">
+        <WarningText className="rounded-2xl border border-yellow/35 bg-yellow/10 px-4 py-3 leading-relaxed dark:border-yellow-dark/45 dark:bg-yellow-dark/10">
           요청된 정보가 부정확한 정보일 경우, 사전 안내 없이 삭제될 수 있습니다.
         </WarningText>
       </Section>
       <div className="flex flex-col h-full">
         {/* 설명 수정 */}
-        <Section className="pb-2 pt-4">
+        <Section className="pb-2 pt-3">
+          <div className="rounded-xl border border-primary/10 bg-search-input-bg/50 p-3 dark:border-grey-dark dark:bg-black/35">
           <Text
             className="mb-1 text-text-on-surface dark:text-grey-light"
             fontWeight="bold"
           >
-            수정할 설명을 입력해주세요.
+            수정할 설명
           </Text>
           <Text typography="t7" className="mb-2 text-grey-dark dark:text-grey">
             기존 설명을 보완하거나 오타를 수정할 수 있어요. (최대 40자)
@@ -366,6 +368,7 @@ const ReportClient = ({
           >
             {reportValue.description.length}/40
           </Text>
+          </div>
         </Section>
 
         {/* 이미지 등록 */}
@@ -379,14 +382,15 @@ const ReportClient = ({
           />
         </div>
 
-        <Section className="pt-3">
+        <Section className="pt-2">
+          <div className="rounded-xl border border-primary/10 bg-search-input-bg/50 p-3 dark:border-grey-dark dark:bg-black/35">
           <Text
             className="mb-2 text-text-on-surface dark:text-grey-light"
             fontWeight="bold"
           >
             위치가 정확하지 않나요?
           </Text>
-          <div className="rounded-xl border border-grey-light/85 bg-search-input-bg/50 px-3 py-2 dark:border-grey-dark/85 dark:bg-black/30">
+          <div className="rounded-lg border border-primary/10 bg-side-main/70 px-3 py-2 dark:border-grey-dark dark:bg-black/25">
             <Text typography="t6" fontWeight="bold" className="text-black dark:text-grey-light">
               현재 위치:{" "}
             </Text>
@@ -421,7 +425,7 @@ const ReportClient = ({
           >
             {newLatLng ? "다시 위치 선택하기" : "지도에서 새 위치 선택"}
           </Button>
-          <WarningText className="text-sm mt-1.5 rounded-lg bg-search-input-bg/35 px-2 py-1 dark:bg-black/30">
+          <WarningText className="mt-1.5 rounded-lg bg-side-main/70 px-2 py-1.5 text-sm dark:bg-black/25">
             {isChangingLocation
               ? isDesktop
                 ? "오른쪽 지도에서 새 위치를 클릭해주세요. 다시 클릭하면 위치를 바꿀 수 있습니다."
@@ -436,6 +440,7 @@ const ReportClient = ({
               className="mt-2 h-52 w-full overflow-hidden rounded-xl border border-grey-light/80 web:hidden dark:border-grey-dark/85"
             />
           )}
+          </div>
         </Section>
 
         {/* 버튼 */}

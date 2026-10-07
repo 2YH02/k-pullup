@@ -50,6 +50,7 @@ const UploadImage = ({
   }, [images, next, withButton]);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (loading) return;
     setLoading(true);
     setLoadingTrue();
 
@@ -135,6 +136,8 @@ const UploadImage = ({
           ref={fileInputRef}
           data-testid="file-input"
           className="hidden"
+          accept="image/*"
+          aria-label="이미지 선택"
         />
 
         {/* 이미지 미리보기 */}
@@ -148,7 +151,8 @@ const UploadImage = ({
               >
                 <button
                   aria-label="이미지 삭제"
-                  className={`absolute -top-2 -right-2 rounded-full w-6 h-6 z-50 flex items-center justify-center bg-primary text-white`}
+                  type="button"
+                  className="absolute -right-2 -top-2 z-50 flex size-6 items-center justify-center rounded-full bg-primary text-white transition-transform duration-150 active:scale-[0.94] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 motion-reduce:transform-none motion-reduce:transition-none"
                   onClick={() => deleteImage(file.id as string)}
                 >
                   <BsX size={20} />
