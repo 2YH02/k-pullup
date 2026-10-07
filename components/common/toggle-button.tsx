@@ -2,6 +2,10 @@ import cn from "@/lib/cn";
 
 interface ToggleButtonProps {
   /**
+   * 스크린 리더에서 사용할 토글 이름
+   */
+  ariaLabel?: string;
+  /**
    * 초기 toggle 값
    */
   initValue?: boolean;
@@ -26,6 +30,7 @@ const buttonSize = {
 };
 
 const ToggleButton = ({
+  ariaLabel = "설정 전환",
   initValue = false,
   size = "md",
   onTrue,
@@ -42,19 +47,20 @@ const ToggleButton = ({
   };
 
   return (
-    <label className="inline-flex items-center cursor-pointer">
+    <label className="inline-flex cursor-pointer items-center rounded-full focus-within:ring-2 focus-within:ring-primary/25">
       <input
         type="checkbox"
+        aria-label={ariaLabel}
         className="sr-only peer"
         defaultChecked={initValue}
         onChange={handleChange}
       />
       <div
         className={cn(
-          `relative bg-gray-200 peer-focus:outline-hidden rounded-full peer dark:bg-gray-700
-        peer-checked:after:translate-x-full peer-checked:rtl:after:-translate-x-full peer-checked:after:border-white 
-        after:content-[''] after:absolute after:bg-white after:border-gray-300 after:border after:rounded-full 
-        after:transition-all dark:border-gray-600 peer-checked:bg-blue`,
+          `relative rounded-full bg-grey-light peer peer-focus:outline-hidden dark:bg-grey-dark
+        peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-checked:rtl:after:-translate-x-full
+        after:absolute after:rounded-full after:border after:border-grey after:bg-white after:transition-all after:content-['']
+        dark:after:border-grey-dark dark:peer-checked:bg-primary-dark`,
           buttonStyle
         )}
       />

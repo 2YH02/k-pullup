@@ -43,7 +43,7 @@ const UserSetting = () => {
     openAlert({
       title: "정말 탈퇴하시겠습니까?",
       description:
-        "추가하신 마커는 유지되고, 작성한 댓글 밑 사진은 모두 삭제됩니다!",
+        "등록한 위치는 유지되며, 작성한 댓글과 사진은 모두 삭제됩니다.",
       onClickAsync: async () => {
         try {
           await deleteUser();
@@ -87,11 +87,25 @@ const UserSetting = () => {
 
   return (
     <List title="사용자 설정">
-      <ListItem title="로그아웃" onClick={handleSignout} />
+      <ListItem
+        title="로그아웃"
+        description="현재 기기에서 계정 연결을 종료합니다."
+        onClick={handleSignout}
+      />
       {user.provider === "website" && (
-        <ListItem title="비밀번호 초기화" url="/reset-password" link />
+        <ListItem
+          title="비밀번호 변경"
+          description="새로운 비밀번호로 변경합니다."
+          url="/reset-password"
+          link
+        />
       )}
-      <ListItem title="회원 탈퇴" onClick={handleResign} />
+      <ListItem
+        title="회원 탈퇴"
+        description="계정과 작성한 활동 정보를 삭제합니다."
+        onClick={handleResign}
+        tone="danger"
+      />
     </List>
   );
 };

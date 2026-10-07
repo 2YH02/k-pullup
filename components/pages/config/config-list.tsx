@@ -12,7 +12,7 @@ interface ListProps {
 
 const List = ({ title, children }: ListProps) => {
   return (
-    <section className="mb-4 px-6">
+    <section className="mb-5 px-6">
       <Text
         typography="t6"
         fontWeight="bold"
@@ -20,7 +20,7 @@ const List = ({ title, children }: ListProps) => {
       >
         {title}
       </Text>
-      <ul className="overflow-hidden rounded-xl border border-primary/10 bg-surface/80 dark:border-grey-dark dark:bg-black">
+      <ul className="overflow-hidden rounded-xl border border-primary/10 bg-search-input-bg/50 dark:border-grey-dark dark:bg-black/35">
         {children}
       </ul>
     </section>
@@ -56,6 +56,7 @@ interface ListItemProps {
   onClick?: VoidFunction;
   onTrue?: VoidFunction;
   onFalse?: VoidFunction;
+  tone?: "default" | "danger";
 }
 
 export const ListItem = ({
@@ -67,6 +68,7 @@ export const ListItem = ({
   onClick,
   onTrue,
   onFalse,
+  tone = "default",
 }: ListItemProps) => {
   const router = useRouter();
 
@@ -91,7 +93,16 @@ export const ListItem = ({
       onKeyDown={(e) => handleEnterOrSpace(e, handleItemClick)}
     >
       <div className="min-w-0">
-        <Text display="block">{title}</Text>
+        <Text
+          display="block"
+          className={
+            tone === "danger"
+              ? "text-coral"
+              : "text-text-on-surface dark:text-grey-light"
+          }
+        >
+          {title}
+        </Text>
         {description && (
           <Text
             display="block"
@@ -105,7 +116,12 @@ export const ListItem = ({
 
       {link && url && <ItemArrow />}
       {onTrue && onFalse && (
-        <ToggleButton onTrue={onTrue} onFalse={onFalse} initValue={initValue} />
+        <ToggleButton
+          ariaLabel={title}
+          onTrue={onTrue}
+          onFalse={onFalse}
+          initValue={initValue}
+        />
       )}
       {onClick && <ItemArrow />}
     </li>

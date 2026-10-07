@@ -1,16 +1,14 @@
 "use client";
 
 import List, { ListItem } from "@pages/config/config-list";
-import { useRouter } from "next/navigation";
-
 const EtcSetting = () => {
-  const router = useRouter();
-  
   return (
     <List title="기타">
       <ListItem
-        title="문의"
-        onClick={() => router.push("/mypage/config/inquiry")}
+        title="문의 및 서비스 안내"
+        description="서비스 정보와 문의 방법을 확인합니다."
+        url="/mypage/config/inquiry"
+        link
       />
     </List>
   );
