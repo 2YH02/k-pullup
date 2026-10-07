@@ -8,7 +8,7 @@ const Loading = () => {
 
   return (
     <SideMain
-      headerTitle="기구 개수 등록"
+      headerTitle="기구 정보 수정"
       hasBackButton
       withNav
       deviceType={deviceType}
@@ -17,12 +17,13 @@ const Loading = () => {
     >
       <div className="flex min-h-full flex-col">
         <Section className="pb-0 pt-4">
-          <div className="mb-5 rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/50 px-3.5 py-3 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/35">
-            <Skeleton className="h-5 w-44 rounded-md" />
-            <Skeleton className="mt-1 h-4 w-56 rounded-md" />
+          <div className="mb-4 rounded-2xl border border-primary/12 bg-search-input-bg/45 p-4 dark:border-white/10 dark:bg-black/30">
+            <Skeleton className="h-3.5 w-20 rounded-md" />
+            <Skeleton className="mt-2 h-6 w-48 rounded-md" />
+            <Skeleton className="mt-2 h-3.5 w-52 rounded-md" />
           </div>
 
-          <div className="rounded-xl border border-primary/25 bg-search-input-bg/45 px-3 py-2 dark:border-primary-dark/50 dark:bg-black/30">
+          <div className="rounded-xl border border-primary/10 bg-search-input-bg/50 px-3 py-2 dark:border-grey-dark dark:bg-black/35">
             <div className="my-1.5 flex items-center rounded-lg px-1.5 py-1">
               <Skeleton className="h-4 w-10 rounded-md" />
               <div className="grow" />
@@ -42,7 +43,7 @@ const Loading = () => {
               </div>
             </div>
           </div>
-          <Skeleton className="mt-3 h-4 w-32 rounded-md" />
+          <Skeleton className="mt-2 h-4 w-40 rounded-md" />
         </Section>
 
         <div className="grow" />

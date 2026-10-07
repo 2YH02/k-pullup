@@ -48,26 +48,14 @@ const SetFacilities = ({
         <FacilityList
           name="철봉"
           count={철봉}
-          increase={() => {
-            if (철봉 === 99) return;
-            increase(1);
-          }}
-          decrease={() => {
-            if (철봉 === 0) return;
-            decrease(1);
-          }}
+          increase={() => increase(1)}
+          decrease={() => decrease(1)}
         />
         <FacilityList
           name="평행봉"
           count={평행봉}
-          increase={() => {
-            if (평행봉 === 99) return;
-            increase(2);
-          }}
-          decrease={() => {
-            if (평행봉 === 0) return;
-            decrease(2);
-          }}
+          increase={() => increase(2)}
+          decrease={() => decrease(2)}
         />
       </div>
       <Text
@@ -98,9 +86,11 @@ export const FacilityList = ({
       <GrowBox />
       <span className="flex items-center rounded-full border border-grey-light/80 bg-side-main px-1 py-0.5 dark:border-grey-dark/80 dark:bg-black/35">
         <button
-          className="rounded-full p-1 text-text-on-surface transition-colors duration-150 active:scale-[0.97] active:bg-black/5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:text-grey-light dark:active:bg-white/10"
+          type="button"
+          className="flex size-8 items-center justify-center rounded-full text-text-on-surface transition-[transform,background-color,opacity] duration-150 active:scale-[0.97] active:bg-black/5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 disabled:cursor-not-allowed disabled:opacity-30 motion-reduce:transform-none motion-reduce:transition-none dark:text-grey-light dark:active:bg-white/10"
           onClick={() => decrease()}
           aria-label={`${name} 감소`}
+          disabled={count <= 0}
         >
           <MinusIcon size={18} />
         </button>
@@ -108,9 +98,11 @@ export const FacilityList = ({
           {count}
         </Text>
         <button
-          className="rounded-full p-1 text-text-on-surface transition-colors duration-150 active:scale-[0.97] active:bg-black/5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 dark:text-grey-light dark:active:bg-white/10"
+          type="button"
+          className="flex size-8 items-center justify-center rounded-full text-text-on-surface transition-[transform,background-color,opacity] duration-150 active:scale-[0.97] active:bg-black/5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35 disabled:cursor-not-allowed disabled:opacity-30 motion-reduce:transform-none motion-reduce:transition-none dark:text-grey-light dark:active:bg-white/10"
           onClick={() => increase()}
           aria-label={`${name} 증가`}
+          disabled={count >= 99}
         >
           <PlusIcon size={18} />
         </button>

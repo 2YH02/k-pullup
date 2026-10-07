@@ -1,5 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import type { FacilitiesRes } from "@api/marker/get-facilities";
 import setNewFacilities from "@api/marker/set-new-facilities";
 import BottomFixedButton from "@common/bottom-fixed-button";
 import GrowBox from "@common/grow-box";
@@ -7,53 +11,54 @@ import Section from "@common/section";
 import Text from "@common/text";
 import LoadingIcon from "@icons/loading-icon";
 import { FacilityList } from "@pages/register/set-facilities";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 
-const FacilitiesClient = ({ markerId }: { markerId: number }) => {
+interface FacilityCounts {
+  철봉: number;
+  평행봉: number;
+}
+
+interface FacilitiesClientProps {
+  markerId: number;
+  initialFacilities: FacilitiesRes[];
+}
+
+const getInitialCounts = (facilities: FacilitiesRes[]): FacilityCounts => ({
+  철봉: facilities.find(({ facilityId }) => facilityId === 1)?.quantity ?? 0,
+  평행봉: facilities.find(({ facilityId }) => facilityId === 2)?.quantity ?? 0,
+});
+
+const FacilitiesClient = ({
+  markerId,
+  initialFacilities,
+}: FacilitiesClientProps) => {
   const router = useRouter();
 
-  const [facilities, setFacilities] = useState({ 철봉: 0, 평행봉: 0 });
+  const [initialCounts] = useState(() => getInitialCounts(initialFacilities));
+  const [facilities, setFacilities] = useState<FacilityCounts>(initialCounts);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const isDisabled = loading || (facilities.철봉 === 0 && facilities.평행봉 === 0);
+  const isChanged =
+    facilities.철봉 !== initialCounts.철봉 ||
+    facilities.평행봉 !== initialCounts.평행봉;
+  const isDisabled = loading || !isChanged;
 
-  const increaseChulbong = () => {
+  const updateFacility = (name: keyof FacilityCounts, amount: number) => {
+    setErrorMessage("");
     setFacilities((prev) => ({
       ...prev,
-      철봉: prev.철봉 + 1,
-    }));
-  };
-  const decreaseChulbong = () => {
-    setFacilities((prev) => ({
-      ...prev,
-      철봉: prev.철봉 - 1,
-    }));
-  };
-  const increasePenghang = () => {
-    setFacilities((prev) => ({
-      ...prev,
-      평행봉: prev.평행봉 + 1,
-    }));
-  };
-  const decreasePenghang = () => {
-    setFacilities((prev) => ({
-      ...prev,
-      평행봉: prev.평행봉 - 1,
+      [name]: Math.min(99, Math.max(0, prev[name] + amount)),
     }));
   };
 
   const submit = async () => {
+    if (loading || !isChanged) return;
+
     setLoading(true);
-    if (!markerId) {
-      setErrorMessage("잠시 후 다시 시도해주세요.");
-      setLoading(false);
-      return;
-    }
+    setErrorMessage("");
 
     try {
       await setNewFacilities({
-        markerId: markerId,
+        markerId,
         facilities: [
           {
             facilityId: 1,
@@ -66,10 +71,10 @@ const FacilitiesClient = ({ markerId }: { markerId: number }) => {
         ],
       });
 
-      router.push(`/pullup/${markerId}`);
+      router.replace(`/pullup/${markerId}`);
       router.refresh();
     } catch {
-      setErrorMessage("잠시 후 다시 시도해주세요.");
+      setErrorMessage("저장하지 못했습니다. 잠시 후 다시 시도해 주세요.");
     } finally {
       setLoading(false);
     }
@@ -78,50 +83,52 @@ const FacilitiesClient = ({ markerId }: { markerId: number }) => {
   return (
     <div className="flex min-h-full flex-col">
       <Section className="pb-0 pt-4">
-        <div className="mb-5 rounded-xl border border-location-badge-bg/80 bg-location-badge-bg/50 px-3.5 py-3 dark:border-location-badge-bg-dark/70 dark:bg-location-badge-bg-dark/35">
+        <div className="mb-4 rounded-2xl border border-primary/12 bg-search-input-bg/45 p-4 dark:border-white/10 dark:bg-black/30">
           <Text
-            fontWeight="bold"
-            className="text-text-on-surface dark:text-grey-light"
-          >
-            기구 개수를 입력하면
-          </Text>
-          <Text
-            typography="t6"
+            typography="t7"
+            display="block"
             className="text-grey-dark dark:text-grey"
           >
-            다른 사람이 더 정확한 정보를 확인할 수 있어요.
+            현재 기구 정보
+          </Text>
+          <Text
+            typography="t4"
+            fontWeight="bold"
+            display="block"
+            className="mt-0.5 text-primary dark:text-primary-light"
+          >
+            철봉 {facilities.철봉}개 · 평행봉 {facilities.평행봉}개
+          </Text>
+          <Text
+            typography="t7"
+            display="block"
+            className="mt-2 text-grey-dark dark:text-grey"
+          >
+            현장에서 확인한 실제 개수로 수정해 주세요.
           </Text>
         </div>
 
-        <div className="rounded-xl border border-primary/25 bg-search-input-bg/45 px-3 py-2 dark:border-primary-dark/50 dark:bg-black/30">
+        <div className="rounded-xl border border-primary/10 bg-search-input-bg/50 px-3 py-2 dark:border-grey-dark dark:bg-black/35">
           <FacilityList
             name="철봉"
             count={facilities.철봉}
-            increase={() => {
-              if (facilities.철봉 === 99) return;
-              increaseChulbong();
-            }}
-            decrease={() => {
-              if (facilities.철봉 === 0) return;
-              decreaseChulbong();
-            }}
+            increase={() => updateFacility("철봉", 1)}
+            decrease={() => updateFacility("철봉", -1)}
           />
           <FacilityList
             name="평행봉"
             count={facilities.평행봉}
-            increase={() => {
-              if (facilities.평행봉 === 99) return;
-              increasePenghang();
-            }}
-            decrease={() => {
-              if (facilities.평행봉 === 0) return;
-              decreasePenghang();
-            }}
+            increase={() => updateFacility("평행봉", 1)}
+            decrease={() => updateFacility("평행봉", -1)}
           />
         </div>
-        <Text typography="t6" className="mt-3 text-red">
-          {errorMessage}
-        </Text>
+        <div aria-live="polite" className="min-h-6 pt-2">
+          {errorMessage && (
+            <Text typography="t7" display="block" className="text-red">
+              {errorMessage}
+            </Text>
+          )}
+        </div>
       </Section>
       <GrowBox />
       <BottomFixedButton
@@ -131,8 +138,10 @@ const FacilitiesClient = ({ markerId }: { markerId: number }) => {
       >
         {loading ? (
           <LoadingIcon size="sm" className="m-0 text-white" />
+        ) : isChanged ? (
+          "변경사항 저장"
         ) : (
-          "등록하기"
+          "변경사항 없음"
         )}
       </BottomFixedButton>
     </div>
