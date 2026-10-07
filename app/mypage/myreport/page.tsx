@@ -32,7 +32,12 @@ const MyreportPage = async () => {
     );
   }
 
-  if (!reports || reports.message === "No reports found") {
+  if (
+    !reports ||
+    reports.message === "No reports found" ||
+    reports.totalReports <= 0 ||
+    Object.keys(reports.markers).length === 0
+  ) {
     return (
       <NotFound
         headerTitle="받은 정보 수정 제안"

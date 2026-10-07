@@ -12,6 +12,7 @@ import Section from "@common/section";
 import SideMain from "@common/side-main";
 import Text from "@common/text";
 import ImageCarousel from "@layout/image-carousel";
+import { formatDate } from "@lib/format-date";
 import { StatusBadge } from "@pages/mypage/report/report-list-item";
 import useAlertStore from "@store/useAlertStore";
 import { ChevronRight, FilePenLine } from "lucide-react";
@@ -36,7 +37,7 @@ const MyreportClient = ({
 
   const [curData, setCurData] = useState<Report | null>(null);
   const [curAddr, setCurAddr] = useState("");
-  const [markerId, setMarkerId] = useState<string | null>(null);
+  const [markerId, setMarkerId] = useState<number | null>(null);
 
   const markerGroups = useMemo(() => Object.entries(data.markers), [data.markers]);
 
@@ -49,7 +50,7 @@ const MyreportClient = ({
   }, [curData]);
 
   const handleDeny = () => {
-    if (!curData || !markerId) {
+    if (!curData || markerId === null) {
       openAlert({
         title: "거절할 수 없습니다.",
         description: "선택된 요청이 없습니다.",
@@ -93,7 +94,7 @@ const MyreportClient = ({
   };
 
   const handleApprove = () => {
-    if (!curData || !markerId) {
+    if (!curData || markerId === null) {
       openAlert({
         title: "승인할 수 없습니다.",
         description: "선택된 요청이 없습니다.",
@@ -151,8 +152,8 @@ const MyreportClient = ({
         backFallbackUrl="/mypage"
         bodyStyle="flex flex-col pb-0"
       >
-        <Section className="pb-2">
-          <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
+        <Section className="pb-3 pt-5">
+          <div className="rounded-2xl border border-primary/12 bg-search-input-bg/45 p-4 dark:border-white/10 dark:bg-black/30">
             <Text typography="t7" display="block" className="mb-0.5 text-grey-dark dark:text-grey">
               받은 제안
             </Text>
@@ -163,7 +164,7 @@ const MyreportClient = ({
         </Section>
 
         <Section className="pt-2">
-          <div className="rounded-xl border border-primary/10 bg-surface/80 p-3 dark:border-grey-dark dark:bg-black">
+          <div className="rounded-xl border border-primary/10 bg-search-input-bg/50 p-3 dark:border-grey-dark dark:bg-black/35">
             <div className="mb-3 flex items-start justify-between gap-2">
               <Text fontWeight="bold" display="block" className="text-primary dark:text-primary-light">
                 수정 요청 정보
@@ -172,6 +173,14 @@ const MyreportClient = ({
             </div>
 
             <div className="space-y-1.5">
+              <div className="flex gap-2">
+                <Text typography="t6" display="block" className="w-10 shrink-0 text-grey-dark dark:text-grey">
+                  요청일
+                </Text>
+                <Text typography="t6" display="block">
+                  {formatDate(curData.createdAt)}
+                </Text>
+              </div>
               <div className="flex gap-2">
                 <Text typography="t6" display="block" className="w-10 shrink-0 text-grey-dark dark:text-grey">
                   주소
@@ -185,12 +194,12 @@ const MyreportClient = ({
                   설명
                 </Text>
                 <Text typography="t6" display="block" className="wrap-break-word">
-                  {curData.description}
+                  {curData.description || "설명 없음"}
                 </Text>
               </div>
             </div>
 
-            {images && images.length > 0 && curData.status !== "APPROVED" && (
+            {images && images.length > 0 && (
               <div className="mb-4 mt-4">
                 <Text
                   typography="t6"
@@ -198,7 +207,7 @@ const MyreportClient = ({
                   display="block"
                   className="mb-1 text-primary dark:text-primary-light"
                 >
-                  추가된 이미지
+                  첨부 사진
                 </Text>
                 <ImageCarousel data={images} />
               </div>
@@ -242,14 +251,16 @@ const MyreportClient = ({
       referrer={!!referrer}
       deviceType={deviceType}
     >
-      <Section className="pb-2">
-        <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
-          <Text fontWeight="bold" display="block" className="text-primary dark:text-primary-light">
-            내 위치에 들어온 수정 제안
+      <Section className="pb-3 pt-5">
+        <div className="rounded-2xl border border-primary/12 bg-search-input-bg/45 p-4 dark:border-white/10 dark:bg-black/30">
+          <Text typography="t7" display="block" className="text-grey-dark dark:text-grey">
+            받은 제안
           </Text>
-          <Text typography="t6" className="mt-0.5 text-grey-dark dark:text-grey">
-            총 <span className="font-bold text-primary dark:text-primary-light">{data.totalReports}</span>
-            건의 제안을 받았어요
+          <Text typography="t4" fontWeight="bold" display="block" className="mt-0.5 text-primary dark:text-primary-light">
+            {data.totalReports}건
+          </Text>
+          <Text typography="t7" display="block" className="mt-2 text-grey-dark dark:text-grey">
+            내가 등록한 장소에 들어온 정보 수정 제안입니다.
           </Text>
         </div>
       </Section>
@@ -257,10 +268,10 @@ const MyreportClient = ({
       {markerGroups.map(([key, { markerID, reports, address }]) => {
         return (
           <Section key={key} className="py-2">
-            <div className="rounded-xl border border-primary/10 bg-surface/80 p-3 dark:border-grey-dark dark:bg-black">
+            <div className="rounded-xl border border-primary/10 bg-search-input-bg/50 p-3 dark:border-grey-dark dark:bg-black/35">
               <div className="mb-2 flex items-center justify-between gap-2">
                 <Text fontWeight="bold" display="block" className="truncate text-primary dark:text-primary-light">
-                  {address || "주소 제공 안됨"}
+                  {address || "주소 정보 없음"}
                 </Text>
                 <Text typography="t7" display="block" className="shrink-0 text-grey-dark dark:text-grey">
                   {reports.length}건
@@ -271,11 +282,11 @@ const MyreportClient = ({
                 {reports.map((report) => (
                   <button
                     key={report.reportID}
-                    className="group min-w-60 cursor-pointer rounded-lg border border-primary/8 bg-search-input-bg/50 dark:bg-black/35 p-3 text-left transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/16 web:hover:bg-search-input-bg/65 active:scale-[0.99] dark:border-grey-dark dark:web:hover:bg-black/45"
+                    className="group min-w-60 cursor-pointer rounded-lg border border-primary/8 bg-search-input-bg/50 p-3 text-left transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/16 web:hover:bg-search-input-bg/65 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25 motion-reduce:transform-none motion-reduce:transition-none dark:border-grey-dark dark:bg-black/35 dark:web:hover:bg-black/45"
                     onClick={() => {
-                      setMarkerId(markerID.toString());
+                      setMarkerId(markerID);
                       setCurData(report);
-                      setCurAddr(address || "주소 제공 안됨");
+                      setCurAddr(address || "주소 정보 없음");
                     }}
                   >
                     <div className="mb-2 flex items-center justify-between">
@@ -286,7 +297,10 @@ const MyreportClient = ({
                       />
                     </div>
                     <Text typography="t7" display="block" className="line-clamp-2 text-grey-dark dark:text-grey">
-                      {report.description || "설명 제공 안됨"}
+                      {report.description || "설명 없음"}
+                    </Text>
+                    <Text typography="t7" display="block" className="mt-1.5 text-grey-dark/80 dark:text-grey/80">
+                      {formatDate(report.createdAt)}
                     </Text>
                     <div className="mt-2 flex items-center text-grey-dark dark:text-grey">
                       <Text typography="t7" display="block">상세 보기</Text>

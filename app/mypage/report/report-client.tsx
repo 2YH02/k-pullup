@@ -33,12 +33,14 @@ const ReportClient = ({
       setReports((prev) => {
         return prev.filter((item) => item.reportId !== reportId);
       });
+      return true;
     } catch {
       openAlert({
         title: "삭제할 수 없습니다.",
         description: "잠시 후 다시 시도해주세요.",
         onClick: () => {},
       });
+      return false;
     }
   };
 
@@ -63,14 +65,16 @@ const ReportClient = ({
       referrer={referrer}
       deviceType={deviceType}
     >
-      <Section className="pb-2">
-        <div className="rounded-xl border border-primary/10 bg-surface/80 px-4 py-3 dark:border-grey-dark dark:bg-black">
-          <Text fontWeight="bold" display="block" className="text-primary dark:text-primary-light">
-            내가 제안한 수정 목록
+      <Section className="pb-3 pt-5">
+        <div className="rounded-2xl border border-primary/12 bg-search-input-bg/45 p-4 dark:border-white/10 dark:bg-black/30">
+          <Text typography="t7" display="block" className="text-grey-dark dark:text-grey">
+            보낸 제안
           </Text>
-          <Text typography="t6" className="mt-0.5 text-grey-dark dark:text-grey">
-            총 <span className="font-bold text-primary dark:text-primary-light">{reports.length}</span>
-            건의 제안을 보냈어요
+          <Text typography="t4" fontWeight="bold" display="block" className="mt-0.5 text-primary dark:text-primary-light">
+            {reports.length}건
+          </Text>
+          <Text typography="t7" display="block" className="mt-2 text-grey-dark dark:text-grey">
+            내가 요청한 정보 수정 제안과 처리 상태입니다.
           </Text>
         </div>
       </Section>

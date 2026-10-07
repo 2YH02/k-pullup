@@ -5,13 +5,14 @@ import Badge from "@common/badge";
 import Button from "@common/button";
 import Text from "@common/text";
 import ImageCarousel from "@layout/image-carousel";
+import { formatDate } from "@lib/format-date";
 import useAlertStore from "@store/useAlertStore";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 
 interface ReportListItemProps {
   data: ReportsRes;
-  onDelete: (markerId: number, reportId: number) => Promise<void>;
+  onDelete: (markerId: number, reportId: number) => Promise<boolean>;
 }
 
 const ReportListItem = ({ data, onDelete }: ReportListItemProps) => {
@@ -33,20 +34,20 @@ const ReportListItem = ({ data, onDelete }: ReportListItemProps) => {
       title: "정말 삭제하시겠습니까?",
       description: "해당 요청이 삭제됩니다.",
       onClickAsync: async () => {
-        await onDelete(data.markerId, data.reportId);
+        const deleted = await onDelete(data.markerId, data.reportId);
+        if (!deleted) return;
         closeAlert();
-        router.refresh();
       },
       cancel: true,
     });
   };
 
   return (
-    <li className="rounded-xl border border-primary/10 bg-surface/80 p-3 dark:border-grey-dark dark:bg-black">
+    <li className="rounded-xl border border-primary/10 bg-search-input-bg/50 p-3 dark:border-grey-dark dark:bg-black/35">
       <div className="mb-3 flex items-start justify-between gap-3">
         <div>
           <Text typography="t7" display="block" className="mb-0.5 text-grey-dark dark:text-grey">
-            제안 #{data.reportId}
+            {formatDate(data.createdAt)} · 제안 #{data.reportId}
           </Text>
           <Text fontWeight="bold" display="block" className="text-primary dark:text-primary-light">
             정보 수정 제안
@@ -62,7 +63,7 @@ const ReportListItem = ({ data, onDelete }: ReportListItemProps) => {
               주소
             </Text>
             <Text typography="t6" display="block" className="wrap-break-word">
-              {data.address}
+              {data.address || "주소 정보 없음"}
             </Text>
           </div>
           <div className="flex gap-2">
@@ -70,7 +71,7 @@ const ReportListItem = ({ data, onDelete }: ReportListItemProps) => {
               설명
             </Text>
             <Text typography="t6" display="block" className="wrap-break-word">
-              {data.description}
+              {data.description || "설명 없음"}
             </Text>
           </div>
         </div>
@@ -103,7 +104,7 @@ const ReportListItem = ({ data, onDelete }: ReportListItemProps) => {
           className="h-9 rounded-md"
           full
         >
-          위치 자세히 보기
+          위치 상세 보기
         </Button>
       </div>
     </li>
