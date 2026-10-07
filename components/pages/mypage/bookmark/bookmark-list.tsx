@@ -5,7 +5,7 @@ import type { Favorite } from "@api/user/favorites";
 import BottomSheet, { BottomSheetItem } from "@common/bottom-sheet";
 import Text from "@common/text";
 import { useToast } from "@hooks/useToast";
-import PinIcon from "@icons/pin-icon";
+import { MapPin } from "lucide-react";
 import { useBottomSheetStore } from "@store/useBottomSheetStore";
 import { MoreHorizontal, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -26,6 +26,22 @@ const BookmarkList = ({ data }: BookmarkList) => {
     });
   };
 
+  if (markers.length === 0) {
+    return (
+      <section className="px-6 pb-6">
+        <div className="rounded-xl border border-grey-light/80 bg-search-input-bg/40 px-4 py-7 text-center dark:border-grey-dark/80 dark:bg-black/30">
+          <MapPin size={24} strokeWidth={1.8} className="mx-auto text-primary/75 dark:text-primary-light" />
+          <Text typography="t6" fontWeight="bold" display="block" className="mt-3 text-text-on-surface dark:text-grey-light">
+            저장한 장소가 없습니다.
+          </Text>
+          <Text typography="t7" display="block" className="mt-1 text-grey-dark dark:text-grey">
+            상세 페이지에서 마음에 드는 장소를 저장해보세요.
+          </Text>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="px-6 pb-6">
       <ul className="space-y-2">
@@ -36,7 +52,7 @@ const BookmarkList = ({ data }: BookmarkList) => {
               id={marker.markerId}
               title={marker.address || "주소 정보 없음"}
               subTitle={marker.description || "설명 없음"}
-              leftIcon={<PinIcon size={26} />}
+              leftIcon={<MapPin size={18} strokeWidth={2} className="text-primary dark:text-primary-light" />}
               onClick={() => {
                 router.push(`/pullup/${marker.markerId}`);
               }}
@@ -85,15 +101,16 @@ const ListItem = ({
   };
 
   return (
-    <li className="group flex items-center gap-2 rounded-xl border border-primary/10 bg-surface/80 px-3 py-2.5 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-white/70 active:scale-[0.995] dark:border-grey-dark dark:bg-black dark:web:hover:bg-black-light">
+    <li className="group flex items-center gap-2 rounded-xl border border-primary/10 bg-search-input-bg/50 px-3 py-2.5 transition-[transform,background-color,border-color] duration-180 ease-out web:hover:border-primary/20 web:hover:bg-search-input-bg active:scale-[0.995] dark:border-grey-dark dark:bg-black/35 dark:web:hover:bg-black/45">
       <div className="min-w-0 grow">
         <button
-          className="flex w-full cursor-pointer items-center gap-3 text-left focus-visible:outline-none"
+          className="flex w-full cursor-pointer items-center gap-3 rounded-lg text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/25"
+          type="button"
           onClick={onClick}
         >
           {leftIcon && (
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/8 dark:bg-primary-dark/20">
-              {leftIcon}
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/8 dark:bg-primary-dark/20">
+                {leftIcon}
             </div>
           )}
           <div className="min-w-0 max-w-[85%]">
@@ -114,7 +131,7 @@ const ListItem = ({
       </div>
       <button
         className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-grey-dark transition-colors duration-150 web:hover:bg-primary/10 web:hover:text-primary active:scale-[0.98] dark:text-grey dark:web:hover:bg-primary-dark/20 dark:web:hover:text-primary-light"
-        aria-label="즐겨찾기 옵션"
+        aria-label="즐겨찾기 옵션 열기"
         onClick={(e) => {
           e.stopPropagation();
           show(`bookmark-${id}`);
@@ -122,7 +139,7 @@ const ListItem = ({
       >
         <MoreHorizontal size={18} />
       </button>
-      <BottomSheet title="저장한 장소" id={`bookmark-${id}`} className="pb-10">
+      <BottomSheet title="즐겨찾기 옵션" id={`bookmark-${id}`} className="pb-10">
         <BottomSheetItem
           icon={<Trash2 size={20} />}
           onClick={handleDelete}

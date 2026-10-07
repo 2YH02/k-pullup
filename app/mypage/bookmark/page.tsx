@@ -1,7 +1,7 @@
 import favorites from "@api/user/favorites";
 import Section from "@common/section";
 import SideMain from "@common/side-main";
-import WarningText from "@common/warning-text";
+import Text from "@common/text";
 import AuthError from "@layout/auth-error";
 import NotFound from "@layout/not-found";
 import guardServerFetch from "@lib/server-fetch-guard";
@@ -34,7 +34,7 @@ const RankingPage = async () => {
     );
   }
 
-  if (!markers?.data || markers.data.length <= 0) {
+  if (!markers?.data) {
     return (
       <NotFound
         headerTitle="즐겨찾기"
@@ -45,6 +45,8 @@ const RankingPage = async () => {
     );
   }
 
+  const favoriteCount = markers.data.length;
+
   return (
     <SideMain
       headerTitle="즐겨찾기"
@@ -53,11 +55,23 @@ const RankingPage = async () => {
       referrer={!!referrer}
       deviceType={deviceType}
     >
-      <Section className="pb-2">
-        <div className="rounded-xl border border-yellow/35 bg-yellow/10 px-3 py-2 dark:border-yellow-dark/40 dark:bg-yellow-dark/10">
-          <WarningText className="text-[13px]">
-            즐겨찾기는 최대 10개까지 추가할 수 있습니다.
-          </WarningText>
+      <Section className="pb-3 pt-5">
+        <div className="rounded-2xl border border-primary/12 bg-search-input-bg/45 p-4 dark:border-white/10 dark:bg-black/30">
+          <Text typography="t7" display="block" className="text-grey-dark dark:text-grey">
+            저장한 장소
+          </Text>
+          <Text typography="t4" fontWeight="bold" display="block" className="mt-0.5 text-primary dark:text-primary-light">
+            {favoriteCount} / 10곳
+          </Text>
+          <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-primary/10 dark:bg-white/10">
+            <div
+              className="h-full rounded-full bg-primary transition-[width] duration-200 motion-reduce:transition-none dark:bg-primary-light"
+              style={{ width: `${Math.min((favoriteCount / 10) * 100, 100)}%` }}
+            />
+          </div>
+          <Text typography="t7" display="block" className="mt-2 text-grey-dark dark:text-grey">
+            최대 10곳까지 저장할 수 있어요.
+          </Text>
         </div>
       </Section>
 
