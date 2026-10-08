@@ -8,6 +8,7 @@ import GoogleAnalytics from "@provider/google-analytics";
 import ImageModalProvider from "@provider/image-modal-provider";
 import KakaoSdk from "@provider/kakao-sdk";
 import LoadMarker from "@provider/load-marker";
+import MockServiceWorker from "@provider/mock-service-worker";
 import ThemeProvider from "@provider/theme-provider";
 import { Toaster } from "@provider/toaster";
 import UserProvider from "@provider/user-provider";
@@ -116,31 +117,33 @@ export default function RootLayout({
             }),
           }}
         />
-        <KakaoSdk />
-        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
-        ) : null}
-        <GoogleAdsense />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ChatIdProvider>
-            <AlertProvider>
-              <ImageModalProvider>
-                <UserProvider>
-                  <LoadMarker />
-                  <GeoProvider>{children}</GeoProvider>
-                  <Roadview />
-                  <Toaster />
-                </UserProvider>
-              </ImageModalProvider>
-            </AlertProvider>
-            <KakaoMap />
-          </ChatIdProvider>
-        </ThemeProvider>
+        <MockServiceWorker>
+          <KakaoSdk />
+          {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+            <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+          ) : null}
+          <GoogleAdsense />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ChatIdProvider>
+              <AlertProvider>
+                <ImageModalProvider>
+                  <UserProvider>
+                    <LoadMarker />
+                    <GeoProvider>{children}</GeoProvider>
+                    <Roadview />
+                    <Toaster />
+                  </UserProvider>
+                </ImageModalProvider>
+              </AlertProvider>
+              <KakaoMap />
+            </ChatIdProvider>
+          </ThemeProvider>
+        </MockServiceWorker>
         <div id="portal"></div>
         <div id="image-portal"></div>
       </body>

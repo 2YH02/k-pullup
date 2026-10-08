@@ -3,6 +3,10 @@ import fetchData from "@lib/fetchData";
 export interface SearchMarkers {
   address: string;
   markerId: number;
+  thumbnailUrl?: string;
+  photoCount?: number;
+  facilityCount?: number;
+  facilityTotal?: number;
 }
 
 export interface SearchRes {
