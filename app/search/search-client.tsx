@@ -26,6 +26,10 @@ export interface SearchData {
   address: string;
   markerId?: number;
   position?: { lat: string; lng: string };
+  thumbnailUrl?: string;
+  photoCount?: number;
+  facilityCount?: number;
+  facilityTotal?: number;
 }
 
 const SearchClient = ({

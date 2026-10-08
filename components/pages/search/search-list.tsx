@@ -8,6 +8,7 @@ import PinIcon from "@icons/pin-icon";
 import { type KakaoPlace } from "@/types/kakao-place.types";
 import useSearchStore from "@store/useSearchStore";
 import useSheetHeightStore from "@store/useSheetHeightStore";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { BsPinMapFill } from "react-icons/bs";
 
@@ -91,6 +92,9 @@ const SearchList = ({
   }
 
   const totalResults = result.length + kakaoSearchResult.length;
+  const sortedMarkerResults = [...result].sort(
+    (a, b) => Number(Boolean(b.thumbnailUrl)) - Number(Boolean(a.thumbnailUrl))
+  );
 
   return (
     <>
@@ -125,7 +129,18 @@ const SearchList = ({
             철봉 위치
           </Text>
           <ul className="space-y-2">
-            {result.map((item, index) => {
+            {sortedMarkerResults.map((item, index) => {
+              const markerMeta = [
+                item.photoCount ? `사진 ${item.photoCount}장` : null,
+                item.facilityCount
+                  ? `기구 ${item.facilityCount}종${
+                      item.facilityTotal ? ` · 총 ${item.facilityTotal}개` : ""
+                    }`
+                  : null,
+              ]
+                .filter(Boolean)
+                .join(" · ");
+
               return (
                 <li key={`${item.markerId ? item.markerId : item.address}-${index}`}>
                   <button
@@ -148,16 +163,41 @@ const SearchList = ({
                       aria-hidden
                       className="absolute inset-0 pointer-events-none bg-linear-to-br from-white/32 via-transparent to-primary/10 dark:from-white/8 dark:to-primary-dark/18"
                     />
-                    <div className="relative shrink-0 h-10 w-10 rounded-full border border-white/45 dark:border-white/10 bg-white/45 dark:bg-white/7 flex items-center justify-center">
-                      <PinIcon />
-                    </div>
+                    {item.thumbnailUrl ? (
+                      <div className="relative shrink-0 h-16 w-20 overflow-hidden rounded-lg border border-white/55 dark:border-white/10 bg-grey-light/40 dark:bg-grey-dark/40">
+                        <Image
+                          src={item.thumbnailUrl}
+                          alt=""
+                          fill
+                          sizes="80px"
+                          className="object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className="relative shrink-0 h-10 w-10 rounded-full border border-white/45 dark:border-white/10 bg-white/45 dark:bg-white/7 flex items-center justify-center">
+                        <PinIcon />
+                      </div>
+                    )}
                     <div className="relative min-w-0 flex-1">
-                      <Text typography="t6" className="break-keep break-words text-text-on-surface dark:text-grey-light">
+                      <Text
+                        typography="t6"
+                        display="block"
+                        className="break-keep break-words line-clamp-2 text-text-on-surface dark:text-grey-light"
+                      >
                         {highlightText(
                           removeMarkTags(item.address),
                           extractMarkedText(item.address).marked
                         )}
                       </Text>
+                      {markerMeta && (
+                        <Text
+                          typography="t7"
+                          display="block"
+                          className="mt-1 text-text-on-surface-muted dark:text-grey"
+                        >
+                          {markerMeta}
+                        </Text>
+                      )}
                     </div>
                   </button>
                 </li>
