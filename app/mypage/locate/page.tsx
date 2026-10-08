@@ -8,6 +8,7 @@ import guardServerFetch from "@lib/server-fetch-guard";
 import RegisteredLocateList from "@pages/mypage/locate/registered-locate-list";
 import { cookies, headers } from "next/headers";
 import getServerDeviceType from "@lib/get-server-device-type";
+import isInternalReferrer from "@lib/is-internal-referrer";
 
 const MyRegisteredLocationsPage = async () => {
   const cookieStore = cookies();
@@ -15,6 +16,7 @@ const MyRegisteredLocationsPage = async () => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const hasInternalReferrer = isInternalReferrer(referrer, headersList.get("host"));
 
   const deviceType = getServerDeviceType();
 
@@ -56,7 +58,7 @@ const MyRegisteredLocationsPage = async () => {
       headerTitle="내가 등록한 위치"
       hasBackButton
       backFallbackUrl="/mypage"
-      referrer={!!referrer}
+      referrer={hasInternalReferrer}
       deviceType={deviceType}
     >
       <Section className="pb-3 pt-5">

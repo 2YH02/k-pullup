@@ -32,7 +32,7 @@ interface PullupClientProps {
   facilities: FacilitiesRes[];
   marker: Marker;
   deviceType: Device;
-  referrer: string | null;
+  referrer: boolean;
   initialComments: CommentsRes;
 }
 
@@ -121,7 +121,7 @@ const PullupClient = ({
     <SideMain
       headerTitle={marker.address || marker.addr || "위치 상세"}
       hasBackButton
-      referrer={!!referrer}
+      referrer={referrer}
       deviceType={deviceType}
       headerIcon={
         <BsHouseDoor size={20} className="text-black dark:text-grey-light" />

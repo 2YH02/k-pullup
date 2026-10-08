@@ -4,6 +4,7 @@ import ResetPasswordForm from "@pages/reset-password/reset-password-form";
 import SendPasswordForm from "@pages/reset-password/send-password-form";
 import { headers } from "next/headers";
 import getServerDeviceType from "@lib/get-server-device-type";
+import isInternalReferrer from "@lib/is-internal-referrer";
 
 interface PageProps {
   searchParams: {
@@ -23,6 +24,7 @@ const ResetPasswordPage = ({ searchParams }: PageProps) => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const hasInternalReferrer = isInternalReferrer(referrer, headersList.get("host"));
 
   const deviceType = getServerDeviceType();
 
@@ -31,7 +33,7 @@ const ResetPasswordPage = ({ searchParams }: PageProps) => {
       headerTitle="비밀번호 초기화"
       fullHeight
       hasBackButton
-      referrer={!!referrer}
+      referrer={hasInternalReferrer}
       deviceType={deviceType}
     >
         <Section className="pt-8">

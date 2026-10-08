@@ -4,8 +4,8 @@ import Section from "@pages/terms/section";
 const PrivacyPolicyPage = () => {
   return (
     <SideMain headerTitle="개인정보처리방침" fullHeight hasBackButton>
-      <div className="p-6">
-        <h1 className="text-2xl font-bold mb-6 text-center dark:text-white">
+      <div className="mx-auto w-full max-w-2xl px-6 py-5 pb-10">
+        <h1 className="mb-7 text-xl font-bold text-text-on-surface dark:text-grey-light">
           개인정보처리방침
         </h1>
 

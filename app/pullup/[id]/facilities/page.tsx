@@ -4,6 +4,7 @@ import getFacilities from "@api/marker/get-facilities";
 import SideMain from "@common/side-main";
 import NotFound from "@layout/not-found";
 import getServerDeviceType from "@lib/get-server-device-type";
+import isInternalReferrer from "@lib/is-internal-referrer";
 
 import FacilitiesClient from "./facilities-client";
 
@@ -13,6 +14,7 @@ const FacilitiesPage = async ({ params }: { params: { id: string } }) => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const hasInternalReferrer = isInternalReferrer(referrer, headersList.get("host"));
 
   const deviceType = getServerDeviceType();
 
@@ -50,7 +52,7 @@ const FacilitiesPage = async ({ params }: { params: { id: string } }) => {
       hasBackButton
       withNav
       fullHeight
-      referrer={!!referrer}
+      referrer={hasInternalReferrer}
       deviceType={deviceType}
       dragable={false}
       bodyStyle="pb-0 mo:pb-0"

@@ -16,6 +16,12 @@ const EtcSetting = () => {
         url="/mypage/config/inquiry"
         link
       />
+      <ListItem
+        title="약관 및 정책"
+        description="서비스 이용약관과 개인정보 정책을 확인합니다."
+        url="/terms"
+        link
+      />
     </List>
   );
 };

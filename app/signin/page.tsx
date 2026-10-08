@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import KakaoLoginButton from "@/components/pages/signin/kakao-login-button";
 import getServerDeviceType from "@lib/get-server-device-type";
+import isInternalReferrer from "@lib/is-internal-referrer";
 
 interface PageProps {
   searchParams: {
@@ -24,6 +25,7 @@ const SigninPage = ({ searchParams }: PageProps) => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const hasInternalReferrer = isInternalReferrer(referrer, headersList.get("host"));
   const safeReturnUrl =
     returnUrl && returnUrl.startsWith("/") && !returnUrl.startsWith("//")
       ? returnUrl
@@ -36,7 +38,7 @@ const SigninPage = ({ searchParams }: PageProps) => {
       headerTitle="로그인"
       fullHeight
       hasBackButton
-      referrer={!!referrer}
+      referrer={hasInternalReferrer}
       backFallbackUrl={safeReturnUrl}
       deviceType={deviceType}
     >

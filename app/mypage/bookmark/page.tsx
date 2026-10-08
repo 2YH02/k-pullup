@@ -8,6 +8,7 @@ import guardServerFetch from "@lib/server-fetch-guard";
 import BookmarkList from "@pages/mypage/bookmark/bookmark-list";
 import { cookies, headers } from "next/headers";
 import getServerDeviceType from "@lib/get-server-device-type";
+import isInternalReferrer from "@lib/is-internal-referrer";
 
 const RankingPage = async () => {
   const cookieStore = cookies();
@@ -15,6 +16,7 @@ const RankingPage = async () => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const hasInternalReferrer = isInternalReferrer(referrer, headersList.get("host"));
 
   const deviceType = getServerDeviceType();
 
@@ -52,7 +54,7 @@ const RankingPage = async () => {
       headerTitle="즐겨찾기"
       hasBackButton
       backFallbackUrl="/mypage"
-      referrer={!!referrer}
+      referrer={hasInternalReferrer}
       deviceType={deviceType}
     >
       <Section className="pb-3 pt-5">

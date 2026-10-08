@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import SignupClient from "./signup-client";
 import getServerDeviceType from "@lib/get-server-device-type";
+import isInternalReferrer from "@lib/is-internal-referrer";
 
 interface PageProps {
   searchParams: {
@@ -20,6 +21,7 @@ const SignupPage = ({ searchParams }: PageProps) => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const hasInternalReferrer = isInternalReferrer(referrer, headersList.get("host"));
 
   const deviceType = getServerDeviceType();
 
@@ -27,7 +29,7 @@ const SignupPage = ({ searchParams }: PageProps) => {
     <>
       <SignupClient
         returnUrl={returnUrl}
-        referrer={!!referrer}
+        referrer={hasInternalReferrer}
         deviceType={deviceType}
       />
     </>

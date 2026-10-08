@@ -4,11 +4,13 @@ import EtcSetting from "@pages/config/etc-setting";
 import UserSetting from "@pages/config/user-setting";
 import { headers } from "next/headers";
 import getServerDeviceType from "@lib/get-server-device-type";
-// TODO: referror 가끔 적용 안되는 문제 확인 필요
+import isInternalReferrer from "@lib/is-internal-referrer";
 
 const ConfigPage = () => {
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const host = headersList.get("host");
+  const hasInternalReferrer = isInternalReferrer(referrer, host);
 
   const deviceType = getServerDeviceType();
 
@@ -18,7 +20,7 @@ const ConfigPage = () => {
       fullHeight
       hasBackButton
       backFallbackUrl="/mypage"
-      referrer={!!referrer}
+      referrer={hasInternalReferrer}
       deviceType={deviceType}
     >
       <AppSetting />
