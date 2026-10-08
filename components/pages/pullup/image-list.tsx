@@ -20,6 +20,18 @@ type Props = {
   onPhotoDeleted?: (photoId: number) => void;
 };
 
+interface PhotoTileProps {
+  photo: Photo;
+  index: number;
+  isOwnerOrAdmin: boolean;
+  isDeleteVisible: boolean;
+  isDeleting: boolean;
+  onOpen: (index: number) => void;
+  onMouseEnter: (photoId: number) => void;
+  onMouseLeave: () => void;
+  onDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
 const ImageList = ({
   photos,
   markerId,
@@ -160,88 +172,48 @@ const ImageList = ({
         <>
           <div className="flex gap-2">
             <div className="w-1/2">
-              {photos.map((photo, i) => {
-                if (i % 2 === 1) return;
-                return (
-                  <div
+              {photos.map((photo, index) =>
+                index % 2 === 0 ? (
+                  <PhotoTile
                     key={photo.photoId}
-                    className="relative mb-2 w-full"
-                    onMouseEnter={() => handleMouseEnter(photo.photoId)}
+                    photo={photo}
+                    index={index}
+                    isOwnerOrAdmin={isOwnerOrAdmin}
+                    isDeleteVisible={
+                      showMobileDeleteBtn || visibleDeleteBtn === photo.photoId
+                    }
+                    isDeleting={deletingPhotoId === photo.photoId}
+                    onOpen={(photoIndex) =>
+                      openModal({ images, curIndex: photoIndex })
+                    }
+                    onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                  >
-                    <button
-                      className="group block w-full overflow-hidden rounded-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35"
-                      onClick={() => {
-                        openModal({ images, curIndex: i });
-                      }}
-                    >
-                      <FadeInImage
-                        src={photo.photoUrl}
-                        w={230}
-                        h={230}
-                        alt="상세"
-                        className="rounded-md transition-transform duration-200 group-active:scale-[0.99]"
-                      />
-                    </button>
-                    {isOwnerOrAdmin && (
-                      <button
-                        onClick={(e) => handleDeleteClick(photo.photoId, e)}
-                        disabled={deletingPhotoId === photo.photoId}
-                        className={`absolute top-2 right-2 rounded-full border border-white/35 bg-black/55 p-1.5 text-white transition-all duration-200 hover:bg-black/75 active:scale-[0.96] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/70 disabled:opacity-50 ${
-                          showMobileDeleteBtn || visibleDeleteBtn === photo.photoId
-                            ? "opacity-100"
-                            : "pointer-events-none opacity-0"
-                        }`}
-                        aria-label="사진 삭제"
-                      >
-                        <BsX size={20} />
-                      </button>
-                    )}
-                  </div>
-                );
-              })}
+                    onDelete={(event) => handleDeleteClick(photo.photoId, event)}
+                  />
+                ) : null
+              )}
             </div>
             <div className="w-1/2">
-              {photos.map((photo, i) => {
-                if (i % 2 !== 1) return;
-                return (
-                  <div
+              {photos.map((photo, index) =>
+                index % 2 === 1 ? (
+                  <PhotoTile
                     key={photo.photoId}
-                    className="relative mb-2 w-full"
-                    onMouseEnter={() => handleMouseEnter(photo.photoId)}
+                    photo={photo}
+                    index={index}
+                    isOwnerOrAdmin={isOwnerOrAdmin}
+                    isDeleteVisible={
+                      showMobileDeleteBtn || visibleDeleteBtn === photo.photoId
+                    }
+                    isDeleting={deletingPhotoId === photo.photoId}
+                    onOpen={(photoIndex) =>
+                      openModal({ images, curIndex: photoIndex })
+                    }
+                    onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                  >
-                    <button
-                      className="group block w-full overflow-hidden rounded-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35"
-                      onClick={() => {
-                        openModal({ images, curIndex: i });
-                      }}
-                    >
-                      <FadeInImage
-                        src={photo.photoUrl}
-                        w={230}
-                        h={230}
-                        alt="상세"
-                        className="rounded-md transition-transform duration-200 group-active:scale-[0.99]"
-                      />
-                    </button>
-                    {isOwnerOrAdmin && (
-                      <button
-                        onClick={(e) => handleDeleteClick(photo.photoId, e)}
-                        disabled={deletingPhotoId === photo.photoId}
-                        className={`absolute top-2 right-2 rounded-full border border-white/35 bg-black/55 p-1.5 text-white transition-all duration-200 hover:bg-black/75 active:scale-[0.96] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/70 disabled:opacity-50 ${
-                          showMobileDeleteBtn || visibleDeleteBtn === photo.photoId
-                            ? "opacity-100"
-                            : "pointer-events-none opacity-0"
-                        }`}
-                        aria-label="사진 삭제"
-                      >
-                        <BsX size={20} />
-                      </button>
-                    )}
-                  </div>
-                );
-              })}
+                    onDelete={(event) => handleDeleteClick(photo.photoId, event)}
+                  />
+                ) : null
+              )}
             </div>
           </div>
         </>
@@ -264,6 +236,56 @@ const ImageList = ({
 };
 
 export default ImageList;
+
+const PhotoTile = ({
+  photo,
+  index,
+  isOwnerOrAdmin,
+  isDeleteVisible,
+  isDeleting,
+  onOpen,
+  onMouseEnter,
+  onMouseLeave,
+  onDelete,
+}: PhotoTileProps) => {
+  return (
+    <div
+      className="relative mb-2 w-full"
+      onMouseEnter={() => onMouseEnter(photo.photoId)}
+      onMouseLeave={onMouseLeave}
+    >
+      <button
+        type="button"
+        className="group block w-full overflow-hidden rounded-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/35"
+        onClick={() => onOpen(index)}
+        aria-label={`철봉 사진 ${index + 1} 크게 보기`}
+      >
+        <FadeInImage
+          src={photo.photoUrl}
+          w={230}
+          h={230}
+          alt={`철봉 사진 ${index + 1}`}
+          className="rounded-md transition-transform duration-200 group-active:scale-[0.99]"
+        />
+      </button>
+      {isOwnerOrAdmin && (
+        <button
+          type="button"
+          onClick={onDelete}
+          disabled={isDeleting}
+          className={`absolute right-2 top-2 rounded-full border border-white/35 bg-black/55 p-1.5 text-white transition-all duration-200 web:hover:bg-black/75 active:scale-[0.96] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-white/70 disabled:opacity-50 ${
+            isDeleteVisible
+              ? "opacity-100"
+              : "pointer-events-none opacity-0"
+          }`}
+          aria-label="사진 삭제"
+        >
+          <BsX size={20} />
+        </button>
+      )}
+    </div>
+  );
+};
 
 const ImageIcon = () => {
   return (

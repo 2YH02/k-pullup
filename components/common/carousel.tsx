@@ -194,43 +194,45 @@ const CarouselItem = React.forwardRef<
 });
 CarouselItem.displayName = "CarouselItem";
 
-const CarouselPrevious = () => {
+interface CarouselControlProps {
+  className?: React.ComponentProps<"button">["className"];
+}
+
+const CarouselPrevious = ({ className }: CarouselControlProps) => {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
   return (
     <Button
-      className={`absolute rounded-full ${
-        orientation === "horizontal"
-          ? "-left-12 top-1/2 -translate-y-1/2"
-          : "-top-12 left-1/2 -translate-x-1/2 rotate-90"
-      }`}
+      className={cn("absolute rounded-full", {
+        "-left-12 top-1/2 -translate-y-1/2": orientation === "horizontal",
+        "-top-12 left-1/2 -translate-x-1/2 rotate-90": orientation !== "horizontal",
+      }, className)}
       size="sm"
       disabled={!canScrollPrev}
       onClick={scrollPrev}
     >
       <ArrowLeftIcon />
-      <span className="sr-only">Previous slide</span>
+        <span className="sr-only">이전 이미지</span>
     </Button>
   );
 };
 CarouselPrevious.displayName = "CarouselPrevious";
 
-const CarouselNext = () => {
+const CarouselNext = ({ className }: CarouselControlProps) => {
   const { orientation, scrollNext, canScrollNext } = useCarousel();
 
   return (
     <Button
-      className={`absolute rounded-full ${
-        orientation === "horizontal"
-          ? "-right-12 top-1/2 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90"
-      }`}
+      className={cn("absolute rounded-full", {
+        "-right-12 top-1/2 -translate-y-1/2": orientation === "horizontal",
+        "-bottom-12 left-1/2 -translate-x-1/2 rotate-90": orientation !== "horizontal",
+      }, className)}
       size="sm"
       disabled={!canScrollNext}
       onClick={scrollNext}
     >
       <ArrowRightIcon />
-      <span className="sr-only">Next slide</span>
+        <span className="sr-only">다음 이미지</span>
     </Button>
   );
 };
