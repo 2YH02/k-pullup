@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import RegisterClient from "./register-client";
 import getServerDeviceType from "@lib/get-server-device-type";
+import isInternalReferrer from "@lib/is-internal-referrer";
 
 export const generateMetadata = () => {
   return {
@@ -12,10 +13,11 @@ export const generateMetadata = () => {
 const Register = () => {
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const hasInternalReferrer = isInternalReferrer(referrer, headersList.get("host"));
 
   const deviceType = getServerDeviceType();
 
-  return <RegisterClient referrer={!!referrer} deviceType={deviceType} />;
+  return <RegisterClient referrer={hasInternalReferrer} deviceType={deviceType} />;
 };
 
 export default Register;

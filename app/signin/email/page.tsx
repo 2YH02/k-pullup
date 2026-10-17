@@ -3,6 +3,7 @@ import SideMain from "@common/side-main";
 import SigninForm from "@pages/signin/signin-form";
 import { headers } from "next/headers";
 import getServerDeviceType from "@lib/get-server-device-type";
+import isInternalReferrer from "@lib/is-internal-referrer";
 
 interface EmailPageProps {
   searchParams: {
@@ -21,6 +22,7 @@ const EmailSigninPage = ({ searchParams }: EmailPageProps) => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const hasInternalReferrer = isInternalReferrer(referrer, headersList.get("host"));
 
   const deviceType = getServerDeviceType();
 
@@ -29,7 +31,7 @@ const EmailSigninPage = ({ searchParams }: EmailPageProps) => {
       headerTitle="로그인"
       fullHeight
       hasBackButton
-      referrer={!!referrer}
+      referrer={hasInternalReferrer}
       deviceType={deviceType}
     >
       <div className="flex h-full w-full flex-col pt-8">
