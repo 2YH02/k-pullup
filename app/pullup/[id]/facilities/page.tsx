@@ -53,6 +53,7 @@ const FacilitiesPage = async ({ params }: { params: { id: string } }) => {
       withNav
       fullHeight
       referrer={hasInternalReferrer}
+      backFallbackUrl={`/pullup/${markerId}`}
       deviceType={deviceType}
       dragable={false}
       bodyStyle="pb-0 mo:pb-0"
