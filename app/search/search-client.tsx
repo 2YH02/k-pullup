@@ -137,7 +137,10 @@ const SearchClient = ({
   const handleEnterKey = () => {
     // Navigate to first result on Enter key
     if (result.length > 0) {
-      const firstResult = result[0];
+      const firstResult = [...result].sort(
+        (a, b) =>
+          Number(Boolean(b.thumbnailUrl)) - Number(Boolean(a.thumbnailUrl))
+      )[0];
       if (firstResult.markerId) {
         router.push(`/pullup/${firstResult.markerId}`);
       } else if (firstResult.position) {
