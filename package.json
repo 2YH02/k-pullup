@@ -55,6 +55,7 @@
     "fast-check": "^4.8.0",
     "happy-dom": "^20.10.6",
     "husky": "^9.1.7",
+    "msw": "^2.4.9",
     "postcss": "^8",
     "tailwindcss": "^4.1.18",
     "typescript": "^5",

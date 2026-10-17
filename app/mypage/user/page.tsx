@@ -6,6 +6,7 @@ import UserinfoCard from "@pages/mypage/user/userinfo-card";
 import UsernameCard from "@pages/mypage/user/username-card";
 import { cookies, headers } from "next/headers";
 import getServerDeviceType from "@lib/get-server-device-type";
+import isInternalReferrer from "@lib/is-internal-referrer";
 
 const UserPage = async () => {
   const cookieStore = cookies();
@@ -13,6 +14,7 @@ const UserPage = async () => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const hasInternalReferrer = isInternalReferrer(referrer, headersList.get("host"));
 
   const deviceType = getServerDeviceType();
 
@@ -38,7 +40,7 @@ const UserPage = async () => {
       headerTitle="내 정보 관리"
       fullHeight
       hasBackButton
-      referrer={!!referrer}
+      referrer={hasInternalReferrer}
       deviceType={deviceType}
     >
       <UsernameCard user={user} />

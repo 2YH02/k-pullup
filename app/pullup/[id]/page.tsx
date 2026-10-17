@@ -7,6 +7,7 @@ import { cookies, headers } from "next/headers";
 import { cache } from "react";
 import PullupClient from "./pullup-client";
 import getServerDeviceType from "@lib/get-server-device-type";
+import isInternalReferrer from "@lib/is-internal-referrer";
 
 type Params = {
   id: string;
@@ -67,6 +68,7 @@ const PullupPage = async ({ params }: { params: Params }) => {
   const { id } = params;
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const hasInternalReferrer = isInternalReferrer(referrer, headersList.get("host"));
 
   const deviceType = getServerDeviceType();
 
@@ -94,7 +96,7 @@ const PullupPage = async ({ params }: { params: Params }) => {
   return (
     <PullupClient
       deviceType={deviceType}
-      referrer={referrer}
+        referrer={hasInternalReferrer}
       marker={marker}
       facilities={facilities}
       initialComments={initialComments}

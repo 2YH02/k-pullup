@@ -5,6 +5,7 @@ import guardServerFetch from "@lib/server-fetch-guard";
 import { cookies, headers } from "next/headers";
 import MyreportClient from "./myreport-client";
 import getServerDeviceType from "@lib/get-server-device-type";
+import isInternalReferrer from "@lib/is-internal-referrer";
 
 const MyreportPage = async () => {
   const cookieStore = cookies();
@@ -12,6 +13,7 @@ const MyreportPage = async () => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const hasInternalReferrer = isInternalReferrer(referrer, headersList.get("host"));
 
   const deviceType = getServerDeviceType();
 
@@ -54,7 +56,7 @@ const MyreportPage = async () => {
     <>
       <MyreportClient
         data={reports}
-        referrer={!!referrer}
+        referrer={hasInternalReferrer}
         deviceType={deviceType}
       />
     </>

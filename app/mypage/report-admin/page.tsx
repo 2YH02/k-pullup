@@ -5,6 +5,7 @@ import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import ReportAdminClient from "./report-admin-client";
 import getServerDeviceType from "@lib/get-server-device-type";
+import isInternalReferrer from "@lib/is-internal-referrer";
 
 const ReportAdminPage = async () => {
   const cookieStore = cookies();
@@ -12,6 +13,7 @@ const ReportAdminPage = async () => {
 
   const headersList = headers();
   const referrer = headersList.get("referer");
+  const hasInternalReferrer = isInternalReferrer(referrer, headersList.get("host"));
 
   const deviceType = getServerDeviceType();
 
@@ -32,7 +34,7 @@ const ReportAdminPage = async () => {
     <>
       <ReportAdminClient
         data={data}
-        referrer={!!referrer}
+        referrer={hasInternalReferrer}
         deviceType={deviceType}
       />
     </>
