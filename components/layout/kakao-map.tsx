@@ -373,7 +373,7 @@ const KakaoMap = () => {
           onLoad={handleLoadMap}
         />
       )}
-      <div ref={mapRef} id="map" className="relative w-full h-dvh [touch-action:pan-x_pan-y] [-webkit-touch-callout:none] [-webkit-user-select:none] [user-select:none]">
+      <div ref={mapRef} id="map" className="fixed inset-0 w-full h-dvh [touch-action:pan-x_pan-y] [-webkit-touch-callout:none] [-webkit-user-select:none] [user-select:none]">
         {/* GPS FAB for Desktop only */}
         <Tooltip
           as="button"
